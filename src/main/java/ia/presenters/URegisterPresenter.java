@@ -1,4 +1,6 @@
-package uc.user.register;
+package ia.presenters;
+
+import uc.user.register.URegisterResponseModel;
 
 public interface URegisterPresenter {
     /** Decides whether or not a Successview should be shown if the User was successfully registered
