@@ -4,13 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
         StateTracker currentState = new StateTracker();
-        while (currentState.getRunStatus()) {
-            try {
-                // ...
-            }
-            catch (Exception e) {
-                // ...
-            }
-        }
+        System.out.print("====    U of T Exam Centre     ===\n");
+        System.out.print("====  CSC 207 Course Project   ===");
+//        while (currentState.getRunStatus()) {
+//            // ...
+//        }
     }
 }
