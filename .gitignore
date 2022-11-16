@@ -61,8 +61,6 @@ atlassian-ide-plugin.xml
 # Cursive Clojure plugin
 .idea/replstate.xml
 
-
-
 # SonarLint plugin
 .idea/sonarlint/
 
@@ -118,9 +116,6 @@ gradle-app.setting
 hs_err_pid*
 replay_pid*
 
-# Package Files #
-*.jar
-*.war
-*.ear
+.idea/
 
-/gradle/
+gradle/
