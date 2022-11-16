@@ -3,8 +3,8 @@ package driver;
 import java.io.Serializable;
 import java.util.*;
 
-import entities.User;
 import entities.Course;
+import entities.User;
 
 public class StateTracker implements Serializable {
     private final HashMap<String, User> trackedUsers;
