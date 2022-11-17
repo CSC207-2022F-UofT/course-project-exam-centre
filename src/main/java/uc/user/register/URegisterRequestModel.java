@@ -1,12 +1,17 @@
 package uc.user.register;
+import java.util.List;
+import java.util.LinkedList;
 
-public class URegisterRequestModel {
+public class URegisterRequestModel{
 
     private String firstName;
     private String lastName;
     private String email;
+
     private String password;
     private String repeatPassword;
+
+    private List<String> courses;
 
     /** Creates a URegisterRequestModel with a firstName, lastName,
      * email, password and the repeatPassword.
@@ -24,6 +29,7 @@ public class URegisterRequestModel {
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
+        this.courses = new LinkedList<String>();
     }
 
     /** Gets the first name of the User
@@ -42,6 +48,14 @@ public class URegisterRequestModel {
         return lastName;
     }
 
+    /** Gets the email of the User
+     *
+     * @return returns the email of the User
+     */
+    String getEmail(){
+        return email;
+    }
+
     /** Gets the password of the User
      *
      * @return returns the password name of the User
@@ -56,5 +70,13 @@ public class URegisterRequestModel {
      */
     String getRepeatPassword(){
         return repeatPassword;
+    }
+
+    /** Gets the list of courses that the User will enroll in
+     *
+     * @return returns a list of Strings containing the courses of the User
+     */
+    List<String> getCourses(){
+        return courses;
     }
 }

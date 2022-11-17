@@ -1,17 +1,22 @@
 package uc.user.register;
 
+import entities.User;
+
 public class URegisterResponseModel {
-    String login;
-    String creationTime;
+    User user;
+    String loginStatus;
+    String timestamp;
 
     /** Creates a URegisterResponseModel with the login and the creationTime it took to create the User
      *
-     * @param login the login details of the User
-     * @param creationTime how long it took to create the User
+     * @param user the User corresponding to the URegisterResponseModel
+     * @param loginStatus the login details of the User
+     * @param timestamp how long it took to create the User
      */
-    public URegisterResponseModel(String login, String creationTime) {
-        this.login = login;
-        this.creationTime = creationTime;
+    public URegisterResponseModel(User user,String loginStatus, String timestamp) {
+        this.user = user;
+        this.loginStatus = loginStatus;
+        this.timestamp = timestamp;
     }
 
     /** Get the login of the User
@@ -19,22 +24,22 @@ public class URegisterResponseModel {
      * @return returns the login of the User
      */
     public String getLogin(){
-        return login;
+        return loginStatus;
     }
 
     /** Get the time it took to create the User
      *
      * @return returns the time it took to create the User
      */
-    public String getCreationTime(){
-        return creationTime;
+    public String getTimestamp(){
+        return timestamp;
     }
 
     /** Sets how long it took to create the User
      *
-     * @param creationTime the time it took to create the user
+     * @param timestamp the time it took to create the user
      */
-    public void setCreationTime(String creationTime){
-        this.creationTime = creationTime;
+    public void setTimestamp(String timestamp){
+        this.timestamp = timestamp;
     }
 }
