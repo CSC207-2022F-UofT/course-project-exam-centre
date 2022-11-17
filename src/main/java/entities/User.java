@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface User {
 
-    int getUserId();
+    String getUserId();
 
     String getName();
+
+    String getFirstName();
+
+    String getLastName();
 
     String getEmail();
 
