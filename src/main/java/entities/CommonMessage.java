@@ -2,8 +2,6 @@ package entities;
 
 // Entity layer
 
-import java.time.LocalDateTime;
-
 class CommonMessage implements Message {
 
     private final int messageId;
