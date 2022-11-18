@@ -1,6 +1,5 @@
 package fworks.views;
 
-import ia.controllers.SolutionDocController;
 import ia.controllers.SubmitDocumentController;
 import ia.controllers.TestDocController;
 
@@ -10,7 +9,7 @@ import java.awt.event.*;
 import java.io.File;
 //import ia.controllers.SubmitSolutionDocController;
 
-public class SolutionsDocSubmissionScreen<T extends SubmitDocumentController> extends JPanel implements ActionListener {
+public class DocumentSubmissionScreen<T extends SubmitDocumentController> extends JPanel implements ActionListener {
 
     /**
      * Name of the test
@@ -52,7 +51,7 @@ public class SolutionsDocSubmissionScreen<T extends SubmitDocumentController> ex
      */
 
     //TODO: add SubmitSolutionDocController as argument
-    public SolutionsDocSubmissionScreen(T controller) {
+    public DocumentSubmissionScreen(T controller) {
 
         this.docSubmissionController = controller;
 
@@ -112,7 +111,7 @@ public class SolutionsDocSubmissionScreen<T extends SubmitDocumentController> ex
         JFrame application = new JFrame("Test Solutions Doc Screen");
         JPanel screens = new JPanel();
         application.add(screens);
-        SolutionsDocSubmissionScreen filescreen = new SolutionsDocSubmissionScreen(new TestDocController());
+        DocumentSubmissionScreen filescreen = new DocumentSubmissionScreen(new TestDocController());
         screens.add(filescreen, "test");
         application.pack();
         application.setVisible(true);
