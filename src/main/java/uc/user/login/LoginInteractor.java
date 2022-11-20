@@ -1,7 +1,5 @@
 package uc.user.login;
 
-import entities.UserFactory;
-
 public class LoginInteractor implements LoginInputBoundary {
     private LoginOutputBoundary presenter;
     private LoginDsGateway dsGateway;
@@ -17,12 +15,11 @@ public class LoginInteractor implements LoginInputBoundary {
         if (dsGateway.verifyLoginCredentials(requestModel.getEmail(), requestModel.getPassword())) {
             String userId = dsGateway.getUserId(requestModel.getEmail());
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);
-            presenter.prepareSuccessView(responseModel);
+            return presenter.prepareSuccessView(responseModel);
         } else {
-            presenter.prepareFailView("The password entered is either incorrect " +
+            return presenter.prepareFailView("The password entered is either incorrect " +
                     "or the email entered is not associated with an account.");
         }
-        return null;
     }
 
 }
