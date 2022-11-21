@@ -36,8 +36,7 @@ public class CommonUser implements User {
 
     /** Gets the User's ID number
      *
-
-     * @return returns an 8-digit String relating to the User's ID
+     * @return returns an 8-digit string relating to the User's ID
      */
     @Override
     public String getUserId() {
@@ -52,6 +51,25 @@ public class CommonUser implements User {
     public String getName() {
         return this.firstName + " " + this.lastName;
     }
+
+    /** Gets the User's first name
+     *
+     * @return returns a string containing the User's first name
+     */
+    @Override
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    /**Gets the User's Last name
+     *
+     * @return returns a string containing the User's last name
+     */
+    @Override
+    public String getLastName(){
+        return this.lastName;
+    }
+
 
     /** Gets the User's email
      *
