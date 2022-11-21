@@ -50,7 +50,7 @@ CREATE TABLE ec.courses (
     course_id character varying NOT NULL,
     code character varying,
     name character varying,
-    creation_timestamp timestamp without time zone
+    creation_timestamp timestamp default current_timestamp
 );
 
 
@@ -81,7 +81,7 @@ CREATE TABLE ec.messages (
     user_id character varying NOT NULL,
     parent_id character varying,
     body text,
-    sent_timestamp timestamp without time zone NOT NULL
+    sent_timestamp timestamp default current_timestamp
 );
 
 
@@ -100,7 +100,7 @@ CREATE TABLE ec.solutions (
     recorded_score integer,
     estimated_time integer,
     root_message_id character varying NOT NULL,
-    creation_timestamp timestamp without time zone
+    creation_timestamp timestamp default current_timestamp
 );
 
 
@@ -118,7 +118,7 @@ CREATE TABLE ec.tests (
     test_type character(250),
     number_of_questions integer,
     estimated_time integer,
-    creation_timestamp timestamp without time zone
+    creation_timestamp timestamp default current_timestamp
 );
 
 
@@ -135,7 +135,7 @@ CREATE TABLE ec.users (
     first_name character(250) NOT NULL,
     last_name character(250) NOT NULL,
     password character varying NOT NULL,
-    creation_timestamp timestamp without time zone NOT NULL
+    creation_timestamp timestamp default current_timestamp
 );
 
 
