@@ -47,10 +47,10 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE ec.courses (
-    "courseId" bigint NOT NULL,
+    course_id character varying NOT NULL,
     code character varying,
     name character varying,
-    "creationTimestamp" timestamp without time zone
+    creation_timestamp timestamp without time zone
 );
 
 
@@ -62,9 +62,9 @@ CREATE TABLE ec.courses (
 --
 
 CREATE TABLE ec.enrolments (
-    "enrollmentId" bigint NOT NULL,
-    "userId" bigint NOT NULL,
-    "courseId" bigint NOT NULL
+    enrollment_id character varying NOT NULL,
+    user_id character varying NOT NULL,
+    course_id character varying NOT NULL
 );
 
 
@@ -76,12 +76,12 @@ CREATE TABLE ec.enrolments (
 --
 
 CREATE TABLE ec.messages (
-    "messageId" bigint NOT NULL,
-    "solutionId" bigint NOT NULL,
-    "userId" bigint NOT NULL,
-    "parentId" bigint,
+    message_id character varying NOT NULL,
+    solution_id character varying NOT NULL,
+    user_id character varying NOT NULL,
+    parent_id character varying,
     body text,
-    "sentTimestamp" timestamp without time zone NOT NULL
+    sent_timestamp timestamp without time zone NOT NULL
 );
 
 
@@ -93,14 +93,14 @@ CREATE TABLE ec.messages (
 --
 
 CREATE TABLE ec.solutions (
-    "solutionId" bigint NOT NULL,
-    "testId" bigint NOT NULL,
-    "userId" bigint NOT NULL,
-    "voteTotal" integer,
-    "recordedScore" integer,
-    "estimateTime" integer,
-    "rootMessageId" bigint NOT NULL,
-    "creationTimestamp" timestamp without time zone
+    solution_id character varying NOT NULL,
+    test_id character varying NOT NULL,
+    user_id character varying NOT NULL,
+    vote_total integer,
+    recorded_score integer,
+    estimated_time integer,
+    root_message_id bigint NOT NULL,
+    creation_timestamp timestamp without time zone
 );
 
 
@@ -112,13 +112,13 @@ CREATE TABLE ec.solutions (
 --
 
 CREATE TABLE ec.tests (
-    "testId" bigint NOT NULL,
-    "userId" bigint NOT NULL,
-    "courseId" bigint NOT NULL,
-    "testType" character(250),
-    "numberOfQuestions" integer,
-    "estimatedTime" integer,
-    "creationTimestamp" timestamp without time zone
+    test_id character varying NOT NULL,
+    user_id character varying NOT NULL,
+    course_id character varying NOT NULL,
+    test_type character(250),
+    number_of_questions integer,
+    estimated_time integer,
+    creation_timestamp timestamp without time zone
 );
 
 
@@ -132,10 +132,10 @@ CREATE TABLE ec.tests (
 CREATE TABLE ec.users (
     userid bigint NOT NULL,
     email character varying NOT NULL,
-    "firstName" character(250) NOT NULL,
-    "lastName" character(250) NOT NULL,
+    first_name character(250) NOT NULL,
+    last_name character(250) NOT NULL,
     password character varying NOT NULL,
-    "creationTimestamp" timestamp without time zone NOT NULL
+    creation_timestamp timestamp without time zone NOT NULL
 );
 
 
@@ -147,7 +147,7 @@ CREATE TABLE ec.users (
 --
 
 ALTER TABLE ONLY ec.courses
-    ADD CONSTRAINT courses_pkey PRIMARY KEY ("courseId");
+    ADD CONSTRAINT courses_pkey PRIMARY KEY (course_id);
 
 
 --
@@ -156,7 +156,7 @@ ALTER TABLE ONLY ec.courses
 --
 
 ALTER TABLE ONLY ec.enrolments
-    ADD CONSTRAINT enrolments_pkey PRIMARY KEY ("enrollmentId", "userId", "courseId");
+    ADD CONSTRAINT enrolments_pkey PRIMARY KEY (enrollment_id, user_id, course_id);
 
 
 --
@@ -165,7 +165,7 @@ ALTER TABLE ONLY ec.enrolments
 --
 
 ALTER TABLE ONLY ec.messages
-    ADD CONSTRAINT messages_pkey PRIMARY KEY ("messageId", "solutionId", "userId");
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (message_id, solution_id, user_id);
 
 
 --
@@ -174,7 +174,7 @@ ALTER TABLE ONLY ec.messages
 --
 
 ALTER TABLE ONLY ec.tests
-    ADD CONSTRAINT tests_pkey PRIMARY KEY ("testId", "userId", "courseId");
+    ADD CONSTRAINT tests_pkey PRIMARY KEY (test_id, user_id, course_id);
 
 
 --
