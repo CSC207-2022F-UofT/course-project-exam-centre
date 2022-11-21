@@ -2,11 +2,6 @@ package entities;
 
 // Entity layer
 
-<<<<<<< HEAD
-=======
-import java.time.LocalDateTime;
-
->>>>>>> origin/8-use-case-8-submit-discussion-board-message
 class CommonMessage implements Message {
 
     private final int messageId;
@@ -18,11 +13,6 @@ class CommonMessage implements Message {
     private final int parentId;
     private final String body;
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/8-use-case-8-submit-discussion-board-message
     /** Creates a Message that contains the messageId, solutionId, parentId, body, timestamp
      *
      * @param messageId the unique id corresponding the Message.
