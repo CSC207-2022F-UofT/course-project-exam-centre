@@ -10,7 +10,7 @@ public class CommonUser implements User {
     private final String firstName;
     private final String lastName;
     private String email;
-    private int userId;
+    private String userId;
     private List<Integer> tests;
     private List<Integer> solutions;
     private List<String> courses;
@@ -24,7 +24,7 @@ public class CommonUser implements User {
      * @param email Email of a User
      * @param userId Assigned userId of a User
      */
-    public CommonUser(String firstName, String lastName, String email, int userId){
+    public CommonUser(String firstName, String lastName, String email, String userId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email  = email;
@@ -36,10 +36,11 @@ public class CommonUser implements User {
 
     /** Gets the User's ID number
      *
-     * @return returns an integer relating to the User's ID
+
+     * @return returns an 8-digit String relating to the User's ID
      */
     @Override
-    public int getUserId() {
+    public String getUserId() {
         return this.userId;
     }
 
