@@ -39,7 +39,7 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
         int randomNum = (int) Math.floor(Math.random() * (max - min + 1)) + min;
         String randomKey = String.format("%08d", randomNum);
 
-        if(!(userDsGateway.checkIfIdExists(randomKey))){
+        if(!(userDsGateway.checkIfUserExists(randomKey))){
             return randomKey;
         } else{
             return createUserId();
@@ -55,7 +55,7 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
      */
     @Override
     public URegisterResponseModel registerUser(URegisterRequestModel requestModel){
-        if(userDsGateway.checkIfAccountExists(requestModel.getEmail())){
+        if(userDsGateway.checkIfUserExistsByEmail(requestModel.getEmail())){
             return userOutputBoundary.prepareFailView("User already exists");
         } else if(!(requestModel.getPassword().equals(requestModel.getRepeatPassword()))){
             return userOutputBoundary.prepareFailView("Passwords do not match");
@@ -68,7 +68,7 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
         URegisterDsRequestModel userDsModel = new URegisterDsRequestModel(user.getEmail(), user.getUserId(),
                 requestModel.getPassword());
 
-        boolean registerStatus = userDsGateway.saveUserInfo(userDsModel);
+        boolean registerStatus = userDsGateway.saveNewUserInfo(userDsModel);
 
         URegisterResponseModel responseModel =new URegisterResponseModel(user, String.valueOf(registerStatus),
                 now.toString());

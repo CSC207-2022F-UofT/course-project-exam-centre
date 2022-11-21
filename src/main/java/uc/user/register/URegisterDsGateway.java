@@ -1,9 +1,8 @@
 package uc.user.register;
 
 public interface URegisterDsGateway {
-    boolean checkIfAccountExists(String email);
-
-    boolean saveUserInfo(URegisterDsRequestModel requestModel);
-    boolean checkIfIdExists(String userId);
+    boolean checkIfUserExistsByEmail(String email);
+    boolean saveNewUserInfo(URegisterDsRequestModel requestModel);
+    boolean checkIfUserExists(String userId);
 
 }
