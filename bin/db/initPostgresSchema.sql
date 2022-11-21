@@ -62,7 +62,7 @@ CREATE TABLE ec.courses (
 --
 
 CREATE TABLE ec.enrolments (
-    enrollment_id character varying NOT NULL,
+    enrolment_id character varying NOT NULL,
     user_id character varying NOT NULL,
     course_id character varying NOT NULL
 );
@@ -99,7 +99,7 @@ CREATE TABLE ec.solutions (
     vote_total integer,
     recorded_score integer,
     estimated_time integer,
-    root_message_id bigint NOT NULL,
+    root_message_id character varying NOT NULL,
     creation_timestamp timestamp without time zone
 );
 
@@ -130,7 +130,7 @@ CREATE TABLE ec.tests (
 --
 
 CREATE TABLE ec.users (
-    userid bigint NOT NULL,
+    user_id character varying NOT NULL,
     email character varying NOT NULL,
     first_name character(250) NOT NULL,
     last_name character(250) NOT NULL,
@@ -156,7 +156,7 @@ ALTER TABLE ONLY ec.courses
 --
 
 ALTER TABLE ONLY ec.enrolments
-    ADD CONSTRAINT enrolments_pkey PRIMARY KEY (enrollment_id, user_id, course_id);
+    ADD CONSTRAINT enrolments_pkey PRIMARY KEY (enrolment_id, user_id, course_id);
 
 
 --
@@ -183,7 +183,7 @@ ALTER TABLE ONLY ec.tests
 --
 
 ALTER TABLE ONLY ec.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (userid);
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
 
 --
