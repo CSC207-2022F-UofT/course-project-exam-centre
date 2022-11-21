@@ -8,6 +8,10 @@ public interface User {
 
     String getName();
 
+    String getFirstName();
+
+    String getLastName();
+
     String getEmail();
 
     List<Integer> getTests();
