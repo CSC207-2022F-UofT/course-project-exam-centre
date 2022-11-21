@@ -3,10 +3,10 @@ package uc.user.register;
 public class URegisterDsRequestModel {
 
     private String email;
-
     private String userId;
-
     private String password;
+    private String firstName;
+    private String lastName;
 
     /** Creates an instance of URegisterDsRequestModel containing an email, userId and password
      *
@@ -34,6 +34,22 @@ public class URegisterDsRequestModel {
      */
     public String getUserId(){
         return this.userId;
+    }
+
+    /** Gets the first name of the User being registered
+     *
+     * @return returns a string containing the firstname of the User
+     */
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    /** Gets the last name of the User being registered
+     *
+     * @return returns a string containing the last name of the User
+     */
+    public String getLastName(){
+        return this.lastName;
     }
 
     /** Gets the password of the User being registered

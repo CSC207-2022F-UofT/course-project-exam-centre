@@ -1,6 +1,7 @@
 package fworks.da;
 
 import ia.gateways.DatabaseAccessGateway;
+import uc.user.register.URegisterDsRequestModel;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -92,6 +93,46 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
             ResultSet rs = statement.executeQuery(query);
             int numRows = countResultSetRows(rs);
             return (numRows > 0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkIfUserExists(String userId) {
+        String query = "SELECT * FROM ec.user WHERE user_id='" + userId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            int numRows = countResultSetRows(rs);
+            return (numRows > 0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkIfUserExistsByEmail(String email) {
+        String query = "SELECT * FROM ec.user WHERE email='" + email + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            int numRows = countResultSetRows(rs);
+            return (numRows > 0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
+        String email = requestModel.getEmail();
+        String userId = requestModel.getUserId();
+        String hashedPassword = hashPassword(requestModel.getPassword());
+        String firstName = requestModel.getFirstName();
+        String lastName = requestModel.getLastName();
+
+        String query = "INSERT INTO ec.users(user_id, email, first_name, last_name, password)" +
+                " VALUES ('" + userId + "', '" + email + "', '" + firstName + "', '" + lastName
+                + "', '" + hashedPassword + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
