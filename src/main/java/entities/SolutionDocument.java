@@ -6,7 +6,7 @@ public class SolutionDocument extends Document {
 
     private String testID;
 
-    private String votes;
+    private int votes;
 
 
     /**
@@ -18,15 +18,14 @@ public class SolutionDocument extends Document {
      * @param user   The user that uploaded the document
      * @param score  The total score of the test
      * @param testID The UofT id for the test
-     * @param votes  The number of votes for the test
      */
 
 
-    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, String votes) {
+    public SolutionDocument(String name, String id, Course course, User user, String score, String testID) {
         super(name, id, course, user);
         this.score = score;
         this.testID = testID;
-        this.votes = votes;
+        this.votes = 0;
     }
 
     public String getScore() {
@@ -45,11 +44,11 @@ public class SolutionDocument extends Document {
         this.testID = testID;
     }
 
-    public String getVotes() {
+    public int getVotes() {
         return votes;
     }
 
-    public void setVotes(String votes) {
+    public void setVotes(int votes) {
         this.votes = votes;
     }
 }
