@@ -11,6 +11,6 @@ public class UserFactory {
      * @return Returns a new instance of User
      */
     public User create(String firstName, String lastName, String email, String userId){
-        return new User(firstName, lastName, email, userId);
+        return new CommonUser(firstName, lastName, email, userId);
     }
 }
