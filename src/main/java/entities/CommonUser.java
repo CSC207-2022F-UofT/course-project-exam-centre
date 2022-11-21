@@ -36,6 +36,7 @@ public class CommonUser implements User {
 
     /** Gets the User's ID number
      *
+
      * @return returns an 8-digit String relating to the User's ID
      */
     @Override
