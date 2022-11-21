@@ -2,9 +2,24 @@ package entities;
 
 public abstract class Document {
 
+    /**
+     * The name of the document
+     */
     private String name;
+
+    /**
+     * A unique identifier for the document
+     */
     private String id;
+
+    /**
+     * The course that the document belongs to
+     */
     private Course course;
+
+    /**
+     * The user who uploaded the document
+     */
     private User user;
 
 
@@ -22,35 +37,36 @@ public abstract class Document {
         this.user = user;
     }
 
+    /**
+     * Gets the document's name
+     * @return The document's name
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Gets the unique id of the document
+     * @return Returns the document's ID
+     */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    /**
+     * Gets the course that this document belongs to
+     * @return Returns the Course item
+     */
     public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
+    /**
+     * Gets the user who uploaded the document
+     * @return The associated user
+     */
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
