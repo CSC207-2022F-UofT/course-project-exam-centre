@@ -13,6 +13,8 @@ class CommonMessage implements Message {
     private final int parentId;
     private final String body;
 
+
+
     /** Creates a Message that contains the messageId, solutionId, parentId, body, timestamp
      *
      * @param messageId the unique id corresponding the Message.

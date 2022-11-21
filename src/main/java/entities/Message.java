@@ -2,6 +2,7 @@ package entities;
 
 // Entity layer
 
+
 public interface Message {
 
     int getMessageId();
