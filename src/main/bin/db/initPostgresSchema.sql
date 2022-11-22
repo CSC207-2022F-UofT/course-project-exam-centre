@@ -150,23 +150,22 @@ VALUES ('igt4sstc', 'wx1of70l', 'h9ib1a73', 'MCQ', '10', '30', current_timestamp
 
 DELETE FROM ec.solutions;
 INSERT INTO ec.solutions
-VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 10, 20, '5ogwodol', current_timestamp),
-('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 10, 20, 'iccijdyo', current_timestamp),
-('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 10, 20, 'gso1dmii', current_timestamp),
-('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 10, 20, 'uo802k9i', current_timestamp),
-('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 10, 20, 'v5e3zcec', current_timestamp);
+VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 10, 20, 'w2ilpab8', current_timestamp),
+('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 10, 20, 'i524wrxd', current_timestamp),
+('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 10, 20, 'b2jyql0z', current_timestamp),
+('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 10, 20, 'lswlchjc', current_timestamp),
+('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 10, 20, 'o9szv3uk', current_timestamp);
 
 DELETE FROM ec.messages;
 INSERT INTO ec.messages
-VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', '5ogwodol', 'great answer!', current_timestamp),
-('i524wrxd', 'v5apbbr0', '4b6v23zg', 'iccijdyo', 'best answer!', current_timestamp),
-('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', 'gso1dmii', 'excellent answer!', current_timestamp),
-('lswlchjc', 'hi0ve0z5', 'mtq2r09h', 'uo802k9i', 'decent answer!', current_timestamp),
-('o9szv3uk', 'wq3t8cps', 'mtq2r09h', 'v5e3zcec', 'wrong answer!', current_timestamp),
+VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', null, 'great answer!', current_timestamp),
+('i524wrxd', 'v5apbbr0', '4b6v23zg', null, 'best answer!', current_timestamp),
+('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', null, 'excellent answer!', current_timestamp),
+('lswlchjc', 'hi0ve0z5', 'mtq2r09h', null, 'decent answer!', current_timestamp),
+('o9szv3uk', 'wq3t8cps', 'mtq2r09h', null, 'wrong answer!', current_timestamp),
 ('jrkkjkd2', 'r5hdyrg2', 'wx1of70l', 'w2ilpab8', 'great answer 2!', current_timestamp),
 ('jm8hn6u8', 'r5hdyrg2', '4b6v23zg', 'jrkkjkd2', 'great answer 3!', current_timestamp),
 ('b7jk4iy3', 'v5apbbr0', 'csye07l8', 'i524wrxd', 'best answer 2!', current_timestamp),
 ('99koseyd', 'v5apbbr0', 'mtq2r09h', 'b7jk4iy3', 'best answer 3!', current_timestamp),
 ('7zsgpyrp', 'pw7mh6vf', 'csye07l8', 'b2jyql0z', 'excellent answer 2!', current_timestamp),
 ('8kh1bmaa', 'pw7mh6vf', 'hph52pue', '7zsgpyrp', 'excellent answer 3!', current_timestamp);
--- parent_id of root message is the root_message_id in solutions table
