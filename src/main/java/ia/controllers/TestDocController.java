@@ -6,6 +6,6 @@ public class TestDocController implements SubmitDocumentController{
 
     @Override
     public void SubmitDocument(File file) {
-        System.out.println("bruh");
+        System.out.println("test");
     }
 }
