@@ -33,12 +33,18 @@ public class Main {
         }
 
         // Load config variables
-        String dbHostname = config.getProperty("DB_HOST");
-        String dbPassword = config.getProperty("DB_PASS");
-        Integer dbPort = Integer.parseInt(config.getProperty("DB_PORT"));
-        String dbName = config.getProperty("DB_NAME");
-        Boolean dbSslStatus = Boolean.parseBoolean(config.getProperty("DB_SSL_STATUS"));
-        String dbUser = config.getProperty("DB_USER");
+        String dbHostname = System.getenv().getOrDefault(
+                "DB_HOST", config.getProperty("DB_HOST"));
+        String dbPassword = System.getenv().getOrDefault(
+                "DB_PASS", config.getProperty("DB_PASS"));
+        Integer dbPort = Integer.parseInt(System.getenv().getOrDefault(
+                "DB_PORT", config.getProperty("DB_PORT")));
+        String dbName = System.getenv().getOrDefault(
+                "DB_NAME", config.getProperty("DB_NAME"));
+        Boolean dbSslStatus = Boolean.parseBoolean(System.getenv().getOrDefault(
+                "DB_SSL_STATUS", config.getProperty("DB_SSL_STATUS")));
+        String dbUser = System.getenv().getOrDefault(
+                "DB_USER", config.getProperty("DB_USER"));
 
         // Initialise Database Access Gateway
         try {
