@@ -7,16 +7,22 @@ public class SolutionDocument extends Document {
     /**
      * The total number of marks for the exam
      */
-    private String score;
+    private Integer score;
 
     /**
-     * The course's ID for the test
+     * The parent test object
      */
-    private String testID;
+    private TestDocument parentTest;
 
     /**
-     * The number of votes that the solution document has
+     * The recorded time taken by the solution poster
      */
+     private Float recordedTime;
+
+    /**
+     * The vote tally of the solution doc
+     */
+
     private int votes;
 
     /**
@@ -34,10 +40,6 @@ public class SolutionDocument extends Document {
      */
     private String rootMessageId;
 
-
-
-
-
     /**
      * Constructs a new Document abstract class for TestDoc or SolutionDoc to extend.
      *
@@ -48,61 +50,46 @@ public class SolutionDocument extends Document {
      * @param score  The total score of the test
      * @param testID The UofT id for the test
      * @param rootMessageId the rootMessage for this solution document that will hold all the messages for the solution
+     * @param recordedTime the recorded time of the solution poster
      */
-    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, String rootMessageId) {
+    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, Float recordedTime, String rootMessageId) {
         super(name, id, course, user);
         this.score = score;
         this.testID = testID;
         this.votes = 0;
+        this.recordedTime = recordedTime;
         this.messages = new Tree(rootMessageId);
     }
 
     /**
-     * Gets the number of marks for the exam
-     * @return The total number of marks
+     * Gets the number of marks for the solution
+     * @return The score recorded by the solution poster
      */
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
     /**
-     * Gets the id for the test
-     * @return The test's id
+     * Sets the number of marks for the solution
      */
-    public String getTestID() {
-        return testID;
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     /**
-     * Gets how many votes the solution document has
-     * @return The number of votes for the document
+     * Gets the parent test object
+     * @return The parent test object
      */
-    public int getVotes() {
-        return votes;
+    public TestDocument getTest() {
+        return parentTest;
     }
 
     /**
-     * Sets the number of votes for the document
-     * @param votes The new number of votes
+     * Sets the parent test document for this solutions document
+     * @param parentTest The parent test of the solution
      */
-    public void setVotes(int votes) {
-        this.votes = votes;
-    }
-
-    /**
-     * Gets the associated test document for the solutions doc
-     * @return The TestDocument item
-     */
-    public TestDocument getDocument() {
-        return document;
-    }
-
-    /**
-     * Adds/sets an associated test document for this solutions document
-     * @param document The TestDocument item
-     */
-    public void setDocument(TestDocument document) {
-        this.document = document;
+    public void setTest(TestDocument parentTest) {
+        this.parentTest = parentTest;
     }
 
     /**
