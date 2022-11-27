@@ -14,9 +14,9 @@ public interface User {
 
     String getEmail();
 
-    List<Integer> getTests();
+    List<String> getTests();
 
-    List<Integer> getSolutions();
+    List<String> getSolutions();
 
     List<String> getCourses();
 
@@ -24,7 +24,7 @@ public interface User {
 
     Boolean removeCourse(String courseCode);
 
-    Boolean addTest(Integer newTestId);
+    Boolean addTest(String newTestId);
 
-    Boolean addSolution(Integer newSolutionId);
+    Boolean addSolution(String newSolutionId);
 }
