@@ -43,7 +43,7 @@ CREATE TABLE ec.enrolments (
 );
 
 ALTER TABLE ONLY ec.enrolments
-    ADD CONSTRAINT enrolments_pkey PRIMARY KEY ("enrollment_id", "user_id", "course_id");
+    ADD CONSTRAINT enrolments_pkey PRIMARY KEY ("enrolment_id", "user_id", "course_id");
 
 
 -- 'Messages' table stores the message thread within a solution
@@ -104,15 +104,15 @@ ALTER TABLE ONLY ec.users
 
 -- Inserting dummy data
 
-DELETE FROM courses;
-INSERT INTO courses VALUES ('h9ib1a73','CSC207', 'Software Design', current_timestamp),
+DELETE FROM ec.courses;
+INSERT INTO ec.courses VALUES ('h9ib1a73','CSC207', 'Software Design', current_timestamp),
 ('aa7hcumk','CSC236', 'Introduction to the Theory of Computation', current_timestamp),
 ('koz8t694','CSC209', 'Software Tools and Systems Programming', current_timestamp),
 ('nmbyan9a','CSC263', 'Data Structures and Analysis', current_timestamp),
 ('u8489vqk','CSC309', 'Programming on the Web', current_timestamp);
 
-DELETE FROM enrolments;
-INSERT into enrolments 
+DELETE FROM ec.enrolments;
+INSERT into ec.enrolments 
 VALUES ('slhu4d40', 'wx1of70l', 'h9ib1a73'),
 ('qd3qx7yk', 'wx1of70l', 'koz8t694'),
 ('bhljuq6s', 'wx1of70l', 'u8489vqk'),
@@ -124,8 +124,8 @@ VALUES ('slhu4d40', 'wx1of70l', 'h9ib1a73'),
 ('fhb9n1jw', '4b6v23zg', 'nmbyan9a'),
 ('jdl3mgjq', 'csye07l8', 'nmbyan9a');
 
-DELETE FROM users;
-INSERT INTO users
+DELETE FROM ec.users;
+INSERT INTO ec.users
 VALUES ('wx1of70l', 'harvey@utoronto.ca', 'Harvey', 'Donnelley', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', current_timestamp), -- abc123
 ('mtq2r09h', 'kento@utoronto.ca', 'Kento', 'Takeda', '8f61ad5cfa0c471c8cbf810ea285cb1e5f9c2c5e5e5e4f58a3229667703e1587', current_timestamp), -- def456
 ('b36as7qx', 'paul@utoronto.ca', 'Paul', 'Bangalan', 'dd130a849d7b29e5541b05d2f7f86a4acd4f1ec598c1c9438783f56bc4f0ff80', current_timestamp), -- 123abc
@@ -135,8 +135,8 @@ VALUES ('wx1of70l', 'harvey@utoronto.ca', 'Harvey', 'Donnelley', '6ca13d52ca70c8
 ('bzjpq4bh', 'humraj@utoronto.ca', 'Humraj', 'Bhoday', '1f91bc2741ddcd07dc2abd277d412010e6e0bdf6532aae15e8d0715555415661', current_timestamp), -- 5ghi6
 ('timlxndy', 'zhihao@utoronto.ca', 'Zhihao', 'Lim', '5a3cf14cf8263fa316a6dad08d1a2f14432fcbfd74e3ae97e9fd1b3dee16703b', current_timestamp); -- 7jkl8
 
-DELETE FROM tests;
-INSERT INTO tests 
+DELETE FROM ec.tests;
+INSERT INTO ec.tests 
 VALUES ('igt4sstc', 'wx1of70l', 'h9ib1a73', 'MCQ', '10', '30', current_timestamp),
 ('wdgi1rq1', 'mtq2r09h', 'h9ib1a73', 'MCQ', '20', '60', current_timestamp),
 ('86pmfyv6', 'wx1of70l', 'aa7hcumk', 'Multiselect', '10', '20', current_timestamp),
@@ -148,25 +148,24 @@ VALUES ('igt4sstc', 'wx1of70l', 'h9ib1a73', 'MCQ', '10', '30', current_timestamp
 ('33bpyulj', 'hph52pue', 'h9ib1a73', 'MCQ', '1', '50', current_timestamp),
 ('beeg1li4', 'bzjpq4bh', 'aa7hcumk', 'MCQ', '12', '25', current_timestamp);
 
-DELETE FROM solutions;
-INSERT INTO solutions
-VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 10, 20, '5ogwodol', current_timestamp),
-('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 10, 20, 'iccijdyo', current_timestamp),
-('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 10, 20, 'gso1dmii', current_timestamp),
-('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 10, 20, 'uo802k9i', current_timestamp),
-('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 10, 20, 'v5e3zcec', current_timestamp);
+DELETE FROM ec.solutions;
+INSERT INTO ec.solutions
+VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 10, 20, 'w2ilpab8', current_timestamp),
+('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 10, 20, 'i524wrxd', current_timestamp),
+('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 10, 20, 'b2jyql0z', current_timestamp),
+('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 10, 20, 'lswlchjc', current_timestamp),
+('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 10, 20, 'o9szv3uk', current_timestamp);
 
-DELETE FROM messages;
-INSERT INTO messages
-VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', '5ogwodol', 'great answer!', current_timestamp),
-('i524wrxd', 'v5apbbr0', '4b6v23zg', 'iccijdyo', 'best answer!', current_timestamp),
-('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', 'gso1dmii', 'excellent answer!', current_timestamp),
-('lswlchjc', 'hi0ve0z5', 'mtq2r09h', 'uo802k9i', 'decent answer!', current_timestamp),
-('o9szv3uk', 'wq3t8cps', 'mtq2r09h', 'v5e3zcec', 'wrong answer!', current_timestamp),
+DELETE FROM ec.messages;
+INSERT INTO ec.messages
+VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', null, 'great answer!', current_timestamp),
+('i524wrxd', 'v5apbbr0', '4b6v23zg', null, 'best answer!', current_timestamp),
+('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', null, 'excellent answer!', current_timestamp),
+('lswlchjc', 'hi0ve0z5', 'mtq2r09h', null, 'decent answer!', current_timestamp),
+('o9szv3uk', 'wq3t8cps', 'mtq2r09h', null, 'wrong answer!', current_timestamp),
 ('jrkkjkd2', 'r5hdyrg2', 'wx1of70l', 'w2ilpab8', 'great answer 2!', current_timestamp),
 ('jm8hn6u8', 'r5hdyrg2', '4b6v23zg', 'jrkkjkd2', 'great answer 3!', current_timestamp),
 ('b7jk4iy3', 'v5apbbr0', 'csye07l8', 'i524wrxd', 'best answer 2!', current_timestamp),
 ('99koseyd', 'v5apbbr0', 'mtq2r09h', 'b7jk4iy3', 'best answer 3!', current_timestamp),
 ('7zsgpyrp', 'pw7mh6vf', 'csye07l8', 'b2jyql0z', 'excellent answer 2!', current_timestamp),
 ('8kh1bmaa', 'pw7mh6vf', 'hph52pue', '7zsgpyrp', 'excellent answer 3!', current_timestamp);
--- parent_id of root message is the root_message_id in solutions table
