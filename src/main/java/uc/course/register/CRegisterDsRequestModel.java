@@ -12,8 +12,6 @@ public class CRegisterDsRequestModel {
         this.courseName = courseName;
         this.courseCode = courseCode;
     }
-
-
     public String getCourseName() {
         return courseName;
     }

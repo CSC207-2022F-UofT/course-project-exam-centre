@@ -3,12 +3,12 @@ package uc.course.updatemembers;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class UpdateCourseMembership implements UpdateCMemInputBoundary {
+public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary {
 
     final UpdateCMemDsGateway gateway;
     final UpdateCMemPresenter presenter;
 
-    public UpdateCourseMembership(UpdateCMemDsGateway gateway, UpdateCMemPresenter presenter) {
+    public UpdateCourseMembershipInteractor(UpdateCMemDsGateway gateway, UpdateCMemPresenter presenter) {
         this.gateway = gateway;
         this.presenter = presenter;
     }
