@@ -3,15 +3,19 @@ package entities;
 // Entity layer
 
 
+import java.time.LocalDateTime;
+
 public interface Message {
 
-    int getMessageId();
+    String getMessageId();
 
-    int getSolutionId();
+    String getSolutionId();
 
-    int getUserId();
+    String getUserId();
 
-    int getParentId();
+    String getParentId();
 
     String getBody();
+
+    LocalDateTime getDate();
 }
