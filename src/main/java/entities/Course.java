@@ -35,6 +35,13 @@ public class Course {
         return courseName;
     }
 
+    /** Gets the course id designated to the course
+     *
+     * @return returns the courseId
+     */
+    public String getCourseId() {
+        return this.courseId;
+    }
     /** Gets the course's code
      *
      * @return returs the string corresponding to the course code
@@ -56,4 +63,6 @@ public class Course {
     public void removeTest(TestDoc test) {
         this.tests.remove(test);
     }
+
+
 }
