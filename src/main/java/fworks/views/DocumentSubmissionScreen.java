@@ -106,7 +106,7 @@ public class DocumentSubmissionScreen<T extends SubmitDocumentController> extend
      * Used for testing layout
      * @param args args
      */
-    public static void main(String[] args) {
+    public DocumentSubmissionScreen() {
         JFrame application = new JFrame("Test Solutions Doc Screen");
         JPanel screens = new JPanel();
         application.add(screens);
