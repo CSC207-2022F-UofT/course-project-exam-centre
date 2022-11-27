@@ -48,9 +48,8 @@ public class DocumentSubmissionScreen<T extends SubmitDocumentController> extend
 
     /**
      * A window allowing the user to select a document for submission and set information of the test
+     * @param controller The user document submission controller
      */
-
-    //TODO: add SubmitSolutionDocController as argument
     public DocumentSubmissionScreen(T controller) {
 
         this.docSubmissionController = controller;
@@ -107,7 +106,7 @@ public class DocumentSubmissionScreen<T extends SubmitDocumentController> extend
      * Used for testing layout
      * @param args args
      */
-    public static void main(String[] args) {
+    public DocumentSubmissionScreen() {
         JFrame application = new JFrame("Test Solutions Doc Screen");
         JPanel screens = new JPanel();
         application.add(screens);
