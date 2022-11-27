@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.TreeSet;
+
 public class SolutionDocument extends Document {
 
     /**
@@ -22,6 +24,19 @@ public class SolutionDocument extends Document {
      */
     private TestDocument document;
 
+    /**
+     * The associated messages for the solutions doc
+     */
+    private Tree messages;
+
+    /**
+     * The rootMessage of all the messages held in the messages tree.
+     */
+    private String rootMessageId;
+
+
+
+
 
     /**
      * Constructs a new Document abstract class for TestDoc or SolutionDoc to extend.
@@ -32,12 +47,14 @@ public class SolutionDocument extends Document {
      * @param user   The user that uploaded the document
      * @param score  The total score of the test
      * @param testID The UofT id for the test
+     * @param rootMessageId the rootMessage for this solution document that will hold all the messages for the solution
      */
-    public SolutionDocument(String name, String id, Course course, User user, String score, String testID) {
+    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, String rootMessageId) {
         super(name, id, course, user);
         this.score = score;
         this.testID = testID;
         this.votes = 0;
+        this.messages = new Tree(rootMessageId);
     }
 
     /**
@@ -86,5 +103,14 @@ public class SolutionDocument extends Document {
      */
     public void setDocument(TestDocument document) {
         this.document = document;
+    }
+
+    /**
+     * adds a message to the messages tree of the solution
+     * @param message the message to be added
+     */
+    public void addMessage(Message message){
+        //Should not need to check if the message does not have a parent id that is in the tree because messages will only be created with parent ids that are already in the tree.
+        this.messages.addMessage(message);
     }
 }
