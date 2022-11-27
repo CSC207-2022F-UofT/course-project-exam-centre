@@ -11,9 +11,11 @@ public class SolutionDocFactory {
      * @param course The course the document belongs to
      * @param user   The user that uploaded the document
      * @param score  The total score of the test
-     * @param testID The UofT id for the test
+     * @param testDocument The parent test doc for the solution
      */
-    public SolutionDocument create(String name, String id, Course course, User user, String score, String testID) {
-        return new SolutionDocument(name, id, course, user, score, testID);
+    public static SolutionDocument create(String name, String id, Course course,
+                                   User user, Integer score,TestDocument testDocument,
+                                          Float recordedTime) {
+        return new SolutionDocument(name, id, course, user, score, testDocument, recordedTime);
     }
 }
