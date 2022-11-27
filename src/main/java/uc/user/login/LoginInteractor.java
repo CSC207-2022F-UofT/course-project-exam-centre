@@ -18,8 +18,9 @@ public class LoginInteractor implements LoginInputBoundary {
         this.stateTracker = stateTracker;
     }
 
-    /**
-     * Verify login credentials and track current user
+    /** Verify login credentials and track current user
+     * @param requestModel contains email and password via user input
+     * @return LoginResponsesModel contains login status and userId.
      */
     @Override
     public LoginResponseModel logIn(LoginRequestModel requestModel) {
@@ -38,6 +39,7 @@ public class LoginInteractor implements LoginInputBoundary {
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);
             return presenter.prepareSuccessView(responseModel);
         } else {
+            // prepare error message
             return presenter.prepareFailView("The password entered is either incorrect " +
                     "or the email entered is not associated with an account.");
         }

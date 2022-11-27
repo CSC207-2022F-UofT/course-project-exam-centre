@@ -1,6 +1,8 @@
 package uc.user.login;
 
 public class LoginDsResponseModel {
+    /** Contains user information required in constructing a user object
+     */
     private String userId;
     private String firstName;
     private String lastName;

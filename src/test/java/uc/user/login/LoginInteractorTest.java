@@ -10,8 +10,7 @@ import static org.junit.Assert.*;
 
 public class LoginInteractorTest {
 
-    /**
-     *  Test that LoginInteractor prepares a success view with the correct output data
+    /** Test that LoginInteractor prepares a success view with the correct output data
      *  and updates the currentUser in the state tracker entity,
      *  given a correct password
      */
@@ -21,6 +20,7 @@ public class LoginInteractorTest {
         LoginDsGateway dsGateway = new LoginDsGateway() {
             @Override
             public boolean verifyLoginCredentials(String email, String password) {
+                // compares to credentials in "DB"
                 return email.equals("firstname@mail.uoftears.ca")
                         && password.equals(";-;");
             }
@@ -48,9 +48,9 @@ public class LoginInteractorTest {
 
         UserFactory userFactory = new UserFactory();
         StateTracker stateTracker = new StateTracker();
-
-        // run the use case
         LoginInteractor interactor = new LoginInteractor(userFactory, presenter, dsGateway, stateTracker);
+
+        // run the use case, supposing the user input is as follows
         LoginRequestModel requestModel = new LoginRequestModel("firstname@mail.uoftears.ca", ";-;");
         interactor.logIn(requestModel);
 
@@ -61,8 +61,7 @@ public class LoginInteractorTest {
         assertTrue(stateTracker.checkIfUserTracked("LOL123"));
     }
 
-    /**
-     *  Test that LoginInteractor prepares a fail view
+    /** Test that LoginInteractor prepares a fail view
      *  and leaves the currentUser null in the state tracker entity,
      *  given an incorrect password
      */
@@ -72,6 +71,7 @@ public class LoginInteractorTest {
         LoginDsGateway dsGateway = new LoginDsGateway() {
             @Override
             public boolean verifyLoginCredentials(String email, String password) {
+                // compares to credentials in "DB"
                 return email.equals("firstname@mail.uoftears.ca")
                         && password.equals(";-;");
             }
@@ -97,9 +97,9 @@ public class LoginInteractorTest {
 
         UserFactory userFactory = new UserFactory();
         StateTracker stateTracker = new StateTracker();
-
-        // run the use case
         LoginInteractor interactor = new LoginInteractor(userFactory, presenter, dsGateway, stateTracker);
+
+        // run the use case, supposing the user input is as follows
         LoginRequestModel requestModel = new LoginRequestModel("firstname@mail.uoftears.ca", ":(");
         interactor.logIn(requestModel);
 
