@@ -7,11 +7,11 @@ public class TestFrame extends JFrame {
     public TestFrame() {
         super("Test");
         TestToolbar toolbar = new TestToolbar();
-        Document document = new Document();
+        DocumentView documentView = new DocumentView();
 
         setLayout(new BorderLayout());
         add(toolbar, BorderLayout.NORTH);
-        add(document.getPanel(), BorderLayout.EAST);
+        add(documentView.getPanel(), BorderLayout.EAST);
 
         setSize(1100, 800);
         setLocationRelativeTo(null);
