@@ -1,4 +1,4 @@
-package ui;
+package fworks.views;
 
 import fworks.views.DocumentSubmissionScreen;
 

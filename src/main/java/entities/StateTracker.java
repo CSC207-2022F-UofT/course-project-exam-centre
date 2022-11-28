@@ -7,8 +7,10 @@ import entities.Course;
 import entities.User;
 
 public class StateTracker implements Serializable {
-    private final HashMap<String, User> trackedUsers;
-    private final HashMap<String, Course> trackedCourses;
+    private final Map<String, User> trackedUsers;
+    // TODO: Implement abstract course class with a Comprehensive Course Class and a Meta Course Class (no test/solution docs)
+    private final Map<String, Course> trackedCourses;
+    private List<Course> courseInfoItems;
     private User currentUser;
     private boolean runStatus;
 
@@ -19,6 +21,7 @@ public class StateTracker implements Serializable {
         this.runStatus = true;
         this.trackedUsers = new HashMap<>();
         this.trackedCourses = new HashMap<>();
+        this.courseInfoItems = new ArrayList<>();
         this.currentUser = null;
     }
 
@@ -63,6 +66,7 @@ public class StateTracker implements Serializable {
      */
     public void setCurrentUser(User loggedInUser) {
         this.currentUser = loggedInUser;
+        addUpdateTrackedUser(loggedInUser);
     }
 
     /**
@@ -122,8 +126,26 @@ public class StateTracker implements Serializable {
      * @param trackedCourse a Course object to be tracked.
      */
     public void addUpdateTrackedCourse(Course trackedCourse) {
-        String trackedUserId = trackedCourse.getCourseId();
-        this.trackedCourses.put(trackedUserId, trackedCourse);
+        String trackedCourseId = trackedCourse.getCourseId();
+        this.trackedCourses.put(trackedCourseId, trackedCourse);
+    }
+
+    /**
+     * Set all course info items.
+     *
+     * @param courseInfoItems a list of all Course info items.
+     */
+    public void setAllCourseInfoItems(List<Course> courseInfoItems) {
+        this.courseInfoItems = courseInfoItems;
+    }
+
+    /**
+     * Get all course info items.
+     *
+     * @return an array list of course info items.
+     */
+    public List<Course> getAllCourseInfoItems() {
+        return this.courseInfoItems;
     }
 
 }
