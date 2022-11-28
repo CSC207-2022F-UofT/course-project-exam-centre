@@ -11,8 +11,8 @@ public class CommonUser implements User {
     private final String lastName;
     private String email;
     private String userId;
-    private List<Integer> tests;
-    private List<Integer> solutions;
+    private List<String> tests;
+    private List<String> solutions;
     private List<String> courses;
 
 
@@ -29,9 +29,9 @@ public class CommonUser implements User {
         this.lastName = lastName;
         this.email  = email;
         this.userId = userId;
-        this.tests = new ArrayList<Integer>();
-        this.solutions = new ArrayList<Integer>();
-        this.courses = new LinkedList<String>();
+        this.tests = new ArrayList<>();
+        this.solutions = new ArrayList<>();
+        this.courses = new LinkedList<>();
     }
 
     /** Gets the User's ID number
@@ -85,7 +85,7 @@ public class CommonUser implements User {
      * @return returns a list containing the different test doc ids that the User has submitted
      */
     @Override
-    public List<Integer> getTests() {
+    public List<String> getTests() {
         return tests;
     }
 
@@ -94,7 +94,7 @@ public class CommonUser implements User {
      * @return returns a list containing the different solution doc ids that the User has submitted
      */
     @Override
-    public List<Integer> getSolutions() {
+    public List<String> getSolutions() {
         return solutions;
     }
 
@@ -133,7 +133,7 @@ public class CommonUser implements User {
      * @return Returns true if the test was successfully added and false if not
      */
     @Override
-    public Boolean addTest(Integer newTestId){
+    public Boolean addTest(String newTestId){
         return this.tests.add(newTestId);
     }
 
@@ -143,7 +143,7 @@ public class CommonUser implements User {
      * @return Returns true if the test was successfully added and false if not
      */
     @Override
-    public Boolean addSolution(Integer newSolutionId){
+    public Boolean addSolution(String newSolutionId){
         return this.solutions.add(newSolutionId);
     }
 }

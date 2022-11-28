@@ -1,16 +1,18 @@
 package entities;
 
+import java.util.HashMap;
+
 public class TestDocument extends Document{
 
     /**
-     * The associated soltuions document for the test
+     * The associated solutions document for the test
      */
-    private SolutionDocument solutions;
+    private final HashMap<String, SolutionDocument> solutions;
 
     /**
-     * The time allotted for the test
+     * The time allotted for the test (hrs)å
      */
-    private String estimatedTime;
+    private Float estimatedTime;
 
     /**
      * The number of questions on the test
@@ -29,15 +31,16 @@ public class TestDocument extends Document{
      * @param id     The document identifier
      * @param course The course the document belongs to
      * @param user   The user that uploaded the document
-     * @param estimatedTime The allotted time to complete the test
+     * @param estimatedTime The allotted time to complete the test (hrs)
      * @param numberOfQuestions The number of questions on the test
      * @param testType The type of the test (i.e. Term test, final exam, ...)
      */
-    public TestDocument(String name, String id, Course course, User user, String estimatedTime, int numberOfQuestions, String testType) {
+    public TestDocument(String name, String id, Course course, User user, Float estimatedTime, int numberOfQuestions, String testType) {
         super(name, id, course, user);
         this.estimatedTime = estimatedTime;
         this.numberOfQuestions = numberOfQuestions;
         this.testType = testType;
+        this.solutions = new HashMap<>();
 
     }
 
@@ -45,30 +48,17 @@ public class TestDocument extends Document{
      * Returns the solutions document for the test
      * @return The SolutionsDocument item
      */
-    public SolutionDocument getSolutions() {
+    public HashMap<String, SolutionDocument> getSolutions() {
         return solutions;
-    }
-
-    /**
-     * Adds/Sets the solutions document for the test
-     * @param solutions The SolutionsDocument item to add or set
-     */
-    public void setSolutions(SolutionDocument solutions) {
-        this.solutions = solutions;
     }
 
     /**
      * Gets the allotted time for the test
      * @return The time for the test
      */
-    public String getEstimatedTime() {
+    public Float getEstimatedTime() {
         return estimatedTime;
     }
-
-    /**
-     * Gets the number of questions on the test
-     * @return The number of questions on this TestDocument
-     */
 
     /**
      * Gets the number of questions for this test
@@ -84,5 +74,13 @@ public class TestDocument extends Document{
      */
     public String getTestType() {
         return testType;
+    }
+
+    /**
+     * Adds/Updates a solution doc for the test
+     * @param solution The SolutionsDocument item to add or update
+     */
+    public void  addUpdateSolution(SolutionDocument solution) {
+        this.solutions.put(solution.getId(), solution);
     }
 }

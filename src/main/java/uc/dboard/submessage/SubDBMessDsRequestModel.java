@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 public class SubDBMessDsRequestModel {
 
-    private final int solutionId;
+    private final String solutionId;
 
-    private final int userId;
+    private final String userId;
 
-    private final int parentId;
+    private final String parentId;
 
     private final String body;
 
@@ -25,7 +25,7 @@ public class SubDBMessDsRequestModel {
      * @param creationTime Time the message was created.
      */
 
-    public SubDBMessDsRequestModel(int solutionId, int userId, int parentId, String body, LocalDateTime creationTime) {
+    public SubDBMessDsRequestModel(String solutionId, String userId, String parentId, String body, LocalDateTime creationTime) {
         this.solutionId = solutionId;
         this.userId = userId;
         this.parentId = parentId;
@@ -37,7 +37,7 @@ public class SubDBMessDsRequestModel {
      *
      * @return return the int corresponding to the Message's Solution Id.
      */
-    public int getSolutionId() {
+    public String getSolutionId() {
         return solutionId;
     }
 
@@ -45,7 +45,7 @@ public class SubDBMessDsRequestModel {
      *
      * @return return the int corresponding to the Message's User Id.
      */
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -53,7 +53,7 @@ public class SubDBMessDsRequestModel {
      *
      * @return return the int corresponding to the Message's Parent Id.
      */
-    public int getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
