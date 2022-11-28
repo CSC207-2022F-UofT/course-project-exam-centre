@@ -77,6 +77,15 @@ public class TestDocument extends Document{
     }
 
     /**
+     * Gets the solution doc by id
+     * @param solutionId the solution id of the document to be retrieved
+     * @return the solution doc matching the solution id
+     */
+    public SolutionDocument getSolution(String solutionId) {
+        return this.solutions.get(solutionId);
+    }
+
+    /**
      * Adds/Updates a solution doc for the test
      * @param solution The SolutionsDocument item to add or update
      */

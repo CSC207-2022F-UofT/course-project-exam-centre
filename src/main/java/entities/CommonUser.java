@@ -39,7 +39,7 @@ public class CommonUser implements User {
      * @return returns an 8-digit string relating to the User's ID
      */
     @Override
-    public String getUserId() {
+    public String getId() {
         return this.userId;
     }
 
