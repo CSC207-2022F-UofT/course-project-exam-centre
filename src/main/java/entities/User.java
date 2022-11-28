@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface User {
 
-    String getUserId();
+    String getId();
 
     String getName();
 

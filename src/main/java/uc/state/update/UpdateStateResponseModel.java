@@ -1,17 +1,19 @@
 package uc.state.update;
 
 import entities.Course;
+import entities.CourseInfo;
 import entities.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class UpdateStateResponseModel {
     private User currentUser;
     private List<Course> usersCourses;
-    private List<Course> allCourseInfoItems;
+    private Map<String, CourseInfo> allCourseInfoItems;
 
     UpdateStateResponseModel(User currentUser, List<Course> usersCourses,
-                             List<Course> allCourseInfo) {
+                             Map<String, CourseInfo> allCourseInfo) {
 
         this.currentUser = currentUser;
         this.usersCourses = usersCourses;
@@ -26,7 +28,7 @@ public class UpdateStateResponseModel {
         return this.usersCourses;
     }
 
-    List<Course> getAllCourseInfo() {
+    Map<String, CourseInfo> getAllCourseInfo() {
         return this.allCourseInfoItems;
     }
 }
