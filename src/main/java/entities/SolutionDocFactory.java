@@ -14,7 +14,7 @@ public class SolutionDocFactory {
      * @param rootMessageId     The root message id for this solution document
      * @param recordedTime      The recorded time for the solution document
      */
-    public SolutionDocument create(String solutionName,
+    public static SolutionDocument create(String solutionName,
                                    String solutionId,
                                    Course course,
                                    User user,

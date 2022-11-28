@@ -130,6 +130,14 @@ public class SolutionDocument extends Document {
     }
 
     /**
+     * Gets the vote total for the solution document
+     * @return The solution document's vote total
+     */
+    public Integer getVotes() {
+        return this.votes;
+    }
+
+    /**
      * adds a message to the messages tree of the solution
      * @param message the message to be added
      */
