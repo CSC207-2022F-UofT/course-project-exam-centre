@@ -3,18 +3,17 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.TestDoc;
-
 /**
  * Represents a university course
  */
-public class Course {
+public class Course implements CourseInfo {
     private final String courseName;
     private final String courseCode;
     private final List<TestDoc> tests;
     private final String courseId;
 
-    /** Constructs a new course
+    /**
+     * Constructs a new course object
      *
      * @param courseName the name of the course
      * @param courseCode the course code of the course
@@ -23,7 +22,7 @@ public class Course {
     public Course(String courseName, String courseCode, String courseId) {
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.tests = new ArrayList<TestDoc>();
+        this.tests = new ArrayList<>();
         this.courseId = courseId;
 
     }
@@ -39,7 +38,7 @@ public class Course {
      *
      * @return returns the courseId
      */
-    public String getCourseId() {
+    public String getId() {
         return this.courseId;
     }
     /** Gets the course's code
