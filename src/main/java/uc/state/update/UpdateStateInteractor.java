@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class UpdateStateInteractor implements UpdateStateInputBoundary {
-    private UpdateStateOutputBoundary presenter;
-    private UpdateStateDsGateway dsGateway;
+    private final UpdateStateOutputBoundary presenter;
+    private final UpdateStateDsGateway dsGateway;
 
     public UpdateStateInteractor(UpdateStateOutputBoundary presenter, UpdateStateDsGateway dsGateway) {
         this.presenter = presenter;
@@ -214,10 +214,12 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         allCourseInfoItems = constructAllCourseInfoItems();
         currentState.setAllCourseInfoItems(allCourseInfoItems);
 
-        return new UpdateStateResponseModel(
+        UpdateStateResponseModel responseModel =  new UpdateStateResponseModel(
                 currentUser,
                 usersCourses,
                 allCourseInfoItems);
+
+        return presenter.prepareSuccessView(responseModel);
 
     }
 

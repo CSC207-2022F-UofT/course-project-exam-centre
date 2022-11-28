@@ -4,23 +4,11 @@ import java.io.Serializable;
 import java.util.*;
 
 public class StateTracker implements Serializable {
-    private final Map<String, User> trackedUsers;
-    // TODO: Implement abstract course class with a Comprehensive Course Class and a Meta Course Class (no test/solution docs)
-    private final Map<String, Course> trackedCourses;
-    private Map<String, CourseInfo> courseInfoItems;
-    private User currentUser;
-    private boolean runStatus;
-
-    /**
-     * Construct a StateTracker object with no tracked users or tracked courses.
-     */
-    public StateTracker() {
-        this.runStatus = true;
-        this.trackedUsers = new HashMap<>();
-        this.trackedCourses = new HashMap<>();
-        this.courseInfoItems = new HashMap<>();
-        this.currentUser = null;
-    }
+    private static final Map<String, User> trackedUsers = new HashMap<>();
+    private static final Map<String, Course> trackedCourses = new HashMap<>();
+    private static Map<String, CourseInfo> courseInfoItems = new HashMap<>();
+    private static User currentUser;
+    private static boolean runStatus = true;
 
     /**
      * Gets the current run status of the program.
@@ -28,7 +16,7 @@ public class StateTracker implements Serializable {
      * @return whether the program should continue running or not.
      */
     public boolean getRunStatus() {
-        return this.runStatus;
+        return runStatus;
     }
 
     /**
@@ -36,7 +24,7 @@ public class StateTracker implements Serializable {
      * continue running.
      */
     public void stopRunning() {
-        this.runStatus = false;
+        runStatus = false;
     }
 
     /**
@@ -46,14 +34,14 @@ public class StateTracker implements Serializable {
      * no user is logged in.
      */
     public User getCurrentUser() {
-        return this.currentUser;
+        return currentUser;
     }
 
     /**
      * Sets the current user to null to indicate that the user is logged out.
      */
     public void removeCurrentUser() {
-        this.currentUser = null;
+        currentUser = null;
     }
 
     /**
@@ -62,7 +50,7 @@ public class StateTracker implements Serializable {
      * @param loggedInUser the User object that will be set as the current user.
      */
     public void setCurrentUser(User loggedInUser) {
-        this.currentUser = loggedInUser;
+        currentUser = loggedInUser;
         addUpdateTrackedUser(loggedInUser);
     }
 
@@ -73,7 +61,7 @@ public class StateTracker implements Serializable {
      * @return a User object corresponding to the userId.
      */
     public User getUserIfTracked(String userId) {
-        return this.trackedUsers.get(userId);
+        return trackedUsers.get(userId);
     }
 
     /**
@@ -83,7 +71,7 @@ public class StateTracker implements Serializable {
      * @return whether the user corresponding to the userId is tracked.
      */
     public boolean checkIfUserTracked(String userId) {
-        return this.trackedUsers.containsKey(userId);
+        return trackedUsers.containsKey(userId);
     }
 
     /**
@@ -94,7 +82,7 @@ public class StateTracker implements Serializable {
      * @return a Course object corresponding to the courseId.
      */
     public Course getCourseIfTracked(String courseId) {
-        return this.trackedCourses.get(courseId);
+        return trackedCourses.get(courseId);
     }
 
     /**
@@ -104,7 +92,7 @@ public class StateTracker implements Serializable {
      * @return whether the course corresponding to the courseId is tracked.
      */
     public boolean checkIfCourseTracked(String courseId) {
-        return this.trackedCourses.containsKey(courseId);
+        return trackedCourses.containsKey(courseId);
     }
 
     /**
@@ -114,7 +102,7 @@ public class StateTracker implements Serializable {
      */
     public void addUpdateTrackedUser(User trackedUser) {
         String trackedUserId = trackedUser.getId();
-        this.trackedUsers.put(trackedUserId, trackedUser);
+        trackedUsers.put(trackedUserId, trackedUser);
     }
 
     /**
@@ -124,7 +112,7 @@ public class StateTracker implements Serializable {
      */
     public void addUpdateTrackedCourse(Course trackedCourse) {
         String trackedCourseId = trackedCourse.getId();
-        this.trackedCourses.put(trackedCourseId, trackedCourse);
+        trackedCourses.put(trackedCourseId, trackedCourse);
     }
 
     /**
@@ -133,7 +121,7 @@ public class StateTracker implements Serializable {
      * @param courseInfoItems a list of all Course info items.
      */
     public void setAllCourseInfoItems(Map<String, CourseInfo> courseInfoItems) {
-        this.courseInfoItems = courseInfoItems;
+        StateTracker.courseInfoItems = courseInfoItems;
     }
 
     /**
@@ -142,7 +130,7 @@ public class StateTracker implements Serializable {
      * @return a map of course info items.
      */
     public Map<String, CourseInfo> getAllCourseInfoItems() {
-        return this.courseInfoItems;
+        return courseInfoItems;
     }
 
 }
