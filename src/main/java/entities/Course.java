@@ -1,7 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a university course
@@ -9,7 +8,7 @@ import java.util.List;
 public class Course implements CourseInfo {
     private final String courseName;
     private final String courseCode;
-    private final List<TestDoc> tests;
+    private final Map<String, TestDocument> tests;
     private final String courseId;
 
     /**
@@ -22,7 +21,7 @@ public class Course implements CourseInfo {
     public Course(String courseName, String courseCode, String courseId) {
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.tests = new ArrayList<>();
+        this.tests = new HashMap<>();
         this.courseId = courseId;
 
     }
@@ -41,6 +40,7 @@ public class Course implements CourseInfo {
     public String getId() {
         return this.courseId;
     }
+
     /** Gets the course's code
      *
      * @return returs the string corresponding to the course code
@@ -48,19 +48,37 @@ public class Course implements CourseInfo {
     public String getCourseCode() {
         return courseCode;
     }
+
+    /** Gets the course's code
+     *
+     * @return the string corresponding to the course code
+     */
+    public Map<String, TestDocument> getTests() {
+        return this.tests;
+    }
+
+    /** Gets the course's code
+     *
+     * @return the string corresponding to the course code
+     */
+    public TestDocument getTest(String testId) {
+        return this.tests.get(testId);
+    }
+
     /** Adds a test document to the course
      *
      * @param test TestDoc for the test being added
      */
-    public void addTest(TestDoc test) {
-        this.tests.add(test);
+    public void addTest(TestDocument test) {
+        this.tests.put(test.getId(), test);
     }
+
     /** Removes a test document to the course
      *
-     * @param test TestDoc for the test being removed
+     * @param testId The id of the test document being removed
      */
-    public void removeTest(TestDoc test) {
-        this.tests.remove(test);
+    public void removeTestById(String testId) {
+        this.tests.remove(testId);
     }
 
 
