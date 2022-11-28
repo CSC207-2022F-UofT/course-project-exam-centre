@@ -2,20 +2,54 @@ package fworks.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class RegisterPanel extends JPanel {
+public class RegisterPanel extends JPanel implements ActionListener {
     private JTextField usernameTextField;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
+    private JButton cancelButton;
+    private JButton registerButton;
 
     public RegisterPanel() {
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
+        cancelButton.addActionListener(this);
+        registerButton.addActionListener(this);
+
         setLayout(new BorderLayout());
         add(fieldsPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.SOUTH);
         setSize(300, 200);
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return usernameTextField.getText();
+    }
+
+    /**
+     * @return the first password
+     */
+    public char[] getPassword1() {
+        return passwordField1.getPassword();
+    }
+
+    /**
+     * @return the repeated password
+     */
+    public char[] getPassword2() {
+        return passwordField2.getPassword();
+    }
+
+    /**
+     * @return true iff the two passwords match
+     */
+    public boolean comparePassword() {
+        return getPassword1() == getPassword2();
     }
 
     private JPanel createFieldsPanel() {
@@ -68,8 +102,8 @@ public class RegisterPanel extends JPanel {
     }
 
     private JPanel createButtonsPanel() {
-        JButton cancelButton = new JButton("Cancel");
-        JButton registerButton = new JButton("Register");
+        cancelButton = new JButton("Cancel");
+        registerButton = new JButton("Register");
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -80,5 +114,15 @@ public class RegisterPanel extends JPanel {
         registerButton.setPreferredSize(new Dimension(120, 30));
 
         return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        JButton clicked = (JButton) actionEvent.getSource();
+        if (clicked == cancelButton) {
+            // TODO: Cancel registration
+        } else if (clicked == registerButton) {
+            // TODO: Process registration
+        }
     }
 }
