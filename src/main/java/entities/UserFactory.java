@@ -10,7 +10,11 @@ public class UserFactory {
      * @param userId User's generated ID
      * @return Returns a new instance of User
      */
-    public static User create(String firstName, String lastName, String email, String userId){
+    public static User create(
+            String firstName,
+            String lastName,
+            String email,
+            String userId){
         return new CommonUser(firstName, lastName, email, userId);
     }
 }

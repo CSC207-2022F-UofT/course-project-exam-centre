@@ -3,16 +3,16 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Tree {
+public class MessageTree {
     private final Message root;
-    private final ArrayList<Tree> subtrees;
+    private final ArrayList<MessageTree> subtrees;
 
-    public Tree(String rootId) {
+    public MessageTree(String rootId) {
         this.root = new CommonMessage(rootId, rootId, rootId, rootId, null, LocalDateTime.now());
-        this.subtrees = new ArrayList<Tree>();
+        this.subtrees = new ArrayList<>();
     }
 
-    private Tree(Message root, ArrayList<Tree> subtrees) {
+    private MessageTree(Message root, ArrayList<MessageTree> subtrees) {
         this.root = root;
         this.subtrees = subtrees;
     }
@@ -26,11 +26,11 @@ public class Tree {
             return false;
         }
         else if (this.root.getMessageId().equals(messsage.getParentId())){
-            this.subtrees.add(new Tree(messsage, new ArrayList<Tree>()));
+            this.subtrees.add(new MessageTree(messsage, new ArrayList<>()));
             return true;
         }
         else{
-            for (Tree subtree : this.subtrees){
+            for (MessageTree subtree : this.subtrees){
                 if (subtree.addMessage(messsage)){
                     return true;
                 }

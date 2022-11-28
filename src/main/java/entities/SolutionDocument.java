@@ -1,78 +1,75 @@
 package entities;
 
-import java.util.TreeSet;
-
 public class SolutionDocument extends Document {
 
     /**
-     * The total number of marks for the exam
+     * The decimal format percentage of the estimated score of the solution
+     * Precondition: 0.0 <= score <= 1.0
      */
-    private Integer score;
+    private Float score;
 
     /**
-     * The parent test object
-     */
-    private TestDocument parentTest;
-
-    /**
-     * The recorded time taken by the solution poster
+     * The recorded time taken by the solution poster (hours).
      */
      private Float recordedTime;
 
     /**
-     * The vote tally of the solution doc
+     * The sum of upvotes and downvotes of the solution document.
      */
-
     private int votes;
 
     /**
-     * The associated test document for the solutions doc
+     * The tree representing the solution document's discussion board messages.
      */
-    private TestDocument document;
+    private MessageTree messageTree;
 
     /**
-     * The associated messages for the solutions doc
+     * The parent test document of the solution doc.
      */
-    private Tree messages;
+    private TestDocument parentTest;
 
     /**
-     * The rootMessage of all the messages held in the messages tree.
-     */
-    private String rootMessageId;
-
-    /**
-     * Constructs a new Document abstract class for TestDoc or SolutionDoc to extend.
+     * Constructs a new SolutionDocument object.
      *
-     * @param name   The name of the document
-     * @param id     The document identifier
-     * @param course The course the document belongs to
-     * @param user   The user that uploaded the document
-     * @param score  The total score of the test
-     * @param testID The UofT id for the test
-     * @param rootMessageId the rootMessage for this solution document that will hold all the messages for the solution
-     * @param recordedTime the recorded time of the solution poster
+     * @param solutionName      The name of the document
+     * @param solutionId        The document identifier
+     * @param course            The course the document belongs to
+     * @param user              The user that uploaded the document
+     * @param score             The total score of the test
+     * @param parentTest        The parent TestDocument object
+     * @param rootMessageId     The root message id for this solution document
+     * @param recordedTime      The recorded time for the solution document
      */
-    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, Float recordedTime, String rootMessageId) {
-        super(name, id, course, user);
+    public SolutionDocument(
+            String solutionName,
+            String solutionId,
+            Course course,
+            User user,
+            Float score,
+            TestDocument parentTest,
+            Float recordedTime,
+            String rootMessageId) {
+
+        super(solutionName, solutionId, course, user);
         this.score = score;
-        this.testID = testID;
+        this.parentTest = parentTest;
         this.votes = 0;
         this.recordedTime = recordedTime;
-        this.messages = new Tree(rootMessageId);
+        this.messageTree = new MessageTree(rootMessageId);
     }
 
     /**
-     * Gets the number of marks for the solution
+     * Gets the estimated score for the solution set
      * @return The score recorded by the solution poster
      */
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
     /**
      * Sets the number of marks for the solution
      */
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 
@@ -85,6 +82,38 @@ public class SolutionDocument extends Document {
     }
 
     /**
+     * Sets the message tree of the solution document
+     * @param newMessageTree The new message tree for the solution document
+     */
+    public void setMessageTree(MessageTree newMessageTree) {
+        this.messageTree = newMessageTree;
+    }
+
+    /**
+     * Gets the message tree for the solution document
+     * @return The solution document's message tree
+     */
+    public MessageTree getMessageTree() {
+        return this.messageTree;
+    }
+
+    /**
+     * Sets the recorded time of the solution document
+     * @param newRecordedTime The new recorded time for the solution document
+     */
+    public void setRecordedTime(Float newRecordedTime) {
+        this.recordedTime = newRecordedTime;
+    }
+
+    /**
+     * Gets the recorded time for the solution document
+     * @return The solution document's recorded time
+     */
+    public Float getRecordedTime() {
+        return this.recordedTime;
+    }
+
+    /**
      * Sets the parent test document for this solutions document
      * @param parentTest The parent test of the solution
      */
@@ -93,11 +122,27 @@ public class SolutionDocument extends Document {
     }
 
     /**
+     * Set solution document vote total
+     * @param newVoteTotal The parent test of the solution
+     */
+    public void setVotes(Integer newVoteTotal) {
+        this.votes = newVoteTotal;
+    }
+
+    /**
+     * Gets the vote total for the solution document
+     * @return The solution document's vote total
+     */
+    public Integer getVotes() {
+        return this.votes;
+    }
+
+    /**
      * adds a message to the messages tree of the solution
      * @param message the message to be added
      */
     public void addMessage(Message message){
         //Should not need to check if the message does not have a parent id that is in the tree because messages will only be created with parent ids that are already in the tree.
-        this.messages.addMessage(message);
+        this.messageTree.addMessage(message);
     }
 }
