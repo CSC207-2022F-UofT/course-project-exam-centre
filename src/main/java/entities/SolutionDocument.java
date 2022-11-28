@@ -48,14 +48,12 @@ public class SolutionDocument extends Document {
      * @param course The course the document belongs to
      * @param user   The user that uploaded the document
      * @param score  The total score of the test
-     * @param testID The UofT id for the test
      * @param rootMessageId the rootMessage for this solution document that will hold all the messages for the solution
      * @param recordedTime the recorded time of the solution poster
      */
-    public SolutionDocument(String name, String id, Course course, User user, String score, String testID, Float recordedTime, String rootMessageId) {
+    public SolutionDocument(String name, String id, Course course, User user, Integer score, Float recordedTime, String rootMessageId) {
         super(name, id, course, user);
         this.score = score;
-        this.testID = testID;
         this.votes = 0;
         this.recordedTime = recordedTime;
         this.messages = new Tree(rootMessageId);
@@ -97,7 +95,8 @@ public class SolutionDocument extends Document {
      * @param message the message to be added
      */
     public void addMessage(Message message){
-        //Should not need to check if the message does not have a parent id that is in the tree because messages will only be created with parent ids that are already in the tree.
+        //Should not need to check if the message does not have a parent id that is in the tree because messages will
+        // only be created with parent ids that are already in the tree.
         this.messages.addMessage(message);
     }
 }

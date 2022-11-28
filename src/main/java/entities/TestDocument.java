@@ -83,4 +83,5 @@ public class TestDocument extends Document{
     public void  addUpdateSolution(SolutionDocument solution) {
         this.solutions.put(solution.getId(), solution);
     }
+
 }
