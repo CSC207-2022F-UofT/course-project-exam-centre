@@ -1,8 +1,8 @@
 package driver;
 
-import fworks.da.PostgresAccessManager;
-import ia.gateways.DatabaseAccessGateway;
-import fworks.views.MainFrame;
+import frameworks.daccess.PostgresAccessManager;
+import iadapters.gateways.DatabaseAccessGateway;
+import frameworks.views.MainFrame;
 
 import java.io.FileInputStream;
 import java.io.IOException;
