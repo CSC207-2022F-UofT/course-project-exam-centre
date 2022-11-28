@@ -145,6 +145,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     }
 
     // Save new test in tests table, to be called after a successful test file upload
+    // TODO: Retrieve variables from request model
     public boolean saveNewTest(){
         String test_id = randomIdGenerator();
         String user_id = null;
@@ -165,6 +166,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     }
 
     // Save new solution in solutions table, to be called after a successful solution file upload
+    // TODO: Retrieve variables from request model
     public boolean saveNewSolution(){
         String solution_id = randomIdGenerator();
         String test_id = null;
