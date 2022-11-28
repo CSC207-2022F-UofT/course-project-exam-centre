@@ -138,4 +138,50 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
+    // Generate random alphanumeric ID
+    public static String randomIdGenerator(){
+        UUID randomUUID = UUID.randomUUID();
+        return randomUUID.toString().substring(0,8).replaceAll("-", "");
+    }
+
+    // Save new test in tests table, to be called after a successful test file upload
+    public boolean saveNewTest(){
+        String test_id = randomIdGenerator();
+        String user_id = null;
+        String course_id = null;
+        String test_type = null;
+        int number_of_questions = 0;
+        int estimated_time = 0;
+
+        String query = "INSERT INTO ec.tests VALUES ('" + test_id + "', '" + 
+        user_id + "', '" + course_id + "', '" + test_type + "', '" + 
+        number_of_questions + "', '" + estimated_time + "';";
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Save new solution in solutions table, to be called after a successful solution file upload
+    public boolean saveNewSolution(){
+        String solution_id = randomIdGenerator();
+        String test_id = null;
+        String user_id = null;
+        int vote_total = 0;
+        int recorded_score = 0;
+        int estimated_time = 0;
+        char root_message_id = '\u0000';
+        
+        String query = "INSERT INTO ec.tests VALUES ('" + solution_id + "', '" + 
+        test_id + "', '" + user_id + "', '" + vote_total + "', '" + recorded_score + 
+        "', '" + estimated_time + "', '" + root_message_id + "';";
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
