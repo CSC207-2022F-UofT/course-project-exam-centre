@@ -66,10 +66,11 @@ CREATE TABLE ec.solutions (
     test_id character varying NOT NULL,
     user_id character varying NOT NULL,
     vote_total integer,
-    recorded_score integer,
-    estimated_time integer,
+    recorded_score float,
+    estimated_time float,
     root_message_id character varying NOT NULL,
-    creation_timestamp timestamp default current_timestamp
+    creation_timestamp timestamp default current_timestamp,
+    solution_name character varying NOT NULL
 );
 
 
@@ -80,8 +81,9 @@ CREATE TABLE ec.tests (
     course_id character varying NOT NULL,
     test_type character(250),
     number_of_questions integer,
-    estimated_time integer,
-    creation_timestamp timestamp default current_timestamp
+    estimated_time float,
+    creation_timestamp timestamp default current_timestamp,
+    test_name character varying NOT NULL
 );
 
 ALTER TABLE ONLY ec.tests
@@ -137,24 +139,24 @@ VALUES ('wx1of70l', 'harvey@utoronto.ca', 'Harvey', 'Donnelley', '6ca13d52ca70c8
 
 DELETE FROM ec.tests;
 INSERT INTO ec.tests 
-VALUES ('igt4sstc', 'wx1of70l', 'h9ib1a73', 'MCQ', '10', '30', current_timestamp),
-('wdgi1rq1', 'mtq2r09h', 'h9ib1a73', 'MCQ', '20', '60', current_timestamp),
-('86pmfyv6', 'wx1of70l', 'aa7hcumk', 'Multiselect', '10', '20', current_timestamp),
-('lfv2iub7', 'b36as7qx', 'koz8t694', 'Open-ended', '5', '60', current_timestamp),
-('54exqbk6', 'b36as7qx', 'nmbyan9a', 'MCQ', '30', '60', current_timestamp),
-('6uobpwih', '4b6v23zg', 'koz8t694', 'Multiselect', '10', '70', current_timestamp),
-('kv9nno9k', '4b6v23zg', 'aa7hcumk', 'MCQ', '20', '40', current_timestamp),
-('igptejsm', 'csye07l8', 'nmbyan9a', 'Open-ended', '3', '50', current_timestamp),
-('33bpyulj', 'hph52pue', 'h9ib1a73', 'MCQ', '1', '50', current_timestamp),
-('beeg1li4', 'bzjpq4bh', 'aa7hcumk', 'MCQ', '12', '25', current_timestamp);
+VALUES ('igt4sstc', 'wx1of70l', 'h9ib1a73', 'MCQ', '10', '3', current_timestamp, 'Test #1'),
+('wdgi1rq1', 'mtq2r09h', 'h9ib1a73', 'MCQ', '20', '1.5', current_timestamp, 'Test #2'),
+('86pmfyv6', 'wx1of70l', 'aa7hcumk', 'Multiselect', '10', '2', current_timestamp, 'Test #3'),
+('lfv2iub7', 'b36as7qx', 'koz8t694', 'Open-ended', '5', '1.5', current_timestamp, 'Test #4'),
+('54exqbk6', 'b36as7qx', 'nmbyan9a', 'MCQ', '30', '3.5', current_timestamp, 'Test #5'),
+('6uobpwih', '4b6v23zg', 'koz8t694', 'Multiselect', '10', '2.5', current_timestamp, 'Test #6'),
+('kv9nno9k', '4b6v23zg', 'aa7hcumk', 'MCQ', '20', '4', current_timestamp, 'Test #7'),
+('igptejsm', 'csye07l8', 'nmbyan9a', 'Open-ended', '3', '1.4', current_timestamp, 'Test #8'),
+('33bpyulj', 'hph52pue', 'h9ib1a73', 'MCQ', '1', '1.2', current_timestamp, 'Test #9'),
+('beeg1li4', 'bzjpq4bh', 'aa7hcumk', 'MCQ', '12', '2.5', current_timestamp, 'Test #10');
 
 DELETE FROM ec.solutions;
 INSERT INTO ec.solutions
-VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 10, 20, 'w2ilpab8', current_timestamp),
-('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 10, 20, 'i524wrxd', current_timestamp),
-('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 10, 20, 'b2jyql0z', current_timestamp),
-('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 10, 20, 'lswlchjc', current_timestamp),
-('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 10, 20, 'o9szv3uk', current_timestamp);
+VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 50.5, 3, 'w2ilpab8', current_timestamp, 'Solution #1'),
+('v5apbbr0', 'igt4sstc', 'b36as7qx', 10, 20.4, 3.5, 'i524wrxd', current_timestamp, 'Solution #2'),
+('pw7mh6vf', 'wdgi1rq1', 'b36as7qx', 15, 99.9, 1.5, 'b2jyql0z', current_timestamp, 'Solution #3'),
+('hi0ve0z5', 'wdgi1rq1', 'mtq2r09h', 2, 93.2, 2.0, 'lswlchjc', current_timestamp, 'Solution #4'),
+('wq3t8cps', '86pmfyv6', '4b6v23zg', 10, 78.5, 1.2, 'o9szv3uk', current_timestamp, 'Solution #5');
 
 DELETE FROM ec.messages;
 INSERT INTO ec.messages
