@@ -53,7 +53,6 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
                 requestModel.getBody(),
                 currentDateTime);
         relatedSolution.addMessage(message);
-        // Update State Tracker with changed Solution Document with the Added Message.
         SubDBMessResponseModel messResponseModel = new SubDBMessResponseModel(
                 requestModel.getBody(),
                 currentDateTime.toString(),
