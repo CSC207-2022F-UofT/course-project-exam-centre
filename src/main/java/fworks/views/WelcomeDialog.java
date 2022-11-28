@@ -2,35 +2,27 @@ package fworks.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class WelcomeDialog extends JDialog {
+public class WelcomeDialog extends JDialog implements ActionListener {
+    private RegisterPanel registerPanel;
+    private LoginPanel loginPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
     public WelcomeDialog() {
+        registerPanel = new RegisterPanel();
+        loginPanel = new LoginPanel();
         JPanel buttonsPanel = createButtonsPanel();
-        RegisterPanel registerPanel = new RegisterPanel();
-        LoginPanel loginPanel = new LoginPanel();
 
         setLayout(new BorderLayout());
-        add(buttonsPanel, BorderLayout.NORTH);
         add(registerPanel, BorderLayout.CENTER);
+        add(buttonsPanel, BorderLayout.NORTH);
 
         newUserRadioButton.setSelected(true);
 
-        newUserRadioButton.addActionListener(actionEvent -> {
-            remove(loginPanel);
-            add(registerPanel, BorderLayout.CENTER);
-            revalidate();
-            repaint();
-        });
-
-        returningUserRadioButton.addActionListener(actionEvent -> {
-            remove(registerPanel);
-            add(loginPanel, BorderLayout.CENTER);
-            revalidate();
-            repaint();
-        });
+        newUserRadioButton.addActionListener(this);
+        returningUserRadioButton.addActionListener(this);
 
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -51,5 +43,19 @@ public class WelcomeDialog extends JDialog {
         panel.add(returningUserRadioButton);
 
         return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        JRadioButton selected = (JRadioButton) actionEvent.getSource();
+        if (selected == newUserRadioButton) {
+            remove(loginPanel);
+            add(registerPanel, BorderLayout.CENTER);
+        } else if (selected == returningUserRadioButton) {
+            remove(registerPanel);
+            add(loginPanel, BorderLayout.CENTER);
+        }
+        revalidate();
+        repaint();
     }
 }
