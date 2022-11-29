@@ -138,4 +138,89 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
+    // Generate random alphanumeric ID
+    public static String randomIdGenerator(){
+        UUID randomUUID = UUID.randomUUID();
+        return randomUUID.toString().substring(0,8).replaceAll("-", "");
+    }
+
+    // Save new test in tests table, to be called after a successful test file upload
+    // TODO: Retrieve variables from request model
+    public boolean saveNewTest(){
+        String testId = randomIdGenerator();
+        String userId = null;
+        String courseId = null;
+        String testType = null;
+        int numberOfQuestions = 0;
+        float estimatedTime = 0;
+        Timestamp timestamp = null;
+        String testName = "";
+
+        String query = "INSERT INTO ec.tests VALUES ('" + testId + "', '" + 
+        userId + "', '" + courseId + "', '" + testType + "', '" + numberOfQuestions + 
+        "', '" + estimatedTime + "', '" + timestamp + "', '" + testName + "';";
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Save new solution in solutions table, to be called after a successful solution file upload
+    // TODO: Retrieve variables from request model
+    public boolean saveNewSolution(){
+        String solutionId = randomIdGenerator();
+        String testId = null;
+        String userId = null;
+        int voteTotal = 0;
+        float recordedScore = 0;
+        float estimatedTime = 0;
+        char rootMessageId = '\u0000';
+        Timestamp timestamp = null;
+        String solutionName = "";
+        
+        String query = "INSERT INTO ec.tests VALUES ('" + solutionId + "', '" + 
+        testId + "', '" + userId + "', '" + voteTotal + "', '" + recordedScore + 
+        "', '" + estimatedTime + "', '" + rootMessageId + "', '" + 
+        timestamp + "', '" + solutionName + "';";
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Get all tests for a course
+    public ArrayList<String> getAllTests(String courseId){
+        ArrayList<String> testIdList = new ArrayList<>();
+        String query = "SELECT test_id FROM ec.tests WHERE COURSE_ID=" + "', '" + courseId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String testId = rs.getString("test_id");
+                testIdList.add(testId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return testIdList;
+    }
+
+    // Get all solutions for a test
+    public ArrayList<String> getAllSolutions(String testId){
+        ArrayList<String> solutionIdList = new ArrayList<>();
+        String query = "SELECT solution_id FROM ec.solutions WHERE test_id=" + "', '" + testId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String solutionId = rs.getString("solution_id");
+                solutionIdList.add(solutionId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return solutionIdList;
+    }
 }
