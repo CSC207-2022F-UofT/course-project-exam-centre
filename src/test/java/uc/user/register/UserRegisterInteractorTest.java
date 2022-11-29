@@ -46,7 +46,7 @@ public class UserRegisterInteractorTest {
                 // Check if the email matches
                 assertEquals(user.getUser().getEmail(), "email@email.com");
                 // Check if the userId is created and is of length 9
-                assertEquals((user.getUser().getUserId()).length(), 9);
+                assertEquals((user.getUser().getId()).length(), 8);
                 // Check if the timestamp is not empty
                 assertNotNull(user.timestamp);
 
