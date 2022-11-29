@@ -3,6 +3,9 @@ package fworks.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The frame for viewing tests
+ */
 public class TestFrame extends JFrame {
     public TestFrame() {
         super("Test");

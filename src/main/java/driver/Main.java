@@ -1,6 +1,7 @@
 package driver;
 
 import fworks.da.PostgresAccessManager;
+import fworks.views.TestFrame;
 import fworks.views.WelcomeDialog;
 import ia.gateways.DatabaseAccessGateway;
 
@@ -22,6 +23,7 @@ public class Main {
 
         // Initialise JFrame view
         new WelcomeDialog();
+        new TestFrame();
 
         // Load local config file
         try {

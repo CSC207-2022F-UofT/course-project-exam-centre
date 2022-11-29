@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The panel component for new users to register
+ */
 public class RegisterPanel extends JPanel implements ActionListener {
     private JTextField usernameTextField;
     private JPasswordField passwordField1;

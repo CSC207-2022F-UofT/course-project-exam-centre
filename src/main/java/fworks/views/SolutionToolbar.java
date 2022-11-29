@@ -3,6 +3,9 @@ package fworks.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The panel component for SolutionFrame
+ */
 public class SolutionToolbar extends JPanel {
     private JButton discussionButton;
     private JButton uploadSolutionsButton;
