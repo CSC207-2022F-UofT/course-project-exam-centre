@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The panel component for existing users to log in
+ */
 public class LoginPanel extends JPanel implements ActionListener {
     private JTextField usernameTextField;
     private JPasswordField passwordField;
@@ -92,9 +95,9 @@ public class LoginPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel login
+            // TODO: Cancel log-in
         } else if (clicked == loginButton) {
-            // TODO: Process login
+            // TODO: Process log-in
         }
     }
 }
