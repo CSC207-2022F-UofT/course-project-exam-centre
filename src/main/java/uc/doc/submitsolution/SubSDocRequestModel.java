@@ -1,54 +1,49 @@
 package uc.doc.submitsolution;
 
-import entities.Course;
-import entities.User;
-
 public class SubSDocRequestModel {
 
-    private String name;
+    private final String name;
+    private final String filePath;
 
-    private String id;
+    private final Float recordedScore;
 
-    private String filePath;
+    private final String userID;
 
-    private Integer recordedScore;
+    private final String courseID;
 
-    private User user;
+    private final String rootID;
 
-    private Course course;
+    private final Float recordedTime;
 
-    private String rootID;
+    private final String parentTestID;
 
-    private Float recordedTime;
 
-    public SubSDocRequestModel(String name, String id, String filePath, Integer recordedScore, User user, Course course, String rootID, Float recordedTime) {
+    public SubSDocRequestModel(String name, String filePath, Float recordedScore, String userID, String courseID,
+                               String rootID, Float recordedTime, String parentTest) {
         this.name = name;
-        this.id = id;
         this.filePath = filePath;
         this.recordedScore = recordedScore;
-        this.user = user;
-        this.course = course;
+        this.userID = userID;
+        this.courseID = courseID;
         this.rootID = rootID;
         this.recordedTime = recordedTime;
+        this.parentTestID = parentTest;
     }
 
-    public String getId() {
-        return id;
-    }
     public String getFilePath() {
         return filePath;
     }
 
-    public Integer getRecordedScore() {
+    public Float getRecordedScore() {
         return recordedScore;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getCourseID() {
+        return courseID;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserID() {
+        return userID;
     }
 
     public String getRootID() {
@@ -61,5 +56,9 @@ public class SubSDocRequestModel {
 
     public String getName() {
         return name;
+    }
+
+    public String getParentTestID() {
+        return parentTestID;
     }
 }

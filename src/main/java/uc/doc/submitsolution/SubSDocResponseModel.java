@@ -7,20 +7,27 @@ import java.time.LocalDateTime;
 
 public class SubSDocResponseModel {
 
-    private SolutionDocument solutionDoc;
+    private final String solutionDocID;
 
-    private LocalDateTime timestamp;
+    private final String testDocID;
 
-    public SubSDocResponseModel(SolutionDocument solutionDoc, LocalDateTime timestamp) {
-        this.solutionDoc = solutionDoc;
+    private final LocalDateTime timestamp;
+
+    public SubSDocResponseModel(String solutionDocID, String testDocID, LocalDateTime timestamp) {
+        this.solutionDocID = solutionDocID;
         this.timestamp = timestamp;
+        this.testDocID = testDocID;
     }
 
-    public SolutionDocument getSolutionDoc() {
-        return solutionDoc;
+    public String getSolutionDoc() {
+        return solutionDocID;
     }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public String getTestDocID() {
+        return testDocID;
     }
 }
