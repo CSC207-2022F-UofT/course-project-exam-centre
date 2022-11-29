@@ -3,6 +3,9 @@ package fworks.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The frame for viewing solutions
+ */
 public class SolutionFrame extends JFrame {
     public SolutionFrame() {
         super("Solutions");
