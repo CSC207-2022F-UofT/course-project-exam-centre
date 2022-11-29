@@ -1,8 +1,9 @@
 package driver;
 
 import fworks.da.PostgresAccessManager;
+import fworks.views.TestFrame;
+import fworks.views.WelcomeDialog;
 import ia.gateways.DatabaseAccessGateway;
-import fworks.views.MainFrame;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class Main {
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
         // Initialise JFrame view
-        new MainFrame();
+        new WelcomeDialog();
+        new TestFrame();
 
         // Load local config file
         try {

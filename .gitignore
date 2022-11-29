@@ -52,6 +52,8 @@ cmake-build-*/
 
 # IntelliJ
 out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -121,3 +123,15 @@ replay_pid*
 
 gradle/
 /.idea/
+
+# Mac
+.DS_Store
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
