@@ -69,6 +69,50 @@ public class UserRegisterInteractorTest {
 
         interactor.registerUser(requestModel);
     }
+    @Test
+    public void userExists(){
+        // Asserting if the register was a fail because the user exists.
+        URegisterDsGateway userDsGateway = new URegisterDsGateway() {
+            @Override
+            public boolean checkIfUserExistsByEmail(String email) {
+                return true;
+            }
+
+            @Override
+            public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
+                return false;
+            }
+
+            @Override
+            public boolean checkIfUserExists(String userId) {
+                return false;
+            }
+        };
+
+        URegisterOutputBoundary userOutputBoundary = new URegisterOutputBoundary() {
+            @Override
+            public URegisterResponseModel prepareSuccessView(URegisterResponseModel user) {
+                return null;
+            }
+
+            @Override
+            public URegisterResponseModel prepareFailView(String error) {
+                assertTrue(userDsGateway.checkIfUserExistsByEmail("email@email.com"));
+                return null;
+            }
+        };
+
+        UserFactory userFactory = new UserFactory();
+
+        UserRegisterInteractor interactor = new UserRegisterInteractor(userDsGateway,
+                userOutputBoundary, userFactory);
+
+        URegisterRequestModel requestModel = new URegisterRequestModel("John", "Doe",
+                "email@email.com", "password", "password");
+
+        interactor.registerUser(requestModel);
+    }
+
 
 
 
