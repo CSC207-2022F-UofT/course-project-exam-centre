@@ -3,6 +3,9 @@ package fworks.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The panel component for TestFrame
+ */
 public class TestToolbar extends JPanel {
     private JComboBox comboBox;
     private JButton addCourseButton;

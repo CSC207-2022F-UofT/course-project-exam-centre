@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The dialog for users to register or log in
+ */
 public class WelcomeDialog extends JDialog implements ActionListener {
     private RegisterPanel registerPanel;
     private LoginPanel loginPanel;
