@@ -147,16 +147,18 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     // Save new test in tests table, to be called after a successful test file upload
     // TODO: Retrieve variables from request model
     public boolean saveNewTest(){
-        String test_id = randomIdGenerator();
-        String user_id = null;
-        String course_id = null;
-        String test_type = null;
-        int number_of_questions = 0;
-        int estimated_time = 0;
+        String testId = randomIdGenerator();
+        String userId = null;
+        String courseId = null;
+        String testType = null;
+        int numberOfQuestions = 0;
+        float estimatedTime = 0;
+        Timestamp timestamp = null;
+        String testName = "";
 
-        String query = "INSERT INTO ec.tests VALUES ('" + test_id + "', '" + 
-        user_id + "', '" + course_id + "', '" + test_type + "', '" + 
-        number_of_questions + "', '" + estimated_time + "';";
+        String query = "INSERT INTO ec.tests VALUES ('" + testId + "', '" + 
+        userId + "', '" + courseId + "', '" + testType + "', '" + numberOfQuestions + 
+        "', '" + estimatedTime + "', '" + timestamp + "', '" + testName + "';";
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
             return true;
@@ -168,22 +170,57 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     // Save new solution in solutions table, to be called after a successful solution file upload
     // TODO: Retrieve variables from request model
     public boolean saveNewSolution(){
-        String solution_id = randomIdGenerator();
-        String test_id = null;
-        String user_id = null;
-        int vote_total = 0;
-        int recorded_score = 0;
-        int estimated_time = 0;
-        char root_message_id = '\u0000';
+        String solutionId = randomIdGenerator();
+        String testId = null;
+        String userId = null;
+        int voteTotal = 0;
+        float recordedScore = 0;
+        float estimatedTime = 0;
+        char rootMessageId = '\u0000';
+        Timestamp timestamp = null;
+        String solutionName = "";
         
-        String query = "INSERT INTO ec.tests VALUES ('" + solution_id + "', '" + 
-        test_id + "', '" + user_id + "', '" + vote_total + "', '" + recorded_score + 
-        "', '" + estimated_time + "', '" + root_message_id + "';";
+        String query = "INSERT INTO ec.tests VALUES ('" + solutionId + "', '" + 
+        testId + "', '" + userId + "', '" + voteTotal + "', '" + recordedScore + 
+        "', '" + estimatedTime + "', '" + rootMessageId + "', '" + 
+        timestamp + "', '" + solutionName + "';";
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Get all tests for a course
+    public ArrayList<String> getAllTests(String courseId){
+        ArrayList<String> testIdList = new ArrayList<>();
+        String query = "SELECT test_id FROM ec.tests WHERE COURSE_ID=" + "', '" + courseId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String testId = rs.getString("test_id");
+                testIdList.add(testId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return testIdList;
+    }
+
+    // Get all solutions for a test
+    public ArrayList<String> getAllSolutions(String testId){
+        ArrayList<String> solutionIdList = new ArrayList<>();
+        String query = "SELECT solution_id FROM ec.solutions WHERE test_id=" + "', '" + testId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String solutionId = rs.getString("solution_id");
+                solutionIdList.add(solutionId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return solutionIdList;
     }
 }

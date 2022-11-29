@@ -1,4 +1,4 @@
-package driver;
+package fworks.da;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -13,8 +13,14 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
-public class FtpClient {
-    // Return FTP server messages
+import ia.gateways.FileAccessGateway;
+
+public class FtpAccessManager implements FileAccessGateway{
+    /** Shows the FTP server's messages
+     *
+     * @param ftpClient FTPClient object
+     * @return returns FTP server's message
+     */
     private static void showServerReply(FTPClient ftpClient) {
         String[] replies = ftpClient.getReplyStrings();
         if (replies != null && replies.length > 0) {
@@ -24,20 +30,26 @@ public class FtpClient {
         }
     }
 
-    // Retrieve remote path
+    /** Retrieve remote path from config file (local.properties)
+     *
+     * @return returns remote path
+     */
     public static String getRemotePath(){
         Properties config = new Properties();
         try {
             String configFilePath = "src/main/java/config/local.properties";
             FileInputStream propsInput = new FileInputStream(configFilePath);
             config.load(propsInput);
-        } catch (IOException e) {
-            System.out.println("Failed to load config file");
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return config.getProperty("REMOTE_PATH");
     }
 
-    // Establish connection to local FTP server
+    /** Establish connection to local FTP server
+     *
+     * @return FTPClient object
+     */
     public static FTPClient connectToServer(){
         // Load local config file
         Properties config = new Properties();
@@ -45,8 +57,8 @@ public class FtpClient {
             String configFilePath = "src/main/java/config/local.properties";
             FileInputStream propsInput = new FileInputStream(configFilePath);
             config.load(propsInput);
-        } catch (IOException e) {
-            System.out.println("Failed to load config file");
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
         String server = config.getProperty("FTP_HOST");
@@ -67,21 +79,23 @@ public class FtpClient {
             boolean success = ftpClient.login(user, pass);
             showServerReply(ftpClient);
             if (!success) {
-                System.out.println("Could not login to the server");
                 return ftpClient;
             } else {
-                System.out.println("LOGGED IN SERVER");
                 return ftpClient;
             }
         } catch (IOException ex) {
-            System.out.println("Oops! Something wrong happened");
             ex.printStackTrace();
         }
         return ftpClient;
     }
 
-    // Upload a file to local FTP server
-    public static boolean uploadFile(String filePath, String fileName){
+    /** Upload a file to the FTP server
+     *
+     * @param localFilePath file path of local file 
+     * @param fileName file name
+     * @return returns true if file upload is successful, false otherwise
+     */
+    public static boolean uploadFile(String localFilePath, String fileName){
         // Establish connection to FTP server
         FTPClient ftpClient = connectToServer();
         
@@ -90,16 +104,14 @@ public class FtpClient {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
  
-            File localFile = new File(filePath);           
+            File localFile = new File(localFilePath);           
             String remoteFile = getRemotePath() + fileName + ".pdf";
             InputStream inputStream = new FileInputStream(localFile);
  
-            System.out.println("Start uploading file");
             boolean done = ftpClient.storeFile(remoteFile, inputStream);
             inputStream.close();
             if (done) {
-                System.out.println("The file is uploaded successfully.");
-                return true; // if true, insert into database
+                return true; // TODO: if true, insert into database
             }
             
         } catch (IOException ex) {
@@ -119,7 +131,12 @@ public class FtpClient {
         return false;
     }
 
-    // Download a file from local FTP server
+    /** Download a file from FTP server
+     *
+     * @param fileName file name to download
+     * @param downloadPath file path of file to download
+     * @return returns true if file is downloaded successfully, false otherwise
+     */
     public static boolean downloadFile(String fileName, String downloadPath){
         // Establish connection to FTP server
         FTPClient ftpClient = connectToServer();
@@ -136,12 +153,10 @@ public class FtpClient {
             outputStream.close();
  
             if (success) {
-                System.out.println("File has been downloaded successfully.");
                 return true;
             }
  
         } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             try {
