@@ -19,6 +19,14 @@ public class URegisterResponseModel {
         this.timestamp = timestamp;
     }
 
+    /** Get the User entity
+     *
+     * @return returns the User entity related to the user being registered
+     */
+    public User getUser() {
+        return user;
+    }
+
     /** Get the login of the User
      *
      * @return returns the login of the User
