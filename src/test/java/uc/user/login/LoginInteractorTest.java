@@ -57,7 +57,7 @@ public class LoginInteractorTest {
         // check if current user is tracked
         assertNotNull(stateTracker.getCurrentUser());
         User user = stateTracker.getCurrentUser();
-        assertEquals("LOL123", user.getUserId());
+        assertEquals("LOL123", user.getId());
         assertTrue(stateTracker.checkIfUserTracked("LOL123"));
     }
 

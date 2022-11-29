@@ -3,14 +3,11 @@ package entities;
 import java.io.Serializable;
 import java.util.*;
 
-import entities.Course;
-import entities.User;
-
 public class StateTracker implements Serializable {
     private final Map<String, User> trackedUsers;
     // TODO: Implement abstract course class with a Comprehensive Course Class and a Meta Course Class (no test/solution docs)
     private final Map<String, Course> trackedCourses;
-    private List<Course> courseInfoItems;
+    private Map<String, CourseInfo> courseInfoItems;
     private User currentUser;
     private boolean runStatus;
 
@@ -21,7 +18,7 @@ public class StateTracker implements Serializable {
         this.runStatus = true;
         this.trackedUsers = new HashMap<>();
         this.trackedCourses = new HashMap<>();
-        this.courseInfoItems = new ArrayList<>();
+        this.courseInfoItems = new HashMap<>();
         this.currentUser = null;
     }
 
@@ -116,7 +113,7 @@ public class StateTracker implements Serializable {
      * @param trackedUser a User object to be tracked or updated.
      */
     public void addUpdateTrackedUser(User trackedUser) {
-        String trackedUserId = trackedUser.getUserId();
+        String trackedUserId = trackedUser.getId();
         this.trackedUsers.put(trackedUserId, trackedUser);
     }
 
@@ -126,7 +123,7 @@ public class StateTracker implements Serializable {
      * @param trackedCourse a Course object to be tracked.
      */
     public void addUpdateTrackedCourse(Course trackedCourse) {
-        String trackedCourseId = trackedCourse.getCourseId();
+        String trackedCourseId = trackedCourse.getId();
         this.trackedCourses.put(trackedCourseId, trackedCourse);
     }
 
@@ -135,16 +132,16 @@ public class StateTracker implements Serializable {
      *
      * @param courseInfoItems a list of all Course info items.
      */
-    public void setAllCourseInfoItems(List<Course> courseInfoItems) {
+    public void setAllCourseInfoItems(Map<String, CourseInfo> courseInfoItems) {
         this.courseInfoItems = courseInfoItems;
     }
 
     /**
      * Get all course info items.
      *
-     * @return an array list of course info items.
+     * @return a map of course info items.
      */
-    public List<Course> getAllCourseInfoItems() {
+    public Map<String, CourseInfo> getAllCourseInfoItems() {
         return this.courseInfoItems;
     }
 

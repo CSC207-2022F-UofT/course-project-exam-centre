@@ -2,10 +2,8 @@ package uc.user.register;
 
 import entities.User;
 import entities.UserFactory;
-import ia.presenters.URegisterPresenter;
 
 import java.time.LocalDateTime;
-import java.util.Random;
 
 public class UserRegisterInteractor implements URegisterInputBoundary {
 
@@ -15,9 +13,9 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
 
     /** Creates an instance of the UserRegisterInteractor with its own DsGateway, Presenter, and Factory.
      *
-     * @param userDsGateway
-     * @param userOutputBoundary
-     * @param userFactory
+     * @param userDsGateway use case gateway
+     * @param userOutputBoundary use case output boundary
+     * @param userFactory user entity factory
      */
     public UserRegisterInteractor(URegisterDsGateway userDsGateway,
                                   URegisterOutputBoundary userOutputBoundary,
@@ -65,7 +63,7 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
                 requestModel.getLastName(), requestModel.getEmail(), createUserId());
 
         LocalDateTime now = LocalDateTime.now();
-        URegisterDsRequestModel userDsModel = new URegisterDsRequestModel(user.getEmail(), user.getUserId(),
+        URegisterDsRequestModel userDsModel = new URegisterDsRequestModel(user.getEmail(), user.getId(),
                 requestModel.getPassword());
 
         boolean registerStatus = userDsGateway.saveNewUserInfo(userDsModel);

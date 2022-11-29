@@ -2,8 +2,11 @@ package uc.state.update;
 
 import entities.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private UpdateStateOutputBoundary presenter;
@@ -31,36 +34,31 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         return newUser;
     }
 
-    private Course constructCourseInfoItemById(String courseId) {
+    private CourseInfo constructCourseInfoItemById(String courseId) {
         List<String> rawCourseData = dsGateway.getCourseById(courseId);
 
         String courseCode = rawCourseData.get(1);
         String courseName = rawCourseData.get(2);
 
-        Course newCourse = null; // TODO: Implement Course entities
-        // Course newCourse = CourseFactory.create(courseName, courseCode, courseId);
-
-
-        return newCourse;
+        return CourseFactory.create(courseName, courseCode, courseId);
 
     }
 
-    private Course constructCompleteCourseById(String courseId) {
+    private Course constructCourseById(String courseId) {
         List<String> rawCourseData = dsGateway.getCourseById(courseId);
 
         String courseCode = rawCourseData.get(1);
         String courseName = rawCourseData.get(2);
 
-        Course newCourse = null; // TODO: Implement Course entities
-        // Course newCourse = CourseFactory.create(courseName, courseCode, courseId);
-
+        Course newCourse = CourseFactory.create(courseName, courseCode, courseId);
+        constructAllTestsByCourse(newCourse);
 
         return newCourse;
 
     }
 
-    private List<TestDocument> constructAllTestsByCourse(Course parentCourse) {
-        String courseId = parentCourse.getCourseId();
+    private void constructAllTestsByCourse(Course parentCourse) {
+        String courseId = parentCourse.getId();
         List<List<String>> rawTestData = dsGateway.getAllTestDocsByCourseId(courseId);
 
         String currentTestName;
@@ -70,9 +68,6 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         String currentTestType;
         User currentTestUser;
         TestDocument currentTestDoc;
-        List<SolutionDocument> currentTestSolutions;
-
-        List<TestDocument> courseTests = new ArrayList<>();
 
         for (int i = 0; i < rawTestData.size(); i++) {
 
@@ -91,19 +86,13 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
                     currentTestType
             );
 
-            currentTestSolutions = constructSolutionsByTest(currentTestDoc);
-
-            for (SolutionDocument currentTestSolution : currentTestSolutions) {
-                currentTestDoc.addUpdateSolution(currentTestSolution);
-            }
-
-            courseTests.add(currentTestDoc);
+            constructSolutionsByTest(currentTestDoc);
+            parentCourse.addTest(currentTestDoc);
 
         }
-        return courseTests;
     }
 
-    private List<SolutionDocument> constructSolutionsByTest(TestDocument parentTestDoc) {
+    private void constructSolutionsByTest(TestDocument parentTestDoc) {
         String parentTestId = parentTestDoc.getId();
         List<List<String>> rawSolutionsData = dsGateway.getAllSolutionDocsByTestId(parentTestId);
 
@@ -111,7 +100,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         String currentSolutionId;
         Course parentCourse = parentTestDoc.getCourse();
         User currentSolutionUser;
-        int currentSolutionScore;
+        float currentSolutionScore;
         float currentSolutionRecordedTime;
         String currentSolutionRootMessId;
         SolutionDocument currentSolutionDoc;
@@ -122,10 +111,10 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
             currentSolutionId = rawSolutionsData.get(i).get(0);
             currentSolutionUser = constructUserById(rawSolutionsData.get(i).get(2));
-            currentSolutionScore = Integer.parseInt(rawSolutionsData.get(i).get(4));
+            currentSolutionScore = Float.parseFloat(rawSolutionsData.get(i).get(4));
             currentSolutionRecordedTime = Float.parseFloat(rawSolutionsData.get(i).get(5));
-            currentSolutionRootMessId = rawSolutionsData.get(i).get(6); // TODO: Fix solution entity re: discussion board
-            currentSolutionName = "Test #" + i;
+            currentSolutionRootMessId = rawSolutionsData.get(i).get(6);
+            currentSolutionName = "Solution #" + i;
 
             currentSolutionDoc = SolutionDocFactory.create(
                     currentSolutionName,
@@ -134,25 +123,62 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
                     currentSolutionUser,
                     currentSolutionScore,
                     parentTestDoc,
-                    currentSolutionRecordedTime
+                    currentSolutionRecordedTime,
+                    currentSolutionRootMessId
             );
 
-            // TODO: Load discussion board
+            constructMessageTreeByParentId(
+                    currentSolutionRootMessId,
+                    currentSolutionDoc.getMessageTree()
+            );
 
-            testSolutions.add(currentSolutionDoc);
+            parentTestDoc.addUpdateSolution(currentSolutionDoc);
 
         }
-        return testSolutions;
-
     }
 
-    private List<Course> constructAllCourseInfoItems() {
+    private void constructMessageTreeByParentId(
+            String parentId, MessageTree newMessageTree) {
+            List<List<String>> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
+
+            String currMessId;
+            String currMessSolutionId;
+            String currMessUserId;
+            String currMessBody;
+            LocalDateTime currMessSentTimestamp;
+
+        for (List<String> rawChildMessageDatum : rawChildMessageData) {
+
+            currMessId = rawChildMessageDatum.get(0);
+            currMessSolutionId = rawChildMessageDatum.get(1);
+            currMessUserId = rawChildMessageDatum.get(2);
+            currMessBody = rawChildMessageDatum.get(3);
+            currMessSentTimestamp = LocalDateTime.parse(rawChildMessageDatum.get(4));
+
+            newMessageTree.addMessage(
+                    MessageFactory.create(
+                        currMessId,
+                        currMessSolutionId,
+                        currMessUserId,
+                        parentId,
+                        currMessBody,
+                        currMessSentTimestamp
+                    )
+            );
+            constructMessageTreeByParentId(currMessId, newMessageTree);
+        }
+    }
+
+    private Map<String, CourseInfo> constructAllCourseInfoItems() {
         List<String> rawCourseIdsData = dsGateway.getAllCourseIds();
-        List<Course> allCourseItems = new ArrayList<>();
+        Map<String, CourseInfo> allCourseItems = new HashMap<>();
+        CourseInfo currentCourseInfoItem;
 
         for (String rawCourseIdsDatum : rawCourseIdsData) {
-            allCourseItems.add(
-                    constructCourseInfoItemById(rawCourseIdsDatum)
+            currentCourseInfoItem = constructCourseInfoItemById(rawCourseIdsDatum);
+            allCourseItems.put(
+                    currentCourseInfoItem.getId(),
+                    currentCourseInfoItem
             );
         }
         return allCourseItems;
@@ -163,13 +189,13 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         StateTracker currentState = requestModel.getCurrentState();
         List<Course> usersCourses = new ArrayList<>();
-        List<Course> allCourseInfoItems;
+        Map<String, CourseInfo> allCourseInfoItems;
         User currentUser = currentState.getCurrentUser();
 
         if (currentUser != null) {
 
             // Reload current user
-            String currentUserId = currentState.getCurrentUser().getUserId();
+            String currentUserId = currentState.getCurrentUser().getId();
             currentUser = constructUserById(currentUserId);
             currentState.setCurrentUser(currentUser);
 
@@ -177,7 +203,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
             List<String> usersCourseIds = currentUser.getCourses();
             Course currentCourse;
             for (String usersCourseId : usersCourseIds) {
-                currentCourse = constructCompleteCourseById(usersCourseId);
+                currentCourse = constructCourseById(usersCourseId);
                 currentState.addUpdateTrackedCourse(currentCourse);
                 usersCourses.add(currentCourse);
             }
