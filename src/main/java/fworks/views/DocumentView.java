@@ -12,7 +12,6 @@ import java.util.prefs.Preferences;
  */
 public class DocumentView {
     private SwingController controller;
-    private SwingViewBuilder factory;
     private JPanel panel;
     private String filePath;
 
@@ -30,7 +29,7 @@ public class DocumentView {
     public DocumentView() {
         setPreferences();
         controller = new SwingController();
-        factory = new SwingViewBuilder(controller);
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();
         filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
     }
