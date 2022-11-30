@@ -36,6 +36,13 @@ public class DocumentView {
     }
 
     /**
+     * @return the panel component
+     */
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    /**
      * @return the file path
      */
     public String getFilePath() {
