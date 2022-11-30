@@ -30,7 +30,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
                 requestModel.getNumberOfQuestions(),
                 requestModel.getRecordedTime(),
                 requestModel.getTestType(),
-                requestModel.getCourseID(),
+                requestModel.getUserID(),
                 requestModel.getCourseID(),
                 requestModel.getFilePath()
         );
