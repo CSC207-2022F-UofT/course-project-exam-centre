@@ -1,30 +1,154 @@
 package ia.gateways;
 
 import ia.gateways.models.*;
+import uc.course.register.CRegisterDsGateway;
+import uc.course.register.CRegisterDsRequestModel;
+import uc.course.updatemembers.UpdateCMemDsGateway;
+import uc.dboard.submessage.SubDBMessDsGateway;
+import uc.dboard.submessage.SubDBMessDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public interface DatabaseAccessGateway
-        extends UpdateStateDsGateway {
+        extends UpdateStateDsGateway,
+        CRegisterDsGateway,
+        UpdateCMemDsGateway,
+        SubDBMessDsGateway {
 
-    // Raw data requests to be implemented
-    List<String> getAllCourseIdsRawData();
-    List<String> getCourseByIdRawData(String courseId);
-    List<String> getUserByIdRawData(String userId);
-    List<String> getCoursesByUserIdRawData(String userId);
-    List<List<String>> getMessagesByParentIdRawData(String parentId);
-    List<List<String>> getTestDocsByCourseIdRawData(String courseId);
-    List<List<String>> getSolutionDocsByTestIdRawData(String testId);
+    // Query methods to be implemented
+
+    boolean checkIfCourseExistsQuery(String courseId);
+    boolean checkIfUserExistsQuery(String userId);
+    boolean checkIfUserExistsByEmailQuery(String email);
+
+    List<String> getAllCourseIdsQuery();
+    List<String> getCourseByIdQuery(String courseId);
+    List<String> getUserByIdQuery(String userId);
+    List<String> getCourseIdsByUserIdQuery(String userId);
+
+    List<List<String>> getMessagesByParentIdQuery(String parentId);
+    List<List<String>> getTestDocsByCourseIdQuery(String courseId);
+    List<List<String>> getSolutionDocsByTestIdQuery(String testId);
+
+    String getTestIdBySolutionIdQuery(String solutionId);
+    String getCourseIdByTestIdQuery(String solutionId);
+
+    void saveCourseQuery(String courseId,
+                         String courseCode,
+                         String courseName);
+
+    void addMessageQuery(String messageId,
+                         String solutionId,
+                         String userId,
+                         String parentId,
+                         String messageBody);
+
+    void addCourseEnrolmentQuery(
+            String enrolmentId,
+            String courseId,
+            String userId);
+
+    void removeCourseEnrolmentQuery(
+            String courseId,
+            String userId);
+
+//    void saveSolutionDocumentQuery(
+//            String solutionId,
+//            String testId,
+//            String userId,
+//            String voteTotal,
+//            String recordedScore,
+//            String estimatedTime,
+//            String rootMessageId,
+//            String solutionName
+//    );
+
+
+    // Default Methods
+
+    default void addCourseEnrolment(
+            String courseId,
+            String userId) {
+
+        String enrolmentId = generateRandomId();
+        addCourseEnrolmentQuery(
+                enrolmentId,
+                courseId,
+                userId);
+    }
+
+    default void removeCourseEnrolment(
+            String courseId,
+            String userId) {
+
+        removeCourseEnrolmentQuery(
+                courseId,
+                userId);
+    }
+
+    default String addMessage(SubDBMessDsRequestModel requestModel) {
+
+        String messageId = generateRandomId();
+        String parentId = requestModel.getParentId();
+
+        if (parentId == null) {
+            parentId = "";
+        }
+
+        addMessageQuery(
+                messageId,
+                requestModel.getSolutionId(),
+                requestModel.getUserId(),
+                parentId,
+                requestModel.getBody()
+        );
+
+        return messageId;
+    }
+
+    default String getTestIdBySolutionId(String solutionId) {
+        return getTestIdBySolutionIdQuery(solutionId);
+    }
+
+    default String getCourseIdByTestId(String testId) {
+        return getCourseIdByTestIdQuery(testId);
+    }
+
+    default boolean checkIfCourseExists(String courseId) {
+        return checkIfCourseExistsQuery(courseId);
+    }
+
+    default boolean checkIfUserExists(String courseId) {
+        return checkIfUserExistsQuery(courseId);
+    }
+
+    default boolean checkIfUserExistsByEmail(String email) {
+        return checkIfUserExistsByEmailQuery(email);
+    }
+
+    default String saveCourse(CRegisterDsRequestModel requestModel) {
+        String courseId = generateRandomId();
+        saveCourseQuery(
+                courseId,
+                requestModel.getCourseCode(),
+                requestModel.getCourseName()
+                );
+        return courseId;
+    }
 
     default List<String> getAllCourseIds() {
-        return getAllCourseIdsRawData();
+        return getAllCourseIdsQuery();
     }
 
     default CourseDbModel getCourseById(String inputId) {
-        List<String> rawCourseData = getCourseByIdRawData(inputId);
+        List<String> rawCourseData = getCourseByIdQuery(inputId);
 
         return new CourseDbModel(
                 rawCourseData.get(0),           // courseId
@@ -34,7 +158,7 @@ public interface DatabaseAccessGateway
     }
 
     default UserDbModel getUserById(String inputId) {
-        List<String> rawUserData = getUserByIdRawData(inputId);
+        List<String> rawUserData = getUserByIdQuery(inputId);
 
         return new UserDbModel(
                 rawUserData.get(0),         // userId
@@ -45,11 +169,11 @@ public interface DatabaseAccessGateway
     }
 
     default List<String> getCourseIdsByUserId(String inputId) {
-        return getCoursesByUserIdRawData(inputId);
+        return getCourseIdsByUserIdQuery(inputId);
     }
 
     default List<MessageDbModel> getMessagesByParentId(String inputId) {
-        List<List<String>> rawMessagesData = getMessagesByParentIdRawData(inputId);
+        List<List<String>> rawMessagesData = getMessagesByParentIdQuery(inputId);
         List<MessageDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawMessagesData) {
@@ -68,7 +192,7 @@ public interface DatabaseAccessGateway
     }
 
     default List<TestDocDbModel> getTestDocsByCourseId(String inputId) {
-        List<List<String>> rawTestDocData = getTestDocsByCourseIdRawData(inputId);
+        List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(inputId);
         List<TestDocDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawTestDocData) {
@@ -87,7 +211,7 @@ public interface DatabaseAccessGateway
     }
 
     default List<SolutionDocDbModel> getSolutionDocsByTestId(String inputId) {
-        List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdRawData(inputId);
+        List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(inputId);
         List<SolutionDocDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawSolutionDocData) {
@@ -105,6 +229,35 @@ public interface DatabaseAccessGateway
             );
         }
         return response;
+    }
+
+    // Generate random alphanumeric ID
+    default String generateRandomId(){
+        UUID randomUUID = UUID.randomUUID();
+        return randomUUID.toString()
+                .substring(0,8)
+                .replaceAll("-", "");
+    }
+
+    default String hashPassword(String unhashedPassword)
+    {
+        try {
+
+            MessageDigest messDigest = MessageDigest.getInstance("SHA-512");
+
+            byte[] messDigestBytes = messDigest.digest(unhashedPassword.getBytes());
+            BigInteger signumRepresentation = new BigInteger(1, messDigestBytes);
+            StringBuilder hashedPassword = new StringBuilder(signumRepresentation.toString(16));
+
+            while (hashedPassword.length() < 32) {
+                hashedPassword.insert(0, "0");
+            }
+            return hashedPassword.toString();
+        }
+
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     boolean getConnectionStatus();

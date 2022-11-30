@@ -27,7 +27,7 @@ public class DocumentView {
      * Initialize with a default file path for testing
      */
     public DocumentView() {
-        filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
+        filePath = "lib/example.pdf";
         controller = new SwingController();
         factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();

@@ -29,33 +29,27 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         return connectionStatus;
     }
 
-    private static String hashPassword(String unhashedPassword)
-    {
-        try {
-
-            MessageDigest messDigest = MessageDigest.getInstance("SHA-512");
-
-            byte[] messDigestBytes = messDigest.digest(unhashedPassword.getBytes());
-            BigInteger signumRepresentation = new BigInteger(1, messDigestBytes);
-            String hashedPassword = signumRepresentation.toString(16);
-
-            while (hashedPassword.length() < 32) {
-                hashedPassword = "0" + hashedPassword;
-            }
-            return hashedPassword;
-        }
-
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static int countResultSetRows(ResultSet rs) throws SQLException {
+    private int countResultSetRows(ResultSet rs) throws SQLException {
         int numRows = 0;
         while (rs.next()) {
             numRows++;
         }
         return numRows;
+    }
+
+    private List<String> getCurrentResultSetStringRow(ResultSet rs) {
+        try{
+            int numOfColumns = rs.getMetaData().getColumnCount();
+            List<String> stringRow = new ArrayList<>();
+            for (int i = 0; i < numOfColumns; i++){
+                stringRow.add(
+                        rs.getString(i)
+                );
+            }
+            return stringRow;
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean verifyLoginCredentials(String email, String password) {
@@ -67,6 +61,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
             while (rs.next()) {
                 remoteHashedPassword = rs.getString("password");
             }
+            assert remoteHashedPassword != null;
             return remoteHashedPassword.equals(clientHashedPassword);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -87,7 +82,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    public boolean checkIfCourseExists(String courseId) {
+    public boolean checkIfCourseExistsQuery(String courseId) {
         String query = "SELECT * FROM ec.courses WHERE course_id='" + courseId + "';";
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
@@ -98,7 +93,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    public boolean checkIfUserExists(String userId) {
+    public boolean checkIfUserExistsQuery(String userId) {
         String query = "SELECT * FROM ec.user WHERE user_id='" + userId + "';";
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
@@ -109,7 +104,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    public boolean checkIfUserExistsByEmail(String email) {
+    public boolean checkIfUserExistsByEmailQuery(String email) {
         String query = "SELECT * FROM ec.user WHERE email='" + email + "';";
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
@@ -138,16 +133,10 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    // Generate random alphanumeric ID
-    public static String randomIdGenerator(){
-        UUID randomUUID = UUID.randomUUID();
-        return randomUUID.toString().substring(0,8).replaceAll("-", "");
-    }
-
     // Save new test in tests table, to be called after a successful test file upload
     // TODO: Retrieve variables from request model
     public boolean saveNewTest(){
-        String testId = randomIdGenerator();
+        String testId = generateRandomId();
         String userId = null;
         String courseId = null;
         String testType = null;
@@ -170,7 +159,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     // Save new solution in solutions table, to be called after a successful solution file upload
     // TODO: Retrieve variables from request model
     public boolean saveNewSolution(){
-        String solutionId = randomIdGenerator();
+        String solutionId = generateRandomId();
         String testId = null;
         String userId = null;
         int voteTotal = 0;
@@ -223,4 +212,255 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
         return solutionIdList;
     }
+
+    public void saveCourseQuery(String courseId,
+                                String courseCode,
+                                String courseName){
+
+        String query = "INSERT INTO ec.courses(course_id, code, name)" +
+                " VALUES ('" + courseId + "', '" +
+                courseCode + "', '" + courseName + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getAllCourseIdsQuery(){
+        List<String> courseIds = new ArrayList<>();
+
+        String query = "SELECT course_id FROM ec.courses;";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String courseId = rs.getString("course_id");
+                courseIds.add(courseId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseIds;
+    }
+
+    public List<String> getCourseByIdQuery(String inputId){
+        List<String> courseData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.courses " +
+                "WHERE course_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+
+            String courseId = rs.getString("course_id");
+            String courseCode = rs.getString("code");
+            String courseName = rs.getString("name");
+
+            courseData.add(courseId);
+            courseData.add(courseCode);
+            courseData.add(courseName);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseData;
+    }
+
+    public List<String> getUserByIdQuery(String inputId){
+        List<String> userData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.users " +
+                "WHERE user_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+
+            String userId = rs.getString("user_id");
+            String email = rs.getString("email");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+
+            userData.add(userId);
+            userData.add(email);
+            userData.add(firstName);
+            userData.add(lastName);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userData;
+    }
+
+    public List<String> getCourseIdsByUserIdQuery(String inputId){
+        List<String> courseIds = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.enrolments " +
+                "WHERE user_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                String courseId = rs.getString("course_id");
+                courseIds.add(courseId);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseIds;
+    }
+
+    public List<List<String>> getMessagesByParentIdQuery(String inputId){
+        List<List<String>> messagesData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.messages " +
+                "WHERE parent_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()) {
+                messagesData.add(
+                        getCurrentResultSetStringRow(rs)
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return messagesData;
+    }
+
+    public List<List<String>> getTestDocsByCourseIdQuery(String inputId){
+        List<List<String>> testsData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.tests " +
+                "WHERE course_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()) {
+                testsData.add(
+                        getCurrentResultSetStringRow(rs)
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return testsData;
+    }
+
+    public List<List<String>> getSolutionDocsByTestIdQuery(String inputId){
+        List<List<String>> solutionsData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.solutions " +
+                "WHERE test_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()) {
+                solutionsData.add(
+                        getCurrentResultSetStringRow(rs)
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return solutionsData;
+    }
+
+    public void addCourseEnrolmentQuery(
+            String enrolmentId,
+            String courseId,
+            String userId) {
+
+        String query = "INSERT INTO ec.enrolments(enrolment_id, " +
+                "user_id, course_id)" +
+                " VALUES ('" + enrolmentId + "', '" +
+                userId + "', '" + courseId + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeCourseEnrolmentQuery(
+            String courseId,
+            String userId) {
+
+        String query = "DELETE FROM ec.enrolments " +
+                "WHERE user_id='" + userId + "' AND " +
+                "course_id='" + courseId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getTestIdBySolutionIdQuery(String inputId){
+
+        String testId;
+        String query = "SELECT test_id FROM ec.solutions " +
+                "WHERE solution_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+
+            testId = rs.getString("test_id");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return testId;
+    }
+
+    public String getCourseIdByTestIdQuery(String inputId){
+
+        String courseId;
+        String query = "SELECT course_id FROM ec.tests " +
+                "WHERE test_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+
+            courseId = rs.getString("course_id");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseId;
+    }
+
+    public void addMessageQuery(String messageId,
+                                String solutionId,
+                                String userId,
+                                String parentId,
+                                String messageBody) {
+        String query = "INSERT INTO ec.messages(message_id, " +
+                "solution_id, user_id, parent_id, body)" +
+                " VALUES ('" + messageId + "', '" +
+                solutionId + "', '" + userId + "', '" + parentId
+                + "', '" + messageBody + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
