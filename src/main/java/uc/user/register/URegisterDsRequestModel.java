@@ -14,10 +14,13 @@ public class URegisterDsRequestModel {
      * @param userId the userId of the user registering
      * @param password the password of the user registering
      */
-    public URegisterDsRequestModel(String email, String userId, String password){
+    public URegisterDsRequestModel(String email, String userId, String password,
+                                   String firstName, String lastName){
         this.email = email;
         this.userId = userId;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     /** Gets the email of the User being registered
