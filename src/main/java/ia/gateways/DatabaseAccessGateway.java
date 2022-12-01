@@ -25,8 +25,8 @@ import java.util.UUID;
 
 /**
  * The DatabaseAccessGateway interface is responsible for defining the database query methods
- * that must be implemented for all use cases and implementing all use case specific gateway
- * methods.
+ * that must be implemented for all use cases and implementing all use case specific DS gateway
+ * methods (by extending all use case specific DS gateway interfaces).
  *
  * This interface defines default methods which implement the use case specific DS gateway
  * interfaces by parsing the input data, formatting the response data and calling the
@@ -38,6 +38,7 @@ import java.util.UUID;
  * where appropriate. The structure of the raw data matrices are determined by the database
  * schema which should be followed by any concrete database implementation.
  *
+ * @layer interface adapters
  */
 public interface DatabaseAccessGateway
         extends UpdateStateDsGateway,
@@ -55,8 +56,9 @@ public interface DatabaseAccessGateway
     /** Checks whether gateway is connected to database.
      *
      * @return boolean representing whether database is connected
+     * @throws Exception if connection check query fails
      */
-    boolean getConnectionStatus();
+    boolean getConnectionStatus() throws Exception;
 
     /** Queries database to check whether a course exists by ID.
      *
@@ -72,7 +74,7 @@ public interface DatabaseAccessGateway
      */
     boolean checkIfUserExistsByEmailQuery(String email);
 
-    /** Queries database to get all course IDs
+    /** Queries database to get all course IDs.
      *
      * @return list containing course ID strings
      */
