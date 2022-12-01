@@ -38,6 +38,7 @@ public class DocumentView {
      * @return the panel component
      */
     public JPanel getPanel() {
+        setViewProperties();
         return panel;
     }
 
@@ -61,7 +62,6 @@ public class DocumentView {
      */
     public void loadFile() {
         controller.openDocument(filePath);
-        setViewProperties();
     }
 
     private void setPreferences() {
