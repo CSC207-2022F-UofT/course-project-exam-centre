@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.controllers.LoginController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,12 +10,16 @@ import java.awt.event.*;
  * The panel component for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
+    private LoginController controller;
+
     private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cancelButton;
     private JButton loginButton;
 
-    public LoginPanel() {
+    public LoginPanel(LoginController controller) {
+        this.controller = controller;
+
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -24,20 +30,6 @@ public class LoginPanel extends JPanel implements ActionListener {
         add(fieldsPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.SOUTH);
         setSize(300, 200);
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return emailTextField.getText();
-    }
-
-    /**
-     * @return the password
-     */
-    public char[] getPassword() {
-        return passwordField.getPassword();
     }
 
     private JPanel createFieldsPanel() {
@@ -95,9 +87,15 @@ public class LoginPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel
+            System.exit(0);
         } else if (clicked == loginButton) {
-            // TODO: Log in
+            String email = emailTextField.getText();
+            String password = new String(passwordField.getPassword());
+            if (email.isBlank() || password.isBlank()) {
+                // TODO
+            } else {
+                controller.logIn(email, password);
+            }
         }
     }
 }
