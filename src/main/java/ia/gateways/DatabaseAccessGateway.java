@@ -33,25 +33,113 @@ public interface DatabaseAccessGateway
         LoginDsGateway,
         URegisterDsGateway {
 
-    // Query methods to be implemented
+    // Query methods to be implemented by a concrete database
+    // access manager class in Drivers and Frameworks layer.
 
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
+    boolean getConnectionStatus();
+
+    /** Queries database to check whether a course exists by ID.
+     *
+     * @param courseId the unique ID of the course being checked
+     * @return boolean representing whether course exists
+     */
     boolean checkIfCourseExistsQuery(String courseId);
-    boolean checkIfUserExistsQuery(String userId);
+
+    /** Queries database to check whether a user exists by email.
+     *
+     * @param email the email of the user being checked
+     * @return boolean representing whether user exists
+     */
     boolean checkIfUserExistsByEmailQuery(String email);
 
+    /** Queries database to get all course IDs
+     *
+     * @return list containing course ID strings
+     */
     List<String> getAllCourseIdsQuery();
+
+    /** Queries database to get a string representing course entity data.
+     *
+     * @param courseId the unique ID of the course being queried
+     * @return list containing course entity data
+     */
     List<String> getCourseByIdQuery(String courseId);
+
+    /** Queries database to get a string representing user entity data.
+     *
+     * @param userId the unique ID of the user being queried
+     * @return list containing user entity data
+     */
     List<String> getUserByIdQuery(String userId);
+
+    /** Queries database to get a string representing user entity data.
+     *
+     * @param email the email of the user being queried
+     * @return list containing user entity data
+     */
     List<String> getUserByEmailQuery(String email);
+
+    /** Queries database to get a list containing the course IDs
+     * of courses that the user belongs to.
+     *
+     * @param userId the unique ID of the user being queried
+     * @return list containing course IDs
+     */
     List<String> getCourseIdsByUserIdQuery(String userId);
 
+    /** Queries database to get a list containing lists of strings that represent
+     * each message entity that shares the given parent ID.
+     *
+     * @param parentId the parent message ID shared by the messages being requested
+     * @return list containing lists of strings representing message entities
+     */
     List<List<String>> getMessagesByParentIdQuery(String parentId);
+
+    /** Queries database to get a list containing lists of strings that represent
+     * each test document entity that shares the given course ID.
+     *
+     * @param courseId the course ID shared by the requested test document entities
+     * @return list containing lists of strings representing test document entities
+     */
     List<List<String>> getTestDocsByCourseIdQuery(String courseId);
+
+    /** Queries database to get a list containing lists of strings that represent
+     * each solution document entity that shares the given test ID.
+     *
+     * @param testId the test ID shared by the requested solution document entities
+     * @return list containing lists of strings representing solution document entities
+     */
     List<List<String>> getSolutionDocsByTestIdQuery(String testId);
 
+    /** Queries database to get the unique test ID corresponding to the given solution ID.
+     *
+     * @param solutionId the solution ID of the solution document being queried
+     * @return a string representing a unique test ID
+     */
     String getTestIdBySolutionIdQuery(String solutionId);
-    String getCourseIdByTestIdQuery(String solutionId);
 
+    /** Queries database to get the unique course ID corresponding to the given test ID.
+     *
+     * @param testId the test ID of the test document being queried
+     * @return a string representing a unique course ID
+     */
+    String getCourseIdByTestIdQuery(String testId);
+
+    /** Queries database to save data for new solution document entity.
+     *
+     * @param solutionId    the solution ID of the solution document being saved
+     * @param testId        the test ID of the solution document being saved
+     * @param userId        the user ID of the solution document being saved
+     * @param voteTotal     the vote total of the solution document being saved
+     * @param recordedScore the recorded score of the solution document being saved
+     * @param estimatedTime the estimated time of the solution document being saved
+     * @param rootMessageId the root message ID of the solution document being saved
+     * @param solutionName  the name of the solution document being saved
+     */
     void saveSolutionDocumentQuery(
             String solutionId,
             String testId,
@@ -62,6 +150,16 @@ public interface DatabaseAccessGateway
             String rootMessageId,
             String solutionName);
 
+    /** Queries database to save data for new test document entity.
+     *
+     * @param testId            the test ID of the test document being saved
+     * @param userId            the user ID of the test document being saved
+     * @param courseId          the course ID of the test document being saved
+     * @param testType          the test type of the test document being saved
+     * @param numOfQuestions    the number of questions in the test document being saved
+     * @param estimatedTime     the estimated time of the test document being saved
+     * @param testName          the name of the test document being saved
+     */
     void saveTestDocumentQuery(
             String testId,
             String userId,
@@ -71,42 +169,99 @@ public interface DatabaseAccessGateway
             Float estimatedTime,
             String testName);
 
+    /** Queries database to update the root message ID of a given solution document.
+     *
+     * @param solutionId        the solution ID of the solution document being queried
+     * @param rootMessageId     the root message ID of the solution document being queried
+     */
     void updateRootMessageIdOfSolutionQuery(
             String solutionId,
             String rootMessageId);
 
+    /** Queries database to save data for new course entity.
+     *
+     * @param courseId          the course ID of the course entity being saved
+     * @param courseCode        the course code of the course entity being saved
+     * @param courseName        the course name of the course entity being saved
+     */
     void saveCourseQuery(String courseId,
                          String courseCode,
                          String courseName);
 
+    /** Queries database to save data for new user entity.
+     *
+     * @param userId             the user ID of the user entity being saved
+     * @param email              the email of the user entity being saved
+     * @param firstName          the first name of the user entity being saved
+     * @param lastName           the last name of the user entity being saved
+     * @param hashedPassword     the hashed password of the user entity being saved
+     */
     void saveUserQuery(
             String userId,
             String email,
             String firstName,
-            String lastName);
+            String lastName,
+            String hashedPassword);
 
+    /** Queries database to save data for new message entity.
+     *
+     * @param messageId     the message ID of the message entity being saved
+     * @param solutionId    the solution ID of the message entity being saved
+     * @param userId        the user ID of the message entity being saved
+     * @param parentId      the parent ID of the message entity being saved
+     * @param messageBody   the message body of the message entity being saved
+     */
     void addMessageQuery(String messageId,
                          String solutionId,
                          String userId,
                          String parentId,
                          String messageBody);
 
+    /** Queries database to save data for a new course enrolment.
+     *
+     * @param enrolmentId     the enrolment ID of the enrolment being saved
+     * @param courseId        the course ID of the enrolment being saved
+     * @param userId          the user ID of the enrolment being saved
+     */
     void addCourseEnrolmentQuery(
             String enrolmentId,
             String courseId,
             String userId);
 
+    /** Queries database to delete a course enrolment using a unique course ID
+     * and user ID pair.
+     *
+     * @param courseId        the course ID of the enrolment being deleted
+     * @param userId          the user ID of the enrolment being deleted
+     */
     void removeCourseEnrolmentQuery(
             String courseId,
             String userId);
 
+    /** Queries database to verify if the inputted hashed password matches the
+     * saved hashed password corresponding to a user's email.
+     *
+     * @param email             the unique email address of the user being queried
+     * @param hashedPassword    the hash of the inputted user password being checked
+     *
+     * @return whether the inputted hashed password matches the one stored for the user
+     * in the database
+     */
     boolean verifyLoginCredentialsQuery(
             String email,
             String hashedPassword
     );
 
-    // Default Methods
+    // Default methods implementing use case database gateways
+    // Note: some methods implement methods across multiple use case gateways
 
+    /** Saves data for new user entity.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the user to be saved.
+     *
+     * @return the unique user ID of the saved user entity
+     */
     @Override
     default String saveUser(URegisterDsRequestModel requestModel) {
         String userId = generateRandomId();
@@ -114,11 +269,19 @@ public interface DatabaseAccessGateway
                 userId,
                 requestModel.getEmail(),
                 requestModel.getFirstName(),
-                requestModel.getLastName()
-        );
+                requestModel.getLastName(),
+                hashPassword(
+                        requestModel.getPassword()
+                ));
         return userId;
     }
 
+    /** Gets data representing a user entity corresponding to the given email.
+     *
+     * @param email      the email of the user entity being requested
+     *
+     * @return a response model representing the data of a user entity
+     */
     @Override
     default UserDbModel getUserByEmail(String email) {
         List<String> rawUserData = getUserByEmailQuery(email);
@@ -131,6 +294,15 @@ public interface DatabaseAccessGateway
         );
     }
 
+    /** Checks whether the hash of the inputted password matches the
+     * saved hashed password corresponding to a user's email.
+     *
+     * @param email             the unique email address of the user being queried
+     * @param password          the plaintext of the user password being checked
+     *
+     * @return whether the hash of the inputted plaintext password matches the one
+     * that is saved corresponding to the user entity
+     */
     @Override
     default boolean verifyLoginCredentials(
             String email,
@@ -141,6 +313,13 @@ public interface DatabaseAccessGateway
 
     }
 
+    /** Saves data for new solution document entity.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the solution document to be saved.
+     *
+     * @return the unique solution ID of the saved solution document entity
+     */
     @Override
     default String saveSolutionDocument(SubSDocDsRequestModel requestModel) {
         String solutionId = generateRandomId();
@@ -158,6 +337,13 @@ public interface DatabaseAccessGateway
         return solutionId;
     }
 
+    /** Saves data for new test document entity.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the test document to be saved.
+     *
+     * @return the unique test ID of the saved test document entity
+     */
     @Override
     default String saveTestDocument(SubTDocDsRequestModel requestModel) {
         String testId = generateRandomId();
@@ -174,6 +360,12 @@ public interface DatabaseAccessGateway
         return testId;
     }
 
+    /** Update the root message ID of a given solution document.
+     *
+     * @param solutionId        the solution ID of the solution document being updated
+     * @param rootMessageId     the new root message ID of the solution document
+     *                          being updated
+     */
     @Override
     default void updateRootMessageIdOfSolution(
             String solutionId,
@@ -184,6 +376,11 @@ public interface DatabaseAccessGateway
                 rootMessageId);
     }
 
+    /** Saves data for new course enrolment.
+     *
+     * @param courseId        the course ID of the enrolment being saved
+     * @param userId          the user ID of the enrolment being saved
+     */
     @Override
     default void addCourseEnrolment(
             String courseId,
@@ -196,6 +393,11 @@ public interface DatabaseAccessGateway
                 userId);
     }
 
+    /** Delete a course enrolment using a unique course ID and user ID pair.
+     *
+     * @param courseId        the course ID of the enrolment being deleted
+     * @param userId          the user ID of the enrolment being deleted
+     */
     @Override
     default void removeCourseEnrolment(
             String courseId,
@@ -206,6 +408,13 @@ public interface DatabaseAccessGateway
                 userId);
     }
 
+    /** Saves data for a new root message (no parent ID or body by definition).
+     *
+     * @param solutionId    the solution ID of the root message being saved
+     * @param userId        the user ID of the root message being saved
+     *
+     * @return the message ID of the saved root message
+     */
     @Override
     default String addRootMessage(
             String solutionId,
@@ -224,6 +433,13 @@ public interface DatabaseAccessGateway
         return messageId;
     }
 
+    /** Save data for new message entity.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the new message entity to be saved.
+     *
+     * @return the unique message ID of the saved message entity
+     */
     @Override
     default String addMessage(SubDBMessDsRequestModel requestModel) {
 
@@ -245,29 +461,57 @@ public interface DatabaseAccessGateway
         return messageId;
     }
 
+    /** Get the test ID corresponding to a solution ID.
+     *
+     * @param solutionId    a solution ID corresponding to the
+     *                      requested test ID
+     *
+     * @return a string representing the requested test ID
+     */
     @Override
     default String getTestIdBySolutionId(String solutionId) {
         return getTestIdBySolutionIdQuery(solutionId);
     }
 
+    /** Get the course ID corresponding to a test ID.
+     *
+     * @param testId        a test ID corresponding to the
+     *                      requested course ID
+     *
+     * @return a string representing the requested course ID
+     */
     @Override
     default String getCourseIdByTestId(String testId) {
         return getCourseIdByTestIdQuery(testId);
     }
 
+    /** Check whether a course exists by ID.
+     *
+     * @param courseId the unique ID of the course being checked
+     * @return boolean representing whether course exists
+     */
     @Override
     default boolean checkIfCourseExists(String courseId) {
         return checkIfCourseExistsQuery(courseId);
     }
 
-    default boolean checkIfUserExistsById(String courseId) {
-        return checkIfUserExistsQuery(courseId);
-    }
-
+    /** Queries database to check whether a user exists by email.
+     *
+     * @param email the email of the user being checked
+     * @return boolean representing whether user exists
+     */
+    @Override
     default boolean checkIfUserExistsByEmail(String email) {
         return checkIfUserExistsByEmailQuery(email);
     }
 
+    /** Saves data for new course entity.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the course entity to be saved.
+     *
+     * @return the unique course ID of the course entity
+     */
     @Override
     default String saveCourse(CRegisterDsRequestModel requestModel) {
         String courseId = generateRandomId();
@@ -279,14 +523,25 @@ public interface DatabaseAccessGateway
         return courseId;
     }
 
+    /** Gets all course IDs
+     *
+     * @return list containing course ID strings
+     */
     @Override
     default List<String> getAllCourseIds() {
         return getAllCourseIdsQuery();
     }
 
+    /** Gets course data by course ID.
+     *
+     * @param courseId the unique ID of the course being requested
+     *
+     * @return CourseDbModel object representing the data for the
+     * requested course entity
+     */
     @Override
-    default CourseDbModel getCourseById(String inputId) {
-        List<String> rawCourseData = getCourseByIdQuery(inputId);
+    default CourseDbModel getCourseById(String courseId) {
+        List<String> rawCourseData = getCourseByIdQuery(courseId);
 
         return new CourseDbModel(
                 rawCourseData.get(0),           // courseId
@@ -295,9 +550,16 @@ public interface DatabaseAccessGateway
         );
     }
 
+    /** Gets user data by user ID.
+     *
+     * @param userId the unique ID of the user being requested
+     *
+     * @return UserDbModel object representing the data for the
+     * requested user entity
+     */
     @Override
-    default UserDbModel getUserById(String inputId) {
-        List<String> rawUserData = getUserByIdQuery(inputId);
+    default UserDbModel getUserById(String userId) {
+        List<String> rawUserData = getUserByIdQuery(userId);
 
         return new UserDbModel(
                 rawUserData.get(0),         // userId
@@ -307,14 +569,27 @@ public interface DatabaseAccessGateway
         );
     }
 
+    /** Gets a list containing the course IDs of courses that
+     * the user belongs to.
+     *
+     * @param userId the unique ID of the associated user
+     * @return list containing strings of course IDs
+     */
     @Override
-    default List<String> getCourseIdsByUserId(String inputId) {
-        return getCourseIdsByUserIdQuery(inputId);
+    default List<String> getCourseIdsByUserId(String userId) {
+        return getCourseIdsByUserIdQuery(userId);
     }
 
+    /** Gets a list containing model representations of
+     * each message entity that shares the given parent ID.
+     *
+     * @param parentId the parent message ID shared by the messages being requested
+     * @return list containing MessageDbModel objects which each represent the data
+     * for a message entity
+     */
     @Override
-    default List<MessageDbModel> getMessagesByParentId(String inputId) {
-        List<List<String>> rawMessagesData = getMessagesByParentIdQuery(inputId);
+    default List<MessageDbModel> getMessagesByParentId(String parentId) {
+        List<List<String>> rawMessagesData = getMessagesByParentIdQuery(parentId);
         List<MessageDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawMessagesData) {
@@ -332,9 +607,16 @@ public interface DatabaseAccessGateway
         return response;
     }
 
+    /** Gets a list containing model representations of
+     * each test document entity that shares the given course ID.
+     *
+     * @param courseId the course ID shared by the requested test document entities
+     * @return list containing TestDocDbModel objects which each represent the data
+     * for a test document entity
+     */
     @Override
-    default List<TestDocDbModel> getTestDocsByCourseId(String inputId) {
-        List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(inputId);
+    default List<TestDocDbModel> getTestDocsByCourseId(String courseId) {
+        List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(courseId);
         List<TestDocDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawTestDocData) {
@@ -352,9 +634,16 @@ public interface DatabaseAccessGateway
         return response;
     }
 
+    /** Gets a list containing model representations of
+     * each solution document entity that shares the given test ID.
+     *
+     * @param testId the test ID shared by the requested solution document entities
+     * @return list containing SolutionDocDbModel objects which each represent the data
+     * for a solution document entity
+     */
     @Override
-    default List<SolutionDocDbModel> getSolutionDocsByTestId(String inputId) {
-        List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(inputId);
+    default List<SolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+        List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(testId);
         List<SolutionDocDbModel> response = new ArrayList<>();
 
         for (List<String> row : rawSolutionDocData) {
@@ -374,7 +663,12 @@ public interface DatabaseAccessGateway
         return response;
     }
 
-    // Generate random alphanumeric ID
+    // Utility methods for gateway requests
+
+    /** Generates a new random entity ID.
+     *
+     * @return a random 8 digit alphanumeric that is statistically unique
+     */
     default String generateRandomId(){
         UUID randomUUID = UUID.randomUUID();
         return randomUUID.toString()
@@ -382,15 +676,23 @@ public interface DatabaseAccessGateway
                 .replaceAll("-", "");
     }
 
-    default String hashPassword(String unhashedPassword)
+    /** Generates a SHA-512 hashed representation of a given plaintext password
+     *
+     * @param plaintextPassword a plaintext string representation of a password
+     *
+     * @return string representation of the SHA-512 hash of the inputted
+     * plaintext password
+     */
+    default String hashPassword(String plaintextPassword)
     {
         try {
 
             MessageDigest messDigest = MessageDigest.getInstance("SHA-512");
 
-            byte[] messDigestBytes = messDigest.digest(unhashedPassword.getBytes());
+            byte[] messDigestBytes = messDigest.digest(plaintextPassword.getBytes());
             BigInteger signumRepresentation = new BigInteger(1, messDigestBytes);
-            StringBuilder hashedPassword = new StringBuilder(signumRepresentation.toString(16));
+            StringBuilder hashedPassword = new StringBuilder(
+                    signumRepresentation.toString(16));
 
             while (hashedPassword.length() < 32) {
                 hashedPassword.insert(0, "0");
@@ -402,7 +704,5 @@ public interface DatabaseAccessGateway
             throw new RuntimeException(e);
         }
     }
-
-    boolean getConnectionStatus();
 
 }

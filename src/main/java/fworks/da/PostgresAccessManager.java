@@ -93,17 +93,6 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    public boolean checkIfUserExistsQuery(String userId) {
-        String query = "SELECT * FROM ec.users WHERE user_id='" + userId + "';";
-        try (Statement statement = db.createStatement()) {
-            ResultSet rs = statement.executeQuery(query);
-            int numRows = countResultSetRows(rs);
-            return (numRows > 0);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public boolean checkIfUserExistsByEmailQuery(String email) {
         String query = "SELECT * FROM ec.users WHERE email='" + email + "';";
         try (Statement statement = db.createStatement()) {
@@ -134,12 +123,14 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
             String userId,
             String email,
             String firstName,
-            String lastName){
+            String lastName,
+            String hashedPassword){
 
         String query = "INSERT INTO ec.users(user_id, email, " +
-                "first_name, last_name)" +
+                "first_name, last_name, password)" +
                 " VALUES ('" + userId + "', '" + email +"', '" +
-                 firstName + "', '" + lastName + "');";
+                 firstName + "', '" + lastName + "', '" +
+                hashedPassword + "');";
 
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
@@ -409,6 +400,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
+    @Override
     public void saveSolutionDocumentQuery(
             String solutionId,
             String testId,
