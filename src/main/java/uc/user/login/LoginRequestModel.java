@@ -4,7 +4,7 @@ public class LoginRequestModel {
     private String email;
     private String password;
 
-    public LoginRequestModel(String email, String password){
+    public LoginRequestModel(String email, String password) {
         this.email = email;
         this.password = password;
     }
