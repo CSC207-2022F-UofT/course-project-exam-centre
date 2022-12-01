@@ -8,9 +8,10 @@ import java.awt.*;
  */
 public class TestFrame extends JFrame {
     public TestFrame() {
-        super("Test");
+        super("Exam Centre");
         TestToolbar toolbar = new TestToolbar();
         DocumentView documentView = new DocumentView();
+        documentView.loadFile();
 
         setLayout(new BorderLayout());
         add(toolbar, BorderLayout.NORTH);
