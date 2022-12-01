@@ -23,6 +23,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The DatabaseAccessGateway interface is responsible for defining the database query methods
+ * that must be implemented for all use cases and implementing all use case specific gateway
+ * methods.
+ *
+ * This interface defines default methods which implement the use case specific DS gateway
+ * interfaces by parsing the input data, formatting the response data and calling the
+ * appropriate query method. This includes generating and assigning unique entity IDs, and
+ * hashing passwords where necessary.
+ *
+ * All database query methods expect parsed inputs and are expected to return list/string matrix
+ * representations of the raw data stored in the database or simple boolean and string values
+ * where appropriate. The structure of the raw data matrices are determined by the database
+ * schema which should be followed by any concrete database implementation.
+ *
+ */
 public interface DatabaseAccessGateway
         extends UpdateStateDsGateway,
         CRegisterDsGateway,
