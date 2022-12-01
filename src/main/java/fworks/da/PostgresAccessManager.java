@@ -11,8 +11,8 @@ import java.util.*;
 
 public class PostgresAccessManager implements DatabaseAccessGateway {
 
-    private Connection db;
-    private boolean connectionStatus;
+    private final Connection db;
+    private final boolean connectionStatus;
 
     public PostgresAccessManager(String hostname, Integer port, String psqlUser, String dbName,
                                  String psqlPassword, Boolean sslStatus) throws SQLException {
@@ -94,7 +94,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     }
 
     public boolean checkIfUserExistsQuery(String userId) {
-        String query = "SELECT * FROM ec.user WHERE user_id='" + userId + "';";
+        String query = "SELECT * FROM ec.users WHERE user_id='" + userId + "';";
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
             int numRows = countResultSetRows(rs);
@@ -105,7 +105,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     }
 
     public boolean checkIfUserExistsByEmailQuery(String email) {
-        String query = "SELECT * FROM ec.user WHERE email='" + email + "';";
+        String query = "SELECT * FROM ec.users WHERE email='" + email + "';";
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
             int numRows = countResultSetRows(rs);
@@ -115,104 +115,6 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
-    public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
-        String email = requestModel.getEmail();
-        String userId = requestModel.getUserId();
-        String hashedPassword = hashPassword(requestModel.getPassword());
-        String firstName = requestModel.getFirstName();
-        String lastName = requestModel.getLastName();
-
-        String query = "INSERT INTO ec.users(user_id, email, first_name, last_name, password)" +
-                " VALUES ('" + userId + "', '" + email + "', '" + firstName + "', '" + lastName
-                + "', '" + hashedPassword + "';";
-        try (Statement statement = db.createStatement()) {
-            ResultSet rs = statement.executeQuery(query);
-            return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Save new test in tests table, to be called after a successful test file upload
-    // TODO: Retrieve variables from request model
-    public boolean saveNewTest(){
-        String testId = generateRandomId();
-        String userId = null;
-        String courseId = null;
-        String testType = null;
-        int numberOfQuestions = 0;
-        float estimatedTime = 0;
-        Timestamp timestamp = null;
-        String testName = "";
-
-        String query = "INSERT INTO ec.tests VALUES ('" + testId + "', '" + 
-        userId + "', '" + courseId + "', '" + testType + "', '" + numberOfQuestions + 
-        "', '" + estimatedTime + "', '" + timestamp + "', '" + testName + "';";
-        try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
-            return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Save new solution in solutions table, to be called after a successful solution file upload
-    // TODO: Retrieve variables from request model
-    public boolean saveNewSolution(){
-        String solutionId = generateRandomId();
-        String testId = null;
-        String userId = null;
-        int voteTotal = 0;
-        float recordedScore = 0;
-        float estimatedTime = 0;
-        char rootMessageId = '\u0000';
-        Timestamp timestamp = null;
-        String solutionName = "";
-        
-        String query = "INSERT INTO ec.tests VALUES ('" + solutionId + "', '" + 
-        testId + "', '" + userId + "', '" + voteTotal + "', '" + recordedScore + 
-        "', '" + estimatedTime + "', '" + rootMessageId + "', '" + 
-        timestamp + "', '" + solutionName + "';";
-        try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
-            return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Get all tests for a course
-    public ArrayList<String> getAllTests(String courseId){
-        ArrayList<String> testIdList = new ArrayList<>();
-        String query = "SELECT test_id FROM ec.tests WHERE COURSE_ID=" + "', '" + courseId + "';";
-        try (Statement statement = db.createStatement()) {
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                String testId = rs.getString("test_id");
-                testIdList.add(testId);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return testIdList;
-    }
-
-    // Get all solutions for a test
-    public ArrayList<String> getAllSolutions(String testId){
-        ArrayList<String> solutionIdList = new ArrayList<>();
-        String query = "SELECT solution_id FROM ec.solutions WHERE test_id=" + "', '" + testId + "';";
-        try (Statement statement = db.createStatement()) {
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                String solutionId = rs.getString("solution_id");
-                solutionIdList.add(solutionId);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return solutionIdList;
-    }
-
     public void saveCourseQuery(String courseId,
                                 String courseCode,
                                 String courseName){
@@ -220,6 +122,24 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         String query = "INSERT INTO ec.courses(course_id, code, name)" +
                 " VALUES ('" + courseId + "', '" +
                 courseCode + "', '" + courseName + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveUserQuery(
+            String userId,
+            String email,
+            String firstName,
+            String lastName){
+
+        String query = "INSERT INTO ec.users(user_id, email, " +
+                "first_name, last_name)" +
+                " VALUES ('" + userId + "', '" + email +"', '" +
+                 firstName + "', '" + lastName + "');";
 
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
@@ -274,6 +194,32 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
 
         String query = "SELECT * FROM ec.users " +
                 "WHERE user_id='" + inputId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+
+            String userId = rs.getString("user_id");
+            String email = rs.getString("email");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+
+            userData.add(userId);
+            userData.add(email);
+            userData.add(firstName);
+            userData.add(lastName);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userData;
+    }
+
+    public List<String> getUserByEmailQuery(String inputEmail){
+        List<String> userData = new ArrayList<>();
+
+        String query = "SELECT * FROM ec.users " +
+                "WHERE email='" + inputEmail + "';";
 
         try (Statement statement = db.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
@@ -458,6 +404,86 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
 
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveSolutionDocumentQuery(
+            String solutionId,
+            String testId,
+            String userId,
+            Integer voteTotal,
+            Float recordedScore,
+            Float estimatedTime,
+            String rootMessageId,
+            String solutionName) {
+
+        String query = "INSERT INTO ec.solutions(solution_id, " +
+                "test_id, user_id, vote_total, recorded_score, " +
+                "estimated_time, root_message_id, solution_name)" +
+                " VALUES ('" + solutionId + "', '" +
+                testId + "', '" + userId + "', '" + voteTotal.toString()
+                + "', '" + recordedScore.toString() + "', " +
+                "'" + estimatedTime.toString() + "', '" + rootMessageId + "', "
+                + "'" + solutionName + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateRootMessageIdOfSolutionQuery(
+            String solutionId,
+            String rootMessageId) {
+
+        String query = "UPDATE ec.solutions SET root_message_id='"
+        + rootMessageId + "' WHERE solution_id='" + solutionId + "';";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveTestDocumentQuery(
+            String testId,
+            String userId,
+            String courseId,
+            String testType,
+            Integer numOfQuestions,
+            Float estimatedTime,
+            String testName) {
+
+        String query = "INSERT INTO ec.tests(test_id, " +
+                "user_id, course_id, test_type, number_of_questions, " +
+                "estimated_time, test_name)" +
+                " VALUES ('" + testId + "', '" +
+                userId + "', '" + courseId + "', '" + testType
+                + "', '" + numOfQuestions.toString() + "', " +
+                "'" + estimatedTime.toString() + "', '" + testName + "');";
+
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean verifyLoginCredentialsQuery(
+            String email,
+            String hashedPassword
+    ) {
+        String query = "SELECT * FROM ec.users WHERE email='" + email + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+            return hashedPassword.equals(
+                    rs.getString("password")
+            );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

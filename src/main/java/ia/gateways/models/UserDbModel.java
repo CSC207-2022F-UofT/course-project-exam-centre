@@ -1,8 +1,10 @@
 package ia.gateways.models;
 
 import uc.state.update.UpdateStateUserDbModel;
+import uc.user.login.LoginDsResponseModel;
 
-public class UserDbModel implements UpdateStateUserDbModel {
+public class UserDbModel
+        implements UpdateStateUserDbModel, LoginDsResponseModel {
 
     private final String userId;
     private final String email;

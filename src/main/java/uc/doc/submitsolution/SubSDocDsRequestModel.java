@@ -6,37 +6,68 @@ public class SubSDocDsRequestModel {
 
     private final Float recordedScore;
 
-    private final String userID;
+    private final String userId;
 
-    private final String courseID;
+    private final String courseId;
 
-    private final String parentTestID;
+    private final String parentTestId;
+
+    private final String rootMessageId;
+
+    private final Integer voteTotal;
 
     private final String filePath;
 
-    public SubSDocDsRequestModel(String name, String userID, Float recordedScore, String courseID, String parentTestID, String filePath) {
+    private final Float estimatedTime;
+
+    public SubSDocDsRequestModel(
+            String name,
+            String userId,
+            Float recordedScore,
+            String courseId,
+            String parentTestId,
+            String filePath,
+            String rootMessageId,
+            Integer voteTotal,
+            Float estimatedTime) {
+
         this.name = name;
         this.recordedScore = recordedScore;
-        this.userID = userID;
-        this.courseID = courseID;
-        this.parentTestID = parentTestID;
+        this.userId = userId;
+        this.courseId = courseId;
+        this.parentTestId = parentTestId;
         this.filePath = filePath;
+        this.rootMessageId = rootMessageId;
+        this.voteTotal = voteTotal;
+        this.estimatedTime = estimatedTime;
     }
 
     public Float getRecordedScore() {
         return recordedScore;
     }
 
-    public String getUserID() {
-        return userID;
+    public Float getEstimatedTime() {
+        return estimatedTime;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public Integer getVoteTotal() {
+        return voteTotal;
     }
 
-    public String getParentTestID() {
-        return parentTestID;
+    public String getRootMessageId() {
+        return rootMessageId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public String getParentTestId() {
+        return parentTestId;
     }
 
     public String getFilePath() {
