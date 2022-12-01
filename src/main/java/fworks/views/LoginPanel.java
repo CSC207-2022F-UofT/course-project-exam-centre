@@ -95,9 +95,9 @@ public class LoginPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel log-in
+            // TODO: Cancel
         } else if (clicked == loginButton) {
-            // TODO: Process log-in
+            // TODO: Log in
         }
     }
 }
