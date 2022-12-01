@@ -8,7 +8,7 @@ import java.awt.event.*;
  * The panel component for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
-    private JTextField usernameTextField;
+    private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cancelButton;
     private JButton loginButton;
@@ -27,10 +27,10 @@ public class LoginPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * @return the username
+     * @return the email
      */
-    public String getUsername() {
-        return usernameTextField.getText();
+    public String getEmail() {
+        return emailTextField.getText();
     }
 
     /**
@@ -41,7 +41,7 @@ public class LoginPanel extends JPanel implements ActionListener {
     }
 
     private JPanel createFieldsPanel() {
-        usernameTextField = new JTextField(15);
+        emailTextField = new JTextField(15);
         passwordField = new JPasswordField(15);
 
         JPanel panel = new JPanel();
@@ -54,12 +54,12 @@ public class LoginPanel extends JPanel implements ActionListener {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
-        panel.add(new JLabel("Enter username"), gridBagConstraints);
+        panel.add(new JLabel("Enter email"), gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
-        panel.add(usernameTextField, gridBagConstraints);
+        panel.add(emailTextField, gridBagConstraints);
 
         // Second row
         gridBagConstraints.gridy = 1;
