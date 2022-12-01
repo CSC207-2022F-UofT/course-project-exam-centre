@@ -3,6 +3,7 @@ package fworks.views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 
 /**
  * The panel component for new users to register
@@ -35,6 +36,13 @@ public class RegisterPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * @return iff the email is valid
+     */
+    public boolean isValidEmail() {
+        return Pattern.matches("^\\S+@\\S+\\.\\S$", getEmail());
+    }
+
+    /**
      * @return the first password
      */
     public char[] getPassword1() {
@@ -53,6 +61,13 @@ public class RegisterPanel extends JPanel implements ActionListener {
      */
     public boolean comparePassword() {
         return getPassword1() == getPassword2();
+    }
+
+    /**
+     * @return true iff the password is 8 characters or more
+     */
+    public boolean isValidPassword() {
+        return getPassword1().length >= 8;
     }
 
     private JPanel createFieldsPanel() {
