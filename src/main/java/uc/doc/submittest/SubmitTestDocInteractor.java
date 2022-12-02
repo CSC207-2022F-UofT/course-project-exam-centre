@@ -40,6 +40,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         );
 
         String docId = tDocDsGateway.saveTestDocument(dsRequestModel);
+        
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
         TestDocument document = TestDocFactory.create(

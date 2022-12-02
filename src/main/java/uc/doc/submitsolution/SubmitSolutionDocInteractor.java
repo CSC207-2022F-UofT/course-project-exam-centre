@@ -27,30 +27,42 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
     @Override
     public SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model) {
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());
-        User user = stateTracker.getUserIfTracked(model.getUserID());
+        User user = stateTracker.getCurrentUser();
         TestDocument parentTest = course.getTest(model.getParentTestID());
 
         SubSDocDsRequestModel dsRequestModel = new SubSDocDsRequestModel(
                 model.getName(),
-                model.getUserID(),
+                user.getId(),
                 model.getRecordedScore(),
                 model.getCourseID(),
                 model.getParentTestID(),
-                model.getFilePath()
+                model.getFilePath(),
+                "",
+                0,
+                model.getRecordedTime()
         );
 
-        String docId = sDocDsGateway.saveSolutionDocument(dsRequestModel);
-        sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, docId);
+        String solutionId = sDocDsGateway.saveSolutionDocument(dsRequestModel);
+        String rootMessageId = sDocDsGateway.addRootMessage(
+                solutionId,
+                user.getId()
+        );
+
+        sDocDsGateway.updateRootMessageIdOfSolution(
+                solutionId,
+                rootMessageId);
+
+        sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
         SolutionDocument document = SolutionDocFactory.create(
                 model.getName(),
-                docId,
+                solutionId,
                 course,
                 user,
                 model.getRecordedScore(),
                 parentTest,
                 model.getRecordedTime(),
-                model.getRootID());
+                rootMessageId);
 
         parentTest.addUpdateSolution(document);
 

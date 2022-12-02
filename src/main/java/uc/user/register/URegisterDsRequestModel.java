@@ -11,13 +11,11 @@ public class URegisterDsRequestModel {
     /** Creates an instance of URegisterDsRequestModel containing an email, userId and password
      *
      * @param email the email that is being registered
-     * @param userId the userId of the user registering
      * @param password the password of the user registering
      */
-    public URegisterDsRequestModel(String email, String userId, String password,
+    public URegisterDsRequestModel(String email,String password,
                                    String firstName, String lastName){
         this.email = email;
-        this.userId = userId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,14 +27,6 @@ public class URegisterDsRequestModel {
      */
     public String getEmail(){
         return this.email;
-    }
-
-    /** Gets the userId of the User being registered
-     *
-     * @return returns a string containing the email of the User
-     */
-    public String getUserId(){
-        return this.userId;
     }
 
     /** Gets the first name of the User being registered
