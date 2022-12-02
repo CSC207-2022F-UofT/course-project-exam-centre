@@ -17,13 +17,13 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
     @Override
     public UpdateCMemResponseModel updateCourseMembership(UpdateCMemRequestModel requestModel) {
         String userId = requestModel.getUserId();
-        List<String> enrollments = gateway.getCourseEnrollment(userId);
+        List<String> enrollments = gateway.getCourseIdsByUserId(userId);
         List<String> newCourseList = requestModel.getNewCoursesList();
 
         for (String course: newCourseList) { //Checks for new courses user not currently enrolled in.
             if (!enrollments.contains(course)) {
                 if (gateway.checkIfCourseExists(course)) { //checks if a course has been registered
-                    gateway.addCourseEnrollment(course, userId);
+                    gateway.addCourseEnrolment(course, userId);
                 }
                 else {
                     return presenter.prepareFailView(course + " has not been registered");
@@ -32,7 +32,7 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         }
         for (String course: enrollments) { //Checks for removed courses
             if (!newCourseList.contains(course)) {
-                gateway.removeCourseEnrollment(course, userId);
+                gateway.removeCourseEnrolment(course, userId);
             }
         }
         LocalDateTime now = LocalDateTime.now();

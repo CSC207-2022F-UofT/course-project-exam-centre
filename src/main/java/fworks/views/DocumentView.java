@@ -8,12 +8,12 @@ import java.util.prefs.Preferences;
 
 /**
  * The view that renders and displays a PDF
+ * TODO: test with PDFs of different sizes
  */
 public class DocumentView {
-    private String filePath;
     private SwingController controller;
-    private SwingViewBuilder factory;
     private JPanel panel;
+    private String filePath;
 
     /**
      * @param filePath the file path of the PDF
@@ -27,22 +27,42 @@ public class DocumentView {
      * Initialize with a default file path for testing
      */
     public DocumentView() {
-        filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
+
+        setPreferences();
         controller = new SwingController();
-        factory = new SwingViewBuilder(controller);
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();
-        panel.setSize(700, 700);
+        filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
     }
 
     /**
-     * @return the panel component of the view
+     * @return the panel component
      */
     public JPanel getPanel() {
-        setPreferences();
-        controller.openDocument(filePath);
-        controller.setPageViewMode(2, false);
-        controller.setPageFitMode(4, true);
+        setViewProperties();
         return panel;
+    }
+
+    /**
+     * @return the file path
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * Set the file path
+     * @param filePath
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    /**
+     * Load the file into the view
+     */
+    public void loadFile() {
+        controller.openDocument(filePath);
     }
 
     private void setPreferences() {
@@ -50,5 +70,11 @@ public class DocumentView {
         preferences.putBoolean("application.viewerpreferences.hidemenubar", true);
         preferences.putBoolean("application.viewerpreferences.hidetoolbar", true);
         preferences.putBoolean("application.statusbar", false);
+    }
+
+    private void setViewProperties() {
+        controller.setPageViewMode(2, false);
+        controller.setPageFitMode(4, true);
+        panel.setSize(700, 700);
     }
 }

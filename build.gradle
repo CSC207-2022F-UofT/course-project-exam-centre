@@ -13,7 +13,7 @@ dependencies {
     implementation files('lib/postgresql-42.5.0.jar') // Third-Party dependency for Postgres DB connections
     implementation 'commons-net:commons-net:3.8.0'
 
-    // For PDF rendering
+    // For PDF rendering and viewing
     implementation 'com.github.pcorless.icepdf:icepdf-core:7.0.0'
     implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.0.0'
 }

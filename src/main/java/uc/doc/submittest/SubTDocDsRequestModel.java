@@ -6,9 +6,9 @@ public class SubTDocDsRequestModel {
 
     private final Integer numberOfQuestions;
 
-    private final String userID;
+    private final String userId;
 
-    private final String courseID;
+    private final String courseId;
 
     private final String filePath;
 
@@ -25,8 +25,8 @@ public class SubTDocDsRequestModel {
                                  String filePath) {
         this.name = name;
         this.numberOfQuestions = numberOfQuestions;
-        this.userID = userID;
-        this.courseID = courseID;
+        this.userId = userID;
+        this.courseId = courseID;
         this.filePath = filePath;
         this.recordedTime = estimatedTime;
         this.testType = testType;
@@ -40,12 +40,12 @@ public class SubTDocDsRequestModel {
         return numberOfQuestions;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getCourseId() {
+        return courseId;
     }
 
     public String getFilePath() {

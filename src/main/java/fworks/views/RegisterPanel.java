@@ -123,9 +123,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel registration
+            // TODO: Cancel
         } else if (clicked == registerButton) {
-            // TODO: Process registration
+            // TODO: Register
         }
     }
 }

@@ -1,6 +1,6 @@
-package uc.user.login;
+package uc.state.update;
 
-public interface LoginDsResponseModel {
+public interface UpdateStateUserDbModel {
     String getUserId();
     String getFirstName();
     String getLastName();

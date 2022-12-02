@@ -28,11 +28,11 @@ public class LoginInteractor implements LoginInputBoundary {
         String password = requestModel.getPassword();
 
         if (dsGateway.verifyLoginCredentials(email, password)) {
-            LoginDsResponseModel dsResponseModel = dsGateway.getUserInfo(email);
+            LoginDsResponseModel dsResponseModel = dsGateway.getUserByEmail(email);
             String userId = dsResponseModel.getUserId();
             String firstName = dsResponseModel.getFirstName();
             String lastName = dsResponseModel.getLastName();
-            User user = userFactory.create(firstName, lastName, email, userId);
+            User user = UserFactory.create(firstName, lastName, email, userId);
             stateTracker.setCurrentUser(user);
 
             // change view to log in screen

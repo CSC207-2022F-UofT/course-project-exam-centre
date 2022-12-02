@@ -3,11 +3,12 @@ package uc.state.update;
 import java.util.List;
 
 public interface UpdateStateDsGateway {
+    List<? extends UpdateStateTestDocDbModel> getTestDocsByCourseId(String courseId);
+    List<? extends UpdateStateSolutionDocDbModel> getSolutionDocsByTestId(String testId);
+
+    List<? extends UpdateStateMessageDbModel> getMessagesByParentId(String parentId);
+    UpdateStateUserDbModel getUserById(String userId);
+    UpdateStateCourseDbModel getCourseById(String courseId);
     List<String> getAllCourseIds();
-    List<List<String>> getAllTestDocsByCourseId(String courseId);
-    List<List<String>> getAllSolutionDocsByTestId(String testId);
-    List<List<String>> getMessagesByParentId(String parentId);
-    List<List<String>> getEnrolmentsByUserId(String userId);
-    List<String> getUserById(String userId);
-    List<String> getCourseById(String courseId);
+    List<String> getCourseIdsByUserId(String userId);
 }
