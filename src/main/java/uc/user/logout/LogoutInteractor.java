@@ -4,7 +4,7 @@ import entities.StateTracker;
 
 /**
  * LogoutInteractor implements logout behaviour by removing currentUser
- * from the state tracker instance, and changing the view to a login screen
+ * from the state tracker instance, and changing the view to a login screen.
  * @layer use cases
  */
 
@@ -18,7 +18,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
     }
 
     /**
-     * Remove the currentUser from the stateTracker instance and change the view to a login screen
+     * Remove the currentUser from the stateTracker instance and change the view to a login screen.
      */
     @Override
     public void logOut() {
