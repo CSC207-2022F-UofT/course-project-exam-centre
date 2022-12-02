@@ -5,16 +5,16 @@ import entities.User;
 import entities.UserFactory;
 
 public class LoginInteractor implements LoginInputBoundary {
-    private UserFactory userFactory;
-    private LoginOutputBoundary presenter;
     private LoginDsGateway dsGateway;
+    private LoginOutputBoundary outputBoundary;
+    private UserFactory userFactory;
     private StateTracker stateTracker;
 
-    public LoginInteractor(UserFactory userFactory, LoginOutputBoundary presenter,
-                           LoginDsGateway dsGateway, StateTracker stateTracker) {
-        this.userFactory = userFactory;
-        this.presenter = presenter;
+    public LoginInteractor(LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary, UserFactory userFactory,
+                           StateTracker stateTracker) {
         this.dsGateway = dsGateway;
+        this.outputBoundary = outputBoundary;
+        this.userFactory = userFactory;
         this.stateTracker = stateTracker;
     }
 
@@ -37,12 +37,11 @@ public class LoginInteractor implements LoginInputBoundary {
 
             // change view to log in screen
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);
-            return presenter.prepareSuccessView(responseModel);
+            return outputBoundary.prepareSuccessView(responseModel);
         } else {
             // prepare error message
-            return presenter.prepareFailView("The password entered is either incorrect " +
+            return outputBoundary.prepareFailView("The password entered is either incorrect " +
                     "or the email entered is not associated with an account.");
         }
     }
-
 }
