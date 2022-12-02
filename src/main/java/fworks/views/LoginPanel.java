@@ -1,5 +1,6 @@
 package fworks.views;
 
+import entities.StateTracker;
 import ia.controllers.LoginController;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.*;
  * The panel component for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
+    private StateTracker stateTracker;
     private LoginController controller;
 
     private JTextField emailTextField;
@@ -17,7 +19,8 @@ public class LoginPanel extends JPanel implements ActionListener {
     private JButton cancelButton;
     private JButton loginButton;
 
-    public LoginPanel(LoginController controller) {
+    public LoginPanel(StateTracker stateTracker, LoginController controller) {
+        this.stateTracker = stateTracker;
         this.controller = controller;
 
         JPanel fieldsPanel = createFieldsPanel();
@@ -83,17 +86,23 @@ public class LoginPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    private boolean isBlank() {
+        String email = emailTextField.getText();
+        String password = new String(passwordField.getPassword());
+        return email.isBlank() || password.isBlank();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
             System.exit(0);
         } else if (clicked == loginButton) {
-            String email = emailTextField.getText();
-            String password = new String(passwordField.getPassword());
-            if (email.isBlank() || password.isBlank()) {
-                // TODO
+            if (isBlank()) {
+                // TODO: blank field(s)
             } else {
+                String email = emailTextField.getText();
+                String password = new String(passwordField.getPassword());
                 controller.logIn(email, password);
             }
         }
