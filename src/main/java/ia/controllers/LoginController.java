@@ -11,6 +11,11 @@ public class LoginController {
         this.inputBoundary = inputBoundary;
     }
 
+    /**
+     * @param email
+     * @param password
+     * @return the LoginResponseModel
+     */
     private LoginResponseModel logIn(String email, String password) {
         LoginRequestModel requestModel = new LoginRequestModel(email, password);
         return inputBoundary.logIn(requestModel);
