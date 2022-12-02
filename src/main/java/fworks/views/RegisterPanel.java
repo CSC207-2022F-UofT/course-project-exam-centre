@@ -9,7 +9,7 @@ import java.awt.event.*;
 import java.util.regex.Pattern;
 
 /**
- * The panel component for new users to register
+ * A panel for new users to register
  */
 public class RegisterPanel extends JPanel implements ActionListener {
     private StateTracker stateTracker;
@@ -47,37 +47,40 @@ public class RegisterPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
-        // First row
+        // Row 1, column 1
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter email"), gridBagConstraints);
 
+        // Row 1, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(emailTextField, gridBagConstraints);
 
-        // Second row
+        // Row 2, column 1
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password"), gridBagConstraints);
 
+        // Row 2, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(passwordField1, gridBagConstraints);
 
-        // Third row
+        // Row 3, column 1
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password again"), gridBagConstraints);
 
+        // Row 3, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
@@ -101,6 +104,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return true iff any field is blank
+     */
     private boolean isBlank() {
         String email = emailTextField.getText();
         String password1 = new String(passwordField1.getPassword());
@@ -108,12 +114,18 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return email.isBlank() || password1.isBlank() || password2.isBlank();
     }
 
+    /**
+     * @return true iff the email is invalid
+     */
     private boolean isInvalidEmail() {
         String email = emailTextField.getText();
         return !Pattern.matches("^\\S+@\\S+\\.\\S$", email);
     }
 
-    private boolean passwordIsNotEqual() {
+    /**
+     * @return true iff the two passwords don't match
+     */
+    private boolean passwordsNotEqual() {
         return passwordField1.getPassword() != passwordField2.getPassword();
     }
 
@@ -127,8 +139,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 // TODO: blank field(s)
             } else if (isInvalidEmail()) {
                 // TODO: invalid email
-            } else if (passwordIsNotEqual()) {
-                // TODO: non-matching password
+            } else if (passwordsNotEqual()) {
+                // TODO: non-matching passwords
             } else {
                 String email = emailTextField.getText();
                 String password = new String(passwordField1.getPassword());

@@ -89,7 +89,7 @@ public class LoginPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * @return true iff email or password field is blank
+     * @return true iff any field is blank
      */
     private boolean isBlank() {
         String email = emailTextField.getText();
