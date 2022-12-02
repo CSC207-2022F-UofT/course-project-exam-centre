@@ -1,5 +1,8 @@
 package fworks.views;
 
+import entities.StateTracker;
+import ia.controllers.UserRegisterController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,13 +12,19 @@ import java.util.regex.Pattern;
  * The panel component for new users to register
  */
 public class RegisterPanel extends JPanel implements ActionListener {
+    private StateTracker stateTracker;
+    private UserRegisterController controller;
+
     private JTextField emailTextField;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
     private JButton cancelButton;
     private JButton registerButton;
 
-    public RegisterPanel() {
+    public RegisterPanel(StateTracker stateTracker, UserRegisterController controller) {
+        this.stateTracker = stateTracker;
+        this.controller = controller;
+
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -26,48 +35,6 @@ public class RegisterPanel extends JPanel implements ActionListener {
         add(fieldsPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.SOUTH);
         setSize(300, 200);
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return emailTextField.getText();
-    }
-
-    /**
-     * @return iff the email is valid
-     */
-    public boolean isValidEmail() {
-        return Pattern.matches("^\\S+@\\S+\\.\\S$", getEmail());
-    }
-
-    /**
-     * @return the first password
-     */
-    public char[] getPassword1() {
-        return passwordField1.getPassword();
-    }
-
-    /**
-     * @return the repeated password
-     */
-    public char[] getPassword2() {
-        return passwordField2.getPassword();
-    }
-
-    /**
-     * @return true iff the two passwords match
-     */
-    public boolean comparePassword() {
-        return getPassword1() == getPassword2();
-    }
-
-    /**
-     * @return true iff the password is 8 characters or more
-     */
-    public boolean isValidPassword() {
-        return getPassword1().length >= 8;
     }
 
     private JPanel createFieldsPanel() {
@@ -134,13 +101,39 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    private boolean isBlank() {
+        String email = emailTextField.getText();
+        String password1 = new String(passwordField1.getPassword());
+        String password2 = new String(passwordField2.getPassword());
+        return email.isBlank() || password1.isBlank() || password2.isBlank();
+    }
+
+    private boolean isInvalidEmail() {
+        String email = emailTextField.getText();
+        return !Pattern.matches("^\\S+@\\S+\\.\\S$", email);
+    }
+
+    private boolean passwordIsNotEqual() {
+        return passwordField1.getPassword() != passwordField2.getPassword();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel
+            System.exit(0);
         } else if (clicked == registerButton) {
-            // TODO: Register
+            if (isBlank()) {
+                // TODO: blank field(s)
+            } else if (isInvalidEmail()) {
+                // TODO: invalid email
+            } else if (passwordIsNotEqual()) {
+                // TODO: non-matching password
+            } else {
+                String email = emailTextField.getText();
+                String password = new String(passwordField1.getPassword());
+                controller.create(email, password);
+            }
         }
     }
 }
