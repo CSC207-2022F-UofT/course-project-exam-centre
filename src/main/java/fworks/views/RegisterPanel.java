@@ -115,18 +115,18 @@ public class RegisterPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * @return true iff the email is invalid
+     * @return true iff the email is valid
      */
-    private boolean isInvalidEmail() {
+    private boolean isValidEmail() {
         String email = emailTextField.getText();
-        return !Pattern.matches("^\\S+@\\S+\\.\\S$", email);
+        return Pattern.matches("^\\S+@\\S+\\.\\S$", email);
     }
 
     /**
-     * @return true iff the two passwords don't match
+     * @return true iff the two passwords match
      */
-    private boolean passwordsNotEqual() {
-        return passwordField1.getPassword() != passwordField2.getPassword();
+    private boolean passwordsMatch() {
+        return passwordField1.getPassword() == passwordField2.getPassword();
     }
 
     @Override
@@ -137,9 +137,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
         } else if (clicked == registerButton) {
             if (isBlank()) {
                 // TODO: blank field(s)
-            } else if (isInvalidEmail()) {
+            } else if (!isValidEmail()) {
                 // TODO: invalid email
-            } else if (passwordsNotEqual()) {
+            } else if (!passwordsMatch()) {
                 // TODO: non-matching passwords
             } else {
                 String email = emailTextField.getText();
