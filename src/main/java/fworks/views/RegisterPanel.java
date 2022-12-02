@@ -37,6 +37,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
         setSize(300, 200);
     }
 
+    /**
+     * @return a panel with text fields
+     */
     private JPanel createFieldsPanel() {
         emailTextField = new JTextField(15);
         passwordField1 = new JPasswordField(15);
@@ -89,6 +92,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return a panel with two buttons: cancel and register
+     */
     private JPanel createButtonsPanel() {
         cancelButton = new JButton("Cancel");
         registerButton = new JButton("Register");

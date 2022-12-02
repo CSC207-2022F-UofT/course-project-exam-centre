@@ -35,6 +35,9 @@ public class LoginPanel extends JPanel implements ActionListener {
         setSize(300, 200);
     }
 
+    /**
+     * @return a panel with text fields
+     */
     private JPanel createFieldsPanel() {
         emailTextField = new JTextField(15);
         passwordField = new JPasswordField(15);
@@ -73,6 +76,9 @@ public class LoginPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return a panel with two buttons: cancel and log in
+     */
     private JPanel createButtonsPanel() {
         cancelButton = new JButton("Cancel");
         loginButton = new JButton("Log in");
