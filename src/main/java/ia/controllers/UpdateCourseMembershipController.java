@@ -1,13 +1,27 @@
 package ia.controllers;
 
+import uc.course.updatemembers.UpdateCMemInputBoundary;
+import uc.course.updatemembers.UpdateCMemRequestModel;
+import uc.course.updatemembers.UpdateCMemResponseModel;
 
-//TEMPORARY PLACEHOLDER CLASS FOR TESTING!!!
-//DELETE BEFORE MERGING
+import java.util.List;
 
 public class UpdateCourseMembershipController {
+    private final UpdateCMemInputBoundary inputBoundary;
 
-    public UpdateCourseMembershipController() {
-        System.out.println("test");
+    public UpdateCourseMembershipController(
+            UpdateCMemInputBoundary inputBoundary){
+            this.inputBoundary = inputBoundary;
     }
 
+    public UpdateCMemResponseModel updateCourseMembership(
+            String userId,
+            List<String> newCoursesList) {
+
+        UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(
+                userId,
+                newCoursesList);
+
+        return inputBoundary.updateCourseMembership(requestModel);
+    }
 }
