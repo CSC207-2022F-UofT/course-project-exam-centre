@@ -32,6 +32,13 @@ public class WelcomeDialog extends JDialog implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * @return true iff new user is selected
+     */
+    public boolean isNewUser() {
+        return newUserRadioButton.isSelected();
+    }
+
     private JPanel createButtonsPanel() {
         newUserRadioButton = new JRadioButton("New user");
         returningUserRadioButton = new JRadioButton("Returning user");

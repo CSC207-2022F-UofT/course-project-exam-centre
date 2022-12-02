@@ -11,6 +11,7 @@ public class SolutionFrame extends JFrame {
         super("Solutions");
         SolutionToolbar toolbar = new SolutionToolbar();
         DocumentView documentView = new DocumentView();
+        documentView.loadFile();
 
         setLayout(new BorderLayout());
         add(toolbar, BorderLayout.NORTH);

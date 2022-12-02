@@ -2,11 +2,12 @@ package fworks.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The panel component for TestFrame
  */
-public class TestToolbar extends JPanel {
+public class TestToolbar extends JPanel implements ActionListener {
     private JComboBox comboBox;
     private JButton addCourseButton;
     private JButton uploadTestButton;
@@ -27,6 +28,10 @@ public class TestToolbar extends JPanel {
         addCourseButton = new JButton("Add course");
         uploadTestButton = new JButton("Upload test");
 
+        comboBox.addActionListener(this);
+        addCourseButton.addActionListener(this);
+        uploadTestButton.addActionListener(this);
+
         comboBox.setPreferredSize(new Dimension(120, 30));
         addCourseButton.setPreferredSize(new Dimension(120, 30));
         uploadTestButton.setPreferredSize(new Dimension(120, 30));
@@ -45,6 +50,9 @@ public class TestToolbar extends JPanel {
         solutionsButton = new JButton("Solutions");
         solutionsButton.setEnabled(false);
 
+        takeTestButton.addActionListener(this);
+        solutionsButton.addActionListener(this);
+
         takeTestButton.setPreferredSize(new Dimension(120, 30));
         solutionsButton.setPreferredSize(new Dimension(120, 30));
 
@@ -56,9 +64,24 @@ public class TestToolbar extends JPanel {
         return panel;
     }
 
-    // Empty constructor for testing
+    // Dummy combo box for testing
     private JComboBox createComboBox() {
         String[] courses = {"CSC207", "CSC236", "CSC258", "CSC263"};
         return new JComboBox(courses);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == comboBox) {
+            // TODO: Switch course
+        } else if (actionEvent.getSource() == addCourseButton) {
+            // TODO: Add course
+        } else if (actionEvent.getSource() == uploadTestButton) {
+            // TODO: Upload test
+        } else if (actionEvent.getSource() == takeTestButton) {
+            // TODO: Take test
+        } else if (actionEvent.getSource() == solutionsButton) {
+            // TODO: Solutions
+        }
     }
 }
