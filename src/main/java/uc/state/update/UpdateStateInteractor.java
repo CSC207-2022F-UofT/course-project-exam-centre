@@ -2,55 +2,61 @@ package uc.state.update;
 
 import entities.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UpdateStateInteractor implements UpdateStateInputBoundary {
-    private UpdateStateOutputBoundary presenter;
-    private UpdateStateDsGateway dsGateway;
+    private final UpdateStateOutputBoundary presenter;
+    private final UpdateStateDsGateway dsGateway;
+    private final StateTracker currentState;
 
-    public UpdateStateInteractor(UpdateStateOutputBoundary presenter, UpdateStateDsGateway dsGateway) {
+    public UpdateStateInteractor(
+            UpdateStateOutputBoundary presenter,
+            UpdateStateDsGateway dsGateway,
+            StateTracker stateTracker) {
         this.presenter = presenter;
         this.dsGateway = dsGateway;
+        this.currentState = stateTracker;
     }
 
     private User constructUserById(String userId) {
-        List<String> rawUserData = dsGateway.getUserById(userId);
-        List<List<String>> rawUserEnrolmentsData = dsGateway.getEnrolmentsByUserId(userId);
+        UpdateStateUserDbModel userData = dsGateway.getUserById(userId);
+        List<String> rawUserEnrolmentsData = dsGateway.getCourseIdsByUserId(userId);
 
-        String email = rawUserData.get(1);
-        String firstName = rawUserData.get(2);
-        String lastName = rawUserData.get(3);
+        User newUser = UserFactory.create(
+                userData.getFirstName(),
+                userData.getLastName(),
+                userData.getEmail(),
+                userData.getUserId());
 
-        User newUser = UserFactory.create(firstName, lastName, email, userId);
-
-        for (List<String> rawUserEnrolmentsDatum : rawUserEnrolmentsData) {
-            newUser.addCourse(rawUserEnrolmentsDatum.get(2));
+        for (String rawUserEnrolmentsDatum : rawUserEnrolmentsData) {
+            newUser.addCourse(rawUserEnrolmentsDatum);
         }
 
         return newUser;
     }
 
     private CourseInfo constructCourseInfoItemById(String courseId) {
-        List<String> rawCourseData = dsGateway.getCourseById(courseId);
+        UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        String courseCode = rawCourseData.get(1);
-        String courseName = rawCourseData.get(2);
-
-        return CourseFactory.create(courseName, courseCode, courseId);
-
+        return CourseFactory.create(
+                courseData.getCourseName(),
+                courseData.getCourseCode(),
+                courseData.getCourseId()
+        );
     }
 
     private Course constructCourseById(String courseId) {
-        List<String> rawCourseData = dsGateway.getCourseById(courseId);
+        UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        String courseCode = rawCourseData.get(1);
-        String courseName = rawCourseData.get(2);
+        Course newCourse = CourseFactory.create(
+                courseData.getCourseName(),
+                courseData.getCourseCode(),
+                courseData.getCourseId()
+        );
 
-        Course newCourse = CourseFactory.create(courseName, courseCode, courseId);
         constructAllTestsByCourse(newCourse);
 
         return newCourse;
@@ -59,31 +65,22 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     private void constructAllTestsByCourse(Course parentCourse) {
         String courseId = parentCourse.getId();
-        List<List<String>> rawTestData = dsGateway.getAllTestDocsByCourseId(courseId);
-
-        String currentTestName;
-        String currentTestId;
-        float currentTestEstimatedTime;
-        int currentTestNumOfQuestions;
-        String currentTestType;
-        User currentTestUser;
+        List<? extends UpdateStateTestDocDbModel> testsData
+                = dsGateway.getTestDocsByCourseId(courseId);
         TestDocument currentTestDoc;
 
-        for (int i = 0; i < rawTestData.size(); i++) {
-
-            currentTestId = rawTestData.get(i).get(0);
-            currentTestUser = constructUserById(rawTestData.get(i).get(1));
-            currentTestType = rawTestData.get(i).get(3);
-            currentTestNumOfQuestions = Integer.parseInt(rawTestData.get(i).get(4));
-            currentTestEstimatedTime = Float.parseFloat(rawTestData.get(i).get(5));
-            currentTestName = "Test #" + i;
+        for (UpdateStateTestDocDbModel currentTestData : testsData) {
 
             currentTestDoc = TestDocFactory.create(
-                    currentTestName, currentTestId,
-                    parentCourse, currentTestUser,
-                    currentTestEstimatedTime,
-                    currentTestNumOfQuestions,
-                    currentTestType
+                    currentTestData.getTestName(),
+                    currentTestData.getTestId(),
+                    parentCourse,
+                    constructUserById(
+                            currentTestData.getUserId()
+                    ),
+                    currentTestData.getEstimatedTime(),
+                    currentTestData.getNumOfQuestions(),
+                    currentTestData.getTestType()
             );
 
             constructSolutionsByTest(currentTestDoc);
@@ -94,41 +91,26 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     private void constructSolutionsByTest(TestDocument parentTestDoc) {
         String parentTestId = parentTestDoc.getId();
-        List<List<String>> rawSolutionsData = dsGateway.getAllSolutionDocsByTestId(parentTestId);
+        List<? extends UpdateStateSolutionDocDbModel> solutionsData
+                = dsGateway.getSolutionDocsByTestId(parentTestId);
 
-        String currentSolutionName;
-        String currentSolutionId;
-        Course parentCourse = parentTestDoc.getCourse();
-        User currentSolutionUser;
-        float currentSolutionScore;
-        float currentSolutionRecordedTime;
-        String currentSolutionRootMessId;
         SolutionDocument currentSolutionDoc;
 
-        List<SolutionDocument> testSolutions = new ArrayList<>();
-
-        for (int i = 0; i < rawSolutionsData.size(); i++) {
-
-            currentSolutionId = rawSolutionsData.get(i).get(0);
-            currentSolutionUser = constructUserById(rawSolutionsData.get(i).get(2));
-            currentSolutionScore = Float.parseFloat(rawSolutionsData.get(i).get(4));
-            currentSolutionRecordedTime = Float.parseFloat(rawSolutionsData.get(i).get(5));
-            currentSolutionRootMessId = rawSolutionsData.get(i).get(6);
-            currentSolutionName = "Solution #" + i;
+        for (UpdateStateSolutionDocDbModel currentSolutionData: solutionsData) {
 
             currentSolutionDoc = SolutionDocFactory.create(
-                    currentSolutionName,
-                    currentSolutionId,
-                    parentCourse,
-                    currentSolutionUser,
-                    currentSolutionScore,
+                    currentSolutionData.getSolutionName(),
+                    currentSolutionData.getSolutionId(),
+                    parentTestDoc.getCourse(),
+                    constructUserById(currentSolutionData.getUserId()),
+                    currentSolutionData.getRecordedScore(),
                     parentTestDoc,
-                    currentSolutionRecordedTime,
-                    currentSolutionRootMessId
+                    currentSolutionData.getEstimatedTime(),
+                    currentSolutionData.getRootMessageId()
             );
 
             constructMessageTreeByParentId(
-                    currentSolutionRootMessId,
+                    currentSolutionData.getRootMessageId(),
                     currentSolutionDoc.getMessageTree()
             );
 
@@ -139,33 +121,23 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     private void constructMessageTreeByParentId(
             String parentId, MessageTree newMessageTree) {
-            List<List<String>> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
+            List<? extends UpdateStateMessageDbModel> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
 
-            String currMessId;
-            String currMessSolutionId;
-            String currMessUserId;
-            String currMessBody;
-            LocalDateTime currMessSentTimestamp;
-
-        for (List<String> rawChildMessageDatum : rawChildMessageData) {
-
-            currMessId = rawChildMessageDatum.get(0);
-            currMessSolutionId = rawChildMessageDatum.get(1);
-            currMessUserId = rawChildMessageDatum.get(2);
-            currMessBody = rawChildMessageDatum.get(3);
-            currMessSentTimestamp = LocalDateTime.parse(rawChildMessageDatum.get(4));
+        for (UpdateStateMessageDbModel rawChildMessageDatum : rawChildMessageData) {
 
             newMessageTree.addMessage(
                     MessageFactory.create(
-                        currMessId,
-                        currMessSolutionId,
-                        currMessUserId,
-                        parentId,
-                        currMessBody,
-                        currMessSentTimestamp
+                            rawChildMessageDatum.getMessageId(),
+                            rawChildMessageDatum.getSolutionId(),
+                            rawChildMessageDatum.getUserId(),
+                            rawChildMessageDatum.getParentId(),
+                            rawChildMessageDatum.getMessageBody(),
+                            rawChildMessageDatum.getMessageSentTimestamp()
                     )
             );
-            constructMessageTreeByParentId(currMessId, newMessageTree);
+            constructMessageTreeByParentId(
+                    rawChildMessageDatum.getMessageId(),
+                    newMessageTree);
         }
     }
 
@@ -185,9 +157,9 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     }
 
     @Override
-    public UpdateStateResponseModel updateState(UpdateStateRequestModel requestModel) {
+    public UpdateStateResponseModel updateState(
+            UpdateStateRequestModel requestModel) {
 
-        StateTracker currentState = requestModel.getCurrentState();
         List<Course> usersCourses = new ArrayList<>();
         Map<String, CourseInfo> allCourseInfoItems;
         User currentUser = currentState.getCurrentUser();

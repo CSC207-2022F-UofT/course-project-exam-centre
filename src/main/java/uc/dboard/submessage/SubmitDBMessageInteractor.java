@@ -3,9 +3,6 @@ package uc.dboard.submessage;
 import entities.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 // Use case layer
 
@@ -28,8 +25,8 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
     @Override
     public SubDBMessResponseModel submitMessage(SubDBMessRequestModel requestModel) {
         String solutionId = requestModel.getSolutionId();
-        String testId = subDBMessDsGateway.getDBTestIDFromSolutionID(solutionId);
-        String courseId = subDBMessDsGateway.getDBCourseIDFromTestID(testId);
+        String testId = subDBMessDsGateway.getTestIdBySolutionId(solutionId);
+        String courseId = subDBMessDsGateway.getCourseIdByTestId(testId);
         Course course = stateTracker.getCourseIfTracked(courseId);
 
         TestDocument relatedTest = course.getTest(testId);
@@ -43,7 +40,7 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
                 requestModel.getBody(),
                 currentDateTime);
 
-        String messageId = subDBMessDsGateway.addMessageToDB(dsRequestModel);
+        String messageId = subDBMessDsGateway.addMessage(dsRequestModel);
 
         Message message = MessageFactory.create(
                 messageId,

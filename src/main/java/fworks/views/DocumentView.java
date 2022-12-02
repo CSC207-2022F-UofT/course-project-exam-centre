@@ -27,6 +27,7 @@ public class DocumentView {
      * Initialize with a default file path for testing
      */
     public DocumentView() {
+
         setPreferences();
         controller = new SwingController();
         SwingViewBuilder factory = new SwingViewBuilder(controller);

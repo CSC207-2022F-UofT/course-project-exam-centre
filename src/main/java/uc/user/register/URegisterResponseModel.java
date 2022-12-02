@@ -4,7 +4,7 @@ import entities.User;
 
 public class URegisterResponseModel {
     User user;
-    String loginStatus;
+    Boolean loginStatus;
     String timestamp;
 
     /** Creates a URegisterResponseModel with the login and the creationTime it took to create the User
@@ -13,7 +13,7 @@ public class URegisterResponseModel {
      * @param loginStatus the login details of the User
      * @param timestamp how long it took to create the User
      */
-    public URegisterResponseModel(User user,String loginStatus, String timestamp) {
+    public URegisterResponseModel(User user, Boolean loginStatus, String timestamp) {
         this.user = user;
         this.loginStatus = loginStatus;
         this.timestamp = timestamp;
@@ -23,7 +23,7 @@ public class URegisterResponseModel {
      *
      * @return returns the login of the User
      */
-    public String getLogin(){
+    public Boolean getLoginStatus(){
         return loginStatus;
     }
 

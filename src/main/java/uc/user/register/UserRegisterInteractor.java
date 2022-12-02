@@ -25,26 +25,6 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
         this.userFactory = userFactory;
     }
 
-    /** Creates an 8-digit number that can be assigned to a User. If the randomly generated UserId is already
-     * assigned to a User, another UserId will be generated and returned. This repeats until a new UserId is
-     * generated.
-     *
-     * @return returns an 8-digit number in String form to assign to a User
-     */
-    private String createUserId(){
-        int max = 99999999;
-        int min = 0;
-        int randomNum = (int) Math.floor(Math.random() * (max - min + 1)) + min;
-        String randomKey = String.format("%08d", randomNum);
-
-        if(!(userDsGateway.checkIfUserExists(randomKey))){
-            return randomKey;
-        } else{
-            return createUserId();
-        }
-        
-    }
-
     /** Checks if a user's info is valid and saves the information if it is. Returns a Response Model and
      * failure or success views depending on whether a user is successfully created.
      *
@@ -59,16 +39,22 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
             return userOutputBoundary.prepareFailView("Passwords do not match");
         }
 
-        User user = userFactory.create(requestModel.getFirstName(),
-                requestModel.getLastName(), requestModel.getEmail(), createUserId());
+        URegisterDsRequestModel userDsModel = new URegisterDsRequestModel(
+                requestModel.getEmail(),
+                requestModel.getPassword(),
+                requestModel.getFirstName(),
+                requestModel.getLastName());
+
+        String userId = userDsGateway.saveUser(userDsModel);
+
+        User user = UserFactory.create(userId, requestModel.getFirstName(),
+                requestModel.getLastName(), requestModel.getEmail());
 
         LocalDateTime now = LocalDateTime.now();
-        URegisterDsRequestModel userDsModel = new URegisterDsRequestModel(user.getEmail(), user.getId(),
-                requestModel.getPassword(), user.getFirstName(), user.getLastName());
 
-        boolean registerStatus = userDsGateway.saveNewUserInfo(userDsModel);
-
-        URegisterResponseModel responseModel =new URegisterResponseModel(user, String.valueOf(registerStatus),
+        URegisterResponseModel responseModel =new URegisterResponseModel(
+                user,
+                true, // TODO: Update URegisterResponseModel
                 now.toString());
 
         return userOutputBoundary.prepareSuccessView(responseModel);

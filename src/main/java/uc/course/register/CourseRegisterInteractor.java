@@ -23,7 +23,7 @@ public class CourseRegisterInteractor implements CRegisterlnputBoundary {
         }
         Course course = courseFactory.create(requestModel.getCourseName(), requestModel.getCourseCode(), requestModel.getCourseId());
         CRegisterDsRequestModel courseDsModel = new CRegisterDsRequestModel(course.getCourseName(), course.getCourseCode());
-        gateway.saveCourseInfo(courseDsModel);
+        gateway.saveCourse(courseDsModel);
 
         LocalDateTime now = LocalDateTime.now();
         CRegisterResponseModel responseModel = new CRegisterResponseModel(course.getCourseName(), true, now.toString());
