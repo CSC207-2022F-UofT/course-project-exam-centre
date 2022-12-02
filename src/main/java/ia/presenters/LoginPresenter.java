@@ -1,5 +1,6 @@
 package ia.presenters;
 
+import uc.user.login.LoginFailedException;
 import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
 
@@ -12,7 +13,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public LoginResponseModel prepareFailView(String errorMessage) {
         // Throw a custom exception
-        throw new LoginFailed(errorMessage);
+        throw new LoginFailedException(errorMessage);
     }
 }
 
