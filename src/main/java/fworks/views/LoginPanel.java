@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The panel component for existing users to log in
+ * A panel for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
     private StateTracker stateTracker;
@@ -44,25 +44,27 @@ public class LoginPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
-        // First row
+        // Row 1, column 1
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter email"), gridBagConstraints);
 
+        // Row 1, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(emailTextField, gridBagConstraints);
 
-        // Second row
+        // Row 2, column 1
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password"), gridBagConstraints);
 
+        // Row 2, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
@@ -86,6 +88,9 @@ public class LoginPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return true iff email or password field is blank
+     */
     private boolean isBlank() {
         String email = emailTextField.getText();
         String password = new String(passwordField.getPassword());
