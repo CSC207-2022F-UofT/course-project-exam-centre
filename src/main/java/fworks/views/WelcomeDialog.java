@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The dialog for users to register or log in
+ * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
     private StateTracker stateTracker;
@@ -29,6 +29,7 @@ public class WelcomeDialog extends JDialog implements ActionListener {
 
         loginPanel = new LoginPanel(stateTracker, loginController);
         registerPanel = new RegisterPanel(stateTracker, userRegisterController);
+
         JPanel buttonsPanel = createButtonsPanel();
 
         setLayout(new BorderLayout());
@@ -45,6 +46,9 @@ public class WelcomeDialog extends JDialog implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * @return a panel with two radio buttons: new user and returning user
+     */
     private JPanel createButtonsPanel() {
         newUserRadioButton = new JRadioButton("New user");
         returningUserRadioButton = new JRadioButton("Returning user");
