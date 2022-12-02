@@ -13,9 +13,9 @@ public class LogoutInteractor implements LogoutInputBoundary {
     private StateTracker stateTracker;
 
     /**
-     * Constructs a LogoutInteractor object.
-     * @param presenter defines a method to update the view to a login screen
-     * @param stateTracker entity is mutated by logOut method
+     * Construct a LogoutInteractor object.
+     * @param presenter has method to update the view to a login screen
+     * @param stateTracker entity to be mutated by logOut method
      */
     public LogoutInteractor(LogoutOutputBoundary presenter, StateTracker stateTracker) {
         this.presenter = presenter;

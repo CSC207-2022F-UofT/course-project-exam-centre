@@ -1,5 +1,5 @@
 package uc.user.logout;
 /**
- * Contains use case layer interfaces and class, which defines and implement logout behaviour
+ * Contains interfaces and classes that define and implement logout behaviour.
  * @layer use cases
  */
