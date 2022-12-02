@@ -10,12 +10,16 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
     private final SubSDocDsGateway sDocDsGateway;
 
+    private final SubSDocFileAccessGateway sDocFileAccessGateway;
+
     private final StateTracker stateTracker;
 
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
+                                       SubSDocFileAccessGateway sDocFileAccessGateway,
                                        SubSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker) {
         this.sDocDsGateway = sDocDsGateway;
+        this.sDocFileAccessGateway = sDocFileAccessGateway;
         this.sDocOutputBoundary = sDocOutputBoundary;
         this.stateTracker = stateTracker;
     }
@@ -35,11 +39,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
                 model.getFilePath()
         );
 
-        String docID = sDocDsGateway.saveSolutionDocument(dsRequestModel);
+        String docId = sDocDsGateway.saveSolutionDocument(dsRequestModel);
+        sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, docId);
 
         SolutionDocument document = SolutionDocFactory.create(
                 model.getName(),
-                docID,
+                docId,
                 course,
                 user,
                 model.getRecordedScore(),

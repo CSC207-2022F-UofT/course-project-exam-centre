@@ -1,5 +1,8 @@
 package ia.gateways;
 
-public interface FileAccessGateway {
+import uc.doc.submitsolution.SubSDocFileAccessGateway;
+import uc.doc.submittest.SubTDocFileAccessGateway;
+
+public interface FileAccessGateway extends SubSDocFileAccessGateway, SubTDocFileAccessGateway{
     
 }

@@ -10,13 +10,17 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
     private final SubTDocDsGateway tDocDsGateway;
 
+    private final SubTDocFileAccessGateway tDocFileAccessGateway;
+
     private final StateTracker stateTracker;
 
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
+                                   SubTDocFileAccessGateway tDocFileAccessGateway,
                                    SubTDocOutputBoundary tDocOutputBoundary,
                                    StateTracker stateTracker) {
         this.tDocOutputBoundary = tDocOutputBoundary;
         this.tDocDsGateway = tDocDsGateway;
+        this.tDocFileAccessGateway = tDocFileAccessGateway;
         this.stateTracker = stateTracker;
     }
 
@@ -35,11 +39,12 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
                 requestModel.getFilePath()
         );
 
-        String docID = tDocDsGateway.saveTestDoc(dsRequestModel);
+        String docId = tDocDsGateway.saveTestDocument(dsRequestModel);
+        tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
         TestDocument document = TestDocFactory.create(
                 requestModel.getName(),
-                docID,
+                docId,
                 course,
                 user,
                 requestModel.getRecordedTime(),
@@ -49,7 +54,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
         course.addTest(document);
 
-        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docID, LocalDateTime.now());
+        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docId, LocalDateTime.now());
 
         return tDocOutputBoundary.prepareSuccessView(responseModel);
     }
