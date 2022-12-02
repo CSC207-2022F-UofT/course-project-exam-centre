@@ -14,8 +14,6 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
 import ia.gateways.FileAccessGateway;
-import uc.doc.submitsolution.SubSDocDsRequestModel;
-import uc.doc.submittest.SubTDocDsRequestModel;
 
 public class FtpAccessManager implements FileAccessGateway{
     /** Shows the FTP server's messages
@@ -97,7 +95,7 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param fileName file name
      * @return returns true if file upload is successful, false otherwise
      */
-    public static boolean uploadFile(String localFilePath, String fileName){
+    public boolean uploadFile(String localFilePath, String fileName){
         // Establish connection to FTP server
         FTPClient ftpClient = connectToServer();
         
@@ -131,18 +129,6 @@ public class FtpAccessManager implements FileAccessGateway{
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean uploadSolutionDocument(SubSDocDsRequestModel model, String docId) {
-        String filePath = model.getFilePath();
-        return uploadFile(filePath, docId);
-    }
-
-    @Override
-    public boolean uploadTestDocument(SubTDocDsRequestModel dsRequestModel, String docId) {
-        String filePath = dsRequestModel.getFilePath();
-        return uploadFile(filePath, docId);
     }
 
     /** Download a file from FTP server
