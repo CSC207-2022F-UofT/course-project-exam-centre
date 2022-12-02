@@ -301,10 +301,10 @@ public interface DatabaseAccessGateway
      * @return a response model representing the data of a user entity
      */
     @Override
-    default UserDbModel getUserByEmail(String email) {
+    default UserDbResponseModel getUserByEmail(String email) {
         List<String> rawUserData = getUserByEmailQuery(email);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -558,10 +558,10 @@ public interface DatabaseAccessGateway
      * requested course entity
      */
     @Override
-    default CourseDbModel getCourseById(String courseId) {
+    default CourseDbResponseModel getCourseById(String courseId) {
         List<String> rawCourseData = getCourseByIdQuery(courseId);
 
-        return new CourseDbModel(
+        return new CourseDbResponseModel(
                 rawCourseData.get(0),           // courseId
                 rawCourseData.get(1),           // courseCode
                 rawCourseData.get(2)            // courseName
@@ -576,10 +576,10 @@ public interface DatabaseAccessGateway
      * requested user entity
      */
     @Override
-    default UserDbModel getUserById(String userId) {
+    default UserDbResponseModel getUserById(String userId) {
         List<String> rawUserData = getUserByIdQuery(userId);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -606,13 +606,13 @@ public interface DatabaseAccessGateway
      * for a message entity
      */
     @Override
-    default List<MessageDbModel> getMessagesByParentId(String parentId) {
+    default List<MessageDbResponseModel> getMessagesByParentId(String parentId) {
         List<List<String>> rawMessagesData = getMessagesByParentIdQuery(parentId);
-        List<MessageDbModel> response = new ArrayList<>();
+        List<MessageDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawMessagesData) {
             response.add(
-                    new MessageDbModel(
+                    new MessageDbResponseModel(
                             row.get(0),                     // messageId
                             row.get(1),                     // solutionId
                             row.get(2),                     // userId
@@ -633,13 +633,13 @@ public interface DatabaseAccessGateway
      * for a test document entity
      */
     @Override
-    default List<TestDocDbModel> getTestDocsByCourseId(String courseId) {
+    default List<TestDocDbResponseModel> getTestDocsByCourseId(String courseId) {
         List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(courseId);
-        List<TestDocDbModel> response = new ArrayList<>();
+        List<TestDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawTestDocData) {
             response.add(
-                    new TestDocDbModel(
+                    new TestDocDbResponseModel(
                             row.get(0),                     // testId
                             row.get(1),                     // userId
                             row.get(2),                     // courseId
@@ -660,13 +660,13 @@ public interface DatabaseAccessGateway
      * for a solution document entity
      */
     @Override
-    default List<SolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+    default List<SolutionDocDbResponseModel> getSolutionDocsByTestId(String testId) {
         List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(testId);
-        List<SolutionDocDbModel> response = new ArrayList<>();
+        List<SolutionDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawSolutionDocData) {
             response.add(
-                    new SolutionDocDbModel(
+                    new SolutionDocDbResponseModel(
                             row.get(0),                     // solutionId
                             row.get(1),                     // testId
                             row.get(2),                     // userId

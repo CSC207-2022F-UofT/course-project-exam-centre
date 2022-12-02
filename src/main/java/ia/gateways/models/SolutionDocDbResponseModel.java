@@ -2,7 +2,7 @@ package ia.gateways.models;
 
 import uc.state.update.UpdateStateSolutionDocDbModel;
 
-public class SolutionDocDbModel implements UpdateStateSolutionDocDbModel {
+public class SolutionDocDbResponseModel implements UpdateStateSolutionDocDbModel {
 
     private final String solutionId;
     private final String testId;
@@ -13,14 +13,14 @@ public class SolutionDocDbModel implements UpdateStateSolutionDocDbModel {
     private final String rootMessageId;
     private final String solutionName;
 
-    public SolutionDocDbModel(String solutionId,
-                              String testId,
-                              String userId,
-                              Integer voteTotal,
-                              Float recordedScore,
-                              Float estimatedTime,
-                              String rootMessageId,
-                              String solutionName) {
+    public SolutionDocDbResponseModel(String solutionId,
+                                      String testId,
+                                      String userId,
+                                      Integer voteTotal,
+                                      Float recordedScore,
+                                      Float estimatedTime,
+                                      String rootMessageId,
+                                      String solutionName) {
         this.solutionId = solutionId;
         this.testId = testId;
         this.userId = userId;
