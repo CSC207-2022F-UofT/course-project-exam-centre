@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * A panel for new users to register
+ * TODO: add fields for first and last name
  */
 public class RegisterPanel extends JPanel implements ActionListener {
     private UserRegisterController controller;
@@ -147,7 +148,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
             } else {
                 String email = emailTextField.getText();
                 String password = new String(passwordField1.getPassword());
-                controller.create(email, password);
+//                controller.create(email, password); TODO
             }
         }
     }
