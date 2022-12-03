@@ -285,8 +285,10 @@ public interface DatabaseAccessGateway
     *
     * @param solutionId    the solution ID of the solution document to be updated
     * @param voteTotal        the vote total to update the solution document to
+    *
+    * @return true if updating of vote was successful
     */
-   void updateSolutionDocVoteQuery(
+   boolean updateSolutionDocVoteQuery(
            String solutionId,
            int voteTotal);
 
@@ -753,10 +755,9 @@ public interface DatabaseAccessGateway
      */
     @Override
     default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
-        updateSolutionDocVoteQuery(
+        return updateSolutionDocVoteQuery(
                 requestModel.getSolutionId(),
                 requestModel.getVote()
         );
-        return true;
     }
 }

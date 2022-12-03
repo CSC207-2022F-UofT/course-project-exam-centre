@@ -678,6 +678,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
      *
      * @return total votes of solution document
      */
+    @Override
     public int getVoteTotalBySolutionIdQuery(String solutionId){
         int voteTotal = 0;
         String query = "SELECT vote_total FROM ec.solutions WHERE solution_id='" + solutionId + "';";
@@ -699,7 +700,8 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
      *
      * @return whether the update of total votes was successful
      */
-    public boolean updateSolutionDocVote(String solutionId, int voteTotal){
+    @Override
+    public boolean updateSolutionDocVoteQuery(String solutionId, int voteTotal){
         String query = "UPDATE ec.solutions SET vote_total=" + voteTotal + " WHERE solution_id='" + solutionId + "';";
         try (Statement statement = db.createStatement()) {
             statement.executeQuery(query);
