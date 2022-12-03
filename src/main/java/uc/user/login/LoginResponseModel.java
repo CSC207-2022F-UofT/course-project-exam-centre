@@ -1,17 +1,10 @@
 package uc.user.login;
 
 public class LoginResponseModel {
-    private boolean loginStatus;
     private String userId;
 
-    public LoginResponseModel(boolean loginStatus, String userId) {
-
-        this.loginStatus = loginStatus;
+    public LoginResponseModel(String userId) {
         this.userId = userId;
-    }
-
-    public boolean isLoggedIn() {
-        return loginStatus;
     }
 
     public String getUserId() {
