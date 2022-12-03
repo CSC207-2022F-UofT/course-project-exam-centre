@@ -13,6 +13,13 @@ public class CourseRegisterInteractor implements CRegisterlnputBoundary {
     final CRegisterDsGateway gateway;
     final CourseFactory courseFactory;
 
+    /** Constructs an instance of CourseRegisterInteractor that contains an OutputBoundary,
+     * Gateway and courseFactory
+     *
+     * @param presenter
+     * @param gateway
+     * @param courseFactory
+     */
     public CourseRegisterInteractor(CRegisterPresenter presenter, CRegisterDsGateway gateway, CourseFactory courseFactory) {
         this.presenter = presenter;
         this.gateway = gateway;
