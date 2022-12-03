@@ -10,7 +10,7 @@ public interface LoginDsGateway {
 
     /**
      * @param email
-     * @return LoginDsResponseModel corresponding to the email
+     * @return a LoginDsResponseModel corresponding to the email
      */
     LoginDsResponseModel getUser(String email);
 }

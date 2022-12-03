@@ -6,7 +6,7 @@ import uc.user.login.LoginResponseModel;
 public class LoginPresenter implements LoginOutputBoundary {
     /**
      * @param responseModel
-     * @return the ResponseModel corresponding to successful log in
+     * @return a ResponseModel corresponding to successful log in
      */
     @Override
     public LoginResponseModel prepareSuccessView(LoginResponseModel responseModel) {
