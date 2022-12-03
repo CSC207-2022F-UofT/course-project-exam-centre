@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UpdateCourseMembershipScreen extends JPanel implements ActionListener {
@@ -15,6 +16,11 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
      * A list of all the labels and buttons on the screen for a dynamically formed list
      */
     HashMap<JLabel, JCheckBox> courseDisplay;
+
+    /**
+     * The ID of the user updating their course membership
+     */
+    String userID;
 
     /**
      * The map of course IDs and their names
@@ -32,9 +38,10 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
      * @param controller The controller for handling course addition
      */
 
-    public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller, HashMap<String, String> courseList){
+    public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller, String userID, HashMap<String, String> courseList){
         this.updateCourseMembershipController = controller;
         this.courseList = courseList;
+        this.userID = userID;
 
         courseDisplay = new HashMap<JLabel, JCheckBox>();
 
@@ -63,11 +70,13 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
     public void actionPerformed(ActionEvent event) {
         System.out.println("Click: " + event);
         try {
+            ArrayList<String> coursesToAdd = new ArrayList<>();
             for (JLabel courseID : courseDisplay.keySet()) {
                 if (courseDisplay.get(courseID).isSelected()) {
-                    updateCourseMembershipController.registerCourse(courseDisplay.get(courseID).getText(), courseID.getText());
+                  coursesToAdd.add(courseID.getText());
                 }
             }
+            updateCourseMembershipController.registerCourse(userID, coursesToAdd);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
