@@ -1,10 +1,8 @@
 package fworks.views;
 
-import ia.controllers.SolutionDocController;
 import ia.controllers.UpdateCourseMembershipController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
