@@ -24,8 +24,8 @@ public class Main {
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
         // Initialise JFrame view
-        new WelcomeDialog();
-        new TestFrame();
+        // new WelcomeDialog();
+        // new TestFrame();
 
         // Load local config file
         try {
@@ -62,6 +62,7 @@ public class Main {
             );
 
             // Construct entity factories
+            //TODO: make factory methods non-static
             CourseFactory courseFactory             = new CourseFactory();
             MessageFactory messageFactory           = new MessageFactory();
             MessageTreeFactory messageTreeFactory   = new MessageTreeFactory();

@@ -19,7 +19,6 @@ public class FtpAccessManager implements FileAccessGateway{
     /** Shows the FTP server's messages
      *
      * @param ftpClient FTPClient object
-     * @return returns FTP server's message
      */
     private static void showServerReply(FTPClient ftpClient) {
         String[] replies = ftpClient.getReplyStrings();
@@ -95,7 +94,7 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param fileName file name
      * @return returns true if file upload is successful, false otherwise
      */
-    public static boolean uploadFile(String localFilePath, String fileName){
+    public boolean uploadFile(String localFilePath, String fileName){
         // Establish connection to FTP server
         FTPClient ftpClient = connectToServer();
         
@@ -111,7 +110,7 @@ public class FtpAccessManager implements FileAccessGateway{
             boolean done = ftpClient.storeFile(remoteFile, inputStream);
             inputStream.close();
             if (done) {
-                return true; // TODO: if true, insert into database
+                return true;
             }
             
         } catch (IOException ex) {

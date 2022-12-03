@@ -1,9 +1,14 @@
 package uc.user.logout;
 
 /**
- * Defines a method to change the current view to the login screen.
+ * LogoutOutputBoundary provides methods for the LogoutInteractor.
+ * They should be implemented by a presenter.
  * @layer use cases
  */
 public interface LogoutOutputBoundary {
+
+    /**
+     * Prepare a login view.
+     */
     void prepareLoginView ();
 }

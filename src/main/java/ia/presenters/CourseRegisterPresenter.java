@@ -2,10 +2,7 @@ package ia.presenters;
 
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
-import uc.course.register.CourseRegisterException;
-import uc.user.login.LoginFailedException;
-import uc.user.login.LoginOutputBoundary;
-import uc.user.login.LoginResponseModel;
+import ia.exceptions.CourseRegisterException;
 
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
     @Override
