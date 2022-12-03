@@ -6,12 +6,27 @@ import java.time.LocalDateTime;
 
 public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
+    /**
+     * The solution doc submission output boundary
+     */
     private final SubSDocOutputBoundary sDocOutputBoundary;
 
+    /**
+     * An instance of the solution doc submission gateway
+     */
     private final SubSDocDsGateway sDocDsGateway;
 
+    /**
+     * The program's state tracker for getting entities from their IDs
+     */
     private final StateTracker stateTracker;
 
+    /**
+     * Creates an interactor for the solution doc submission use case
+     * @param sDocDsGateway The solution document submission data storage gateway
+     * @param sDocOutputBoundary The solution document submission use case output boundary
+     * @param stateTracker The app's state tracker
+     */
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
                                        SubSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker) {
@@ -20,6 +35,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
         this.stateTracker = stateTracker;
     }
 
+    /**
+     * Takes in the needed information for and creates a new SolutionDoc entity
+     * @param model The solution document submission model containing all the relevant information for creating a new
+     *              solution doc entity
+     * @return If completed, the sucess view response model
+     */
     @Override
     public SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model) {
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());
