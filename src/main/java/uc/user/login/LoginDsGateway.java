@@ -1,8 +1,16 @@
 package uc.user.login;
 
 public interface LoginDsGateway {
-    /** Return true if there is an email with corresponding password
+    /**
+     * @param email
+     * @param password
+     * @return true iff there is a user with a matching email and password
      */
-    boolean verifyLoginCredentials(String email, String password);
-    LoginDsResponseModel getUserInfo(String email);
+    boolean authenticate(String email, String password);
+
+    /**
+     * @param email
+     * @return LoginDsResponseModel corresponding to the email
+     */
+    LoginDsResponseModel getUser(String email);
 }
