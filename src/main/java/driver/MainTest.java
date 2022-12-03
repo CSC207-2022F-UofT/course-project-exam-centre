@@ -1,15 +1,35 @@
 package driver;
 
-import fworks.views.SolutionFrame;
-import fworks.views.TestFrame;
-import fworks.views.WelcomeDialog;
+import entities.*;
+import fworks.views.*;
+import ia.controllers.*;
+import ia.presenters.*;
+import uc.user.login.*;
+import uc.user.register.*;
 
 /**
  * A driver for testing the UI
  */
 public class MainTest {
     public static void main(String[] args) {
-        new WelcomeDialog(); // Register/Log-in window
+        // TODO: is it okay to construct things here?
+
+        StateTracker stateTracker = new StateTracker();
+        UserFactory userFactory = new UserFactory(); // TODO: no need to construct if static
+
+        LoginDsGateway loginDsGateway = new LoginDsGateway(); // TODO
+        LoginPresenter loginPresenter = new LoginPresenter();
+        LoginInteractor loginInteractor = new LoginInteractor(stateTracker, loginDsGateway,
+                loginPresenter, userFactory);
+        LoginController loginController = new LoginController(loginInteractor);
+
+        UserRegisterDsGateway userRegisterDsGateway = new UserRegisterDsGateway(); // TODO
+        UserRegisterResponseFormatter userRegisterResponseFormatter = new UserRegisterResponseFormatter();
+        UserRegisterInteractor userRegisterInteractor = new UserRegisterInteractor(stateTracker, userRegisterDsGateway,
+                userRegisterResponseFormatter, userFactory); // TODO
+        UserRegisterController userRegisterController = new UserRegisterController(userRegisterInteractor);
+
+        new WelcomeDialog(loginController, userRegisterController); // Register/Log-in window
         new TestFrame(); // View test window
 //        new SolutionFrame(); // View solutions window
     }
