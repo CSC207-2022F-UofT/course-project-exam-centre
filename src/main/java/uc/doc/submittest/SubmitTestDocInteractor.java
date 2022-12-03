@@ -6,41 +6,24 @@ import java.time.LocalDateTime;
 
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
-    /**
-     * The output boundary for the test document submission use case
-     */
     private final SubTDocOutputBoundary tDocOutputBoundary;
 
-    /**
-     * The gateway for the test document submission use case
-     */
     private final SubTDocDsGateway tDocDsGateway;
 
-    /**
-     * The app's state tracker for finding courses/documents based on their ID
-     */
+    private final SubTDocFileAccessGateway tDocFileAccessGateway;
+
     private final StateTracker stateTracker;
 
-    /**
-     * Creates a new interactor instance for submission of a new test document
-     * @param tDocDsGateway The test document submission gateway
-     * @param tDocOutputBoundary The test document output boundary
-     * @param stateTracker The app's state tracker for refrencing entites
-     */
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
+                                   SubTDocFileAccessGateway tDocFileAccessGateway,
                                    SubTDocOutputBoundary tDocOutputBoundary,
                                    StateTracker stateTracker) {
         this.tDocOutputBoundary = tDocOutputBoundary;
         this.tDocDsGateway = tDocDsGateway;
+        this.tDocFileAccessGateway = tDocFileAccessGateway;
         this.stateTracker = stateTracker;
     }
 
-    /**
-     * Takes in information and creates a new TestDocument entity and returns feedback for the creation process
-     * @param requestModel The request model containing the relevant information for the creation of a new TestDocument
-     *                     entity
-     * @return The response model creation of this entity
-     */
     @Override
     public SubmitTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
@@ -56,11 +39,13 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
                 requestModel.getFilePath()
         );
 
-        String docID = tDocDsGateway.saveTestDocument(dsRequestModel);
+        String docId = tDocDsGateway.saveTestDocument(dsRequestModel);
+        
+        tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
         TestDocument document = TestDocFactory.create(
                 requestModel.getName(),
-                docID,
+                docId,
                 course,
                 user,
                 requestModel.getRecordedTime(),
@@ -70,7 +55,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
         course.addTest(document);
 
-        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docID, LocalDateTime.now());
+        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docId, LocalDateTime.now());
 
         return tDocOutputBoundary.prepareSuccessView(responseModel);
     }
