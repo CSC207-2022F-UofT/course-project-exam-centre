@@ -12,8 +12,8 @@ public class LoginController {
     }
 
     /**
-     * @param email
-     * @param password
+     * @param email the email for the user login attempt
+     * @param password the plaintext password for the user login attempt
      * @return the LoginResponseModel
      */
     public LoginResponseModel logIn(String email, String password) {

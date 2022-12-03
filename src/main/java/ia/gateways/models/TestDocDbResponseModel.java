@@ -2,7 +2,7 @@ package ia.gateways.models;
 
 import uc.state.update.UpdateStateTestDocDbModel;
 
-public class TestDocDbModel implements UpdateStateTestDocDbModel {
+public class TestDocDbResponseModel implements UpdateStateTestDocDbModel {
 
     private final String testId;
     private final String userId;
@@ -11,12 +11,12 @@ public class TestDocDbModel implements UpdateStateTestDocDbModel {
     private final Float estimatedTime;
     private final String testName;
 
-    public TestDocDbModel(String testId,
-                          String userId,
-                          String testType,
-                          Integer numOfQuestions,
-                          Float estimatedTime,
-                          String testName) {
+    public TestDocDbResponseModel(String testId,
+                                  String userId,
+                                  String testType,
+                                  Integer numOfQuestions,
+                                  Float estimatedTime,
+                                  String testName) {
         this.testId = testId;
         this.userId = userId;
         this.testType = testType;

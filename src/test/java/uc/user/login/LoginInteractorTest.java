@@ -48,7 +48,7 @@ public class LoginInteractorTest {
 
         UserFactory userFactory = new UserFactory();
         StateTracker stateTracker = new StateTracker();
-        LoginInteractor interactor = new LoginInteractor(userFactory, presenter, dsGateway, stateTracker);
+        LoginInteractor interactor = new LoginInteractor(stateTracker, dsGateway, presenter, userFactory);
 
         // run the use case, supposing the user input is as follows
         LoginRequestModel requestModel = new LoginRequestModel("firstname@mail.uoftears.ca", ";-;");
@@ -97,7 +97,7 @@ public class LoginInteractorTest {
 
         UserFactory userFactory = new UserFactory();
         StateTracker stateTracker = new StateTracker();
-        LoginInteractor interactor = new LoginInteractor(userFactory, presenter, dsGateway, stateTracker);
+        LoginInteractor interactor = new LoginInteractor(stateTracker, dsGateway, presenter, userFactory);
 
         // run the use case, supposing the user input is as follows
         LoginRequestModel requestModel = new LoginRequestModel("firstname@mail.uoftears.ca", ":(");

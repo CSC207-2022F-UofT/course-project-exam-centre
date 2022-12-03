@@ -1,9 +1,12 @@
 package driver;
 
+import entities.*;
 import fworks.da.PostgresAccessManager;
 import fworks.views.TestFrame;
 import fworks.views.WelcomeDialog;
 import ia.gateways.DatabaseAccessGateway;
+import uc.course.register.CRegisterInputBoundary;
+import uc.course.register.CourseRegisterInteractor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +18,6 @@ public class Main {
     public static void main(String[] args) {
 
         Properties config = new Properties();
-        DatabaseAccessGateway db;
 
         // Welcome Message :D
         System.out.println("\n====    U of T Exam Centre     ===");
@@ -48,9 +50,9 @@ public class Main {
         String dbUser = System.getenv().getOrDefault(
                 "DB_USER", config.getProperty("DB_USER"));
 
-        // Initialise Database Access Gateway
+        // Initialise database access gateway
         try {
-            db = new PostgresAccessManager(
+            DatabaseAccessGateway dbGateway = new PostgresAccessManager(
                     dbHostname,
                     dbPort,
                     dbUser,
@@ -58,7 +60,24 @@ public class Main {
                     dbPassword,
                     dbSslStatus
             );
-            /* TODO: Inject this into controllers */
+
+            // Construct entity factories
+            //TODO: make factory methods non-static
+            CourseFactory courseFactory             = new CourseFactory();
+            MessageFactory messageFactory           = new MessageFactory();
+            MessageTreeFactory messageTreeFactory   = new MessageTreeFactory();
+            SolutionDocFactory solutionDocFactory   = new SolutionDocFactory();
+            TestDocFactory testDocFactory           = new TestDocFactory();
+            StateTrackerFactory stateTrackerFactory = new StateTrackerFactory();
+            UserFactory userFactory                 = new UserFactory();
+
+            // Construct state tracker entity
+            StateTracker currentState = stateTrackerFactory.create();
+
+            // Construct use case presenters
+
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
