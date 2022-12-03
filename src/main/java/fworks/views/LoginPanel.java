@@ -1,19 +1,25 @@
 package fworks.views;
 
+import ia.controllers.LoginController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The panel component for existing users to log in
+ * A panel for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
-    private JTextField usernameTextField;
+    private LoginController controller;
+
+    private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cancelButton;
     private JButton loginButton;
 
-    public LoginPanel() {
+    public LoginPanel(LoginController controller) {
+        this.controller = controller;
+
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -27,21 +33,10 @@ public class LoginPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * @return the username
+     * @return a panel with text fields
      */
-    public String getUsername() {
-        return usernameTextField.getText();
-    }
-
-    /**
-     * @return the password
-     */
-    public char[] getPassword() {
-        return passwordField.getPassword();
-    }
-
     private JPanel createFieldsPanel() {
-        usernameTextField = new JTextField(15);
+        emailTextField = new JTextField(15);
         passwordField = new JPasswordField(15);
 
         JPanel panel = new JPanel();
@@ -49,25 +44,27 @@ public class LoginPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
-        // First row
+        // Row 1, column 1
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
-        panel.add(new JLabel("Enter username"), gridBagConstraints);
+        panel.add(new JLabel("Enter email"), gridBagConstraints);
 
+        // Row 1, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
-        panel.add(usernameTextField, gridBagConstraints);
+        panel.add(emailTextField, gridBagConstraints);
 
-        // Second row
+        // Row 2, column 1
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password"), gridBagConstraints);
 
+        // Row 2, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
@@ -76,6 +73,9 @@ public class LoginPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return a panel with two buttons: cancel and log in
+     */
     private JPanel createButtonsPanel() {
         cancelButton = new JButton("Cancel");
         loginButton = new JButton("Log in");
@@ -91,13 +91,32 @@ public class LoginPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return true iff any field is blank
+     */
+    private boolean isBlank() {
+        String email = emailTextField.getText();
+        String password = new String(passwordField.getPassword());
+        return email.isBlank() || password.isBlank();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel
+            System.exit(0);
         } else if (clicked == loginButton) {
-            // TODO: Log in
+            if (isBlank()) {
+                // TODO: blank field(s)
+            } else {
+                String email = emailTextField.getText();
+                String password = new String(passwordField.getPassword());
+                try {
+                    controller.logIn(email, password);
+                } catch (Exception exception) {
+                    // TODO: handle error
+                }
+            }
         }
     }
 }

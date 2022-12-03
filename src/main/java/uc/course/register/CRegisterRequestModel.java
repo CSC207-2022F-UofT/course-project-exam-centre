@@ -1,7 +1,6 @@
 package uc.course.register;
 
 public class CRegisterRequestModel {
-    public String courseId;
     private String courseName;
     private String courseCode;
 
@@ -16,9 +15,5 @@ public class CRegisterRequestModel {
 
     public String getCourseCode() {
         return courseCode;
-    }
-
-    public String getCourseId() {
-        return courseId;
     }
 }

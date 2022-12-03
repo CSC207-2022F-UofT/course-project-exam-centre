@@ -1,5 +1,5 @@
 package uc.course.register;
 
-public interface CRegisterlnputBoundary {
+public interface CRegisterInputBoundary {
     CRegisterResponseModel registerCourse(CRegisterRequestModel requestModel);
 }

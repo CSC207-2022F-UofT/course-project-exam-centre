@@ -4,7 +4,7 @@ import uc.state.update.UpdateStateMessageDbModel;
 
 import java.time.LocalDateTime;
 
-public class MessageDbModel implements UpdateStateMessageDbModel {
+public class MessageDbResponseModel implements UpdateStateMessageDbModel {
 
     private final String messageId;
     private final String solutionId;
@@ -13,12 +13,12 @@ public class MessageDbModel implements UpdateStateMessageDbModel {
     private final String messageBody;
     private final LocalDateTime messageSentTimestamp;
 
-    public MessageDbModel(String messageId,
-                          String solutionId,
-                          String userId,
-                          String parentId,
-                          String messageBody,
-                          LocalDateTime messageSentTimestamp) {
+    public MessageDbResponseModel(String messageId,
+                                  String solutionId,
+                                  String userId,
+                                  String parentId,
+                                  String messageBody,
+                                  LocalDateTime messageSentTimestamp) {
         this.messageId = messageId;
         this.solutionId = solutionId;
         this.userId = userId;

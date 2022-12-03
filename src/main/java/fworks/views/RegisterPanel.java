@@ -1,20 +1,28 @@
 package fworks.views;
 
+import ia.controllers.UserRegisterController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 
 /**
- * The panel component for new users to register
+ * A panel for new users to register
+ * TODO: add fields for first and last name
  */
 public class RegisterPanel extends JPanel implements ActionListener {
-    private JTextField usernameTextField;
+    private UserRegisterController controller;
+
+    private JTextField emailTextField;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
     private JButton cancelButton;
     private JButton registerButton;
 
-    public RegisterPanel() {
+    public RegisterPanel(UserRegisterController controller) {
+        this.controller = controller;
+
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -28,35 +36,10 @@ public class RegisterPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * @return the username
+     * @return a panel with text fields
      */
-    public String getUsername() {
-        return usernameTextField.getText();
-    }
-
-    /**
-     * @return the first password
-     */
-    public char[] getPassword1() {
-        return passwordField1.getPassword();
-    }
-
-    /**
-     * @return the repeated password
-     */
-    public char[] getPassword2() {
-        return passwordField2.getPassword();
-    }
-
-    /**
-     * @return true iff the two passwords match
-     */
-    public boolean comparePassword() {
-        return getPassword1() == getPassword2();
-    }
-
     private JPanel createFieldsPanel() {
-        usernameTextField = new JTextField(15);
+        emailTextField = new JTextField(15);
         passwordField1 = new JPasswordField(15);
         passwordField2 = new JPasswordField(15);
 
@@ -65,37 +48,40 @@ public class RegisterPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
-        // First row
+        // Row 1, column 1
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
-        panel.add(new JLabel("Enter username"), gridBagConstraints);
+        panel.add(new JLabel("Enter email"), gridBagConstraints);
 
+        // Row 1, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
-        panel.add(usernameTextField, gridBagConstraints);
+        panel.add(emailTextField, gridBagConstraints);
 
-        // Second row
+        // Row 2, column 1
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password"), gridBagConstraints);
 
+        // Row 2, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(passwordField1, gridBagConstraints);
 
-        // Third row
+        // Row 3, column 1
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password again"), gridBagConstraints);
 
+        // Row 3, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
@@ -104,6 +90,9 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return a panel with two buttons: cancel and register
+     */
     private JPanel createButtonsPanel() {
         cancelButton = new JButton("Cancel");
         registerButton = new JButton("Register");
@@ -119,13 +108,48 @@ public class RegisterPanel extends JPanel implements ActionListener {
         return panel;
     }
 
+    /**
+     * @return true iff any field is blank
+     */
+    private boolean isBlank() {
+        String email = emailTextField.getText();
+        String password1 = new String(passwordField1.getPassword());
+        String password2 = new String(passwordField2.getPassword());
+        return email.isBlank() || password1.isBlank() || password2.isBlank();
+    }
+
+    /**
+     * @return true iff the email is valid
+     */
+    private boolean isValidEmail() {
+        String email = emailTextField.getText();
+        return Pattern.matches("^\\S+@\\S+\\.\\S$", email);
+    }
+
+    /**
+     * @return true iff the two passwords match
+     */
+    private boolean passwordsMatch() {
+        return passwordField1.getPassword() == passwordField2.getPassword();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         JButton clicked = (JButton) actionEvent.getSource();
         if (clicked == cancelButton) {
-            // TODO: Cancel
+            System.exit(0);
         } else if (clicked == registerButton) {
-            // TODO: Register
+            if (isBlank()) {
+                // TODO: blank field(s)
+            } else if (!isValidEmail()) {
+                // TODO: invalid email
+            } else if (!passwordsMatch()) {
+                // TODO: non-matching passwords
+            } else {
+                String email = emailTextField.getText();
+                String password = new String(passwordField1.getPassword());
+//                controller.create(email, password); TODO
+            }
         }
     }
 }

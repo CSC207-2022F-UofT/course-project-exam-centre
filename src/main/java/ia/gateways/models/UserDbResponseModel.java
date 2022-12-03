@@ -3,7 +3,7 @@ package ia.gateways.models;
 import uc.state.update.UpdateStateUserDbModel;
 import uc.user.login.LoginDsResponseModel;
 
-public class UserDbModel
+public class UserDbResponseModel
         implements UpdateStateUserDbModel, LoginDsResponseModel {
 
     private final String userId;
@@ -11,10 +11,10 @@ public class UserDbModel
     private final String firstName;
     private final String lastName;
 
-    public UserDbModel(String userId,
-                       String email,
-                       String firstName,
-                       String lastName) {
+    public UserDbResponseModel(String userId,
+                               String email,
+                               String firstName,
+                               String lastName) {
         this.userId = userId;
         this.email = email;
         this.firstName = firstName;

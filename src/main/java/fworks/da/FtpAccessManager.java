@@ -19,7 +19,6 @@ public class FtpAccessManager implements FileAccessGateway{
     /** Shows the FTP server's messages
      *
      * @param ftpClient FTPClient object
-     * @return returns FTP server's message
      */
     private static void showServerReply(FTPClient ftpClient) {
         String[] replies = ftpClient.getReplyStrings();
