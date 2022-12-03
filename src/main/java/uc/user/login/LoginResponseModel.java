@@ -19,10 +19,16 @@ public class LoginResponseModel {
         this.userId = userId;
     }
 
+    /**
+     * @return true if user successfully logged in
+     */
     public boolean isLoggedIn() {
         return loginStatus;
     }
 
+    /**
+     * @return userId of logged-in user
+     */
     public String getUserId() {
         return userId;
     }

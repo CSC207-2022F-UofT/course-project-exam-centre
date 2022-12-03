@@ -19,10 +19,16 @@ public class LoginRequestModel {
         this.password = password;
     }
 
+    /**
+     * @return email inputted by user
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @return password inputted by user
+     */
     public String getPassword() {
         return password;
     }

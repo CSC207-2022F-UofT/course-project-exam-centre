@@ -58,5 +58,4 @@ public class LoginInteractor implements LoginInputBoundary {
                     "or the email entered is not associated with an account.");
         }
     }
-
 }
