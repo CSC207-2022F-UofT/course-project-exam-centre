@@ -28,10 +28,10 @@ public class LoginInteractor implements LoginInputBoundary {
         String email = requestModel.getEmail();
         String password = requestModel.getPassword();
 
-        if (!dsGateway.authenticate(email, password)) {
+        if (!dsGateway.verifyLoginCredentials(email, password)) {
             return outputBoundary.prepareFailView("Could not find a user with a matching email and password");
         } else {
-            LoginDsResponseModel dsResponseModel = dsGateway.getUser(email);
+            LoginDsResponseModel dsResponseModel = dsGateway.getUserByEmail(email);
 
             String userId = dsResponseModel.getUserId();
             String firstName = dsResponseModel.getFirstName();
