@@ -1,5 +1,9 @@
 package uc.user.login;
 
 public interface LoginInputBoundary {
-    LoginResponseModel logIn (LoginRequestModel requestModel);
+    /**
+     * @param requestModel
+     * @return a LoginResponseModel corresponding to the requestModel
+     */
+    LoginResponseModel logIn(LoginRequestModel requestModel);
 }

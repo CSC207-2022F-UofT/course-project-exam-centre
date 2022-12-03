@@ -1,21 +1,25 @@
 package fworks.views;
 
+import ia.controllers.LoginController;
+import ia.controllers.UserRegisterController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The dialog for users to register or log in
+ * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
-    private RegisterPanel registerPanel;
     private LoginPanel loginPanel;
+    private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
-    public WelcomeDialog() {
-        registerPanel = new RegisterPanel();
-        loginPanel = new LoginPanel();
+    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
+        loginPanel = new LoginPanel(loginController);
+        registerPanel = new RegisterPanel(userRegisterController);
+
         JPanel buttonsPanel = createButtonsPanel();
 
         setLayout(new BorderLayout());
@@ -33,12 +37,8 @@ public class WelcomeDialog extends JDialog implements ActionListener {
     }
 
     /**
-     * @return true iff new user is selected
+     * @return a panel with two radio buttons: new user and returning user
      */
-    public boolean isNewUser() {
-        return newUserRadioButton.isSelected();
-    }
-
     private JPanel createButtonsPanel() {
         newUserRadioButton = new JRadioButton("New user");
         returningUserRadioButton = new JRadioButton("Returning user");
