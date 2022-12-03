@@ -11,22 +11,22 @@ import entities.UserFactory;
 public class LoginInteractor implements LoginInputBoundary {
     private StateTracker stateTracker;
     private LoginDsGateway dsGateway;
-    private LoginOutputBoundary presenter;
+    private LoginOutputBoundary outputBoundary;
     private UserFactory userFactory;
 
     /**
      * Construct a LoginInteractor object.
      * @param userFactory creates User objects
-     * @param presenter has method to update the view to login success/failure view
+     * @param outputBoundary has method to update the view to login success/failure view
      * @param dsGateway has method to verify login credentials and get user information
      * @param stateTracker entity to be mutated by logIn method
      */
-    public LoginInteractor(UserFactory userFactory, LoginOutputBoundary presenter,
-                           LoginDsGateway dsGateway, StateTracker stateTracker) {
-        this.userFactory = userFactory;
-        this.presenter = presenter;
-        this.dsGateway = dsGateway;
+    public LoginInteractor(StateTracker stateTracker, LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary,
+                           UserFactory userFactory) {
         this.stateTracker = stateTracker;
+        this.dsGateway = dsGateway;
+        this.outputBoundary = outputBoundary;
+        this.userFactory = userFactory;
     }
 
     /**
@@ -41,7 +41,7 @@ public class LoginInteractor implements LoginInputBoundary {
         String password = requestModel.getPassword();
 
         if (!dsGateway.verifyLoginCredentials(email, password)) {
-            return presenter.prepareFailView("Could not find a user with a matching email and password");
+            return outputBoundary.prepareFailView("Could not find a user with a matching email and password");
         } else {
             LoginDsResponseModel dsResponseModel = dsGateway.getUserByEmail(email);
 
@@ -52,7 +52,7 @@ public class LoginInteractor implements LoginInputBoundary {
             stateTracker.setCurrentUser(user);
 
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);
-            return presenter.prepareSuccessView(responseModel);
+            return outputBoundary.prepareSuccessView(responseModel);
         }
     }
 }
