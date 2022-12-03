@@ -2,7 +2,7 @@ package uc.user.login;
 
 /**
  * LoginOutputBoundary provides methods for an interactor.
- * They should be implemented by LoginPresenter.
+ * They should be implemented by a presenter.
  * @layer use cases
  */
 public interface LoginOutputBoundary {

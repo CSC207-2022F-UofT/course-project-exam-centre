@@ -49,8 +49,8 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
 
         String userId = userDsGateway.saveUser(userDsModel);
 
-        User user = UserFactory.create(userId, requestModel.getFirstName(),
-                requestModel.getLastName(), requestModel.getEmail());
+        User user = UserFactory.create(requestModel.getFirstName(),
+                requestModel.getLastName(), requestModel.getEmail(), userId);
 
         LocalDateTime now = LocalDateTime.now();
 
