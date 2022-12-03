@@ -10,6 +10,8 @@ import uc.doc.submitsolution.SubSDocDsGateway;
 import uc.doc.submitsolution.SubSDocDsRequestModel;
 import uc.doc.submittest.SubTDocDsGateway;
 import uc.doc.submittest.SubTDocDsRequestModel;
+import uc.doc.voteonsolution.VoteSDocDsGateway;
+import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
 import uc.user.login.LoginDsGateway;
 import uc.user.register.URegisterDsGateway;
@@ -48,7 +50,8 @@ public interface DatabaseAccessGateway
         SubSDocDsGateway,
         SubTDocDsGateway,
         LoginDsGateway,
-        URegisterDsGateway {
+        URegisterDsGateway,
+        VoteSDocDsGateway {
 
     // Query methods to be implemented by a concrete database
     // access manager class in Drivers and Frameworks layer.
@@ -146,6 +149,14 @@ public interface DatabaseAccessGateway
      * @return a string representing a unique course ID
      */
     String getCourseIdByTestIdQuery(String testId);
+
+    /** Queries database to get the total votes of a solution document
+     *  corresponding to the given solution ID.
+     *
+     * @param solutionId the solution ID of the solution document being queried
+     * @return an int representing the total votes of the solution document
+     */
+    int getVoteTotalBySolutionIdQuery(String solutionId);
 
     /** Queries database to save data for new solution document entity.
      *
@@ -269,6 +280,16 @@ public interface DatabaseAccessGateway
             String email,
             String hashedPassword
     );
+        
+    /** Queries database to update the total number of votes of the solution document.
+    *
+    * @param solutionId    the solution ID of the solution document to be updated
+    * @param voteTotal        the vote total to update the solution document to
+    */
+   void updateSolutionDocVoteQuery(
+           String solutionId,
+           int voteTotal);
+
 
     // Default methods implementing use case database gateways
     // Note: some methods implement methods across multiple use case gateways
@@ -723,4 +744,19 @@ public interface DatabaseAccessGateway
         }
     }
 
+    /** Updates the total votes for a solution document.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the solution document to be updated.
+     *
+     * @return true if update was successful, false otherwise
+     */
+    @Override
+    default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
+        updateSolutionDocVoteQuery(
+                requestModel.getSolutionId(),
+                requestModel.getVote()
+        );
+        return true;
+    }
 }
