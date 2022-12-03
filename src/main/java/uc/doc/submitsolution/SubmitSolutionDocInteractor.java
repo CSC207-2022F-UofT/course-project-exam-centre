@@ -10,12 +10,16 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
     private final SubSDocDsGateway sDocDsGateway;
 
+    private final SubSDocFileAccessGateway sDocFileAccessGateway;
+
     private final StateTracker stateTracker;
 
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
+                                       SubSDocFileAccessGateway sDocFileAccessGateway,
                                        SubSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker) {
         this.sDocDsGateway = sDocDsGateway;
+        this.sDocFileAccessGateway = sDocFileAccessGateway;
         this.sDocOutputBoundary = sDocOutputBoundary;
         this.stateTracker = stateTracker;
     }
@@ -23,29 +27,42 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
     @Override
     public SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model) {
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());
-        User user = stateTracker.getUserIfTracked(model.getUserID());
+        User user = stateTracker.getCurrentUser();
         TestDocument parentTest = course.getTest(model.getParentTestID());
 
         SubSDocDsRequestModel dsRequestModel = new SubSDocDsRequestModel(
                 model.getName(),
-                model.getUserID(),
+                user.getId(),
                 model.getRecordedScore(),
                 model.getCourseID(),
                 model.getParentTestID(),
-                model.getFilePath()
+                model.getFilePath(),
+                "",
+                0,
+                model.getRecordedTime()
         );
 
-        String docID = sDocDsGateway.saveSolutionDocument(dsRequestModel);
+        String solutionId = sDocDsGateway.saveSolutionDocument(dsRequestModel);
+        String rootMessageId = sDocDsGateway.addRootMessage(
+                solutionId,
+                user.getId()
+        );
+
+        sDocDsGateway.updateRootMessageIdOfSolution(
+                solutionId,
+                rootMessageId);
+
+        sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
         SolutionDocument document = SolutionDocFactory.create(
                 model.getName(),
-                docID,
+                solutionId,
                 course,
                 user,
                 model.getRecordedScore(),
                 parentTest,
                 model.getRecordedTime(),
-                model.getRootID());
+                rootMessageId);
 
         parentTest.addUpdateSolution(document);
 
