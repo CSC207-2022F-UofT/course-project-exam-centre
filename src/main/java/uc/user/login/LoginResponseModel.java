@@ -1,8 +1,7 @@
 package uc.user.login;
 
 /**
- * LoginResponseModel contains data to be used by a presenter
- * in order to switch the view to a home screen.
+ * LoginResponseModel bundles data to be used by a presenter.
  */
 public class LoginResponseModel {
     private boolean loginStatus;

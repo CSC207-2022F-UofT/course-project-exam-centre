@@ -3,8 +3,7 @@ package uc.user.logout;
 import entities.StateTracker;
 
 /**
- * LogoutInteractor implements logout behaviour by removing currentUser
- * from the state tracker instance, and changing the view to a login screen.
+ * LogoutInteractor implements logout behaviour.
  * @layer use cases
  */
 
@@ -23,7 +22,8 @@ public class LogoutInteractor implements LogoutInputBoundary {
     }
 
     /**
-     * Remove the currentUser from the stateTracker instance and change the view to a login screen.
+     * Remove the currentUser from the stateTracker instance.
+     * Change the view to a login screen.
      */
     @Override
     public void logOut() {

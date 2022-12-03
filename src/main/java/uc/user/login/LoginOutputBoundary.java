@@ -1,9 +1,8 @@
 package uc.user.login;
 
 /**
- * Methods defined in LoginOutputBoundary are used by LoginInteractor
- * to either prepare the view to the home screen,
- * or prepare a failure popup, which are implemented by a presenter.
+ * LoginOutputBoundary provides methods for the LoginInteractor.
+ * They should be implemented by a presenter.
  * @layer use cases
  */
 public interface LoginOutputBoundary {
@@ -17,7 +16,7 @@ public interface LoginOutputBoundary {
     /**
      * Prepares a failure popup.
      * @param errorMessage to be displayed to user
-     * @throws ia.presenters.LoginFailed exception
+     * @throws ia.presenters.LoginFailed runtime exception
      */
     LoginResponseModel prepareFailView (String errorMessage);
 }

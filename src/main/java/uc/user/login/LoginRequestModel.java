@@ -1,8 +1,7 @@
 package uc.user.login;
 
 /**
- * LoginRequestModel contains user inputted data
- * to be manipulated by LoginInterator.
+ * LoginRequestModel bundles user inputted data for LoginInterator.
  * @layer use cases
  */
 public class LoginRequestModel {

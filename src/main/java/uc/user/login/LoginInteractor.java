@@ -5,9 +5,7 @@ import entities.User;
 import entities.UserFactory;
 
 /**
- * LoginInteractor implements login behaviour by adding user to
- * the stateTracker instance, and changing the view to the home screen
- * upon successful verification. Otherwise, failure popup is presented.
+ * LoginInteractor implements login behaviour.
  * @layer use cases
  */
 public class LoginInteractor implements LoginInputBoundary {
@@ -32,7 +30,8 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     /**
-     * Verify login credentials and add user as currentUser in stateTracker.
+     * Verify login credentials.
+     * Add user as currentUser in stateTracker.
      * @param requestModel contains email and password via user input
      * @return LoginResponsesModel contains login status and userId
      */

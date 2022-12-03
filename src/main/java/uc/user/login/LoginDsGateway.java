@@ -1,8 +1,7 @@
 package uc.user.login;
 
 /**
- * Methods defined in LoginDsGateway are used by LoginInteractor
- * to access persistent data.
+ * LoginDsGateway provides methods to compare against and access persistent data.
  * @layer use cases
  */
 public interface LoginDsGateway {

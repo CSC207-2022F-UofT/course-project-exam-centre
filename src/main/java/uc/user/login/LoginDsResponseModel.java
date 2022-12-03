@@ -1,8 +1,7 @@
 package uc.user.login;
 
 /**
- * Methods defined in LoginDsResponseModel are used by LoginInteractor
- * to access persistent data.
+ * LoginDsResponseModel represents a bundle of persistent user data.
  * @layer use cases
  */
 public interface LoginDsResponseModel {
