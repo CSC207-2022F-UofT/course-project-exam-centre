@@ -6,7 +6,6 @@ package uc.user.login;
 public class LoginResponseModel {
     private boolean loginStatus;
     private String userId;
-    private boolean loginStatus;
 
     /**
      * Construct a LoginResponseModel.
