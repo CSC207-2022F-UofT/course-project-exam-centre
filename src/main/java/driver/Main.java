@@ -4,6 +4,15 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.PostgresAccessManager;
 import ia.gateways.DatabaseAccessGateway;
+import ia.presenters.*;
+import uc.course.register.CRegisterOutputBoundary;
+import uc.course.updatemembers.UpdateCMemOutputBoundary;
+import uc.dboard.submessage.SubDBMessOutputBoundary;
+import uc.doc.submitsolution.SubSDocOutputBoundary;
+import uc.doc.submittest.SubTDocOutputBoundary;
+import uc.user.login.LoginOutputBoundary;
+import uc.user.logout.LogoutOutputBoundary;
+import uc.user.register.URegisterOutputBoundary;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -59,7 +68,6 @@ public class Main {
             );
 
             // Construct entity factories
-            //TODO: make factory methods non-static
             CourseFactory courseFactory             = new CourseFactory();
             MessageFactory messageFactory           = new MessageFactory();
             MessageTreeFactory messageTreeFactory   = new MessageTreeFactory();
@@ -72,6 +80,24 @@ public class Main {
             StateTracker currentState = stateTrackerFactory.create();
 
             // Construct use case presenters
+            CRegisterOutputBoundary courseRegisterPresenter
+                    = new CourseRegisterPresenter();
+            LoginOutputBoundary loginPresenter
+                    = new LoginPresenter();
+            LogoutOutputBoundary logoutPresenter
+                    = new LogoutPresenter();
+            SubDBMessOutputBoundary submitDBMessagePresenter
+                    = new SubmitDBMessagePresenter();
+            SubSDocOutputBoundary submitSolutionDocPresenter
+                    = new SubmitSolutionDocPresenter();
+            SubTDocOutputBoundary submitTestDocPresenter
+                    = new SubmitTestDocPresenter();
+            UpdateCMemOutputBoundary updateCourseMembershipPresenter
+                    = new UpdateCourseMembershipPresenter();
+            URegisterOutputBoundary userRegisterPresenter
+                    = new UserRegisterPresenter();
+
+            // Construct use case interactors
 
 
 
