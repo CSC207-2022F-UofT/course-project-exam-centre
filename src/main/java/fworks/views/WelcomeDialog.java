@@ -11,18 +11,12 @@ import java.awt.event.*;
  * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
-    private LoginController loginController;
-    private UserRegisterController userRegisterController;
-
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
     public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
-        this.loginController = loginController;
-        this.userRegisterController = userRegisterController;
-
         loginPanel = new LoginPanel(loginController);
         registerPanel = new RegisterPanel(userRegisterController);
 
