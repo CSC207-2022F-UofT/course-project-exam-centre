@@ -2,17 +2,39 @@ package driver;
 
 import entities.*;
 import entities.factories.*;
+import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
+import ia.gateways.FileAccessGateway;
 import ia.presenters.*;
+import uc.course.register.CRegisterInputBoundary;
 import uc.course.register.CRegisterOutputBoundary;
+import uc.course.register.CourseRegisterInteractor;
+import uc.course.updatemembers.UpdateCMemInputBoundary;
 import uc.course.updatemembers.UpdateCMemOutputBoundary;
+import uc.course.updatemembers.UpdateCourseMembershipInteractor;
+import uc.dboard.submessage.SubDBMessInputBoundary;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
+import uc.dboard.submessage.SubmitDBMessageInteractor;
 import uc.doc.submitsolution.SubSDocOutputBoundary;
+import uc.doc.submitsolution.SubSDocInputBoundary;
+import uc.doc.submitsolution.SubmitSolutionDocInteractor;
+import uc.doc.submittest.SubTDocInputBoundary;
 import uc.doc.submittest.SubTDocOutputBoundary;
+import uc.doc.submittest.SubmitTestDocInteractor;
+import uc.state.update.UpdateStateInputBoundary;
+import uc.state.update.UpdateStateInteractor;
+import uc.state.update.UpdateStateOutputBoundary;
+import uc.user.login.LoginInputBoundary;
+import uc.user.login.LoginInteractor;
 import uc.user.login.LoginOutputBoundary;
+import uc.user.logout.LogoutInputBoundary;
+import uc.user.logout.LogoutInteractor;
 import uc.user.logout.LogoutOutputBoundary;
+import uc.user.register.URegisterInputBoundary;
 import uc.user.register.URegisterOutputBoundary;
+import uc.user.register.UserRegisterInteractor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -56,8 +78,9 @@ public class Main {
         String dbUser = System.getenv().getOrDefault(
                 "DB_USER", config.getProperty("DB_USER"));
 
-        // Initialise database access gateway
         try {
+
+            // Initialise db access gateway
             DatabaseAccessGateway dbGateway = new PostgresAccessManager(
                     dbHostname,
                     dbPort,
@@ -67,10 +90,13 @@ public class Main {
                     dbSslStatus
             );
 
+            // Initialise file access gateway
+            // TODO: Make FtpAccessManager methods non-static and init connection on construction
+            FileAccessGateway fileAccessGateway = new FtpAccessManager();
+
             // Construct entity factories
             CourseFactory courseFactory             = new CourseFactory();
             MessageFactory messageFactory           = new MessageFactory();
-            MessageTreeFactory messageTreeFactory   = new MessageTreeFactory();
             SolutionDocFactory solutionDocFactory   = new SolutionDocFactory();
             TestDocFactory testDocFactory           = new TestDocFactory();
             StateTrackerFactory stateTrackerFactory = new StateTrackerFactory();
@@ -96,12 +122,96 @@ public class Main {
                     = new UpdateCourseMembershipPresenter();
             URegisterOutputBoundary userRegisterPresenter
                     = new UserRegisterPresenter();
+            UpdateStateOutputBoundary updateStatePresenter
+                    = new UpdateStatePresenter();
 
             // Construct use case interactors
+            CRegisterInputBoundary courseRegisterInteractor
+                    = new CourseRegisterInteractor(
+                            courseRegisterPresenter,
+                            dbGateway,
+                            courseFactory
+            );
+            LoginInputBoundary loginInteractor
+                    = new LoginInteractor(
+                            userFactory,
+                            loginPresenter,
+                            dbGateway,
+                            currentState
+            );
+            LogoutInputBoundary logoutInteractor
+                    = new LogoutInteractor(
+                    logoutPresenter,
+                    currentState
+            );
+            SubDBMessInputBoundary submitDBMessageInteractor
+                    = new SubmitDBMessageInteractor(
+                    submitDBMessagePresenter,
+                    messageFactory,
+                    dbGateway,
+                    currentState
+            );
+            SubSDocInputBoundary submitSolutionDocInteractor
+                    = new SubmitSolutionDocInteractor(
+                    dbGateway,
+                    fileAccessGateway,
+                    submitSolutionDocPresenter,
+                    currentState,
+                    solutionDocFactory
+            );
+            SubTDocInputBoundary submitTestDocInteractor
+                    = new SubmitTestDocInteractor(
+                    dbGateway,
+                    fileAccessGateway,
+                    submitTestDocPresenter,
+                    currentState,
+                    testDocFactory
+            );
+            UpdateCMemInputBoundary updateCourseMembershipInteractor
+                    = new UpdateCourseMembershipInteractor(
+                    dbGateway,
+                    updateCourseMembershipPresenter
+            );
+            URegisterInputBoundary userRegisterInteractor
+                    = new UserRegisterInteractor(
+                            currentState,
+                            dbGateway,
+                            userRegisterPresenter,
+                            userFactory
+            );
+            UpdateStateInputBoundary updateStateInteractor
+                    = new UpdateStateInteractor(
+                            updateStatePresenter,
+                            dbGateway,
+                            currentState,
+                            userFactory,
+                            courseFactory,
+                            testDocFactory,
+                            solutionDocFactory,
+                            messageFactory
+            );
 
+            // Construct use case controllers
+            CourseRegisterController courseRegisterController
+                    = new CourseRegisterController(courseRegisterInteractor);
+            LoginController loginController
+                    = new LoginController(loginInteractor);
+            SubmitDBMessageController submitDBMesageController
+                    = new SubmitDBMessageController(submitDBMessageInteractor);
+            SubmitSolutionDocController submitSolutionDocController
+                    = new SubmitSolutionDocController(submitSolutionDocInteractor);
+            SubmitTestDocController submitTestDocController
+                    = new SubmitTestDocController(submitTestDocInteractor);
+            UpdateCourseMembershipController updateCourseMembershipController
+                    = new UpdateCourseMembershipController(updateCourseMembershipInteractor);
+            UpdateStateController updateStateController
+                    = new UpdateStateController(updateStateInteractor);
+            UserRegisterController userRegisterController
+                    = new UserRegisterController(userRegisterInteractor);
+            LogoutController logoutController
+                    = new LogoutController(logoutInteractor);
 
-
-        } catch (SQLException e) {
+        } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);
         }
     }

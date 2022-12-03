@@ -2,20 +2,20 @@ package ia.controllers;
 
 import uc.doc.submitsolution.SubSDocRequestModel;
 import uc.doc.submitsolution.SubSDocResponseModel;
-import uc.doc.submitsolution.SubmitSDocInputBoundary;
+import uc.doc.submitsolution.SubSDocInputBoundary;
 
 public class SubmitSolutionDocController{
 
     /**
      * The input boundary class for the Submit document use case
      */
-    private final SubmitSDocInputBoundary inputBoundary;
+    private final SubSDocInputBoundary inputBoundary;
 
     /**
      * Creates a new instance of SubmitSolutionDocController to take in data from the related screen
      * @param inputBoundary The SubmitSDocInputBoundary from the Submit Document use case
      */
-    public SubmitSolutionDocController(SubmitSDocInputBoundary inputBoundary) {
+    public SubmitSolutionDocController(SubSDocInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;
     }
 

@@ -2,7 +2,7 @@ package uc.doc.submitsolution;
 
 import java.io.File;
 
-public interface SubmitSDocInputBoundary {
+public interface SubSDocInputBoundary {
 
     SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model);
 

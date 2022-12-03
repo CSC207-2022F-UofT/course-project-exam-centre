@@ -5,7 +5,7 @@ import entities.factories.SolutionDocFactory;
 
 import java.time.LocalDateTime;
 
-public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
+public class SubmitSolutionDocInteractor implements SubSDocInputBoundary {
 
     private final SubSDocOutputBoundary sDocOutputBoundary;
     private final SubSDocDsGateway sDocDsGateway;
@@ -69,6 +69,6 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
         SubSDocResponseModel responseModel = new SubSDocResponseModel(document.getId(), parentTest.getId(), LocalDateTime.now());
 
-        return sDocOutputBoundary.c(responseModel);
+        return sDocOutputBoundary.prepareSuccessView(responseModel);
     }
 }

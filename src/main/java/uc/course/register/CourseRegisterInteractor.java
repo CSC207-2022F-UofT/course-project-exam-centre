@@ -6,11 +6,14 @@ import entities.factories.CourseFactory;
 import java.time.LocalDateTime;
 
 public class CourseRegisterInteractor implements CRegisterInputBoundary {
-    final CRegisterPresenter presenter;
+    final CRegisterOutputBoundary presenter;
     final CRegisterDsGateway gateway;
     final CourseFactory courseFactory;
 
-    public CourseRegisterInteractor(CRegisterPresenter presenter, CRegisterDsGateway gateway, CourseFactory courseFactory) {
+    public CourseRegisterInteractor(
+            CRegisterOutputBoundary presenter,
+            CRegisterDsGateway gateway,
+            CourseFactory courseFactory) {
         this.presenter = presenter;
         this.gateway = gateway;
         this.courseFactory = courseFactory;
