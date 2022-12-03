@@ -23,7 +23,7 @@ public class LoginInteractor implements LoginInputBoundary {
      */
     public LoginInteractor(StateTracker stateTracker, LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary,
                            UserFactory userFactory) {
-        // Can we remove userFactory from constructor?
+        // TODO: Can we remove userFactory from constructor?
         this.stateTracker = stateTracker;
         this.dsGateway = dsGateway;
         this.outputBoundary = outputBoundary;
