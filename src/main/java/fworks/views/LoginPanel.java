@@ -1,6 +1,5 @@
 package fworks.views;
 
-import entities.StateTracker;
 import ia.controllers.LoginController;
 
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.awt.event.*;
  * A panel for existing users to log in
  */
 public class LoginPanel extends JPanel implements ActionListener {
-    private StateTracker stateTracker;
     private LoginController controller;
 
     private JTextField emailTextField;
@@ -19,8 +17,7 @@ public class LoginPanel extends JPanel implements ActionListener {
     private JButton cancelButton;
     private JButton loginButton;
 
-    public LoginPanel(StateTracker stateTracker, LoginController controller) {
-        this.stateTracker = stateTracker;
+    public LoginPanel(LoginController controller) {
         this.controller = controller;
 
         JPanel fieldsPanel = createFieldsPanel();
