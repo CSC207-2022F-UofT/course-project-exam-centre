@@ -111,7 +111,11 @@ public class LoginPanel extends JPanel implements ActionListener {
             } else {
                 String email = emailTextField.getText();
                 String password = new String(passwordField.getPassword());
-                controller.logIn(email, password);
+                try {
+                    controller.logIn(email, password);
+                } catch (Exception exception) {
+                    // TODO: handle error
+                }
             }
         }
     }
