@@ -1,10 +1,12 @@
 package driver;
 
 import entities.*;
+import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
 import fworks.views.TestFrame;
 import fworks.views.WelcomeDialog;
 import ia.gateways.DatabaseAccessGateway;
+import ia.gateways.FileAccessGateway;
 import uc.course.register.CRegisterInputBoundary;
 import uc.course.register.CourseRegisterInteractor;
 
@@ -49,9 +51,19 @@ public class Main {
                 "DB_SSL_STATUS", config.getProperty("DB_SSL_STATUS")));
         String dbUser = System.getenv().getOrDefault(
                 "DB_USER", config.getProperty("DB_USER"));
+        String ftpHost = System.getenv().getOrDefault(
+                "FTP_HOST", config.getProperty("FTP_HOST"));
+        int ftpPort = Integer.parseInt(System.getenv().getOrDefault(
+                "FTP_PORT", config.getProperty("FTP_PORT")));
+        String ftpUser = System.getenv().getOrDefault(
+                "FTP_USER", config.getProperty("FTP_USER"));
+        String ftpPass = System.getenv().getOrDefault(
+                "FTP_PASS", config.getProperty("FTP_PASS"));
+        String ftpRemotePath = System.getenv().getOrDefault(
+                "REMOTE_PATH", config.getProperty("REMOTE_PATH"));
 
-        // Initialise database access gateway
         try {
+            // Initialise database access gateway
             DatabaseAccessGateway dbGateway = new PostgresAccessManager(
                     dbHostname,
                     dbPort,
@@ -59,6 +71,15 @@ public class Main {
                     dbName,
                     dbPassword,
                     dbSslStatus
+            );
+
+            // Initialise file access gateway
+            FileAccessGateway fileAccessGateway = new FtpAccessManager(
+                ftpHost,
+                ftpPort,
+                ftpUser,
+                ftpPass,
+                ftpRemotePath
             );
 
             // Construct entity factories
