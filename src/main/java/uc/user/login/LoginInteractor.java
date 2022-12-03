@@ -4,24 +4,36 @@ import entities.StateTracker;
 import entities.User;
 import entities.UserFactory;
 
+/**
+ * LoginInteractor implements login behaviour.
+ * @layer use cases
+ */
 public class LoginInteractor implements LoginInputBoundary {
     private StateTracker stateTracker;
     private LoginDsGateway dsGateway;
     private LoginOutputBoundary outputBoundary;
     private UserFactory userFactory;
 
-    public LoginInteractor(StateTracker stateTracker, LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary,
-                           UserFactory userFactory) {
-        this.stateTracker = stateTracker;
-        this.dsGateway = dsGateway;
-        this.outputBoundary = outputBoundary;
+    /**
+     * Construct a LoginInteractor object.
+     * @param userFactory creates User objects
+     * @param presenter has method to update the view to login success/failure view
+     * @param dsGateway has method to verify login credentials and get user information
+     * @param stateTracker entity to be mutated by logIn method
+     */
+    public LoginInteractor(UserFactory userFactory, LoginOutputBoundary presenter,
+                           LoginDsGateway dsGateway, StateTracker stateTracker) {
         this.userFactory = userFactory;
+        this.presenter = presenter;
+        this.dsGateway = dsGateway;
+        this.stateTracker = stateTracker;
     }
 
     /**
-     * Verify login credentials and track current user
+     * Verify login credentials.
+     * Add user as currentUser in stateTracker.
      * @param requestModel contains email and password via user input
-     * @return LoginResponsesModel contains userId
+     * @return LoginResponsesModel contains login status and userId
      */
     @Override
     public LoginResponseModel logIn(LoginRequestModel requestModel) {

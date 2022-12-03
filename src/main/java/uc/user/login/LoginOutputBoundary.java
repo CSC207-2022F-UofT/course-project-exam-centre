@@ -1,15 +1,22 @@
 package uc.user.login;
 
+/**
+ * LoginOutputBoundary provides methods for the LoginInteractor.
+ * They should be implemented by a presenter.
+ * @layer use cases
+ */
 public interface LoginOutputBoundary {
-    /**
-     * @param responseModel
-     * @return a ResponseModel corresponding to successful log in
-     */
-    LoginResponseModel prepareSuccessView(LoginResponseModel responseModel);
 
     /**
-     * @param errorMessage
-     * @return a ResponseModel corresponding to the error
+     * Prepares the home screen.
+     * @param responseModel contains loginStatus and userId
      */
-    LoginResponseModel prepareFailView(String errorMessage);
+    LoginResponseModel prepareSuccessView (LoginResponseModel responseModel);
+
+    /**
+     * Prepares a failure popup.
+     * @param errorMessage to be displayed to user
+     * @throws ia.presenters.LoginFailed runtime exception
+     */
+    LoginResponseModel prepareFailView (String errorMessage);
 }
