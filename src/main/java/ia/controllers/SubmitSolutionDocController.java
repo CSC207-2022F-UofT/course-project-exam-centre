@@ -37,7 +37,7 @@ public class SubmitSolutionDocController{
                                                   String parentTestID,
                                                   String filePath) {
 
-        SubSDocRequestModel responseModel = new SubSDocRequestModel(
+        SubSDocRequestModel requestModel = new SubSDocRequestModel(
                 name,
                 filePath,
                 recordedScore,
@@ -46,6 +46,6 @@ public class SubmitSolutionDocController{
                 parentTestID
                 );
 
-        return inputBoundary.submitSolutionDoc(responseModel);
+        return inputBoundary.submitSolutionDoc(requestModel);
     }
 }

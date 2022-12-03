@@ -5,7 +5,7 @@ import entities.factories.TestDocFactory;
 
 import java.time.LocalDateTime;
 
-public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
+public class SubmitTestDocInteractor implements SubTDocInputBoundary {
 
     private final SubTDocOutputBoundary tDocOutputBoundary;
     private final SubTDocDsGateway tDocDsGateway;
@@ -26,7 +26,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
     }
 
     @Override
-    public SubmitTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
+    public SubTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
         User user = stateTracker.getUserIfTracked(requestModel.getUserID());
 
@@ -56,7 +56,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
         course.addTest(document);
 
-        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docId, LocalDateTime.now());
+        SubTDocResponseModel responseModel = new SubTDocResponseModel(docId, LocalDateTime.now());
 
         return tDocOutputBoundary.prepareSuccessView(responseModel);
     }

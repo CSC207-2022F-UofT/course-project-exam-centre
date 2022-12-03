@@ -2,7 +2,7 @@ package ia.presenters;
 
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
-import ia.exceptions.CourseRegisterException;
+import ia.exceptions.CourseRegisterFailed;
 
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
     @Override
@@ -15,7 +15,7 @@ public class CourseRegisterPresenter implements CRegisterOutputBoundary {
     @Override
     public CRegisterResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
-        throw new CourseRegisterException(errorMessage);
+        throw new CourseRegisterFailed(errorMessage);
     }
 }
 

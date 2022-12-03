@@ -15,7 +15,7 @@ public class LogoutInteractorTest {
     public void logOutRemovesCurrentUser(){
         LogoutOutputBoundary presenter = new LogoutOutputBoundary() {
             @Override
-            public void prepareLoginView() {
+            public void prepareSuccessView() {
             }
         };
         StateTracker stateTracker = new StateTracker();

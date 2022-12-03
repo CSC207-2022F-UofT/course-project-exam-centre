@@ -69,6 +69,6 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
         SubSDocResponseModel responseModel = new SubSDocResponseModel(document.getId(), parentTest.getId(), LocalDateTime.now());
 
-        return sDocOutputBoundary.prepareSucessView(responseModel);
+        return sDocOutputBoundary.c(responseModel);
     }
 }

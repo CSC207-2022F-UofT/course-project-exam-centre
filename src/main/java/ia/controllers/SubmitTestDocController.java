@@ -1,22 +1,22 @@
 package ia.controllers;
 
 import uc.doc.submittest.SubTDocRequestModel;
-import uc.doc.submittest.SubmitTDocInputBoundary;
-import uc.doc.submittest.SubmitTDocResponseModel;
+import uc.doc.submittest.SubTDocInputBoundary;
+import uc.doc.submittest.SubTDocResponseModel;
 
 public class SubmitTestDocController {
 
     /**
      * The input boundary for the Submit Test Doc use case
      */
-    private final SubmitTDocInputBoundary inputBoundary;
+    private final SubTDocInputBoundary inputBoundary;
 
     /**
      * Creates an instance of SubmitTestDocController for taking information from the related view and sending that
      * info to the use case
      * @param inputBoundary An instance of SubmitTDocInputBoundary for the SubmitTestDoc use case
      */
-    public SubmitTestDocController(SubmitTDocInputBoundary inputBoundary) {
+    public SubmitTestDocController(SubTDocInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;
     }
 
@@ -32,13 +32,13 @@ public class SubmitTestDocController {
      * @param filePath The path to the document on the user's drive
      * @return An instance of a SubmitTDocResponseModel for this request
      */
-    public SubmitTDocResponseModel SubmitTestDocument(String name,
-                               Integer numOfQuestions,
-                               Float recordedTime,
-                               String testType,
-                               String userID,
-                               String courseID,
-                               String filePath) {
+    public SubTDocResponseModel SubmitTestDocument(String name,
+                                                   Integer numOfQuestions,
+                                                   Float recordedTime,
+                                                   String testType,
+                                                   String userID,
+                                                   String courseID,
+                                                   String filePath) {
         SubTDocRequestModel requestModel = new SubTDocRequestModel(
                 name,
                 numOfQuestions,

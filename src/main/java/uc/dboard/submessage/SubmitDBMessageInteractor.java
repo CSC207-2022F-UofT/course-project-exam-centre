@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
-    private final SubDBMessPresenter presenter;
+    private final SubDBMessOutputBoundary presenter;
     private final SubDBMessDsGateway subDBMessDsGateway;
     private final StateTracker stateTracker;
     private final MessageFactory messageFactory;
 
-    public SubmitDBMessageInteractor(SubDBMessPresenter presenter,
+    public SubmitDBMessageInteractor(SubDBMessOutputBoundary presenter,
                                      MessageFactory messageFactory,
                                      SubDBMessDsGateway subDBMessDsGateway,
                                      StateTracker stateTracker) {
