@@ -22,8 +22,8 @@ public class Main {
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
         // Initialise JFrame view
-        new WelcomeDialog();
-        new TestFrame();
+        // new WelcomeDialog();
+        // new TestFrame();
 
         // Load local config file
         try {
