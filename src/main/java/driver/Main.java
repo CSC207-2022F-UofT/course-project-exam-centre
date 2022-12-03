@@ -1,12 +1,9 @@
 package driver;
 
 import entities.*;
+import entities.factories.*;
 import fworks.da.PostgresAccessManager;
-import fworks.views.TestFrame;
-import fworks.views.WelcomeDialog;
 import ia.gateways.DatabaseAccessGateway;
-import uc.course.register.CRegisterInputBoundary;
-import uc.course.register.CourseRegisterInteractor;
 
 import java.io.FileInputStream;
 import java.io.IOException;

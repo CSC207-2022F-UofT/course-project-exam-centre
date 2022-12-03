@@ -1,4 +1,9 @@
-package entities;
+package entities.factories;
+
+import entities.Course;
+import entities.SolutionDocument;
+import entities.TestDocument;
+import entities.User;
 
 public class SolutionDocFactory {
 
@@ -14,7 +19,7 @@ public class SolutionDocFactory {
      * @param rootMessageId     The root message id for this solution document
      * @param recordedTime      The recorded time for the solution document
      */
-    public static SolutionDocument create(String solutionName,
+    public SolutionDocument create(String solutionName,
                                    String solutionId,
                                    Course course,
                                    User user,

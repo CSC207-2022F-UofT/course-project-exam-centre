@@ -1,27 +1,28 @@
 package uc.doc.submittest;
 
 import entities.*;
+import entities.factories.TestDocFactory;
 
 import java.time.LocalDateTime;
 
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
     private final SubTDocOutputBoundary tDocOutputBoundary;
-
     private final SubTDocDsGateway tDocDsGateway;
-
     private final SubTDocFileAccessGateway tDocFileAccessGateway;
-
     private final StateTracker stateTracker;
+    private final TestDocFactory testDocFactory;
 
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
                                    SubTDocFileAccessGateway tDocFileAccessGateway,
                                    SubTDocOutputBoundary tDocOutputBoundary,
-                                   StateTracker stateTracker) {
+                                   StateTracker stateTracker,
+                                   TestDocFactory testDocFactory) {
         this.tDocOutputBoundary = tDocOutputBoundary;
         this.tDocDsGateway = tDocDsGateway;
         this.tDocFileAccessGateway = tDocFileAccessGateway;
         this.stateTracker = stateTracker;
+        this.testDocFactory = testDocFactory;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
-        TestDocument document = TestDocFactory.create(
+        TestDocument document = testDocFactory.create(
                 requestModel.getName(),
                 docId,
                 course,

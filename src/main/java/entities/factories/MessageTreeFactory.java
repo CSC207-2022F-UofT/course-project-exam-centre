@@ -1,4 +1,6 @@
-package entities;
+package entities.factories;
+
+import entities.MessageTree;
 
 public class MessageTreeFactory {
 

@@ -1,8 +1,6 @@
 package uc.user.register;
 
-import entities.User;
-import entities.UserFactory;
-import org.junit.Before;
+import entities.factories.UserFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

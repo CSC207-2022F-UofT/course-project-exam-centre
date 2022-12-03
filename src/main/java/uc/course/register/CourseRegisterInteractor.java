@@ -1,7 +1,7 @@
 package uc.course.register;
 
 import entities.Course;
-import entities.CourseFactory;
+import entities.factories.CourseFactory;
 
 import java.time.LocalDateTime;
 

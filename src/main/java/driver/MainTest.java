@@ -1,6 +1,7 @@
 package driver;
 
 import entities.*;
+import entities.factories.UserFactory;
 import fworks.views.*;
 /**
  * A driver for testing the UI

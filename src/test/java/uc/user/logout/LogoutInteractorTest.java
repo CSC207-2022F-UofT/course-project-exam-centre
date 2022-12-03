@@ -2,7 +2,7 @@ package uc.user.logout;
 
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
+import entities.factories.UserFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
