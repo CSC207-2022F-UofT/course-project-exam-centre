@@ -7,7 +7,7 @@ package uc.user.register;
 public interface URegisterInputBoundary {
     /** Invoke register user use case.
      * @param requestModel a request model containing information of the user attempting to register
-     * @return a LoginResponseModel corresponding to the requestModel
+     * @return a RegisterResponseModel corresponding to the requestModel
      */
     URegisterResponseModel registerUser(URegisterRequestModel requestModel);
 
