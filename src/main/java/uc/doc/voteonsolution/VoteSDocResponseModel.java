@@ -1,6 +1,5 @@
 package uc.doc.voteonsolution;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import entities.SolutionDocument;
