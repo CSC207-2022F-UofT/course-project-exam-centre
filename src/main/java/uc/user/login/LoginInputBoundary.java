@@ -2,7 +2,7 @@ package uc.user.login;
 
 /**
  * LoginInputBoundary provides an entry-point to the login use case.
- * Used by LoginController and implemented by LoginInteractor.
+ * Used by a controller and implemented by LoginInteractor.
  * @layer use cases
  */
 public interface LoginInputBoundary {
