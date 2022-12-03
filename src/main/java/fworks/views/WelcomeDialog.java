@@ -1,6 +1,5 @@
 package fworks.views;
 
-import entities.StateTracker;
 import ia.controllers.LoginController;
 import ia.controllers.UserRegisterController;
 
@@ -12,7 +11,6 @@ import java.awt.event.*;
  * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
-    private StateTracker stateTracker;
     private LoginController loginController;
     private UserRegisterController userRegisterController;
 
@@ -21,14 +19,12 @@ public class WelcomeDialog extends JDialog implements ActionListener {
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
-    public WelcomeDialog(StateTracker stateTracker, LoginController loginController,
-                         UserRegisterController userRegisterController) {
-        this.stateTracker = stateTracker;
+    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
         this.loginController = loginController;
         this.userRegisterController = userRegisterController;
 
-        loginPanel = new LoginPanel(stateTracker, loginController);
-        registerPanel = new RegisterPanel(stateTracker, userRegisterController);
+        loginPanel = new LoginPanel(loginController);
+        registerPanel = new RegisterPanel(userRegisterController);
 
         JPanel buttonsPanel = createButtonsPanel();
 

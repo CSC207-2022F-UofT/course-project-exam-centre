@@ -1,6 +1,5 @@
 package fworks.views;
 
-import entities.StateTracker;
 import ia.controllers.UserRegisterController;
 
 import javax.swing.*;
@@ -12,7 +11,6 @@ import java.util.regex.Pattern;
  * A panel for new users to register
  */
 public class RegisterPanel extends JPanel implements ActionListener {
-    private StateTracker stateTracker;
     private UserRegisterController controller;
 
     private JTextField emailTextField;
@@ -21,8 +19,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
     private JButton cancelButton;
     private JButton registerButton;
 
-    public RegisterPanel(StateTracker stateTracker, UserRegisterController controller) {
-        this.stateTracker = stateTracker;
+    public RegisterPanel(UserRegisterController controller) {
         this.controller = controller;
 
         JPanel fieldsPanel = createFieldsPanel();
