@@ -4,6 +4,7 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
 import ia.gateways.FileAccessGateway;
@@ -210,6 +211,12 @@ public class Main {
                     = new UserRegisterController(userRegisterInteractor);
             LogoutController logoutController
                     = new LogoutController(logoutInteractor);
+
+            // Construct JFrame views
+            new WelcomeDialog(
+                    loginController,
+                    userRegisterController
+            );
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);
