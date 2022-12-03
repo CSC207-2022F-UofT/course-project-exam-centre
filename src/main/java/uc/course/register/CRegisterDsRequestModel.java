@@ -2,6 +2,10 @@ package uc.course.register;
 
 import java.util.List;
 
+/** CRegisterDsRequestModel is responsible for bundling information in a way that
+ * can be then stored in persistent data
+ * @layer use cases
+ */
 public class CRegisterDsRequestModel {
     private String courseName;
     private String courseCode;

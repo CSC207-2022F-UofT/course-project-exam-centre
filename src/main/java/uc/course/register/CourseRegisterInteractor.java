@@ -5,6 +5,9 @@ import entities.CourseFactory;
 
 import java.time.LocalDateTime;
 
+/** CourseRegisterInteractor implements the ability to register courses.
+ * @layer use cases
+ */
 public class CourseRegisterInteractor implements CRegisterlnputBoundary {
     final CRegisterPresenter presenter;
     final CRegisterDsGateway gateway;
