@@ -5,43 +5,42 @@ import entities.User;
 import entities.UserFactory;
 
 public class LoginInteractor implements LoginInputBoundary {
+    private StateTracker stateTracker;
     private LoginDsGateway dsGateway;
     private LoginOutputBoundary outputBoundary;
     private UserFactory userFactory;
-    private StateTracker stateTracker;
 
-    public LoginInteractor(LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary, UserFactory userFactory,
-                           StateTracker stateTracker) {
+    public LoginInteractor(StateTracker stateTracker, LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary,
+                           UserFactory userFactory) {
+        this.stateTracker = stateTracker;
         this.dsGateway = dsGateway;
         this.outputBoundary = outputBoundary;
         this.userFactory = userFactory;
-        this.stateTracker = stateTracker;
     }
 
-    /** Verify login credentials and track current user
+    /**
+     * Verify login credentials and track current user
      * @param requestModel contains email and password via user input
-     * @return LoginResponsesModel contains login status and userId.
+     * @return LoginResponsesModel contains userId
      */
     @Override
     public LoginResponseModel logIn(LoginRequestModel requestModel) {
         String email = requestModel.getEmail();
         String password = requestModel.getPassword();
 
-        if (dsGateway.verifyLoginCredentials(email, password)) {
-            LoginDsResponseModel dsResponseModel = dsGateway.getUserInfo(email);
+        if (!dsGateway.authenticate(email, password)) {
+            return outputBoundary.prepareFailView("Could not find a user with a matching email and password");
+        } else {
+            LoginDsResponseModel dsResponseModel = dsGateway.getUser(email);
+
             String userId = dsResponseModel.getUserId();
             String firstName = dsResponseModel.getFirstName();
             String lastName = dsResponseModel.getLastName();
-            User user = userFactory.create(firstName, lastName, email, userId);
+            User user = UserFactory.create(firstName, lastName, email, userId);
             stateTracker.setCurrentUser(user);
 
-            // change view to log in screen
-            LoginResponseModel responseModel = new LoginResponseModel(true, userId);
+            LoginResponseModel responseModel = new LoginResponseModel(userId);
             return outputBoundary.prepareSuccessView(responseModel);
-        } else {
-            // prepare error message
-            return outputBoundary.prepareFailView("The password entered is either incorrect " +
-                    "or the email entered is not associated with an account.");
         }
     }
 }
