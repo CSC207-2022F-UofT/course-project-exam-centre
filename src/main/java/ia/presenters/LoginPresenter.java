@@ -15,11 +15,11 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     /**
      * @param errorMessage
-     * @throws FailedLogin
+     * @throws LoginFailed
      */
     @Override
     public LoginResponseModel prepareFailView(String errorMessage) {
-        throw new FailedLogin(errorMessage);
+        throw new LoginFailed(errorMessage);
     }
 }
 
