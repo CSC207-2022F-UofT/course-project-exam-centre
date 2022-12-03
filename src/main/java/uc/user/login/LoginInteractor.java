@@ -17,14 +17,14 @@ public class LoginInteractor implements LoginInputBoundary {
     /**
      * Construct a LoginInteractor object.
      * @param userFactory creates User objects
-     * @param presenter has method to update the view to login success/failure view
+     * @param outputBoundary has method to update the view to login success/failure view
      * @param dsGateway has method to verify login credentials and get user information
      * @param stateTracker entity to be mutated by logIn method
      */
-    public LoginInteractor(UserFactory userFactory, LoginOutputBoundary presenter,
-                           LoginDsGateway dsGateway, StateTracker stateTracker) {
+    public LoginInteractor(StateTracker stateTracker, LoginDsGateway dsGateway, LoginOutputBoundary outputBoundary,
+                           UserFactory userFactory) {
         this.userFactory = userFactory;
-        this.presenter = presenter;
+        this.outputBoundary = outputBoundary;
         this.dsGateway = dsGateway;
         this.stateTracker = stateTracker;
     }
@@ -51,7 +51,7 @@ public class LoginInteractor implements LoginInputBoundary {
             User user = UserFactory.create(firstName, lastName, email, userId);
             stateTracker.setCurrentUser(user);
 
-            LoginResponseModel responseModel = new LoginResponseModel(userId);
+            LoginResponseModel responseModel = new LoginResponseModel(true, userId);
             return outputBoundary.prepareSuccessView(responseModel);
         }
     }
