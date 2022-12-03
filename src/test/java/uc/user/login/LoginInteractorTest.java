@@ -150,7 +150,7 @@ public class LoginInteractorTest {
         StateTracker stateTracker = new StateTracker();
         LoginInteractor interactor = new LoginInteractor(stateTracker, dsGateway, presenter, userFactory);
 
-        // run the use case, supposing the user input is as follows
+        // run the use case, supposing the user inputted password does not match
         LoginRequestModel requestModel = new LoginRequestModel("firstlast@mail.uoftears.ca", ":(");
         interactor.logIn(requestModel);
 
