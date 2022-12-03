@@ -10,12 +10,16 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
     private final SubSDocDsGateway sDocDsGateway;
 
+    private final SubSDocFileAccessGateway sDocFileAccessGateway;
+
     private final StateTracker stateTracker;
 
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
+                                       SubSDocFileAccessGateway sDocFileAccessGateway,
                                        SubSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker) {
         this.sDocDsGateway = sDocDsGateway;
+        this.sDocFileAccessGateway = sDocFileAccessGateway;
         this.sDocOutputBoundary = sDocOutputBoundary;
         this.stateTracker = stateTracker;
     }
@@ -47,6 +51,8 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
         sDocDsGateway.updateRootMessageIdOfSolution(
                 solutionId,
                 rootMessageId);
+
+        sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
         SolutionDocument document = SolutionDocFactory.create(
                 model.getName(),

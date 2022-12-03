@@ -6,9 +6,8 @@ package uc.user.login;
  * @layer use cases
  */
 public interface LoginInputBoundary {
-
-    /**
-     * Invoke login use case.
-     */
-    LoginResponseModel logIn (LoginRequestModel requestModel);
+    /** Invoke login use case.
+     * @param requestModel
+     * @return a LoginResponseModel corresponding to the requestModel
+    LoginResponseModel logIn(LoginRequestModel requestModel);
 }

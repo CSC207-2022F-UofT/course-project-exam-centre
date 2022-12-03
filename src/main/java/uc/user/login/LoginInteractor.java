@@ -9,10 +9,10 @@ import entities.UserFactory;
  * @layer use cases
  */
 public class LoginInteractor implements LoginInputBoundary {
-    private UserFactory userFactory;
-    private LoginOutputBoundary presenter;
-    private LoginDsGateway dsGateway;
     private StateTracker stateTracker;
+    private LoginDsGateway dsGateway;
+    private LoginOutputBoundary outputBoundary;
+    private UserFactory userFactory;
 
     /**
      * Construct a LoginInteractor object.
@@ -40,21 +40,19 @@ public class LoginInteractor implements LoginInputBoundary {
         String email = requestModel.getEmail();
         String password = requestModel.getPassword();
 
-        if (dsGateway.verifyLoginCredentials(email, password)) {
+        if (!dsGateway.verifyLoginCredentials(email, password)) {
+            return outputBoundary.prepareFailView("Could not find a user with a matching email and password");
+        } else {
             LoginDsResponseModel dsResponseModel = dsGateway.getUserByEmail(email);
+
             String userId = dsResponseModel.getUserId();
             String firstName = dsResponseModel.getFirstName();
             String lastName = dsResponseModel.getLastName();
             User user = UserFactory.create(firstName, lastName, email, userId);
             stateTracker.setCurrentUser(user);
 
-            // change view to log in screen
-            LoginResponseModel responseModel = new LoginResponseModel(true, userId);
-            return presenter.prepareSuccessView(responseModel);
-        } else {
-            // prepare error message
-            return presenter.prepareFailView("The password entered is either incorrect " +
-                    "or the email entered is not associated with an account.");
+            LoginResponseModel responseModel = new LoginResponseModel(userId);
+            return outputBoundary.prepareSuccessView(responseModel);
         }
     }
 }

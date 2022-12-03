@@ -7,7 +7,7 @@ package uc.user.login;
 public class LoginRequestModel {
     private String email;
     private String password;
-
+    
     /**
      * Construct a LoginRequestModel.
      * @param email inputted by user

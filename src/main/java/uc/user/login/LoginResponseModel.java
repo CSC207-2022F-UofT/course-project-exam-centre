@@ -4,7 +4,6 @@ package uc.user.login;
  * LoginResponseModel bundles data to be used by a presenter.
  */
 public class LoginResponseModel {
-    private boolean loginStatus;
     private String userId;
 
     /**

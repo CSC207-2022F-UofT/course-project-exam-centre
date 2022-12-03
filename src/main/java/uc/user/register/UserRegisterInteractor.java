@@ -1,5 +1,6 @@
 package uc.user.register;
 
+import entities.StateTracker;
 import entities.User;
 import entities.UserFactory;
 
@@ -7,9 +8,10 @@ import java.time.LocalDateTime;
 
 public class UserRegisterInteractor implements URegisterInputBoundary {
 
-    final URegisterDsGateway userDsGateway;
-    final URegisterOutputBoundary userOutputBoundary;
-    final UserFactory userFactory;
+    private StateTracker stateTracker;
+    private URegisterDsGateway userDsGateway;
+    private URegisterOutputBoundary userOutputBoundary;
+    private UserFactory userFactory;
 
     /** Creates an instance of the UserRegisterInteractor with its own DsGateway, Presenter, and Factory.
      *
@@ -17,7 +19,7 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
      * @param userOutputBoundary use case output boundary
      * @param userFactory user entity factory
      */
-    public UserRegisterInteractor(URegisterDsGateway userDsGateway,
+    public UserRegisterInteractor(StateTracker stateTracker, URegisterDsGateway userDsGateway,
                                   URegisterOutputBoundary userOutputBoundary,
                                   UserFactory userFactory) {
         this.userDsGateway = userDsGateway;
