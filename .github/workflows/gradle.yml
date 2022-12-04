@@ -1,11 +1,5 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+# Custom GitHub Gradle workflow with test summary
+name: Gradle CI Test Summary
 
 on:
   push:
@@ -38,7 +32,7 @@ jobs:
           path: build/reports/tests/test
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
-        if: always() # always run even if the previous step fails
+        if: always()
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
       - name: Test Summary
