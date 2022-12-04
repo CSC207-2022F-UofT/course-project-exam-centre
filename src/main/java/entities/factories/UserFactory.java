@@ -1,4 +1,7 @@
-package entities;
+package entities.factories;
+
+import entities.CommonUser;
+import entities.User;
 
 public class UserFactory {
 
@@ -10,7 +13,7 @@ public class UserFactory {
      * @param userId User's generated ID
      * @return Returns a new instance of User
      */
-    public static User create(
+    public User create(
             String firstName,
             String lastName,
             String email,

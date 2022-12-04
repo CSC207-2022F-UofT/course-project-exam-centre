@@ -10,5 +10,9 @@ public interface LogoutOutputBoundary {
     /**
      * Prepare a login view.
      */
-    void prepareLoginView ();
+    void prepareSuccessView();
+    /**
+     * Prepare a login view.
+     */
+    void prepareFailView(String errorMessage);
 }

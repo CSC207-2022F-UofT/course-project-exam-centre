@@ -1,6 +1,9 @@
-package entities;
+package entities.factories;
 
 // Entity layer
+
+import entities.CommonMessage;
+import entities.Message;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +12,7 @@ public class MessageFactory {
     /**
      * Returns a new Message object.
      */
-    public static Message create(
+    public Message create(
             String messageId,
             String solutionId,
             String userId,

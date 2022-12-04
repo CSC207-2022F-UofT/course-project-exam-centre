@@ -2,13 +2,13 @@ package uc.doc.submittest;
 
 import java.time.LocalDateTime;
 
-public class SubmitTDocResponseModel {
+public class SubTDocResponseModel {
 
     private final String testDocID;
 
     private final LocalDateTime timestamp;
 
-    public SubmitTDocResponseModel(String testDocID, LocalDateTime timestamp) {
+    public SubTDocResponseModel(String testDocID, LocalDateTime timestamp) {
         this.testDocID = testDocID;
         this.timestamp = timestamp;
     }

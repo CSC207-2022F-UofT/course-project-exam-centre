@@ -1,4 +1,6 @@
-package entities;
+package entities.factories;
+
+import entities.StateTracker;
 
 public class StateTrackerFactory {
 

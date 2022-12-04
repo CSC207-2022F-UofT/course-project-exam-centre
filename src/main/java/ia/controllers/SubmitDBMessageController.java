@@ -4,10 +4,10 @@ import uc.dboard.submessage.SubDBMessInputBoundary;
 import uc.dboard.submessage.SubDBMessRequestModel;
 import uc.dboard.submessage.SubDBMessResponseModel;
 
-public class SubDBMessageController {
+public class SubmitDBMessageController {
     private final SubDBMessInputBoundary inputBoundary;
 
-    public SubDBMessageController(
+    public SubmitDBMessageController(
             SubDBMessInputBoundary inputBoundary){
         this.inputBoundary = inputBoundary;
     }

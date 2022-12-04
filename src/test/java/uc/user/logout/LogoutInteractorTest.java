@@ -2,7 +2,7 @@ package uc.user.logout;
 
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
+import entities.factories.UserFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -15,7 +15,10 @@ public class LogoutInteractorTest {
     public void logOutRemovesCurrentUser(){
         LogoutOutputBoundary presenter = new LogoutOutputBoundary() {
             @Override
-            public void prepareLoginView() {
+            public void prepareSuccessView() {
+            }
+            @Override
+            public void prepareFailView(String errorMessage) {
             }
         };
         StateTracker stateTracker = new StateTracker();

@@ -4,7 +4,7 @@ package entities;
 
 import java.time.LocalDateTime;
 
-class CommonMessage implements Message {
+public class CommonMessage implements Message {
 
     private final String messageId;
 
@@ -29,7 +29,7 @@ class CommonMessage implements Message {
      * @param date The Date the message was created.
      */
 
-    CommonMessage(String messageId, String solutionId, String userId, String parentId, String body, LocalDateTime date) {
+    public CommonMessage(String messageId, String solutionId, String userId, String parentId, String body, LocalDateTime date) {
         this.messageId = messageId;
         this.solutionId = solutionId;
         this.userId = userId;

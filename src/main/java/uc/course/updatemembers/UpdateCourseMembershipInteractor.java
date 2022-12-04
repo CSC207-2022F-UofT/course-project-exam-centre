@@ -6,9 +6,11 @@ import java.util.List;
 public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary {
 
     final UpdateCMemDsGateway gateway;
-    final UpdateCMemPresenter presenter;
+    final UpdateCMemOutputBoundary presenter;
 
-    public UpdateCourseMembershipInteractor(UpdateCMemDsGateway gateway, UpdateCMemPresenter presenter) {
+    public UpdateCourseMembershipInteractor(
+            UpdateCMemDsGateway gateway,
+            UpdateCMemOutputBoundary presenter) {
         this.gateway = gateway;
         this.presenter = presenter;
     }

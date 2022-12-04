@@ -2,7 +2,7 @@ package uc.user.login;
 
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
+import entities.factories.UserFactory;
 
 /**
  * LoginInteractor implements login behaviour.
@@ -49,7 +49,7 @@ public class LoginInteractor implements LoginInputBoundary {
             String userId = dsResponseModel.getUserId();
             String firstName = dsResponseModel.getFirstName();
             String lastName = dsResponseModel.getLastName();
-            User user = UserFactory.create(firstName, lastName, email, userId);
+            User user = userFactory.create(firstName, lastName, email, userId);
             stateTracker.setCurrentUser(user);
 
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);

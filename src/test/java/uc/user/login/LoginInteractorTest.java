@@ -2,7 +2,7 @@ package uc.user.login;
 
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
+import entities.factories.UserFactory;
 
 import org.junit.Test;
 

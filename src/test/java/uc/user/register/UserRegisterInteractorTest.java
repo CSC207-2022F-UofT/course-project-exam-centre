@@ -1,8 +1,8 @@
 package uc.user.register;
 
+import entities.factories.UserFactory;
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class UserRegisterInteractorTest {
                 assertNotNull(user.timestamp);
 
                 return null;
-            };
+            }
 
             @Override
             public URegisterResponseModel prepareFailView(String error) {

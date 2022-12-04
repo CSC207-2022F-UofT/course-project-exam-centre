@@ -1,31 +1,32 @@
 package uc.doc.submittest;
 
 import entities.*;
+import entities.factories.TestDocFactory;
 
 import java.time.LocalDateTime;
 
-public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
+public class SubmitTestDocInteractor implements SubTDocInputBoundary {
 
     private final SubTDocOutputBoundary tDocOutputBoundary;
-
     private final SubTDocDsGateway tDocDsGateway;
-
     private final SubTDocFileAccessGateway tDocFileAccessGateway;
-
     private final StateTracker stateTracker;
+    private final TestDocFactory testDocFactory;
 
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
                                    SubTDocFileAccessGateway tDocFileAccessGateway,
                                    SubTDocOutputBoundary tDocOutputBoundary,
-                                   StateTracker stateTracker) {
+                                   StateTracker stateTracker,
+                                   TestDocFactory testDocFactory) {
         this.tDocOutputBoundary = tDocOutputBoundary;
         this.tDocDsGateway = tDocDsGateway;
         this.tDocFileAccessGateway = tDocFileAccessGateway;
         this.stateTracker = stateTracker;
+        this.testDocFactory = testDocFactory;
     }
 
     @Override
-    public SubmitTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
+    public SubTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
         User user = stateTracker.getUserIfTracked(requestModel.getUserID());
 
@@ -43,7 +44,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
-        TestDocument document = TestDocFactory.create(
+        TestDocument document = testDocFactory.create(
                 requestModel.getName(),
                 docId,
                 course,
@@ -55,7 +56,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
         course.addTest(document);
 
-        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docId, LocalDateTime.now());
+        SubTDocResponseModel responseModel = new SubTDocResponseModel(docId, LocalDateTime.now());
 
         return tDocOutputBoundary.prepareSuccessView(responseModel);
     }

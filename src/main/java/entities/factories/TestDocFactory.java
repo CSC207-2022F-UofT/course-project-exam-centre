@@ -1,4 +1,8 @@
-package entities;
+package entities.factories;
+
+import entities.Course;
+import entities.TestDocument;
+import entities.User;
 
 public class TestDocFactory {
 
@@ -14,7 +18,14 @@ public class TestDocFactory {
      * @param numberOfQuestions The number of questions on the test
      * @param testType The type of the test (i.e. Term test, final exam, ...)
      */
-    public static TestDocument create (String name, String id, Course course, User user, Float estimatedTime, int numberOfQuestions, String testType) {
+    public TestDocument create (
+            String name,
+            String id,
+            Course course,
+            User user,
+            Float estimatedTime,
+            int numberOfQuestions,
+            String testType) {
         return new TestDocument(name, id, course, user, estimatedTime, numberOfQuestions, testType);
     }
 }

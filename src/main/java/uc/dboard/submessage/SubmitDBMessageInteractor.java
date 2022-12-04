@@ -1,6 +1,7 @@
 package uc.dboard.submessage;
 
 import entities.*;
+import entities.factories.MessageFactory;
 
 import java.time.LocalDateTime;
 
@@ -8,18 +9,19 @@ import java.time.LocalDateTime;
 
 public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
-    // no gateway final UserRegisterDsGateway userDsGateway;
-    final SubDBMessPresenter presenter;
+    private final SubDBMessOutputBoundary presenter;
+    private final SubDBMessDsGateway subDBMessDsGateway;
+    private final StateTracker stateTracker;
+    private final MessageFactory messageFactory;
 
-    final SubDBMessDsGateway subDBMessDsGateway;
-
-    final StateTracker stateTracker;
-
-    public SubmitDBMessageInteractor(SubDBMessPresenter presenter,
-                                     MessageFactory messageFactory, SubDBMessDsGateway subDBMessDsGateway, StateTracker stateTracker) {
+    public SubmitDBMessageInteractor(SubDBMessOutputBoundary presenter,
+                                     MessageFactory messageFactory,
+                                     SubDBMessDsGateway subDBMessDsGateway,
+                                     StateTracker stateTracker) {
         this.presenter = presenter;
         this.subDBMessDsGateway = subDBMessDsGateway;
         this.stateTracker = stateTracker;
+        this.messageFactory = messageFactory;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
         String messageId = subDBMessDsGateway.addMessage(dsRequestModel);
 
-        Message message = MessageFactory.create(
+        Message message = messageFactory.create(
                 messageId,
                 solutionId,
                 requestModel.getUserId(),

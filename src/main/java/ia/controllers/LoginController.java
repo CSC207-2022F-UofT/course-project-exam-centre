@@ -5,7 +5,7 @@ import uc.user.login.LoginRequestModel;
 import uc.user.login.LoginResponseModel;
 
 public class LoginController {
-    private LoginInputBoundary inputBoundary;
+    private final LoginInputBoundary inputBoundary;
 
     public LoginController(LoginInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;
