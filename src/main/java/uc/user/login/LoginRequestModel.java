@@ -13,7 +13,7 @@ public class LoginRequestModel {
      * @param email inputted by user
      * @param password inputted by user
      */
-    public LoginRequestModel(String email, String password){
+    public LoginRequestModel(String email, String password) {
         this.email = email;
         this.password = password;
     }

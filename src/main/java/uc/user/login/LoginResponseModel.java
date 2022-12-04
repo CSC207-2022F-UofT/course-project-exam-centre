@@ -1,11 +1,11 @@
 package uc.user.login;
 
 /**
- * LoginResponseModel bundles data to be used by a presenter.
+ * LoginResponseModel bundles data to be used by LoginPresenter.
  */
 public class LoginResponseModel {
-    private String userId;
     private boolean loginStatus;
+    private String userId;
 
     /**
      * Construct a LoginResponseModel.

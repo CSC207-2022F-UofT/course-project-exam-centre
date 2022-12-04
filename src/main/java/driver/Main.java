@@ -78,10 +78,19 @@ public class Main {
                 "DB_SSL_STATUS", config.getProperty("DB_SSL_STATUS")));
         String dbUser = System.getenv().getOrDefault(
                 "DB_USER", config.getProperty("DB_USER"));
+        String ftpHost = System.getenv().getOrDefault(
+                "FTP_HOST", config.getProperty("FTP_HOST"));
+        int ftpPort = Integer.parseInt(System.getenv().getOrDefault(
+                "FTP_PORT", config.getProperty("FTP_PORT")));
+        String ftpUser = System.getenv().getOrDefault(
+                "FTP_USER", config.getProperty("FTP_USER"));
+        String ftpPass = System.getenv().getOrDefault(
+                "FTP_PASS", config.getProperty("FTP_PASS"));
+        String ftpRemotePath = System.getenv().getOrDefault(
+                "REMOTE_PATH", config.getProperty("REMOTE_PATH"));
 
         try {
-
-            // Initialise db access gateway
+            // Initialise database access gateway
             DatabaseAccessGateway dbGateway = new PostgresAccessManager(
                     dbHostname,
                     dbPort,
@@ -92,8 +101,13 @@ public class Main {
             );
 
             // Initialise file access gateway
-            // TODO: Make FtpAccessManager methods non-static and init connection on construction
-            FileAccessGateway fileAccessGateway = new FtpAccessManager();
+            FileAccessGateway fileAccessGateway = new FtpAccessManager(
+                ftpHost,
+                ftpPort,
+                ftpUser,
+                ftpPass,
+                ftpRemotePath
+            );
 
             // Construct entity factories
             CourseFactory courseFactory             = new CourseFactory();
@@ -135,10 +149,10 @@ public class Main {
             );
             LoginInputBoundary loginInteractor
                     = new LoginInteractor(
-                            userFactory,
-                            loginPresenter,
+                            currentState,
                             dbGateway,
-                            currentState
+                            loginPresenter,
+                            userFactory
             );
             LogoutInputBoundary logoutInteractor
                     = new LogoutInteractor(
