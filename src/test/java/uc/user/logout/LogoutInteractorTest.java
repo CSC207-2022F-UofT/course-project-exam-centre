@@ -17,6 +17,9 @@ public class LogoutInteractorTest {
             @Override
             public void prepareSuccessView() {
             }
+            @Override
+            public void prepareFailView(String errorMessage) {
+            }
         };
         StateTracker stateTracker = new StateTracker();
         UserFactory userFactory = new UserFactory();
