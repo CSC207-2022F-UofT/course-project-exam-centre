@@ -24,7 +24,6 @@ public class CRegisterRequestModel {
     public String getCourseName() {
         return courseName;
     }
-
     /** Gets the course code of the course
      *
      * @return a string containing the course code
@@ -32,15 +31,4 @@ public class CRegisterRequestModel {
     public String getCourseCode() {
         return courseCode;
     }
-<<<<<<< HEAD
-
-    /** Gets the course id of the course
-     *
-     * @return a string containing the course code
-     */
-    public String getCourseId() {
-        return courseId;
-    }
-=======
->>>>>>> main
 }
