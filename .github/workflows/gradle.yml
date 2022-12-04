@@ -14,11 +14,11 @@ permissions:
 
 jobs:
   build:
-    name: Autograding
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: education/autograding@v1
+    - name: Autograding
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: education/autograding@v1
     - name: Test
       run: ./gradlew test --tests "*"
 
