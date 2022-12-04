@@ -5,8 +5,9 @@ import entities.factories.MessageFactory;
 
 import java.time.LocalDateTime;
 
-// Use case layer
-
+/** SubmitDBMessageInteractor implements the ability to submit a DB message
+ * @layer use cases
+ */
 public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
     private final SubDBMessOutputBoundary presenter;
@@ -14,6 +15,14 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
     private final StateTracker stateTracker;
     private final MessageFactory messageFactory;
 
+    /** Construct a SubmitDBMessageInteractor that contains an outputBoundary, DsGateway, stateTracker
+     * and messageFactory
+     *
+     * @param presenter provides methods to update the view
+     * @param messageFactory creates Message objects
+     * @param subDBMessDsGateway provides methods to access persistent data
+     * @param stateTracker tracks the state of the entities accessed in the program
+     */
     public SubmitDBMessageInteractor(SubDBMessOutputBoundary presenter,
                                      MessageFactory messageFactory,
                                      SubDBMessDsGateway subDBMessDsGateway,

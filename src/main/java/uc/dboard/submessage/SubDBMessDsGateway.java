@@ -1,7 +1,8 @@
 package uc.dboard.submessage;
 
-// Use case layer
-
+/** SubDBMessDsGateway provides methods to access, compare, and update persistent data
+ * @layer use cases
+ */
 public interface SubDBMessDsGateway {
 
     /** Gets the TestID from the database when given the solutionID of the solution the user wants to add a Message to.
