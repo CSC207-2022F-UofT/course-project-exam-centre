@@ -66,5 +66,8 @@ jobs:
             pull_number,
             state: "closed"
           })
-    - name: Test Reporter
-      uses: dorny/test-reporter@v1.6.0
+    - uses: actions/upload-artifact@v2  # upload test results
+      if: success() || failure()        # run this step even if previous step failed
+      with:
+        name: test-results
+        path: jest-junit.xml
