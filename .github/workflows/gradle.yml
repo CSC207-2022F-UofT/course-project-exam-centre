@@ -1,11 +1,7 @@
 # Custom GitHub Gradle workflow with test summary
 name: Gradle CI Test Summary
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push]
 
 permissions:
   contents: read
