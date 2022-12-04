@@ -4,4 +4,7 @@ package uc.course.register;
  * @layer use cases
  */
 public interface CRegisterOutputBoundary {
+    CRegisterResponseModel prepareSuccessView (CRegisterResponseModel responseModel);
+    CRegisterResponseModel prepareFailView (String errorMessage);
+
 }

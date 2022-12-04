@@ -1,12 +1,8 @@
 package driver;
 
 import entities.*;
+import entities.factories.UserFactory;
 import fworks.views.*;
-import ia.controllers.*;
-import ia.presenters.*;
-import uc.user.login.*;
-import uc.user.register.*;
-
 /**
  * A driver for testing the UI
  */
@@ -17,19 +13,22 @@ public class MainTest {
         StateTracker stateTracker = new StateTracker();
         UserFactory userFactory = new UserFactory(); // TODO: no need to construct if static
 
-        LoginDsGateway loginDsGateway = new LoginDsGateway(); // TODO
-        LoginPresenter loginPresenter = new LoginPresenter();
-        LoginInteractor loginInteractor = new LoginInteractor(stateTracker, loginDsGateway,
-                loginPresenter, userFactory);
-        LoginController loginController = new LoginController(loginInteractor);
+        //TODO: This code is problematic in a number of ways. Focus should be on the Main driver for now and when that
+        // completed, we can return to this and make a test version of the driver.
 
-        UserRegisterDsGateway userRegisterDsGateway = new UserRegisterDsGateway(); // TODO
-        UserRegisterResponseFormatter userRegisterResponseFormatter = new UserRegisterResponseFormatter();
-        UserRegisterInteractor userRegisterInteractor = new UserRegisterInteractor(stateTracker, userRegisterDsGateway,
-                userRegisterResponseFormatter, userFactory); // TODO
-        UserRegisterController userRegisterController = new UserRegisterController(userRegisterInteractor);
+//        LoginDsGateway loginDsGateway = new LoginDsGateway(); // TODO
+//        LoginPresenter loginPresenter = new LoginPresenter();
+//        LoginInteractor loginInteractor = new LoginInteractor(stateTracker, loginDsGateway,
+//                loginPresenter, userFactory);
+//        LoginController loginController = new LoginController(loginInteractor);
+//
+//        UserRegisterDsGateway userRegisterDsGateway = new UserRegisterDsGateway(); // TODO
+//        UserRegisterResponseFormatter userRegisterResponseFormatter = new UserRegisterResponseFormatter();
+//        UserRegisterInteractor userRegisterInteractor = new UserRegisterInteractor(stateTracker, userRegisterDsGateway,
+//                userRegisterResponseFormatter, userFactory); // TODO
+//        UserRegisterController userRegisterController = new UserRegisterController(userRegisterInteractor);
 
-        new WelcomeDialog(loginController, userRegisterController); // Register/Log-in window
+//        new WelcomeDialog(loginController, userRegisterController); // Register/Log-in window
         new TestFrame(); // View test window
 //        new SolutionFrame(); // View solutions window
     }

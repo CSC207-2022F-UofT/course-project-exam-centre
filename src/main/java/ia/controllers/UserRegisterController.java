@@ -16,7 +16,7 @@ public class UserRegisterController {
         this.userInput = userInput;
     }
 
-    /** Creates a request model for a user to be registered into the system
+    /** Calls the register new user method in the user register interactor
      *
      * @param firstName the first name of the user
      * @param lastName the last name of the user
@@ -25,8 +25,12 @@ public class UserRegisterController {
      * @param password2 the repeated password of the user
      * @return returns a URegiseterResponseModel containing the data of the User
      */
-    public URegisterResponseModel create(String firstName, String lastName, String email,
-                                  String password1, String password2) {
+    URegisterResponseModel registerUser(
+            String firstName,
+            String lastName,
+            String email,
+            String password1,
+            String password2) {
 
         URegisterRequestModel requestModel = new URegisterRequestModel(firstName,
                 lastName, email, password1, password2);

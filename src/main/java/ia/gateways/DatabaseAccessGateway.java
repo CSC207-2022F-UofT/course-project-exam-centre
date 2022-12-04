@@ -10,6 +10,8 @@ import uc.doc.submitsolution.SubSDocDsGateway;
 import uc.doc.submitsolution.SubSDocDsRequestModel;
 import uc.doc.submittest.SubTDocDsGateway;
 import uc.doc.submittest.SubTDocDsRequestModel;
+import uc.doc.voteonsolution.VoteSDocDsGateway;
+import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
 import uc.user.login.LoginDsGateway;
 import uc.user.register.URegisterDsGateway;
@@ -48,7 +50,8 @@ public interface DatabaseAccessGateway
         SubSDocDsGateway,
         SubTDocDsGateway,
         LoginDsGateway,
-        URegisterDsGateway {
+        URegisterDsGateway,
+        VoteSDocDsGateway {
 
     // Query methods to be implemented by a concrete database
     // access manager class in Drivers and Frameworks layer.
@@ -146,6 +149,14 @@ public interface DatabaseAccessGateway
      * @return a string representing a unique course ID
      */
     String getCourseIdByTestIdQuery(String testId);
+
+    /** Queries database to get the total votes of a solution document
+     *  corresponding to the given solution ID.
+     *
+     * @param solutionId the solution ID of the solution document being queried
+     * @return an int representing the total votes of the solution document
+     */
+    int getVoteTotalBySolutionIdQuery(String solutionId);
 
     /** Queries database to save data for new solution document entity.
      *
@@ -269,6 +280,18 @@ public interface DatabaseAccessGateway
             String email,
             String hashedPassword
     );
+        
+    /** Queries database to update the total number of votes of the solution document.
+    *
+    * @param solutionId    the solution ID of the solution document to be updated
+    * @param voteTotal        the vote total to update the solution document to
+    *
+    * @return true if updating of vote was successful
+    */
+   boolean updateSolutionDocVoteQuery(
+           String solutionId,
+           int voteTotal);
+
 
     // Default methods implementing use case database gateways
     // Note: some methods implement methods across multiple use case gateways
@@ -301,10 +324,10 @@ public interface DatabaseAccessGateway
      * @return a response model representing the data of a user entity
      */
     @Override
-    default UserDbModel getUserByEmail(String email) {
+    default UserDbResponseModel getUserByEmail(String email) {
         List<String> rawUserData = getUserByEmailQuery(email);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -558,10 +581,10 @@ public interface DatabaseAccessGateway
      * requested course entity
      */
     @Override
-    default CourseDbModel getCourseById(String courseId) {
+    default CourseDbResponseModel getCourseById(String courseId) {
         List<String> rawCourseData = getCourseByIdQuery(courseId);
 
-        return new CourseDbModel(
+        return new CourseDbResponseModel(
                 rawCourseData.get(0),           // courseId
                 rawCourseData.get(1),           // courseCode
                 rawCourseData.get(2)            // courseName
@@ -576,10 +599,10 @@ public interface DatabaseAccessGateway
      * requested user entity
      */
     @Override
-    default UserDbModel getUserById(String userId) {
+    default UserDbResponseModel getUserById(String userId) {
         List<String> rawUserData = getUserByIdQuery(userId);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -606,13 +629,13 @@ public interface DatabaseAccessGateway
      * for a message entity
      */
     @Override
-    default List<MessageDbModel> getMessagesByParentId(String parentId) {
+    default List<MessageDbResponseModel> getMessagesByParentId(String parentId) {
         List<List<String>> rawMessagesData = getMessagesByParentIdQuery(parentId);
-        List<MessageDbModel> response = new ArrayList<>();
+        List<MessageDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawMessagesData) {
             response.add(
-                    new MessageDbModel(
+                    new MessageDbResponseModel(
                             row.get(0),                     // messageId
                             row.get(1),                     // solutionId
                             row.get(2),                     // userId
@@ -633,13 +656,13 @@ public interface DatabaseAccessGateway
      * for a test document entity
      */
     @Override
-    default List<TestDocDbModel> getTestDocsByCourseId(String courseId) {
+    default List<TestDocDbResponseModel> getTestDocsByCourseId(String courseId) {
         List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(courseId);
-        List<TestDocDbModel> response = new ArrayList<>();
+        List<TestDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawTestDocData) {
             response.add(
-                    new TestDocDbModel(
+                    new TestDocDbResponseModel(
                             row.get(0),                     // testId
                             row.get(1),                     // userId
                             row.get(2),                     // courseId
@@ -660,13 +683,13 @@ public interface DatabaseAccessGateway
      * for a solution document entity
      */
     @Override
-    default List<SolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+    default List<SolutionDocDbResponseModel> getSolutionDocsByTestId(String testId) {
         List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(testId);
-        List<SolutionDocDbModel> response = new ArrayList<>();
+        List<SolutionDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawSolutionDocData) {
             response.add(
-                    new SolutionDocDbModel(
+                    new SolutionDocDbResponseModel(
                             row.get(0),                     // solutionId
                             row.get(1),                     // testId
                             row.get(2),                     // userId
@@ -723,4 +746,18 @@ public interface DatabaseAccessGateway
         }
     }
 
+    /** Updates the total votes for a solution document.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the solution document to be updated.
+     *
+     * @return true if update was successful, false otherwise
+     */
+    @Override
+    default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
+        return updateSolutionDocVoteQuery(
+                requestModel.getSolutionId(),
+                requestModel.getVote()
+        );
+    }
 }

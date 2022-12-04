@@ -10,7 +10,7 @@ public class TestDocument extends Document{
     private final HashMap<String, SolutionDocument> solutions;
 
     /**
-     * The time allotted for the test (hrs)å
+     * The time allotted for the test (hrs)
      */
     private Float estimatedTime;
 

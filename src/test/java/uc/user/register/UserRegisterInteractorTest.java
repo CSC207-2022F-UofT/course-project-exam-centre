@@ -1,9 +1,12 @@
 package uc.user.register;
 
+import entities.factories.UserFactory;
+import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.swing.plaf.nimbus.State;
 
 import static org.junit.Assert.*;
 
@@ -18,8 +21,7 @@ public class UserRegisterInteractorTest {
         URegisterDsGateway userDsGateway = new URegisterDsGateway() {
             /* Initializing a URegisterDsGateway that states that a user does not exist in the db
             and that the user info was saved.
-            *
-            * */
+            */
 
             @Override
             public boolean checkIfUserExistsByEmail(String email) {
@@ -27,13 +29,8 @@ public class UserRegisterInteractorTest {
             }
 
             @Override
-            public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
-                return true;
-            }
-
-            @Override
-            public boolean checkIfUserExists(String userId) {
-                return false;
+            public String saveUser(URegisterDsRequestModel requestModel) {
+                return "ABCD1234";
             }
         };
 
@@ -48,13 +45,13 @@ public class UserRegisterInteractorTest {
                 assertEquals(user.getUser().getLastName(), "Doe");
                 // Check if the email matches
                 assertEquals(user.getUser().getEmail(), "email@email.com");
-                // Check if the userId is created and is of length 9
+                // Check if the userId is created and is of length 8
                 assertEquals((user.getUser().getId()).length(), 8);
                 // Check if the timestamp is not empty
                 assertNotNull(user.timestamp);
 
                 return null;
-            };
+            }
 
             @Override
             public URegisterResponseModel prepareFailView(String error) {
@@ -63,16 +60,18 @@ public class UserRegisterInteractorTest {
                 return null;
             }
         };
-
+        StateTracker stateTracker = new StateTracker();
         UserFactory userFactory = new UserFactory();
 
-        UserRegisterInteractor interactor = new UserRegisterInteractor(userDsGateway,
-                userOutputBoundary, userFactory);
+        UserRegisterInteractor interactor = new UserRegisterInteractor(stateTracker,
+                userDsGateway,
+                userOutputBoundary,
+                userFactory);
 
         interactor.registerUser(requestModel);
     }
     @Test
-    public void userExists(){
+    public void registerFailGivenUserExists(){
         // Asserting if the register was a fail because the user exists.
 
         URegisterRequestModel requestModel = new URegisterRequestModel("John", "Doe",
@@ -84,13 +83,9 @@ public class UserRegisterInteractorTest {
             }
 
             @Override
-            public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
-                return false;
-            }
-
-            @Override
-            public boolean checkIfUserExists(String userId) {
-                return false;
+            public String saveUser(URegisterDsRequestModel requestModel) {
+                fail("Use case success is unexpected.");
+                return null;
             }
         };
 
@@ -98,7 +93,7 @@ public class UserRegisterInteractorTest {
             @Override
             public URegisterResponseModel prepareSuccessView(URegisterResponseModel user) {
                 // In case of failure
-                fail("Use case failure is unexpected.");
+                fail("Use case success is unexpected.");
                 return null;
             }
 
@@ -108,18 +103,19 @@ public class UserRegisterInteractorTest {
                 return null;
             }
         };
-
+        StateTracker stateTracker = new StateTracker();
         UserFactory userFactory = new UserFactory();
 
-        UserRegisterInteractor interactor = new UserRegisterInteractor(userDsGateway,
-                userOutputBoundary, userFactory);
-
+        UserRegisterInteractor interactor = new UserRegisterInteractor(stateTracker,
+                userDsGateway,
+                userOutputBoundary,
+                userFactory);
         interactor.registerUser(requestModel);
     }
 
     @Test
-    public void passwordsDontMatch(){
-        // Asserting if the register was a fail because passwords dont match
+    public void registerFailGivenPasswordsDontMatch(){
+        // Asserting if the register was a fail because passwords don't match
 
         URegisterRequestModel requestModel = new URegisterRequestModel("John", "Doe",
                 "email@email.com", "password", "notpassword");
@@ -130,21 +126,17 @@ public class UserRegisterInteractorTest {
             }
 
             @Override
-            public boolean saveNewUserInfo(URegisterDsRequestModel requestModel) {
-                return false;
-            }
-
-            @Override
-            public boolean checkIfUserExists(String userId) {
-                return false;
+            public String saveUser(URegisterDsRequestModel requestModel) {
+                fail("Use case success is unexpected");
+                return null;
             }
         };
 
         URegisterOutputBoundary userOutputBoundary = new URegisterOutputBoundary() {
             @Override
             public URegisterResponseModel prepareSuccessView(URegisterResponseModel user) {
-                // In case of failure
-                fail("Use case failure is unexpected.");
+                // In case of unexpected success
+                fail("Use case success is unexpected.");
                 return null;
             }
 
@@ -155,17 +147,14 @@ public class UserRegisterInteractorTest {
             }
         };
 
+        StateTracker stateTracker = new StateTracker();
         UserFactory userFactory = new UserFactory();
 
-        UserRegisterInteractor interactor = new UserRegisterInteractor(userDsGateway,
-                userOutputBoundary, userFactory);
+        UserRegisterInteractor interactor = new UserRegisterInteractor(stateTracker,
+                userDsGateway,
+                userOutputBoundary,
+                userFactory);
 
         interactor.registerUser(requestModel);
     }
-
-
-
-
-
-
 }

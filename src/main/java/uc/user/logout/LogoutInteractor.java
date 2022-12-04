@@ -28,6 +28,6 @@ public class LogoutInteractor implements LogoutInputBoundary {
     @Override
     public void logOut() {
         stateTracker.removeCurrentUser();
-        presenter.prepareLoginView();
+        presenter.prepareSuccessView();
     }
 }

@@ -4,5 +4,6 @@ package uc.course.updatemembers;
  * @layer use cases
  */
 public interface UpdateCMemOutputBoundary {
-    UpdateCMemResponseModel updateCourseMembership(UpdateCMemRequestModel requestModel);
+    UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel);
+    UpdateCMemResponseModel prepareFailView(String errorMessage);
 }

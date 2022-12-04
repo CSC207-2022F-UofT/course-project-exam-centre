@@ -672,4 +672,43 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         }
     }
 
+    /** Queries postgres DB to get the total votes of a solution document.
+     *
+     * @param solutionId             the unique solution Id of the solution document being queried
+     *
+     * @return total votes of solution document
+     */
+    @Override
+    public int getVoteTotalBySolutionIdQuery(String solutionId){
+        int voteTotal = 0;
+        String query = "SELECT vote_total FROM ec.solutions WHERE solution_id='" + solutionId + "';";
+        try (Statement statement = db.createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                voteTotal = rs.getInt("vote_total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return voteTotal;
+    }
+
+    /** Queries postgres DB to update the total votes of a solution document
+     *
+     * @param solutionId             the unique solution Id of the solution document being queried
+     * @param voteTotal              the total number of votes to update the solution document to
+     *
+     * @return whether the update of total votes was successful
+     */
+    @Override
+    public boolean updateSolutionDocVoteQuery(String solutionId, int voteTotal){
+        String query = "UPDATE ec.solutions SET vote_total=" + voteTotal + " WHERE solution_id='" + solutionId + "';";
+        try (Statement statement = db.createStatement()) {
+            statement.executeQuery(query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

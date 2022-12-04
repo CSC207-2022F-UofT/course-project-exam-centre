@@ -4,7 +4,6 @@ package uc.course.register;
  * @layer use cases
  */
 public class CRegisterRequestModel {
-    public String courseId;
     private String courseName;
     private String courseCode;
 
@@ -33,6 +32,7 @@ public class CRegisterRequestModel {
     public String getCourseCode() {
         return courseCode;
     }
+<<<<<<< HEAD
 
     /** Gets the course id of the course
      *
@@ -41,4 +41,6 @@ public class CRegisterRequestModel {
     public String getCourseId() {
         return courseId;
     }
+=======
+>>>>>>> main
 }
