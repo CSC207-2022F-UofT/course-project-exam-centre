@@ -8,10 +8,7 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  - pull_request_target
 
 permissions:
   contents: read
