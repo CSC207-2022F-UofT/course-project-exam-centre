@@ -66,3 +66,5 @@ jobs:
             pull_number,
             state: "closed"
           })
+    - name: Test Reporter
+      uses: dorny/test-reporter@v1.6.0
