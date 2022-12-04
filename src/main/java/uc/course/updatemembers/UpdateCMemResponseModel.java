@@ -10,6 +10,12 @@ public class UpdateCMemResponseModel {
     private List<String> userCourseList;
     private boolean updateMembershipStatus;
 
+    /** Constructs a UpdateCMemResponseModel containing a timestamp, userCourseList and an updateMembershipStatus
+     *
+     * @param timestamp how long it takes the membership to update
+     * @param userCourseList the course list of the user
+     * @param updateMembershipStatus if the membership was updated or not
+     */
     public UpdateCMemResponseModel(String timestamp, List<String> userCourseList, boolean updateMembershipStatus) {
         this.timestamp = timestamp;
         this.userCourseList = userCourseList;

@@ -4,6 +4,16 @@ package uc.course.updatemembers;
  * @layer use cases
  */
 public interface UpdateCMemOutputBoundary {
+    /**
+     * Prepares a success view
+     * @param responseModel contains a user's course list and their membership status.
+     */
     UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel);
+
+    /**
+     * Prepares a failure view
+     * @param errorMessage String of the error that has occurred
+     * @throws ia.exceptions.UpdateCourseMembershipFailed exception
+     */
     UpdateCMemResponseModel prepareFailView(String errorMessage);
 }
