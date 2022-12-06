@@ -1,5 +1,10 @@
 package uc.user.register;
 
+/** The URegisterDsRequestModel is responsible for bundling information
+ *  that can then be stored as persistent data.
+ * It contains information of the user that is attempting to register an account.
+ * @layer use cases
+ */
 public class URegisterDsRequestModel {
 
     private String email;

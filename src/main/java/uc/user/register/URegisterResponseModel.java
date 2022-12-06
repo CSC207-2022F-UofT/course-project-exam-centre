@@ -2,6 +2,9 @@ package uc.user.register;
 
 import entities.User;
 
+/** The URegisterResponseModel is responsible for formatting information into a way the presenter can use.
+ * @layer use cases
+ */
 public class URegisterResponseModel {
     User user;
     Boolean loginStatus;

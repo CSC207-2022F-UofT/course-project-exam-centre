@@ -2,6 +2,10 @@ package uc.user.register;
 import java.util.List;
 import java.util.LinkedList;
 
+/** The URegisterRequestModel is responsible for formatting information for UserRegisterInteractor
+ *  to use.
+ * @layer use cases
+ */
 public class URegisterRequestModel{
 
     private String firstName;
