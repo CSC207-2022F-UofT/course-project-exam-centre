@@ -1,18 +1,18 @@
 package uc.doc.submitsolution;
 
 /**
- * SubSDocDsGateway provides methods to save document, and save/modify the root message of the message board
+ * SubmitSDocDsGateway provides methods to save document, and save/modify the root message of the message board
  * @layer Use cases
  */
 
-public interface SubSDocDsGateway {
+public interface SubmitSDocDsGateway {
 
     /**
      * Saves the solution document in memory
      * @param model The request model containing the needed information to save the solution document
      * @return The ID of the newly saved document
      */
-    String saveSolutionDocument(SubSDocDsRequestModel model);
+    String saveSolutionDocument(SubmitSDocDsRequestModel model);
 
     /**
      * Adds a root message to the solution document

@@ -5,7 +5,7 @@ package uc.doc.submitsolution;
  * @layer Use cases
  */
 
-public class SubSDocRequestModel {
+public class SubmitSDocRequestModel {
 
     /**
      * The name of the document
@@ -38,7 +38,7 @@ public class SubSDocRequestModel {
     private final String parentTestID;
 
     /**
-     * Creates a SubSDocRequestModel instance which is used to pass the needed information into the interactor for
+     * Creates a SubmitSDocRequestModel instance which is used to pass the needed information into the interactor for
      * creation of a new SolutionDoc entity
      * @param name The name of the document
      * @param filePath The path to the document on the submitting user's drive
@@ -47,12 +47,12 @@ public class SubSDocRequestModel {
      * @param recordedTime The estimated time it took to write this solution set
      * @param parentTest The ID of the test this solution document was written for
      */
-    public SubSDocRequestModel(String name,
-                               String filePath,
-                               Float recordedScore,
-                               String courseID,
-                               Float recordedTime,
-                               String parentTest) {
+    public SubmitSDocRequestModel(String name,
+                                  String filePath,
+                                  Float recordedScore,
+                                  String courseID,
+                                  Float recordedTime,
+                                  String parentTest) {
         this.name = name;
         this.filePath = filePath;
         this.recordedScore = recordedScore;

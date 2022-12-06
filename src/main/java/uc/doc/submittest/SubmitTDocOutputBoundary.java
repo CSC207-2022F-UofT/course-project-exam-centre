@@ -1,10 +1,10 @@
 package uc.doc.submittest;
 
 /**
- * SubTDocOutputBoundary provides methods for returning the status of the use case actions back to the presenters
+ * SubmitTDocOutputBoundary provides methods for returning the status of the use case actions back to the presenters
  * @layer Use cases
  */
-public interface SubTDocOutputBoundary {
+public interface SubmitTDocOutputBoundary {
 
         /**
          * Alerts the presenters that the request succeeded

@@ -1,19 +1,19 @@
 package ia.presenters;
 
 import ia.exceptions.SubmitSolutionDocFailed;
-import uc.doc.submitsolution.SubSDocOutputBoundary;
-import uc.doc.submitsolution.SubSDocResponseModel;
+import uc.doc.submitsolution.SubmitSDocOutputBoundary;
+import uc.doc.submitsolution.SubmitSDocResponseModel;
 
-public class SubmitSolutionDocPresenter implements SubSDocOutputBoundary {
+public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
     @Override
-    public SubSDocResponseModel prepareSuccessView(
-            SubSDocResponseModel responseModel) {
+    public SubmitSDocResponseModel prepareSuccessView(
+            SubmitSDocResponseModel responseModel) {
         // TODO: Update view model here
         return responseModel;
     }
 
     @Override
-    public SubSDocResponseModel prepareFailView(String errorMessage) {
+    public SubmitSDocResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
         throw new SubmitSolutionDocFailed(errorMessage);
     }

@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
  */
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
-    private final SubTDocOutputBoundary tDocOutputBoundary;
+    private final SubmitTDocOutputBoundary tDocOutputBoundary;
 
-    private final SubTDocDsGateway tDocDsGateway;
+    private final SubmitTDocDsGateway tDocDsGateway;
 
-    private final SubTDocFileAccessGateway tDocFileAccessGateway;
+    private final SubmitTDocFileAccessGateway tDocFileAccessGateway;
 
     private final TestDocFactory testDocFactory;
 
@@ -30,9 +30,9 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
      * @param stateTracker The app's state tracker for referencing entities
      * @param testDocFactory The factory for creating test documents
      */
-    public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
-                                   SubTDocFileAccessGateway tDocFileAccessGateway,
-                                   SubTDocOutputBoundary tDocOutputBoundary,
+    public SubmitTestDocInteractor(SubmitTDocDsGateway tDocDsGateway,
+                                   SubmitTDocFileAccessGateway tDocFileAccessGateway,
+                                   SubmitTDocOutputBoundary tDocOutputBoundary,
                                    StateTracker stateTracker,
                                    TestDocFactory testDocFactory) {
         this.tDocOutputBoundary = tDocOutputBoundary;
@@ -49,11 +49,11 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
      * @return The response model creation of this entity
      */
     @Override
-    public SubmitTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel) {
+    public SubmitTDocResponseModel submitTestDoc(SubmitTDocRequestModel requestModel) {
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
         User user = stateTracker.getUserIfTracked(requestModel.getUserID());
 
-        SubTDocDsRequestModel dsRequestModel = new SubTDocDsRequestModel(
+        SubmitTDocDsRequestModel dsRequestModel = new SubmitTDocDsRequestModel(
                 requestModel.getName(),
                 requestModel.getNumberOfQuestions(),
                 requestModel.getRecordedTime(),

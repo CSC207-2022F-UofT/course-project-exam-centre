@@ -1,10 +1,10 @@
 package uc.doc.submitsolution;
 
-/** SubSDocFileAccessGateway provides a method to access the file of the uploaded solution document
+/** SubmitSDocFileAccessGateway provides a method to access the file of the uploaded solution document
  * @layer Use cases
  */
 
-public interface SubSDocFileAccessGateway {
+public interface SubmitSDocFileAccessGateway {
 
     /**
      * Uploads the solution document into persistent data
@@ -12,6 +12,6 @@ public interface SubSDocFileAccessGateway {
      * @param docId The ID of the document entity
      * @return Whether the request succeeded
      */
-    boolean uploadSolutionDocument(SubSDocDsRequestModel model, String docId);
+    boolean uploadSolutionDocument(SubmitSDocDsRequestModel model, String docId);
 
 }

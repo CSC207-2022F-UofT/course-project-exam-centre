@@ -1,10 +1,10 @@
 package uc.doc.submittest;
 
 /**
- * SubTDocRequestModel bundles the data required by the interactor into a single object
+ * SubmitTDocRequestModel bundles the data required by the interactor into a single object
  * @layer Use cases
  */
-public class SubTDocRequestModel {
+public class SubmitTDocRequestModel {
 
     /**
      * The name of this test document
@@ -51,13 +51,13 @@ public class SubTDocRequestModel {
      * @param courseID The ID of the course this test belongs to
      * @param filePath The path of the document on the user's drive
      */
-    public SubTDocRequestModel(String name,
-                               Integer numberOfQuestions,
-                               Float recordedTime,
-                               String testType,
-                               String userID,
-                               String courseID,
-                               String filePath) {
+    public SubmitTDocRequestModel(String name,
+                                  Integer numberOfQuestions,
+                                  Float recordedTime,
+                                  String testType,
+                                  String userID,
+                                  String courseID,
+                                  String filePath) {
         this.name = name;
         this.numberOfQuestions = numberOfQuestions;
         this.recordedTime = recordedTime;

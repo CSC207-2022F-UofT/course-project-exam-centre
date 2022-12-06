@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
  * SubmitSolutionDocInteractor implements the ability to submit a solution document into persistent data
  * @layer Use cases
  */
-public class SubmitSolutionDocInteractor implements SubSDocInputBoundary{
+public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
 
-    private final SubSDocOutputBoundary sDocOutputBoundary;
+    private final SubmitSDocOutputBoundary sDocOutputBoundary;
 
-    private final SubSDocDsGateway sDocDsGateway;
+    private final SubmitSDocDsGateway sDocDsGateway;
 
-    private final SubSDocFileAccessGateway sDocFileAccessGateway;
+    private final SubmitSDocFileAccessGateway sDocFileAccessGateway;
 
     private final SolutionDocFactory solutionDocFactory;
 
@@ -30,9 +30,9 @@ public class SubmitSolutionDocInteractor implements SubSDocInputBoundary{
      * @param stateTracker Used for tracking entities in the program
      * @param solutionDocFactory The factory for creating solution documents
      */
-    public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
-                                       SubSDocFileAccessGateway sDocFileAccessGateway,
-                                       SubSDocOutputBoundary sDocOutputBoundary,
+    public SubmitSolutionDocInteractor(SubmitSDocDsGateway sDocDsGateway,
+                                       SubmitSDocFileAccessGateway sDocFileAccessGateway,
+                                       SubmitSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker,
                                        SolutionDocFactory solutionDocFactory) {
         this.sDocDsGateway = sDocDsGateway;
@@ -49,12 +49,12 @@ public class SubmitSolutionDocInteractor implements SubSDocInputBoundary{
      * @return If completed, the success view response model, containing information to be presented to the user
      */
     @Override
-    public SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model) {
+    public SubmitSDocResponseModel submitSolutionDoc(SubmitSDocRequestModel model) {
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());
         User user = stateTracker.getCurrentUser();
         TestDocument parentTest = course.getTest(model.getParentTestID());
 
-        SubSDocDsRequestModel dsRequestModel = new SubSDocDsRequestModel(
+        SubmitSDocDsRequestModel dsRequestModel = new SubmitSDocDsRequestModel(
                 model.getName(),
                 user.getId(),
                 model.getRecordedScore(),
@@ -90,8 +90,8 @@ public class SubmitSolutionDocInteractor implements SubSDocInputBoundary{
 
         parentTest.addUpdateSolution(document);
 
-        SubSDocResponseModel responseModel = new SubSDocResponseModel(document.getId(), parentTest.getId(), LocalDateTime.now());
+        SubmitSDocResponseModel responseModel = new SubmitSDocResponseModel(document.getId(), parentTest.getId(), LocalDateTime.now());
 
-        return sDocOutputBoundary.prepareSucessView(responseModel);
+        return sDocOutputBoundary.prepareSuccessView(responseModel);
     }
 }

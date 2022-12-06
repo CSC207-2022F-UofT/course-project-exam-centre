@@ -1,11 +1,11 @@
 package uc.doc.submitsolution;
 
 /**
- * SubSDocDsRequestModel bundles the data required for storing a solution document into a single object
+ * SubmitSDocDsRequestModel bundles the data required for storing a solution document into a single object
  * @layer Use cases
  */
 
-public class SubSDocDsRequestModel {
+public class SubmitSDocDsRequestModel {
 
     /**
      * Name of the document
@@ -64,7 +64,7 @@ public class SubSDocDsRequestModel {
      * @param voteTotal The total number of upvotes and downvotes for this document
      * @param estimatedTime The estimated time it took to write this solution set
      */
-    public SubSDocDsRequestModel(
+    public SubmitSDocDsRequestModel(
             String name,
             String userId,
             Float recordedScore,

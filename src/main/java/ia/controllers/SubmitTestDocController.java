@@ -1,7 +1,6 @@
 package ia.controllers;
 
-import uc.doc.submittest.SubTDocRequestModel;
-import uc.doc.submittest.SubTDocInputBoundary;
+import uc.doc.submittest.SubmitTDocRequestModel;
 import uc.doc.submittest.SubTDocResponseModel;
 
 public class SubmitTestDocController {
@@ -39,7 +38,7 @@ public class SubmitTestDocController {
                                                    String userID,
                                                    String courseID,
                                                    String filePath) {
-        SubTDocRequestModel requestModel = new SubTDocRequestModel(
+        SubmitTDocRequestModel requestModel = new SubmitTDocRequestModel(
                 name,
                 numOfQuestions,
                 recordedTime,

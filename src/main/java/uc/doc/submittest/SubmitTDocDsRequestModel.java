@@ -4,7 +4,7 @@ package uc.doc.submittest;
  * SubTDocDsRequestModel bundles the information required for saving a test document into a single object
  * @layer Use cases
  */
-public class SubTDocDsRequestModel {
+public class SubmitTDocDsRequestModel {
 
     /**
      * The name of this test document
@@ -52,13 +52,13 @@ public class SubTDocDsRequestModel {
      * @param courseID The ID of the course this test belongs to
      * @param filePath The path to the file on the user's drive
      */
-    public SubTDocDsRequestModel(String name,
-                                 Integer numberOfQuestions,
-                                 Float estimatedTime,
-                                 String testType,
-                                 String userID,
-                                 String courseID,
-                                 String filePath) {
+    public SubmitTDocDsRequestModel(String name,
+                                    Integer numberOfQuestions,
+                                    Float estimatedTime,
+                                    String testType,
+                                    String userID,
+                                    String courseID,
+                                    String filePath) {
         this.name = name;
         this.numberOfQuestions = numberOfQuestions;
         this.userId = userID;

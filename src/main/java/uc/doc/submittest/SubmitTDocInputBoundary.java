@@ -11,7 +11,7 @@ public interface SubmitTDocInputBoundary {
      * @param requestModel A request model containing the required information for saving a test document
      * @return A response model containing the information to be passed back to the presenters
      */
-    SubmitTDocResponseModel submitTestDoc(SubTDocRequestModel requestModel);
+    SubmitTDocResponseModel submitTestDoc(SubmitTDocRequestModel requestModel);
 
 }
 

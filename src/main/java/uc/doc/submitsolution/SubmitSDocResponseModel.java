@@ -1,13 +1,13 @@
 package uc.doc.submitsolution;
 
 /**
- * SubSDocResponseModel bundles the data being passed back to presenter in a single object
+ * SubmitSDocResponseModel bundles the data being passed back to presenter in a single object
  * @layer Use cases
  */
 
 import java.time.LocalDateTime;
 
-public class SubSDocResponseModel {
+public class SubmitSDocResponseModel {
 
     /**
      * The ID of the new solution doc entity
@@ -30,7 +30,7 @@ public class SubSDocResponseModel {
      * @param testDocID The ID of the corresponding test this solution document belongs to
      * @param timestamp The time the SolutionDoc was created
      */
-    public SubSDocResponseModel(String solutionDocID, String testDocID, LocalDateTime timestamp) {
+    public SubmitSDocResponseModel(String solutionDocID, String testDocID, LocalDateTime timestamp) {
         this.solutionDocID = solutionDocID;
         this.timestamp = timestamp;
         this.testDocID = testDocID;

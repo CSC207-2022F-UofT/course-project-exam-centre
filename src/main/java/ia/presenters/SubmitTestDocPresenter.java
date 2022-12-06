@@ -1,10 +1,10 @@
 package ia.presenters;
 
 import ia.exceptions.SubmitTestDocFailed;
-import uc.doc.submittest.SubTDocOutputBoundary;
+import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubTDocResponseModel;
 
-public class SubmitTestDocPresenter implements SubTDocOutputBoundary {
+public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
     @Override
     public SubTDocResponseModel prepareSuccessView(
             SubTDocResponseModel responseModel) {

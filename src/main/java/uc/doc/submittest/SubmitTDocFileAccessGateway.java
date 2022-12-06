@@ -1,10 +1,10 @@
 package uc.doc.submittest;
 
 /**
- * SubTDocFileAccessGateway provides methods for uploading the test document from the user's comptuer
+ * SubmitTDocFileAccessGateway provides methods for uploading the test document from the user's comptuer
  * @layer Use cases
  */
-public interface SubTDocFileAccessGateway {
+public interface SubmitTDocFileAccessGateway {
 
     /**
      * Uploads the test document into the app
@@ -12,6 +12,6 @@ public interface SubTDocFileAccessGateway {
      * @param docId The ID the document
      * @return Whether the request succeeds
      */
-    boolean uploadTestDocument(SubTDocDsRequestModel dsRequestModel, String docId);
+    boolean uploadTestDocument(SubmitTDocDsRequestModel dsRequestModel, String docId);
     
 }
