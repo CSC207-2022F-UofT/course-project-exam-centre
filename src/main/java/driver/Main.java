@@ -88,6 +88,8 @@ public class Main {
                 "FTP_PASS", config.getProperty("FTP_PASS"));
         String ftpRemotePath = System.getenv().getOrDefault(
                 "REMOTE_PATH", config.getProperty("REMOTE_PATH"));
+        String ftpLocalPath = System.getenv().getOrDefault(
+                "LOCAL_PATH", config.getProperty("LOCAL_PATH"));
 
         try {
             // Initialise database access gateway
@@ -106,7 +108,8 @@ public class Main {
                 ftpPort,
                 ftpUser,
                 ftpPass,
-                ftpRemotePath
+                ftpRemotePath,
+                ftpLocalPath
             );
 
             // Construct entity factories

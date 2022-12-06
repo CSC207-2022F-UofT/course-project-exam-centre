@@ -2,6 +2,6 @@ package uc.doc.downloaddoc;
 
 public interface DownloadDocFileAccessGateway {
 
-    boolean downloadDoc(DownloadDocFileAccessRequestModel downloadDocFileAccessRequestModel);
+    String downloadDoc(DownloadDocFileAccessRequestModel downloadDocFileAccessRequestModel);
 
 }

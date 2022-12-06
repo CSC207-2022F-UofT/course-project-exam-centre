@@ -24,13 +24,12 @@ public class DownloadDocInteractor implements DownloadDocInputBoundary {
     public DownloadDocResponseModel downloadDoc(DownloadDocRequestModel model) {
         User user = stateTracker.getCurrentUser();
         String documentId = model.getDocumentId();
-        String downloadPath = model.getDownloadPath();
+        String downloadPath;
 
         if (!checkIfDocumentDownloaded(documentId)) {
-            DownloadDocFileAccessRequestModel downloadDocFileAccessRequestModel = new DownloadDocFileAccessRequestModel(documentId, user.getId(), downloadPath);
-            if (downloadDocFileAccessGateway.downloadDoc(downloadDocFileAccessRequestModel)) {
-                updateDownloadedDocuments(documentId, downloadPath);
-            }
+            DownloadDocFileAccessRequestModel downloadDocFileAccessRequestModel = new DownloadDocFileAccessRequestModel(documentId, user.getId());
+            downloadPath = downloadDocFileAccessGateway.downloadDoc(downloadDocFileAccessRequestModel);
+            updateDownloadedDocuments(documentId, downloadPath);
         } else {
             downloadPath = getDownloadedDocumentPath(documentId);
         }

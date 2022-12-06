@@ -21,12 +21,11 @@ public interface FileAccessGateway extends SubSDocFileAccessGateway, SubTDocFile
         return uploadFile(filePath, docId);
     }
 
-    boolean downloadFile(String fileName, String downloadPath);
+    String downloadFile(String fileName);
 
-    default boolean downloadDoc(DownloadDocFileAccessRequestModel model) {
+    default String downloadDoc(DownloadDocFileAccessRequestModel model) {
         String documentId = model.getDocumentId();
-        String downloadPath = model.getDownloadPath();
-        return downloadFile(documentId, downloadPath);
+        return downloadFile(documentId);
     }
 
 }

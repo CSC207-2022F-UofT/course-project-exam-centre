@@ -3,12 +3,10 @@ package uc.doc.downloaddoc;
 public class DownloadDocFileAccessRequestModel {
     private final String documentId;
     private final String userId;
-    private final String downloadPath;
 
-    public DownloadDocFileAccessRequestModel(String documentId, String userId, String downloadPath) {
+    public DownloadDocFileAccessRequestModel(String documentId, String userId) {
         this.documentId = documentId;
         this.userId = userId;
-        this.downloadPath = downloadPath;
     }
 
     public String getDocumentId() {
@@ -19,7 +17,4 @@ public class DownloadDocFileAccessRequestModel {
         return this.userId;
     }
 
-    public String getDownloadPath() {
-        return this.downloadPath;
-    }
 }
