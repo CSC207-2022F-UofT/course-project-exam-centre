@@ -172,7 +172,7 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
                         fileName.getText()
                 );
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
     }
