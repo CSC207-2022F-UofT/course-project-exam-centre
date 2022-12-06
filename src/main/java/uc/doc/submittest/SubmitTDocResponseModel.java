@@ -2,10 +2,14 @@ package uc.doc.submittest;
 
 import java.time.LocalDateTime;
 
+/**
+ * SubmitTDocResponseModel bundles the information of the saved test document to be passed back to the presenters
+ * @layer Use cases
+ */
 public class SubmitTDocResponseModel {
 
     /**
-     * The ID of the newly created test doucment
+     * The ID of the newly created test document
      */
     private final String testDocID;
 

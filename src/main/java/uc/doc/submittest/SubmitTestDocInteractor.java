@@ -4,6 +4,11 @@ import entities.*;
 
 import java.time.LocalDateTime;
 
+
+/**
+ * SubmitTestDocInteractor implementes the ability to save a test document into persistent memory
+ * @layer Use cases
+ */
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
     /**
@@ -27,11 +32,12 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
     private final StateTracker stateTracker;
 
     /**
-     * Creates a new interactor instance for submission of a new test document
-     * @param tDocDsGateway The test document submission gateway
-     * @param tDocOutputBoundary The test document output boundary
-     * @param tDocFileAccessGateway The test document file access gateway
-     * @param stateTracker The app's state tracker for refrencing entites
+     * Creates a new interactor instance for submission of a new test document which contains an OutputBoundary,
+     * DsGateway, FileAccessGateway, and StateTracker
+     * @param tDocDsGateway Contains the methods to save the document in persistent memory
+     * @param tDocOutputBoundary Provides the methods to update the views and pass information back to the user
+     * @param tDocFileAccessGateway Provides methods for uploading the document
+     * @param stateTracker The app's state tracker for referencing entities
      */
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
                                    SubTDocFileAccessGateway tDocFileAccessGateway,

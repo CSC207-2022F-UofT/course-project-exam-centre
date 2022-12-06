@@ -1,5 +1,9 @@
 package uc.doc.submittest;
 
+/**
+ * SubTDocRequestModel bundles the data required by the interactor into a single object
+ * @layer Use cases
+ */
 public class SubTDocRequestModel {
 
     /**
