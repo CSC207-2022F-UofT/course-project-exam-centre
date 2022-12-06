@@ -11,8 +11,8 @@ public class DownloadDocController {
         this.downloadDocInputBoundary = downloadDocInputBoundary;
     }
 
-    public DownloadDocResponseModel createInput(String documentId, String userId){
-        DownloadDocRequestModel downloadDocRequestModel = new DownloadDocRequestModel(documentId, userId);
+    public DownloadDocResponseModel createInput(String documentId, String userId, String downloadPath){
+        DownloadDocRequestModel downloadDocRequestModel = new DownloadDocRequestModel(documentId, userId, downloadPath);
         return downloadDocInputBoundary.downloadDoc(downloadDocRequestModel);
     }
 }
