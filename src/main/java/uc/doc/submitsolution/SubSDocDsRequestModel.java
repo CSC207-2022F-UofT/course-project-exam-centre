@@ -53,7 +53,7 @@ public class SubSDocDsRequestModel {
     private final Float estimatedTime;
 
     /**
-     * Creates a new solution doc submission data storage model used to store the solution doc in a database
+     * Creates a new solution doc submission data storage model used to store the solution doc in a persistent memory
      * @param name The name of the document
      * @param userId The ID of the user submitting the document
      * @param recordedScore The marks earned for this solution document

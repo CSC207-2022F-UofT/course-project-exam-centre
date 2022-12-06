@@ -43,7 +43,7 @@ public class SubTDocDsRequestModel {
 
     /**
      * Creates a new instance of the test document submission data storage request model for storing the needed
-     * information in a database
+     * information in persistent memory
      * @param name The name of the test document
      * @param numberOfQuestions The number of question on this test
      * @param estimatedTime The time limit for this test
