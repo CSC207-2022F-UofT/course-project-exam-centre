@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/** UpdateStateInteractor implements the ability to update the state tracker.
+ * @layer use cases
+ */
 public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private final UpdateStateOutputBoundary presenter;
     private final UpdateStateDsGateway dsGateway;
@@ -19,6 +22,18 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private final SolutionDocFactory solutionDocFactory;
     private final MessageFactory messageFactory;
 
+    /** Constructs an instance of UpdateStateInteractor containing a presenter, dsGateway, stateTracker and
+     * the different factories for creating entities.
+     *
+     * @param presenter provides methods to output data
+     * @param dsGateway provides methods to access and update persistent data
+     * @param stateTracker the stateTracker we are updating
+     * @param userFactory provides methods to create User entities
+     * @param courseFactory provides methods to create Course entities
+     * @param testDocFactory provides methods to create TestDocument entities
+     * @param solutionDocFactory provides methods to create SolutionDocument entities
+     * @param messageFactory provides methods to create Message entities
+     */
     public UpdateStateInteractor(
             UpdateStateOutputBoundary presenter,
             UpdateStateDsGateway dsGateway,
@@ -40,6 +55,11 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         this.messageFactory = messageFactory;
     }
 
+    /** Constructs a User using a userId
+     *
+     * @param userId the userId of the user being created
+     * @return the created User entity
+     */
     private User constructUserById(String userId) {
         UpdateStateUserDbModel userData = dsGateway.getUserById(userId);
         List<String> rawUserEnrolmentsData = dsGateway.getCourseIdsByUserId(userId);
@@ -57,6 +77,11 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         return newUser;
     }
 
+    /** Constructs CourseInfo using a courseId
+     *
+     * @param courseId the courseId of the CourseInfo being created
+     * @return the created CourseInfo
+     */
     private CourseInfo constructCourseInfoItemById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
@@ -67,6 +92,11 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         );
     }
 
+    /** Constructs a Course entity using a courseId
+     *
+     * @param courseId the courseId of the Course being created
+     * @return the created Course
+     */
     private Course constructCourseById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
@@ -82,6 +112,10 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     }
 
+    /** Constructs all the tests belonging to a course
+     *
+     * @param parentCourse The course that all the tests belong to
+     */
     private void constructAllTestsByCourse(Course parentCourse) {
         String courseId = parentCourse.getId();
         List<? extends UpdateStateTestDocDbModel> testsData
@@ -108,6 +142,10 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         }
     }
 
+    /** Constructs all the solutions belonging to a test
+     *
+     * @param parentTestDoc the test that has all the solutions
+     */
     private void constructSolutionsByTest(TestDocument parentTestDoc) {
         String parentTestId = parentTestDoc.getId();
         List<? extends UpdateStateSolutionDocDbModel> solutionsData
@@ -138,6 +176,11 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         }
     }
 
+    /** Constructs a messageTree using the parentId of a message
+     *
+     * @param parentId the parentId of a message
+     * @param newMessageTree the message tree being added
+     */
     private void constructMessageTreeByParentId(
             String parentId, MessageTree newMessageTree) {
             List<? extends UpdateStateMessageDbModel> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
@@ -160,6 +203,10 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         }
     }
 
+    /** Constructs all the courseInfo items
+     *
+     * @return a mapping of courseId to the courseInfo
+     */
     private Map<String, CourseInfo> constructAllCourseInfoItems() {
         List<String> rawCourseIdsData = dsGateway.getAllCourseIds();
         Map<String, CourseInfo> allCourseItems = new HashMap<>();
@@ -175,6 +222,11 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         return allCourseItems;
     }
 
+    /** Updates the state to contain all the new data being created.
+     *
+     * @param requestModel requestModel containing information about the current state
+     * @return A responseModel corresponding to the requestModel
+     */
     @Override
     public UpdateStateResponseModel updateState(
             UpdateStateRequestModel requestModel) {
