@@ -15,8 +15,8 @@ public interface SubmitTDocOutputBoundary {
 
         /**
          * Alerts the presenters that the request failed
-         * @param error The error that occurred
+         * @param errorMessage The error that occurred
          * @return The data to be presented
          */
-        SubmitTDocResponseModel prepareFailureView(String error);
+        SubmitTDocResponseModel prepareFailureView(String errorMessage);
 }

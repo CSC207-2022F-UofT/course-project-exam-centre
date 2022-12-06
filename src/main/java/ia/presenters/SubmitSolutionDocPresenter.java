@@ -13,7 +13,7 @@ public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
     }
 
     @Override
-    public SubmitSDocResponseModel prepareFailView(String errorMessage) {
+    public SubmitSDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: Update view model here
         throw new SubmitSolutionDocFailed(errorMessage);
     }

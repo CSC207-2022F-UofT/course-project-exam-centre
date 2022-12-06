@@ -8,8 +8,8 @@ import uc.dboard.submessage.SubDBMessDsGateway;
 import uc.dboard.submessage.SubDBMessDsRequestModel;
 import uc.doc.submitsolution.SubmitSDocDsGateway;
 import uc.doc.submitsolution.SubmitSDocDsRequestModel;
-import uc.doc.submittest.SubTDocDsRequestModel;
 import uc.doc.submittest.SubmitTDocDsGateway;
+import uc.doc.submittest.SubmitTDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocDsGateway;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
@@ -386,7 +386,7 @@ public interface DatabaseAccessGateway
      * @return the unique test ID of the saved test document entity
      */
     @Override
-    default String saveTestDocument(SubTDocDsRequestModel requestModel) {
+    default String saveTestDocument(SubmitTDocDsRequestModel requestModel) {
         String testId = generateRandomId();
 
         saveTestDocumentQuery(

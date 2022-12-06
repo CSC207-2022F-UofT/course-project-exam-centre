@@ -21,6 +21,7 @@ import uc.dboard.submessage.SubmitDBMessageInteractor;
 import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocInputBoundary;
 import uc.doc.submitsolution.SubmitSolutionDocInteractor;
+import uc.doc.submittest.SubmitTDocInputBoundary;
 import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTestDocInteractor;
 import uc.state.update.UpdateStateInputBoundary;
@@ -173,7 +174,7 @@ public class Main {
                     currentState,
                     solutionDocFactory
             );
-            SubTDocInputBoundary submitTestDocInteractor
+            SubmitTDocInputBoundary submitTestDocInteractor
                     = new SubmitTestDocInteractor(
                     dbGateway,
                     fileAccessGateway,

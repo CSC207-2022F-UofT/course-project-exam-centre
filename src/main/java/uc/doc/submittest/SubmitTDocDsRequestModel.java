@@ -1,7 +1,7 @@
 package uc.doc.submittest;
 
 /**
- * SubTDocDsRequestModel bundles the information required for saving a test document into a single object
+ * SubmitTDocDsRequestModel bundles the information required for saving a test document into a single object
  * @layer Use cases
  */
 public class SubmitTDocDsRequestModel {
