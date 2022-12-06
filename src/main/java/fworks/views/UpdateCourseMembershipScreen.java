@@ -43,7 +43,7 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
         this.courseList = courseList;
         this.userID = userID;
 
-        courseDisplay = new HashMap<JLabel, JCheckBox>();
+        courseDisplay = new HashMap<>();
 
         this.setLayout(new GridLayout(courseList.size() + 1, 2));
 

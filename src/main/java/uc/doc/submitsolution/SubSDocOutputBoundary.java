@@ -4,7 +4,6 @@ package uc.doc.submitsolution;
  * SubSDocOutputBoundary provides methods for sending the status of the request back to the views
  * @layer Use cases
  */
-
 public interface SubSDocOutputBoundary {
 
     /**

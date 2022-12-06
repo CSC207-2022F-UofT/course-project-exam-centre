@@ -1,4 +1,5 @@
-package uc.user.logout;
 /**
- * Contains use case layer classes and interfaces.
+ * Contains interfaces and classes that define and implement logout behaviour.
+ * @layer use cases
  */
+package uc.user.logout;

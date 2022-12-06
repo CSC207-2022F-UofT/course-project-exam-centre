@@ -1,6 +1,7 @@
 package uc.state.update;
 
 import entities.*;
+import entities.factories.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,20 +13,38 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private final UpdateStateDsGateway dsGateway;
     private final StateTracker currentState;
 
+    private final UserFactory userFactory;
+    private final TestDocFactory testDocFactory;
+    private final CourseFactory courseFactory;
+    private final SolutionDocFactory solutionDocFactory;
+    private final MessageFactory messageFactory;
+
     public UpdateStateInteractor(
             UpdateStateOutputBoundary presenter,
             UpdateStateDsGateway dsGateway,
-            StateTracker stateTracker) {
+            StateTracker stateTracker,
+            UserFactory userFactory,
+            CourseFactory courseFactory,
+            TestDocFactory testDocFactory,
+            SolutionDocFactory solutionDocFactory,
+            MessageFactory messageFactory) {
+
         this.presenter = presenter;
         this.dsGateway = dsGateway;
         this.currentState = stateTracker;
+
+        this.userFactory = userFactory;
+        this.testDocFactory = testDocFactory;
+        this.solutionDocFactory = solutionDocFactory;
+        this.courseFactory = courseFactory;
+        this.messageFactory = messageFactory;
     }
 
     private User constructUserById(String userId) {
         UpdateStateUserDbModel userData = dsGateway.getUserById(userId);
         List<String> rawUserEnrolmentsData = dsGateway.getCourseIdsByUserId(userId);
 
-        User newUser = UserFactory.create(
+        User newUser = userFactory.create(
                 userData.getFirstName(),
                 userData.getLastName(),
                 userData.getEmail(),
@@ -41,7 +60,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private CourseInfo constructCourseInfoItemById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        return CourseFactory.create(
+        return courseFactory.create(
                 courseData.getCourseName(),
                 courseData.getCourseCode(),
                 courseData.getCourseId()
@@ -51,7 +70,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private Course constructCourseById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        Course newCourse = CourseFactory.create(
+        Course newCourse = courseFactory.create(
                 courseData.getCourseName(),
                 courseData.getCourseCode(),
                 courseData.getCourseId()
@@ -71,7 +90,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         for (UpdateStateTestDocDbModel currentTestData : testsData) {
 
-            currentTestDoc = TestDocFactory.create(
+            currentTestDoc = testDocFactory.create(
                     currentTestData.getTestName(),
                     currentTestData.getTestId(),
                     parentCourse,
@@ -98,7 +117,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         for (UpdateStateSolutionDocDbModel currentSolutionData: solutionsData) {
 
-            currentSolutionDoc = SolutionDocFactory.create(
+            currentSolutionDoc = solutionDocFactory.create(
                     currentSolutionData.getSolutionName(),
                     currentSolutionData.getSolutionId(),
                     parentTestDoc.getCourse(),
@@ -126,7 +145,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         for (UpdateStateMessageDbModel rawChildMessageDatum : rawChildMessageData) {
 
             newMessageTree.addMessage(
-                    MessageFactory.create(
+                    messageFactory.create(
                             rawChildMessageDatum.getMessageId(),
                             rawChildMessageDatum.getSolutionId(),
                             rawChildMessageDatum.getUserId(),

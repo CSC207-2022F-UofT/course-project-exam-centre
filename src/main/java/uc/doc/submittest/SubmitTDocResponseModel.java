@@ -8,14 +8,8 @@ import java.time.LocalDateTime;
  */
 public class SubmitTDocResponseModel {
 
-    /**
-     * The ID of the newly created test document
-     */
     private final String testDocID;
 
-    /**
-     * The time that the document was created
-     */
     private final LocalDateTime timestamp;
 
     /**

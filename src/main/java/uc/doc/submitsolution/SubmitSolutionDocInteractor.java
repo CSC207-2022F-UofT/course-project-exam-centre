@@ -1,6 +1,7 @@
 package uc.doc.submitsolution;
 
 import entities.*;
+import entities.factories.*;
 
 import java.time.LocalDateTime;
 
@@ -8,27 +9,16 @@ import java.time.LocalDateTime;
  * SubmitSolutionDocInteractor implements the ability to submit a solution document into persistent data
  * @layer Use cases
  */
+public class SubmitSolutionDocInteractor implements SubSDocInputBoundary{
 
-public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
-
-    /**
-     * The solution doc submission output boundary
-     */
     private final SubSDocOutputBoundary sDocOutputBoundary;
 
-    /**
-     * An instance of the solution doc submission gateway
-     */
     private final SubSDocDsGateway sDocDsGateway;
 
-    /**
-     * The solution document file access gateway
-     */
     private final SubSDocFileAccessGateway sDocFileAccessGateway;
 
-    /**
-     * The program's state tracker for getting entities from their IDs
-     */
+    private final SolutionDocFactory solutionDocFactory;
+
     private final StateTracker stateTracker;
 
     /**
@@ -38,15 +28,18 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
      * @param sDocOutputBoundary Provides methods to update views and give user feedback
      * @param sDocFileAccessGateway The file access gateway for the solution document submission use case
      * @param stateTracker Used for tracking entities in the program
+     * @param solutionDocFactory The factory for creating solution documents
      */
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
                                        SubSDocFileAccessGateway sDocFileAccessGateway,
                                        SubSDocOutputBoundary sDocOutputBoundary,
-                                       StateTracker stateTracker) {
+                                       StateTracker stateTracker,
+                                       SolutionDocFactory solutionDocFactory) {
         this.sDocDsGateway = sDocDsGateway;
         this.sDocFileAccessGateway = sDocFileAccessGateway;
         this.sDocOutputBoundary = sDocOutputBoundary;
         this.stateTracker = stateTracker;
+        this.solutionDocFactory = solutionDocFactory;
     }
 
     /**
@@ -85,7 +78,7 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
         sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
-        SolutionDocument document = SolutionDocFactory.create(
+        SolutionDocument document = solutionDocFactory.create(
                 model.getName(),
                 solutionId,
                 course,

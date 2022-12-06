@@ -4,7 +4,6 @@ package uc.dboard.submessage;
 
 public class SubDBMessRequestModel {
 
-    private final String messageId;
 
     private final String solutionId;
 
@@ -14,16 +13,16 @@ public class SubDBMessRequestModel {
 
     private final String body;
 
-    public SubDBMessRequestModel(String messageId, String solutionId, String userId, String parentId, String body){
-        this.messageId = messageId;
+    public SubDBMessRequestModel(
+            String solutionId,
+            String userId,
+            String parentId,
+            String body){
+
         this.solutionId = solutionId;
         this.userId = userId;
         this.parentId = parentId;
         this.body = body;
-    }
-
-    public String getMessageId() {
-        return messageId;
     }
 
     public String getSolutionId() {

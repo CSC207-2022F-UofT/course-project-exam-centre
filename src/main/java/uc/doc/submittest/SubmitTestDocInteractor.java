@@ -1,34 +1,24 @@
 package uc.doc.submittest;
 
 import entities.*;
+import entities.factories.TestDocFactory;
 
 import java.time.LocalDateTime;
 
-
 /**
- * SubmitTestDocInteractor implementes the ability to save a test document into persistent memory
+ * SubmitTestDocInteractor implements the ability to save a test document into persistent memory
  * @layer Use cases
  */
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
-    /**
-     * The output boundary for the test document submission use case
-     */
     private final SubTDocOutputBoundary tDocOutputBoundary;
 
-    /**
-     * The gateway for the test document submission use case
-     */
     private final SubTDocDsGateway tDocDsGateway;
 
-    /**
-     * The file access gateway for test document submission
-     */
     private final SubTDocFileAccessGateway tDocFileAccessGateway;
 
-    /**
-     * The app's state tracker for finding courses/documents based on their ID
-     */
+    private final TestDocFactory testDocFactory;
+
     private final StateTracker stateTracker;
 
     /**
@@ -38,15 +28,18 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
      * @param tDocOutputBoundary Provides the methods to update the views and pass information back to the user
      * @param tDocFileAccessGateway Provides methods for uploading the document
      * @param stateTracker The app's state tracker for referencing entities
+     * @param testDocFactory The factory for creating test documents
      */
     public SubmitTestDocInteractor(SubTDocDsGateway tDocDsGateway,
                                    SubTDocFileAccessGateway tDocFileAccessGateway,
                                    SubTDocOutputBoundary tDocOutputBoundary,
-                                   StateTracker stateTracker) {
+                                   StateTracker stateTracker,
+                                   TestDocFactory testDocFactory) {
         this.tDocOutputBoundary = tDocOutputBoundary;
         this.tDocDsGateway = tDocDsGateway;
         this.tDocFileAccessGateway = tDocFileAccessGateway;
         this.stateTracker = stateTracker;
+        this.testDocFactory = testDocFactory;
     }
 
     /**
@@ -74,7 +67,7 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
-        TestDocument document = TestDocFactory.create(
+        TestDocument document = testDocFactory.create(
                 requestModel.getName(),
                 docId,
                 course,

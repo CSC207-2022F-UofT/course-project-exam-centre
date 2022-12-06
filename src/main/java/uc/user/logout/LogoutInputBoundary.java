@@ -1,9 +1,14 @@
 package uc.user.logout;
 
 /**
- * Defines a logout method to be called by the Controller and implemented by the Use Case Interactor.
+ * LogoutOutputBoundary provides an entry-point to the logout use case.
+ * Used by a Controller and implemented by LogoutInteractor.
  * @layer use cases
  */
 public interface LogoutInputBoundary {
+
+    /**
+     * Invoke logout use case.
+     */
     void logOut ();
 }

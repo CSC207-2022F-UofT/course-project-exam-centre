@@ -2,7 +2,7 @@ package uc.user.register;
 
 import entities.StateTracker;
 import entities.User;
-import entities.UserFactory;
+import entities.factories.UserFactory;
 
 import java.time.LocalDateTime;
 
@@ -49,8 +49,8 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
 
         String userId = userDsGateway.saveUser(userDsModel);
 
-        User user = UserFactory.create(userId, requestModel.getFirstName(),
-                requestModel.getLastName(), requestModel.getEmail());
+        User user = userFactory.create(requestModel.getFirstName(),
+                requestModel.getLastName(), requestModel.getEmail(), userId);
 
         LocalDateTime now = LocalDateTime.now();
 
