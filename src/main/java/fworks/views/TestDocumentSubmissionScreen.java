@@ -176,7 +176,7 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
                 String filePath = fileChooser.getSelectedFile().getAbsolutePath();
                 String shortenedFileName = filePath.substring(filePath.lastIndexOf("\\") + 1);
                 fileName.setText(shortenedFileName);
-                System.out.println("File Selected with path: " + fileName.getText());
+                System.out.println("File Selected with path: " + fileChooser.getSelectedFile().getAbsolutePath());
             }
         } else {
             try {
