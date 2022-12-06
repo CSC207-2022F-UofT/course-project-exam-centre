@@ -4,6 +4,11 @@ import entities.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * SubmitSolutionDocInteractor implements the ability to submit a solution document into persistent data
+ * @layer Use cases
+ */
+
 public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
 
     /**
@@ -27,11 +32,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
     private final StateTracker stateTracker;
 
     /**
-     * Creates an interactor for the solution doc submission use case
-     * @param sDocDsGateway The solution document submission data storage gateway
-     * @param sDocOutputBoundary The solution document submission use case output boundary
+     * Creates an interactor for the solution doc submission use case which contains the DsGateway, Output Boundary,
+     * FileAccessGateway and StateTracker
+     * @param sDocDsGateway Provides methods to store document into persistent memory
+     * @param sDocOutputBoundary Provides methods to update views and give user feedback
      * @param sDocFileAccessGateway The file access gateway for the solution document submission use case
-     * @param stateTracker The app's state tracker
+     * @param stateTracker Used for tracking entities in the program
      */
     public SubmitSolutionDocInteractor(SubSDocDsGateway sDocDsGateway,
                                        SubSDocFileAccessGateway sDocFileAccessGateway,
@@ -47,7 +53,7 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary{
      * Takes in the needed information for and creates a new SolutionDoc entity
      * @param model The solution document submission model containing all the relevant information for creating a new
      *              solution doc entity
-     * @return If completed, the sucess view response model
+     * @return If completed, the success view response model, containing information to be presented to the user
      */
     @Override
     public SubSDocResponseModel submitSolutionDoc(SubSDocRequestModel model) {

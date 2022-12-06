@@ -1,5 +1,10 @@
 package uc.doc.submitsolution;
 
+/**
+ * SubSDocRequestModel is a collection of the data requiredb by the interactor in a single object
+ * @layer Use cases
+ */
+
 public class SubSDocRequestModel {
 
     /**

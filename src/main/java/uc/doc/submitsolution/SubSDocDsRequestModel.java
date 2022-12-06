@@ -1,5 +1,10 @@
 package uc.doc.submitsolution;
 
+/**
+ * SubSDocDsRequestModel bundles the data required for storing a solution document into a single object
+ * @layer Use cases
+ */
+
 public class SubSDocDsRequestModel {
 
     /**

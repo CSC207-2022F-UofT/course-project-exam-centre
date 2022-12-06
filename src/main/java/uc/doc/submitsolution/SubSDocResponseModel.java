@@ -1,8 +1,10 @@
 package uc.doc.submitsolution;
 
-import entities.SolutionDocument;
+/**
+ * SubSDocResponseModel bundles the data being passed back to presenter in a single object
+ * @layer Use cases
+ */
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 public class SubSDocResponseModel {
