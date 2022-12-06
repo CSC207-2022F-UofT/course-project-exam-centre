@@ -1,9 +1,14 @@
 package fworks.views;
 
 import ia.controllers.SubmitTestDocController;
+import org.intellij.lang.annotations.JdkConstants;
+import uc.doc.submittest.SubmitTDocInputBoundary;
+import uc.doc.submittest.SubmitTDocRequestModel;
+import uc.doc.submittest.SubmitTDocResponseModel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.event.*;
 
 public class TestDocumentSubmissionScreen extends JPanel implements ActionListener {
@@ -11,12 +16,12 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
     /**
      * Name of the test
      */
-    JTextField name = new JTextField(15);
+    JTextField name = new JTextField(25);
 
     /**
      * A description of the test
      */
-    JTextArea description = new JTextArea(5, 35);
+    JTextArea description = new JTextArea(5, 25);
 
     /**
      * The file path of the test document
@@ -29,9 +34,14 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
     JLabel fileName = new JLabel("No file selected");
 
     /**
-     * The Duration of the test
+     * The duration in hours of the test
      */
-    JTextField durationField = new JTextField(15);
+    JTextField durationHoursField = new JTextField(5);
+
+    /**
+     * The duration in minutes of the test
+     */
+    JTextField durationMinutesField = new JTextField(5);
 
     /**
      * The number of questions on the test
@@ -62,11 +72,9 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
         this.userID = userID;
         this.courseID = courseID;
 
-        //TODO: Fix alignment issues with large text box
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        JLabel nameLabel = new JLabel("Test Name:");
-        JLabel duration = new JLabel("Test Duration");
+        setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         JButton selectFile = new JButton("Select File");
         JButton submit = new JButton("Submit Test Document");
@@ -74,18 +82,84 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
         selectFile.addActionListener(this);
         submit.addActionListener(this);
 
-        this.add(fileName);
-        this.add(selectFile);
-        this.add(nameLabel);
-        this.add(name);
-        this.add(duration);
-        this.add(durationField);
-        this.add(new JLabel("The number of questions on the test:"));
-        this.add(numQuestions);
-        this.add(new JLabel("Description:"));
-        this.add(description);
+        description.setLineWrap(true);
+        JScrollPane descriptionBox = new JScrollPane(description);
+
+        // Initial Layout Setup
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = new Insets(0, 0, 5, 5);
+
+        // Line 1 Column 1
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridwidth = 4;
+        this.add(fileName, gridBagConstraints);
+
+        // Line 2 Column 1
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 1;
+        this.add(selectFile, gridBagConstraints);
+
+        // Line 3 Column 1
+        gridBagConstraints.gridy = 2;
+        JLabel nameLabel = new JLabel("Test Name:");
+        this.add(nameLabel, gridBagConstraints);
+
+        // Line 3 Column 2
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridwidth = 4;
+        this.add(name, gridBagConstraints);
+
+        // Line 4 Column 1
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridwidth = 1;
+        JLabel duration = new JLabel("Test Duration:");
+        this.add(duration, gridBagConstraints);
+
+        // Line 4 Column 2
+        JLabel hours = new JLabel("Hours:");
+        gridBagConstraints.gridx = 1;
+        this.add(hours, gridBagConstraints);
+
+        // Line 4 Column 3
+        gridBagConstraints.gridx = 2;
+        this.add(durationHoursField, gridBagConstraints);
+
+        // Line 4 Column 4
+        JLabel minutes = new JLabel("Minutes:");
+        gridBagConstraints.gridx = 3;
+        this.add(minutes, gridBagConstraints);
+
+        // Line 4 Column 5
+        gridBagConstraints.gridx = 4;
+        this.add(durationMinutesField, gridBagConstraints);
+
+        // Line 5 Column 1
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        this.add(new JLabel("Question Count:"), gridBagConstraints);
+
+        // Line 5 Column 2
+        gridBagConstraints.gridx = 1;
+        this.add(numQuestions, gridBagConstraints);
+
+        // Line 6 Column 1
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 0;
+        this.add(new JLabel("Description:"), gridBagConstraints);
+
+        // Line 6 Column 2
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridwidth = 4;
+        this.add(descriptionBox, gridBagConstraints);
+
         submit.setText("Submit Test Document");
-        this.add(submit);
+
+        // Line 7 Column 1
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 0;
+        this.add(submit, gridBagConstraints);
     }
 
     /**
@@ -99,23 +173,27 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
         if (event.getActionCommand().equals("Select File")) {
             int r = fileChooser.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION) {
-                fileName.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                String shortenedFileName = filePath.substring(filePath.lastIndexOf("\\") + 1);
+                fileName.setText(shortenedFileName);
                 System.out.println("File Selected with path: " + fileName.getText());
             }
         } else {
             try {
                 System.out.println("Click: " + event.getActionCommand());
+                Float timeParsedHours = Float.parseFloat(durationHoursField.getText())
+                        + Float.parseFloat(durationMinutesField.getText())/60;
                 testDocController.SubmitTestDocument(
                         name.getText(),
                         Integer.parseInt(numQuestions.getText()),
-                        Float.parseFloat(durationField.getText()), //TODO: HIGH PRIORITY determine a standard format for inputting time and how to parse as a float.
+                        timeParsedHours,
                         description.getText(),
                         userID,
                         courseID,
-                        fileName.getText()
+                        fileChooser.getSelectedFile().getAbsolutePath()
                         );
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
     }
