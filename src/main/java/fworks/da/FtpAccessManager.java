@@ -79,6 +79,7 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param fileName file name
      * @return returns true if file upload is successful, false otherwise
      */
+    @Override
     public boolean uploadFile(String localFilePath, String fileName){
         // Upload file
         try {
@@ -118,6 +119,7 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param downloadPath file path of file to download
      * @return returns true if file is downloaded successfully, false otherwise
      */
+    @Override
     public boolean downloadFile(String fileName, String downloadPath){
 
         // Download file
