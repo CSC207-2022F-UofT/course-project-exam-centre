@@ -7,7 +7,7 @@ import uc.user.register.URegisterResponseModel;
 public class UserRegisterPresenter implements URegisterOutputBoundary {
     /** Prepares the successView when the User is successfully registered
      *
-     * @param responseModel responsemOdel representing newly-registerd user
+     * @param responseModel responseModel representing newly-registerd user
      * @return response model representing newly-registerd user
      */
     @Override
