@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SolutionDocumentSubmissionScreen extends JPanel implements ActionListener {
+public class SolutionDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**
      * Name of the solution document
@@ -140,6 +140,9 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridwidth = 4;
         this.add(submit, gridBagConstraints);
+
+        this.pack();
+        this.setVisible(true);
     }
 
     /**
@@ -171,6 +174,8 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
                         parentTestID,
                         fileName.getText()
                 );
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, "%s Successfully Uploaded".formatted(name.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }

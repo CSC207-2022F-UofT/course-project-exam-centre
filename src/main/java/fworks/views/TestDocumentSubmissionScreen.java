@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TestDocumentSubmissionScreen extends JPanel implements ActionListener {
+public class TestDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**
      * Name of the test
@@ -160,6 +160,9 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridx = 0;
         this.add(submit, gridBagConstraints);
+
+        this.pack();
+        this.setVisible(true);
     }
 
     /**
@@ -192,6 +195,8 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
                         courseID,
                         fileChooser.getSelectedFile().getAbsolutePath()
                         );
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, "%s Successfully Uploaded".formatted(name.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
