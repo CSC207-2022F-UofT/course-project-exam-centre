@@ -175,7 +175,7 @@ public class SolutionDocumentSubmissionScreen extends JFrame implements ActionLi
                         fileName.getText()
                 );
                 this.setVisible(false);
-                JOptionPane.showMessageDialog(this, "%s Successfully Uploaded".formatted(name.getText()));
+                JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", name.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
