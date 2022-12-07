@@ -8,8 +8,15 @@ public class MessageTree {
     private final Message root;
     private final ArrayList<MessageTree> subtrees;
 
-    public MessageTree(String rootId) {
-        this.root = new CommonMessage(rootId, rootId, rootId, rootId, null, LocalDateTime.now());
+    public MessageTree(String rootId,
+                       String solutionId,
+                       String userId) {
+        this.root = new CommonMessage(rootId,
+                solutionId,
+                userId,
+                null,
+                "",
+                LocalDateTime.now());
         this.subtrees = new ArrayList<>();
     }
 

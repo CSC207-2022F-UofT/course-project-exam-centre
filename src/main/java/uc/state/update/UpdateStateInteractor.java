@@ -158,6 +158,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
                     rawChildMessageDatum.getMessageId(),
                     newMessageTree);
         }
+
     }
 
     private Map<String, CourseInfo> constructAllCourseInfoItems() {

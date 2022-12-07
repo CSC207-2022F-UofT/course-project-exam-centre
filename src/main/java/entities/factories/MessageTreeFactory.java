@@ -7,7 +7,12 @@ public class MessageTreeFactory {
     /**
      * Returns a new MessageTree object.
      */
-    public MessageTree create(String rootMessageId) {
-        return new MessageTree(rootMessageId);
+    public MessageTree create(String rootMessageId,
+                              String solutionId,
+                              String userId) {
+        return new MessageTree(
+                rootMessageId,
+                solutionId,
+                userId);
     }
 }

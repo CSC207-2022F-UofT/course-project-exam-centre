@@ -81,7 +81,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         try{
             int numOfColumns = rs.getMetaData().getColumnCount();
             List<String> stringRow = new ArrayList<>();
-            for (int i = 0; i < numOfColumns; i++){
+            for (int i = 1; i <= numOfColumns; i++){
                 stringRow.add(
                         rs.getString(i)
                 );
