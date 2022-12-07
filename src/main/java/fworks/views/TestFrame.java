@@ -9,6 +9,10 @@ import java.awt.*;
 public class TestFrame extends JFrame {
     public TestFrame() {
         super("Exam Centre");
+
+        MenuBar menuBar = new MenuBar();
+        this.setJMenuBar(menuBar.getMenuBar());
+
         TestToolbar toolbar = new TestToolbar();
         DocumentView documentView = new DocumentView();
         documentView.loadFile();
