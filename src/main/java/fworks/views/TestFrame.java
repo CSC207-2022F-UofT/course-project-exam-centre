@@ -11,7 +11,7 @@ public class TestFrame extends JFrame {
         super("Exam Centre");
 
         MenuBar menuBar = new MenuBar();
-        this.setJMenuBar(menuBar.getMenuBar());
+        this.setJMenuBar(menuBar);
 
         TestToolbar toolbar = new TestToolbar();
         DocumentView documentView = new DocumentView();

@@ -33,7 +33,7 @@ public class URegisterRequestModel{
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
-        this.courses = new LinkedList<String>();
+        this.courses = new LinkedList<>();
     }
 
     /** Gets the first name of the User

@@ -1,4 +1,4 @@
-package uc.state.update;
+package uc.state.update.dbmodels;
 
 import java.time.LocalDateTime;
 

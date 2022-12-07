@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -59,9 +60,9 @@ public interface DatabaseAccessGateway
     /** Checks whether gateway is connected to database.
      *
      * @return boolean representing whether database is connected
-     * @throws Exception if connection check query fails
      */
-    boolean getConnectionStatus() throws Exception;
+    @Override
+    boolean getConnectionStatus();
 
     /** Queries database to check whether a course exists by ID.
      *
@@ -641,7 +642,7 @@ public interface DatabaseAccessGateway
                             row.get(2),                     // userId
                             row.get(3),                     // parentId
                             row.get(4),                     // messageBody
-                            LocalDateTime.parse(row.get(5)) // sentTimestamp
+                            parseTimestamp(row.get(5))      // sentTimestamp
                     )
             );
         }
@@ -665,9 +666,9 @@ public interface DatabaseAccessGateway
                     new TestDocDbResponseModel(
                             row.get(0),                     // testId
                             row.get(1),                     // userId
-                            row.get(2),                     // courseId
-                            Integer.parseInt(row.get(3)),   // numOfQuestions
-                            Float.parseFloat(row.get(4)),   // estimatedTime
+                            row.get(3),                     // test type
+                            Integer.parseInt(row.get(4)),   // numOfQuestions
+                            Float.parseFloat(row.get(5)),   // estimatedTime
                             row.get(6)                      // testName
                     )
             );
@@ -702,6 +703,21 @@ public interface DatabaseAccessGateway
             );
         }
         return response;
+    }
+
+    /** Updates the total votes for a solution document.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the solution document to be updated.
+     *
+     * @return true if update was successful, false otherwise
+     */
+    @Override
+    default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
+        return updateSolutionDocVoteQuery(
+                requestModel.getSolutionId(),
+                requestModel.getVote()
+        );
     }
 
     // Utility methods for gateway requests
@@ -746,18 +762,15 @@ public interface DatabaseAccessGateway
         }
     }
 
-    /** Updates the total votes for a solution document.
+    /** Parses timestamp string into LocalDateTime object
      *
-     * @param requestModel      the use case DS request model representing the
-     *                          data of the solution document to be updated.
-     *
-     * @return true if update was successful, false otherwise
+     * @param timestamp string of timestamp
+     * @return LocalDateTime object representing timestamp
      */
-    @Override
-    default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
-        return updateSolutionDocVoteQuery(
-                requestModel.getSolutionId(),
-                requestModel.getVote()
-        );
+    default LocalDateTime parseTimestamp(String timestamp) {
+        String pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+
+        return LocalDateTime.from(formatter.parse(timestamp));
     }
 }

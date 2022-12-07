@@ -1,5 +1,7 @@
 package uc.user.login;
 
+import java.util.List;
+
 /**
  * LoginDsGateway provides methods to compare against and access persistent data.
  * @layer use cases
@@ -18,4 +20,7 @@ public interface LoginDsGateway {
      * @return LoginDsResponseModel which contains user's first and last name, id, and email
      */
     LoginDsResponseModel getUserByEmail(String email);
+
+    //TODO: JavaDoc
+    List<String> getCourseIdsByUserId(String userId);
 }

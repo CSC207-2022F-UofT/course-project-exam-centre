@@ -3,32 +3,35 @@ package uc.state.update;
 import entities.Course;
 import entities.CourseInfo;
 import entities.User;
+import uc.state.update.responsemodels.UpdateStateCourseInfoResponseModel;
+import uc.state.update.responsemodels.UpdateStateCourseResponseModel;
+import uc.state.update.responsemodels.UpdateStateUserResponseModel;
 
-import java.util.List;
 import java.util.Map;
 
 public class UpdateStateResponseModel {
-    private User currentUser;
-    private List<Course> usersCourses;
-    private Map<String, CourseInfo> allCourseInfoItems;
+    private final UpdateStateUserResponseModel currentUserModel;
+    private final Map<String, UpdateStateCourseResponseModel> usersCourseModels;
+    private final Map<String, UpdateStateCourseInfoResponseModel> courseInfoModels;
 
-    UpdateStateResponseModel(User currentUser, List<Course> usersCourses,
-                             Map<String, CourseInfo> allCourseInfo) {
+    UpdateStateResponseModel(UpdateStateUserResponseModel currentUser,
+                             Map<String, UpdateStateCourseResponseModel> usersCourseModels,
+                             Map<String, UpdateStateCourseInfoResponseModel> courseInfoModels) {
 
-        this.currentUser = currentUser;
-        this.usersCourses = usersCourses;
-        this.allCourseInfoItems = allCourseInfo;
+        this.currentUserModel = currentUser;
+        this.usersCourseModels = usersCourseModels;
+        this.courseInfoModels = courseInfoModels;
     }
 
-    User getCurrentUser() {
-        return this.currentUser;
+    UpdateStateUserResponseModel getCurrentUserModel() {
+        return this.currentUserModel;
     }
 
-    List<Course> getUsersCourses() {
-        return this.usersCourses;
+    Map<String, UpdateStateCourseResponseModel> getCurrentUserCourseModels() {
+        return this.usersCourseModels;
     }
 
-    Map<String, CourseInfo> getAllCourseInfo() {
-        return this.allCourseInfoItems;
+    Map<String, UpdateStateCourseInfoResponseModel> getCourseInfoModels() {
+        return this.courseInfoModels;
     }
 }

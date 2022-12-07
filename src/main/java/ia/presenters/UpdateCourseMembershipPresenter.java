@@ -18,6 +18,11 @@ public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary
         this.viewManagerGateway = viewManagerGateway;
     }
 
+    /** Prepares the successView when the membership of the course is successfully updated
+     *
+     * @param responseModel contains a user's course list and their membership status.
+     * @return resposeModel corresponding to successfully updating course membership.
+     */
     @Override
     public UpdateCMemResponseModel prepareSuccessView(
             UpdateCMemResponseModel responseModel) {
@@ -25,6 +30,11 @@ public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary
         return responseModel;
     }
 
+    /** Prepares the successView when the membership of the course is unsuccessfully updated
+     *
+     * @param errorMessage String of the error that has occurred
+     * @throws UpdateCourseMembershipFailed when the update course membership use case fails.
+     */
     @Override
     public UpdateCMemResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here

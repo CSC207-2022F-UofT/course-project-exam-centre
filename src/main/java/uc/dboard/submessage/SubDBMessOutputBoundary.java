@@ -7,7 +7,7 @@ public interface SubDBMessOutputBoundary {
     /**
      * Prepares a success view
      * @param message a responseModel containing the body, creation time, and parentId
-     * @return
+     * @return SubDBMessResponseModel
      */
     SubDBMessResponseModel prepareSuccessView(SubDBMessResponseModel message);
 

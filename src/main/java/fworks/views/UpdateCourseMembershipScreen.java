@@ -105,7 +105,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
                 }
             }
             System.out.println(coursesToAdd);
-            updateCourseMembershipController.registerCourse(userId, coursesToAdd);
+            updateCourseMembershipController.updateCourseMembership(coursesToAdd);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", courseDisplayString));
         } catch (Exception e) {

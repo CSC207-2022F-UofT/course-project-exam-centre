@@ -20,7 +20,7 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
 
     /** Prepares the successView when the User is successfully registered
      *
-     * @param responseModel responsemOdel representing newly-registerd user
+     * @param responseModel responseModel representing newly-registerd user
      * @return response model representing newly-registerd user
      */
     @Override
@@ -32,6 +32,7 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
     /** Prepares a failView when the User is unsuccessfully registered
      *
      * @param errorMessage describes the error that occured when registering the User
+     * @throws UserRegisterFailed when the user register use case fails.
      */
     @Override
     public URegisterResponseModel prepareFailView(String errorMessage){

@@ -2,7 +2,7 @@ package uc.course.updatemembers;
 
 /** UpdateCMemInputBoundary provides an entry point from the Interface Adapter layer to the Use Case layer
  * to access the update members Use Case
- * @layers use cases
+ * @layer use cases
  */
 public interface UpdateCMemInputBoundary {
     /**

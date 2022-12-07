@@ -1,6 +1,5 @@
 package uc.course.updatemembers;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 /** UpdateCMemDsRequestModel is responsible for packaging data in a way the database can use

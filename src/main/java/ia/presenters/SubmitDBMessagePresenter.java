@@ -17,6 +17,11 @@ public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
         this.viewManagerGateway = viewManagerGateway;
     }
 
+    /** Prepares the successView when the message is successfully submitted.
+     *
+     * @param responseModel a responseModel containing the body, creation time, and parentId
+     * @return responseModel corresponding to successful submission of message.
+     */
     @Override
     public SubDBMessResponseModel prepareSuccessView(
             SubDBMessResponseModel responseModel) {
@@ -24,6 +29,11 @@ public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
         return responseModel;
     }
 
+    /** Prepares the failView when the message is unsuccessfully submitted.
+     *
+     * @param errorMessage String containing the error
+     * @throws SubmitDBMessageFailed when the submit discussion message use case fails.
+     */
     @Override
     public SubDBMessResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here

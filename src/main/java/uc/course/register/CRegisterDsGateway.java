@@ -18,4 +18,5 @@ public interface CRegisterDsGateway {
      * @return the course's unique id
      */
     String saveCourse(CRegisterDsRequestModel requestModel);
+    boolean getConnectionStatus();
 }

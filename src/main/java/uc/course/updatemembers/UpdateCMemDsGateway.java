@@ -1,5 +1,7 @@
 package uc.course.updatemembers;
 
+import uc.course.updatemembers.dbmodels.*;
+
 import java.util.List;
 
 /** UpdateCMemDsGateway provides methods to compare, access or update persistent data
@@ -34,4 +36,19 @@ public interface UpdateCMemDsGateway
      * @return a list of the CourseIds the user is enrolled in
      */
     List<String> getCourseIdsByUserId(String userId);
+
+    /**
+     * Gets a User DB model representing a user by ID
+     * @param userId the userId of the user being retrieved
+     * @return UpdateCMemUserDbModel representing a user
+     */
+    UpdateCMemUserDbModel getUserById(String userId);
+
+    // TODO: Update JavaDoc
+    boolean getConnectionStatus();
+    List<? extends UpdateCMemTestDocDbModel> getTestDocsByCourseId(String courseId);
+    List<? extends UpdateCMemSolutionDocDbModel> getSolutionDocsByTestId(String testId);
+
+    List<? extends UpdateCMemMessageDbModel> getMessagesByParentId(String parentId);
+    UpdateCMemCourseDbModel getCourseById(String courseId);
 }

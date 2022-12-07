@@ -17,11 +17,21 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
         this.viewManagerGateway = viewManagerGateway;
     }
 
+    /** Prepares SuccessView when a solution document is succesfully voted
+     *
+     * @param model Response model containing the vote total, sDoc and timestamp of the request
+     * @return model Response model corresponding to succesfu
+     */
     @Override
     public VoteSDocResponseModel prepareSuccessView(VoteSDocResponseModel model) {
         return model;
     }
 
+    /** Prepares SuccessView when a solution document is unsuccesfully voted
+     *
+     * @param errorMessage The errorMessage that occurs when a failure view happens
+     * @return
+     */
     @Override
     public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
         // TODO prepare failure view
