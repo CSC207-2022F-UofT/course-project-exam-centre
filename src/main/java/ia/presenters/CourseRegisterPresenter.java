@@ -1,5 +1,6 @@
 package ia.presenters;
 
+import fworks.views.ViewManagerGateway;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
 import ia.exceptions.CourseRegisterFailed;
@@ -14,7 +15,7 @@ public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
     @Override
     public CRegisterResponseModel prepareFailView(String errorMessage) {
-        // TODO: Update view model here
+        ViewManagerGateway.showError(errorMessage, "Course Register Failed");
         throw new CourseRegisterFailed(errorMessage);
     }
 }

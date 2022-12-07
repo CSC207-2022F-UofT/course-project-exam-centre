@@ -1,5 +1,6 @@
 package ia.presenters;
 
+import fworks.views.ViewManagerGateway;
 import ia.exceptions.UserRegisterFailed;
 import uc.user.register.URegisterOutputBoundary;
 import uc.user.register.URegisterResponseModel;
@@ -23,6 +24,7 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
     @Override
     public URegisterResponseModel prepareFailView(String errorMessage){
         // TODO: Update view model
+        ViewManagerGateway.showError(errorMessage, "User Registration Failed");
         throw new UserRegisterFailed(errorMessage);
     }
 

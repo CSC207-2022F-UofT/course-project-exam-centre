@@ -1,5 +1,6 @@
 package ia.presenters;
 
+import fworks.views.ViewManagerGateway;
 import ia.exceptions.LoginFailed;
 import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
@@ -20,6 +21,7 @@ public class LoginPresenter implements LoginOutputBoundary {
      */
     @Override
     public LoginResponseModel prepareFailView(String errorMessage) {
+        ViewManagerGateway.showError(errorMessage, "Login Failed");
         throw new LoginFailed(errorMessage);
     }
 }
