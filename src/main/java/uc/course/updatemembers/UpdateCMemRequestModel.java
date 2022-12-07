@@ -7,25 +7,14 @@ import java.util.List;
  * @layer use cases
  */
 public class UpdateCMemRequestModel {
-    private String userId;
     private List<String> newCoursesList;
 
-    /** Construct an UpdateCMemRequestModel containing a userId and newCoursesList
+    /** Construct an UpdateCMemRequestModel containing a newCoursesList
      *
-     * @param userId the userId of the user updating their courses
      * @param newCoursesList the new course list of the user
      */
-    public UpdateCMemRequestModel(String userId, List<String> newCoursesList) {
-        this.userId = userId;
+    public UpdateCMemRequestModel(List<String> newCoursesList) {
         this.newCoursesList = newCoursesList;
-    }
-
-    /** Gets the userId of the user trying to update their courses
-     *
-     * @return returns a userId of a user
-     */
-    public String getUserId() {
-        return userId;
     }
 
     /** Gets an updated list of the courses a user is enrolled in

@@ -25,7 +25,7 @@ public class UserRegisterController {
      * @param password2 the repeated password of the user
      * @return returns a URegiseterResponseModel containing the data of the User
      */
-    URegisterResponseModel registerUser(
+    public URegisterResponseModel registerUser(
             String firstName,
             String lastName,
             String email,

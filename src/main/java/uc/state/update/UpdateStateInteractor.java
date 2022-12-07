@@ -139,7 +139,8 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     private void constructMessageTreeByParentId(
             String parentId, MessageTree newMessageTree) {
-            List<? extends UpdateStateMessageDbModel> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
+            List<? extends UpdateStateMessageDbModel> rawChildMessageData
+                    = dsGateway.getMessagesByParentId(parentId);
 
         for (UpdateStateMessageDbModel rawChildMessageDatum : rawChildMessageData) {
 
@@ -179,17 +180,17 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         Message currentMessage = messageTree.getRootMessage();
 
-        UpdateStateUserDbModel messageDbModel
+        UpdateStateUserDbModel senderDbModel
                 = dsGateway.getUserById(currentMessage.getUserId());
 
         List<UpdateStateMessageTreeResponseModel> replies = new ArrayList<>();
 
         UpdateStateUserResponseModel senderUserModel
                 = new UpdateStateUserResponseModel(
-                        messageDbModel.getUserId(),
-                        messageDbModel.getEmail(),
-                        messageDbModel.getFirstName(),
-                        messageDbModel.getLastName()
+                        senderDbModel.getUserId(),
+                        senderDbModel.getEmail(),
+                        senderDbModel.getFirstName(),
+                        senderDbModel.getLastName()
         );
 
         if (messageTree.getSubtrees().size() > 0) {

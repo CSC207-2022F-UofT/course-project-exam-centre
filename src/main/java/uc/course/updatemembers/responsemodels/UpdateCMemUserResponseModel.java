@@ -1,23 +1,16 @@
-package ia.gateways.models;
+package uc.course.updatemembers.responsemodels;
 
-import uc.course.updatemembers.dbmodels.UpdateCMemUserDbModel;
-import uc.state.update.dbmodels.UpdateStateUserDbModel;
-import uc.user.login.LoginDsResponseModel;
-
-public class UserDbResponseModel
-        implements UpdateStateUserDbModel,
-        LoginDsResponseModel,
-        UpdateCMemUserDbModel {
+public class UpdateCMemUserResponseModel {
 
     private final String userId;
     private final String email;
     private final String firstName;
     private final String lastName;
 
-    public UserDbResponseModel(String userId,
-                               String email,
-                               String firstName,
-                               String lastName) {
+    public UpdateCMemUserResponseModel(String userId,
+                                       String email,
+                                       String firstName,
+                                       String lastName) {
         this.userId = userId;
         this.email = email;
         this.firstName = firstName;

@@ -170,7 +170,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 courseCode + "', '" + courseName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -199,7 +199,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 hashedPassword + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -449,7 +449,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 userId + "', '" + courseId + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -471,7 +471,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 "course_id='" + courseId + "';";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -548,7 +548,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 + "', '" + messageBody + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -586,7 +586,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 + "'" + solutionName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -609,7 +609,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         + rootMessageId + "' WHERE solution_id='" + solutionId + "';";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -644,7 +644,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 "'" + estimatedTime.toString() + "', '" + testName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

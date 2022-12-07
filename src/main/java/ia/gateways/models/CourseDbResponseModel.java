@@ -1,8 +1,11 @@
 package ia.gateways.models;
 
+import uc.course.updatemembers.dbmodels.UpdateCMemCourseDbModel;
 import uc.state.update.dbmodels.UpdateStateCourseDbModel;
 
-public class CourseDbResponseModel implements UpdateStateCourseDbModel {
+public class CourseDbResponseModel
+        implements UpdateStateCourseDbModel,
+        UpdateCMemCourseDbModel {
 
     private final String courseId;
     private final String courseCode;

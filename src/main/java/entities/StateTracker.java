@@ -153,4 +153,12 @@ public class StateTracker implements Serializable {
         return this.trackedCourses;
     }
 
+    /**
+     * Remove tracked course.
+     */
+    public void removeTrackedCourse(String courseId) {
+        this.trackedCourses.remove(courseId);
+    }
+
+
 }
