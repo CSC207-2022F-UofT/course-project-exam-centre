@@ -6,7 +6,7 @@ import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
 import fworks.views.Updatable;
 import fworks.views.ViewManager;
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;

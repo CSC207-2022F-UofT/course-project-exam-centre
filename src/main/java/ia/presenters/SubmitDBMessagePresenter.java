@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitDBMessageFailed;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubDBMessResponseModel;

@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.LoginFailed;
 import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;

@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UpdateStateFailed;
 import uc.state.update.UpdateStateOutputBoundary;
 import uc.state.update.UpdateStateResponseModel;

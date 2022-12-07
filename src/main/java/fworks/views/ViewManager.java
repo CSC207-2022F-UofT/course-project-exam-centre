@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.gateways.ViewManagerGateway;
 import javax.swing.*;
 import java.util.ArrayList;
 

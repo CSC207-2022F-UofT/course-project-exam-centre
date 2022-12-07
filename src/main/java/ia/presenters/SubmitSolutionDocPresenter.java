@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitSolutionDocFailed;
 import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocResponseModel;

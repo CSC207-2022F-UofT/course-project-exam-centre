@@ -1,7 +1,6 @@
 package ia.presenters;
 
-import fworks.views.UpdateCourseMembershipScreen;
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UpdateCourseMembershipFailed;
 import uc.course.updatemembers.UpdateCMemOutputBoundary;
 import uc.course.updatemembers.UpdateCMemResponseModel;

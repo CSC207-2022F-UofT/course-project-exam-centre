@@ -1,6 +1,4 @@
-package fworks.views;
-
-import javax.swing.*;
+package ia.gateways;
 
 /**
  * Allows the presenter to update the view

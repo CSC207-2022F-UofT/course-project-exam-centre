@@ -1,10 +1,8 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.LogoutFailed;
 import uc.user.logout.LogoutOutputBoundary;
-
-import javax.swing.text.View;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 

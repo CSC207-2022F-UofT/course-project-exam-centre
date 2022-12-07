@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UserRegisterFailed;
 import uc.user.register.URegisterOutputBoundary;
 import uc.user.register.URegisterResponseModel;

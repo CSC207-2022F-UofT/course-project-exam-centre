@@ -1,6 +1,6 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.doc.voteonsolution.VoteSDocResponseModel;

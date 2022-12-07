@@ -1,11 +1,9 @@
 package ia.presenters;
 
-import fworks.views.ViewManagerGateway;
+import ia.gateways.ViewManagerGateway;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
 import ia.exceptions.CourseRegisterFailed;
-
-import javax.swing.text.View;
 
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
