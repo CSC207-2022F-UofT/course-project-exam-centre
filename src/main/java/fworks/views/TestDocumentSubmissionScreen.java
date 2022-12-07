@@ -65,6 +65,7 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
 
     /**
      * A window allowing the user to select a document for submission and set information of the test
+     * This screen auto displays after being created, and should be disposed after use
      * @param controller The user document submission controller
      */
     public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID, String userID) {

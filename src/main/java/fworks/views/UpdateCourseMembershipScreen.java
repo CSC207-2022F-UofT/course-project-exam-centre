@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class UpdateCourseMembershipScreen extends JFrame implements ActionListener, IUpdateCourseMembershipScreen {
+public class UpdateCourseMembershipScreen extends JFrame implements ActionListener {
 
     /**
      * A list of all the labels and buttons on the screen for a dynamically formed list
@@ -20,13 +20,13 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      * The ID of the user updating their course membership
      */
-    String userID;
+    String userId;
 
     /**
      * The map of course IDs and their names
      * CourseList contains the string with the course's ID, followed by its name
      */
-    HashMap<String, String> courseList;
+    HashMap<String, List<Object>> courseList;
 
     /**
      * Button to submit course selection
@@ -43,28 +43,41 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
      * @param controller The controller for handling course addition
      */
 
-    public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller, String userID){
+    /**
+     *  The viewmodel for this screen
+     */
+    CourseMembershipViewModel viewModel;
+
+    /**
+     * Creates a screen for updating a user's course membership
+     * @param controller The controller for updating course membership
+     * @param viewModel The view model for this screen
+     */
+    public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller,
+                                        CourseMembershipViewModel viewModel){
         this.updateCourseMembershipController = controller;
+        this.viewModel = viewModel;
         submit = new JButton("Add Courses");
         submit.addActionListener(this);
     }
 
     /**
-     * Creates the screen with a hashmap of courses to populate with
-     * @param courseList A hashmap containing the course id, and name
+     * Creates the screen with the courses according to the view model
+     * This screen auto-updates upon being called.
      */
-    @Override
-    public void createScreenWithCourses(HashMap<String, String> courseList, String userID){
-        this.courseList = courseList;
-        this.userID = userID;
+    public void createScreen(){
+        this.courseList = viewModel.getCourses();
+        this.userId = viewModel.getUserID();
+        reset();
 
         courseDisplay = new HashMap<>();
 
         this.setLayout(new GridLayout(courseList.size() + 1, 2));
 
         for(String ID: courseList.keySet()) {
-            JLabel courseID = new JLabel(courseList.get(ID));
+            JLabel courseID = new JLabel((String) courseList.get(ID).get(0));
             JCheckBox courseSelect = new JCheckBox(ID);
+            courseSelect.setSelected((boolean) courseList.get(ID).get(1));
             courseDisplay.put(courseID, courseSelect);
             this.add(courseSelect);
             this.add(courseID);
@@ -92,7 +105,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
                 }
             }
             System.out.println(coursesToAdd);
-            updateCourseMembershipController.registerCourse(userID, coursesToAdd);
+            updateCourseMembershipController.registerCourse(userId, coursesToAdd);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", courseDisplayString));
         } catch (Exception e) {
@@ -103,14 +116,13 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      * Resets the view before being used again
      */
-    @Override
-    public void reset() {
+    private void reset() {
         this.remove(submit);
         for(JLabel courseID : courseDisplay.keySet()) {
             this.remove(courseID);
             this.remove(courseDisplay.get(courseID));
         }
-        this.userID = null;
+        this.userId = null;
         this.setVisible(false);
     }
 }

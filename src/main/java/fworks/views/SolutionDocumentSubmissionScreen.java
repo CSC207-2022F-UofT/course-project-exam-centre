@@ -57,6 +57,7 @@ public class SolutionDocumentSubmissionScreen extends JFrame implements ActionLi
 
     /**
      * A window allowing the user to select a document for submission and set information of the test
+     * This screen auto-displays when being created, should be disposed after use
      * @param controller The user document submission controller
      */
     public SolutionDocumentSubmissionScreen(SubmitSolutionDocController controller, String courseID, String parentTestID) {
