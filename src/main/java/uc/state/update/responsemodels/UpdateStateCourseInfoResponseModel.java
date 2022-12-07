@@ -1,16 +1,14 @@
-package ia.gateways.models;
+package uc.state.update.responsemodels;
 
-import uc.state.update.dbmodels.UpdateStateCourseDbModel;
-
-public class CourseDbResponseModel implements UpdateStateCourseDbModel {
+public class UpdateStateCourseInfoResponseModel {
 
     private final String courseId;
     private final String courseCode;
     private final String courseName;
 
-    public CourseDbResponseModel(String courseId,
-                                 String courseCode,
-                                 String courseName) {
+    public UpdateStateCourseInfoResponseModel(String courseId,
+                                              String courseCode,
+                                              String courseName) {
         this.courseId = courseId;
         this.courseCode = courseCode;
         this.courseName = courseName;

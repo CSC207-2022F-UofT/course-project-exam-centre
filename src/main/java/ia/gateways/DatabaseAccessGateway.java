@@ -59,9 +59,9 @@ public interface DatabaseAccessGateway
     /** Checks whether gateway is connected to database.
      *
      * @return boolean representing whether database is connected
-     * @throws Exception if connection check query fails
      */
-    boolean getConnectionStatus() throws Exception;
+    @Override
+    boolean getConnectionStatus();
 
     /** Queries database to check whether a course exists by ID.
      *

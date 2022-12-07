@@ -2,7 +2,10 @@ package uc.dboard.submessage;
 
 // Use case layer
 
-import java.time.LocalDateTime;
+import uc.state.update.responsemodels.UpdateStateCourseResponseModel;
+
+import java.util.List;
+import java.util.Map;
 
 public class SubDBMessResponseModel {
 
@@ -10,6 +13,8 @@ public class SubDBMessResponseModel {
     String creationTime;
 
     String parentId;
+
+    Map<String, UpdateStateCourseResponseModel> currentCourses;
 
 
     public SubDBMessResponseModel(String messageBody, String creationTime, String parentId) {

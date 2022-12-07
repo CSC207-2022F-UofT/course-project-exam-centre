@@ -4,6 +4,7 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import fworks.views.DocumentView;
 import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
@@ -145,7 +146,8 @@ public class Main {
                     = new CourseRegisterInteractor(
                             courseRegisterPresenter,
                             dbGateway,
-                            courseFactory
+                            courseFactory,
+                            currentState
             );
             LoginInputBoundary loginInteractor
                     = new LoginInteractor(
@@ -225,6 +227,9 @@ public class Main {
                     = new UserRegisterController(userRegisterInteractor);
             LogoutController logoutController
                     = new LogoutController(logoutInteractor);
+
+            // Update current state
+            updateStateController.updateState();
 
             // Construct JFrame views
             new WelcomeDialog(

@@ -2,6 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessageTree {
     private final Message root;
@@ -37,5 +38,13 @@ public class MessageTree {
             }
         }
         return false;
+    }
+
+    public List<MessageTree> getSubtrees(){
+        return this.subtrees;
+    }
+
+    public Message getRootMessage() {
+        return this.root;
     }
 }

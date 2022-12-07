@@ -48,10 +48,14 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     /** Checks whether connection to postgres instance is
      *
      * @return boolean representing whether database is connected
-     * @throws SQLException if connection check query fails
      */
-    public boolean getConnectionStatus() throws SQLException {
-        return this.db.isValid(2);
+    public boolean getConnectionStatus() {
+        try {
+            return this.db.isValid(2);
+        } catch(SQLException e) {
+            return false;
+        }
+
     }
 
     /** Counts number of rows represented in a given ResultSet object.

@@ -1,6 +1,6 @@
 package ia.gateways.models;
 
-import uc.state.update.UpdateStateSolutionDocDbModel;
+import uc.state.update.dbmodels.UpdateStateSolutionDocDbModel;
 
 public class SolutionDocDbResponseModel implements UpdateStateSolutionDocDbModel {
 

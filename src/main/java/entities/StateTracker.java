@@ -5,7 +5,6 @@ import java.util.*;
 
 public class StateTracker implements Serializable {
     private final Map<String, User> trackedUsers;
-    // TODO: Implement abstract course class with a Comprehensive Course Class and a Meta Course Class (no test/solution docs)
     private final Map<String, Course> trackedCourses;
     private Map<String, CourseInfo> courseInfoItems;
     private User currentUser;
@@ -143,6 +142,15 @@ public class StateTracker implements Serializable {
      */
     public Map<String, CourseInfo> getAllCourseInfoItems() {
         return this.courseInfoItems;
+    }
+
+    /**
+     * Get all tracked courses.
+     *
+     * @return a map of course items.
+     */
+    public Map<String, Course> getAllTrackedCourses() {
+        return this.trackedCourses;
     }
 
 }

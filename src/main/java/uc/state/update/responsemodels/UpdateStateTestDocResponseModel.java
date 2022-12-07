@@ -1,8 +1,9 @@
-package ia.gateways.models;
+package uc.state.update.responsemodels;
 
-import uc.state.update.dbmodels.UpdateStateTestDocDbModel;
+import java.util.HashMap;
+import java.util.Map;
 
-public class TestDocDbResponseModel implements UpdateStateTestDocDbModel {
+public class UpdateStateTestDocResponseModel {
 
     private final String testId;
     private final String userId;
@@ -10,19 +11,28 @@ public class TestDocDbResponseModel implements UpdateStateTestDocDbModel {
     private final Integer numOfQuestions;
     private final Float estimatedTime;
     private final String testName;
+    private final Map<String, UpdateStateSolutionDocResponseModel> solutionModels;
 
-    public TestDocDbResponseModel(String testId,
-                                  String userId,
-                                  String testType,
-                                  Integer numOfQuestions,
-                                  Float estimatedTime,
-                                  String testName) {
+    public UpdateStateTestDocResponseModel(
+            String testId,
+            String userId,
+            String testType,
+            Integer numOfQuestions,
+            Float estimatedTime,
+            String testName,
+            Map<String, UpdateStateSolutionDocResponseModel> solutionModels) {
+
         this.testId = testId;
         this.userId = userId;
         this.testType = testType;
         this.numOfQuestions = numOfQuestions;
         this.estimatedTime = estimatedTime;
         this.testName = testName;
+        this.solutionModels = solutionModels;
+    }
+
+    public Map<String, UpdateStateSolutionDocResponseModel> getSolutionModels() {
+        return this.solutionModels;
     }
 
     public String getTestId() {
