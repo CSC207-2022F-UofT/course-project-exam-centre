@@ -6,6 +6,13 @@ import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocResponseModel;
 
 public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    public SubmitSolutionDocPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     @Override
     public SubmitSDocResponseModel prepareSuccessView(
             SubmitSDocResponseModel responseModel) {
@@ -16,7 +23,7 @@ public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
     @Override
     public SubmitSDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: Update view model here
-        ViewManagerGateway.showError(errorMessage, "Solution Document Submission Failed");
+        viewManagerGateway.showError(errorMessage, "Solution Document Submission Failed");
         throw new SubmitSolutionDocFailed(errorMessage);
     }
 }

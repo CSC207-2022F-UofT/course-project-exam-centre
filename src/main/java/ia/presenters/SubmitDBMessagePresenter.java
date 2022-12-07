@@ -6,6 +6,13 @@ import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubDBMessResponseModel;
 
 public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    public SubmitDBMessagePresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     @Override
     public SubDBMessResponseModel prepareSuccessView(
             SubDBMessResponseModel responseModel) {
@@ -16,7 +23,7 @@ public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
     @Override
     public SubDBMessResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
-        ViewManagerGateway.showError(errorMessage, "Discussion Board Message Submission Failed");
+        viewManagerGateway.showError(errorMessage, "Discussion Board Message Submission Failed");
         throw new SubmitDBMessageFailed(errorMessage);
     }
 }

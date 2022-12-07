@@ -7,6 +7,12 @@ import uc.doc.voteonsolution.VoteSDocResponseModel;
 
 public class VoteSDocPresenter implements VoteSDocOutputBoundary{
 
+    private final ViewManagerGateway viewManagerGateway;
+
+    public VoteSDocPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     @Override
     public VoteSDocResponseModel prepareSuccessView(VoteSDocResponseModel model) {
         return model;
@@ -15,7 +21,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
     @Override
     public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
         // TODO prepare failure view
-        ViewManagerGateway.showError(errorMessage, "Document Vote Failed");
+        viewManagerGateway.showError(errorMessage, "Document Vote Failed");
         return null;
     }
     

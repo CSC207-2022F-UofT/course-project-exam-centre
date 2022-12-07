@@ -6,6 +6,13 @@ import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
 
 public class LoginPresenter implements LoginOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    public LoginPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     /**
      * @param responseModel the response model for the login use case
      * @return a ResponseModel corresponding to successful log in
@@ -21,7 +28,7 @@ public class LoginPresenter implements LoginOutputBoundary {
      */
     @Override
     public LoginResponseModel prepareFailView(String errorMessage) {
-        ViewManagerGateway.showError(errorMessage, "Login Failed");
+        viewManagerGateway.showError(errorMessage, "Login Failed");
         throw new LoginFailed(errorMessage);
     }
 }

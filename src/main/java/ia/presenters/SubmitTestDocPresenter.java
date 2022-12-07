@@ -6,6 +6,13 @@ import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTDocResponseModel;
 
 public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    public SubmitTestDocPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     @Override
     public SubmitTDocResponseModel prepareSuccessView(
             SubmitTDocResponseModel responseModel) {
@@ -16,7 +23,7 @@ public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
     @Override
     public SubmitTDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: Update view model here
-        ViewManagerGateway.showError(errorMessage, "Test Document Submission Failed");
+        viewManagerGateway.showError(errorMessage, "Test Document Submission Failed");
         throw new SubmitTestDocFailed(errorMessage);
     }
 }

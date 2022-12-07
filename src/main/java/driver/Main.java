@@ -4,6 +4,9 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import fworks.views.Updatable;
+import fworks.views.ViewManager;
+import fworks.views.ViewManagerGateway;
 import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
@@ -40,6 +43,7 @@ import uc.user.register.UserRegisterInteractor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Main {
@@ -120,25 +124,30 @@ public class Main {
             // Construct state tracker entity
             StateTracker currentState = stateTrackerFactory.create();
 
+            // Construct a new ViewManager
+            ArrayList<Updatable> updatableScreens = new ArrayList<>();
+            //TODO Add Updatable screens to ArrayList
+            ViewManagerGateway viewManagerGateway = new ViewManager(updatableScreens);
+
             // Construct use case presenters
             CRegisterOutputBoundary courseRegisterPresenter
-                    = new CourseRegisterPresenter();
+                    = new CourseRegisterPresenter(viewManagerGateway);
             LoginOutputBoundary loginPresenter
-                    = new LoginPresenter();
+                    = new LoginPresenter(viewManagerGateway);
             LogoutOutputBoundary logoutPresenter
-                    = new LogoutPresenter();
+                    = new LogoutPresenter(viewManagerGateway);
             SubDBMessOutputBoundary submitDBMessagePresenter
-                    = new SubmitDBMessagePresenter();
+                    = new SubmitDBMessagePresenter(viewManagerGateway);
             SubmitSDocOutputBoundary submitSolutionDocPresenter
-                    = new SubmitSolutionDocPresenter();
+                    = new SubmitSolutionDocPresenter(viewManagerGateway);
             SubmitTDocOutputBoundary submitTestDocPresenter
-                    = new SubmitTestDocPresenter();
+                    = new SubmitTestDocPresenter(viewManagerGateway);
             UpdateCMemOutputBoundary updateCourseMembershipPresenter
-                    = new UpdateCourseMembershipPresenter();
+                    = new UpdateCourseMembershipPresenter(viewManagerGateway);
             URegisterOutputBoundary userRegisterPresenter
-                    = new UserRegisterPresenter();
+                    = new UserRegisterPresenter(viewManagerGateway);
             UpdateStateOutputBoundary updateStatePresenter
-                    = new UpdateStatePresenter();
+                    = new UpdateStatePresenter(viewManagerGateway);
 
             // Construct use case interactors
             CRegisterInputBoundary courseRegisterInteractor

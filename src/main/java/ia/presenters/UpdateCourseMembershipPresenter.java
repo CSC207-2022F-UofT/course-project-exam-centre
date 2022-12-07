@@ -1,11 +1,19 @@
 package ia.presenters;
 
+import fworks.views.UpdateCourseMembershipScreen;
 import fworks.views.ViewManagerGateway;
 import ia.exceptions.UpdateCourseMembershipFailed;
 import uc.course.updatemembers.UpdateCMemOutputBoundary;
 import uc.course.updatemembers.UpdateCMemResponseModel;
 
 public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    public UpdateCourseMembershipPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     @Override
     public UpdateCMemResponseModel prepareSuccessView(
             UpdateCMemResponseModel responseModel) {
@@ -16,7 +24,7 @@ public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary
     @Override
     public UpdateCMemResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
-        ViewManagerGateway.showError(errorMessage, "Course Membership Update Failed");
+        viewManagerGateway.showError(errorMessage, "Course Membership Update Failed");
         throw new UpdateCourseMembershipFailed(errorMessage);
     }
 }

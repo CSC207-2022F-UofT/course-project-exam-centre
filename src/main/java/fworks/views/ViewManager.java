@@ -24,4 +24,9 @@ public class ViewManager implements ViewManagerGateway {
             view.update();
         }
     }
+
+    @Override
+    public void showError(String errorMessage, String presentationMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage, presentationMessage, JOptionPane.INFORMATION_MESSAGE);
+    }
 }

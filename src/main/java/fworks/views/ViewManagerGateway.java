@@ -15,7 +15,5 @@ public interface ViewManagerGateway {
     /**
      * Creates a dialogue box displaying the error
      */
-    static void showError(String errorMessage, String presentationMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage, presentationMessage, JOptionPane.INFORMATION_MESSAGE);
-    }
+    void showError(String errorMessage, String presentationMessage);
 }
