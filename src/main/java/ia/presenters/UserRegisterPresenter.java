@@ -19,6 +19,7 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
     /** Prepares a failView when the User is unsuccessfully registered
      *
      * @param errorMessage describes the error that occured when registering the User
+     * @throws UserRegisterFailed when the user register use case fails.
      */
     @Override
     public URegisterResponseModel prepareFailView(String errorMessage){

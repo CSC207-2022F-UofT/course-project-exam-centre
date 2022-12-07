@@ -20,7 +20,7 @@ public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary
     /** Prepares the successView when the membership of the course is unsuccessfully updated
      *
      * @param errorMessage String of the error that has occurred
-     * @return
+     * @throws UpdateCourseMembershipFailed when the update course membership use case fails.
      */
     @Override
     public UpdateCMemResponseModel prepareFailView(String errorMessage) {

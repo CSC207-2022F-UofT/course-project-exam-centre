@@ -5,7 +5,8 @@ import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
 
 public class LoginPresenter implements LoginOutputBoundary {
-    /**
+    /** Prepares SuccessView after successful Login
+     *
      * @param responseModel the response model for the login use case
      * @return a ResponseModel corresponding to successful log in
      */
@@ -14,7 +15,8 @@ public class LoginPresenter implements LoginOutputBoundary {
         return responseModel;
     }
 
-    /**
+    /** Prepares FailView after unsuccessful Login
+     *
      * @param errorMessage an error message describing the use case failure
      * @throws LoginFailed occurs when the login use case fails
      */
