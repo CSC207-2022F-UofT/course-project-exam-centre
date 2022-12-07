@@ -1,10 +1,22 @@
 package ia.presenters;
 
+import ia.gateways.ViewManagerGateway;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
 import ia.exceptions.CourseRegisterFailed;
 
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
+    public CourseRegisterPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     /**  Prepares the successView when the Course is successfully registered
      *
      * @param responseModel CRegisterResponseModel containing the information of the new course
@@ -24,7 +36,8 @@ public class CourseRegisterPresenter implements CRegisterOutputBoundary {
      */
     @Override
     public CRegisterResponseModel prepareFailView(String errorMessage) {
-        // TODO: Update view model here
+        //TODO Update view model here
+        viewManagerGateway.showError(errorMessage, "Course Register Failed");
         throw new CourseRegisterFailed(errorMessage);
     }
 }

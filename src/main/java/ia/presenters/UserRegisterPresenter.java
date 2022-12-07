@@ -1,10 +1,23 @@
 package ia.presenters;
 
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UserRegisterFailed;
 import uc.user.register.URegisterOutputBoundary;
 import uc.user.register.URegisterResponseModel;
 
 public class UserRegisterPresenter implements URegisterOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
+    public UserRegisterPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
+
     /** Prepares the successView when the User is successfully registered
      *
      * @param responseModel responseModel representing newly-registerd user
@@ -24,6 +37,7 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
     @Override
     public URegisterResponseModel prepareFailView(String errorMessage){
         // TODO: Update view model
+        viewManagerGateway.showError(errorMessage, "User Registration Failed");
         throw new UserRegisterFailed(errorMessage);
     }
 

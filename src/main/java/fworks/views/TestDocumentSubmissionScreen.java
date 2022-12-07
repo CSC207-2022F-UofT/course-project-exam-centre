@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TestDocumentSubmissionScreen extends JPanel implements ActionListener {
+public class TestDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**
      * Name of the test
@@ -65,6 +65,7 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
 
     /**
      * A window allowing the user to select a document for submission and set information of the test
+     * This screen auto displays after being created, and should be disposed after use
      * @param controller The user document submission controller
      */
     public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID, String userID) {
@@ -160,6 +161,9 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridx = 0;
         this.add(submit, gridBagConstraints);
+
+        this.pack();
+        this.setVisible(true);
     }
 
     /**
@@ -192,6 +196,8 @@ public class TestDocumentSubmissionScreen extends JPanel implements ActionListen
                         courseID,
                         fileChooser.getSelectedFile().getAbsolutePath()
                         );
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", name.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }

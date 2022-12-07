@@ -1,10 +1,22 @@
 package ia.presenters;
 
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitSolutionDocFailed;
 import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocResponseModel;
 
 public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
+    public SubmitSolutionDocPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     /** Prepares the successView when the solution is successfully submitted.
      *
      * @param responseModel Bundled data to inform the user of the success
@@ -25,6 +37,7 @@ public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
     @Override
     public SubmitSDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: Update view model here
+        viewManagerGateway.showError(errorMessage, "Solution Document Submission Failed");
         throw new SubmitSolutionDocFailed(errorMessage);
     }
 }

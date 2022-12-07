@@ -1,10 +1,22 @@
 package ia.presenters;
 
+import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UpdateStateFailed;
 import uc.state.update.UpdateStateOutputBoundary;
 import uc.state.update.UpdateStateResponseModel;
 
 public class UpdateStatePresenter implements UpdateStateOutputBoundary {
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
+    public UpdateStatePresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     /** Prepares FailView when the state is successfully updated.
      *
      * @param responseModel
@@ -25,6 +37,7 @@ public class UpdateStatePresenter implements UpdateStateOutputBoundary {
     @Override
     public UpdateStateResponseModel prepareFailView(String errorMessage){
         // TODO: Update view model
+        viewManagerGateway.showError(errorMessage, "State Update Failed");
         throw new UpdateStateFailed(errorMessage);
     }
 

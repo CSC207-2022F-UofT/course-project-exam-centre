@@ -1,10 +1,22 @@
 package ia.presenters;
 
+import ia.gateways.ViewManagerGateway;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.doc.voteonsolution.VoteSDocResponseModel;
 
 public class VoteSDocPresenter implements VoteSDocOutputBoundary{
+
+    private final ViewManagerGateway viewManagerGateway;
+
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
+    public VoteSDocPresenter(ViewManagerGateway viewManagerGateway) {
+        this.viewManagerGateway = viewManagerGateway;
+    }
+
     /** Prepares SuccessView when a solution document is succesfully voted
      *
      * @param model Response model containing the vote total, sDoc and timestamp of the request
@@ -23,6 +35,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
     @Override
     public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
         // TODO prepare failure view
+        viewManagerGateway.showError(errorMessage, "Document Vote Failed");
         return null;
     }
     
