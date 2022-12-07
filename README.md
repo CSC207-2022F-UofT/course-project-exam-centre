@@ -12,6 +12,7 @@
       <ul>
         <li><a href="Project Structure">Project Structure</a></li>
         <li><a href="Naming Conventions">Naming Conventions</a></li>
+        <li><a href="Design Patterns">Design Patterns</a></li>
       </ul>
     </li>
     <li>
@@ -29,6 +30,7 @@
         <li><a href="Document Management ">Document Management</a></li>
         <li><a href="Data Access and Management">Data Access and Management</a></li>
       </ul>
+    <li><a href="#next-steps">Next Steps</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -49,6 +51,11 @@ TODO: Complete Project Structure
   
 ### Naming Conventions
 TODO: Complete Naming Conventions
+
+
+### Design Patterns
+1. **Factory Design Pattern** 
+    We utilize the factory design pattern to create instances of our entities. All of our factories can be found in `java/entities/factories` We 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,6 +104,10 @@ TODO: Complete
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Next Steps
+
+There are still many features we can improve on as well as some use cases that we decided to not complete due to time constraints.
+TODO: Complete Next Steps
 ## License
 TODO: Complete License
 
