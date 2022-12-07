@@ -9,6 +9,10 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public VoteSDocPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }

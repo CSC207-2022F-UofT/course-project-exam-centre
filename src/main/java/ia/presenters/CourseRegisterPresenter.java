@@ -11,6 +11,10 @@ public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public CourseRegisterPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }

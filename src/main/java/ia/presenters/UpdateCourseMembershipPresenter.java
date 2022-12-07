@@ -10,6 +10,10 @@ public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public UpdateCourseMembershipPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }

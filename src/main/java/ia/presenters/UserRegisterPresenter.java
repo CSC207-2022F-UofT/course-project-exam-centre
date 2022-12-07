@@ -9,6 +9,10 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public UserRegisterPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }

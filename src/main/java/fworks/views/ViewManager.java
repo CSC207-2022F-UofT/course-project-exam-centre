@@ -25,6 +25,11 @@ public class ViewManager implements ViewManagerGateway {
         }
     }
 
+    /**
+     * Creates a dialogue box to show the user an error
+     * @param errorMessage The name of the error which occurred
+     * @param presentationMessage A user-friendly name/description of the message
+     */
     @Override
     public void showError(String errorMessage, String presentationMessage) {
         JOptionPane.showMessageDialog(null, errorMessage, presentationMessage, JOptionPane.INFORMATION_MESSAGE);

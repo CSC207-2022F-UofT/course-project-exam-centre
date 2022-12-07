@@ -9,6 +9,10 @@ public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public SubmitSolutionDocPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }

@@ -9,6 +9,10 @@ public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
 
+    /**
+     * Creates a presenter for updating the view
+     * @param viewManagerGateway Used for managing and updating views
+     */
     public SubmitTestDocPresenter(ViewManagerGateway viewManagerGateway) {
         this.viewManagerGateway = viewManagerGateway;
     }
