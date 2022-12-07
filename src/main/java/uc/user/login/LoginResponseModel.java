@@ -1,7 +1,8 @@
 package uc.user.login;
 
 /**
- * LoginResponseModel bundles data to be used by LoginPresenter.
+ * LoginResponseModel bundles data to be used by a presenter.
+ * @layer use cases
  */
 public class LoginResponseModel {
     private boolean loginStatus;

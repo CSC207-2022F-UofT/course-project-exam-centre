@@ -19,11 +19,11 @@ import uc.course.updatemembers.UpdateCourseMembershipInteractor;
 import uc.dboard.submessage.SubDBMessInputBoundary;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubmitDBMessageInteractor;
-import uc.doc.submitsolution.SubSDocOutputBoundary;
-import uc.doc.submitsolution.SubSDocInputBoundary;
+import uc.doc.submitsolution.SubmitSDocOutputBoundary;
+import uc.doc.submitsolution.SubmitSDocInputBoundary;
 import uc.doc.submitsolution.SubmitSolutionDocInteractor;
-import uc.doc.submittest.SubTDocInputBoundary;
-import uc.doc.submittest.SubTDocOutputBoundary;
+import uc.doc.submittest.SubmitTDocInputBoundary;
+import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTestDocInteractor;
 import uc.state.update.UpdateStateInputBoundary;
 import uc.state.update.UpdateStateInteractor;
@@ -130,9 +130,9 @@ public class Main {
                     = new LogoutPresenter();
             SubDBMessOutputBoundary submitDBMessagePresenter
                     = new SubmitDBMessagePresenter();
-            SubSDocOutputBoundary submitSolutionDocPresenter
+            SubmitSDocOutputBoundary submitSolutionDocPresenter
                     = new SubmitSolutionDocPresenter();
-            SubTDocOutputBoundary submitTestDocPresenter
+            SubmitTDocOutputBoundary submitTestDocPresenter
                     = new SubmitTestDocPresenter();
             UpdateCMemOutputBoundary updateCourseMembershipPresenter
                     = new UpdateCourseMembershipPresenter();
@@ -168,7 +168,7 @@ public class Main {
                     dbGateway,
                     currentState
             );
-            SubSDocInputBoundary submitSolutionDocInteractor
+            SubmitSDocInputBoundary submitSolutionDocInteractor
                     = new SubmitSolutionDocInteractor(
                     dbGateway,
                     fileAccessGateway,
@@ -176,7 +176,7 @@ public class Main {
                     currentState,
                     solutionDocFactory
             );
-            SubTDocInputBoundary submitTestDocInteractor
+            SubmitTDocInputBoundary submitTestDocInteractor
                     = new SubmitTestDocInteractor(
                     dbGateway,
                     fileAccessGateway,

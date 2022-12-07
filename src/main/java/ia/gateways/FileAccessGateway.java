@@ -1,20 +1,20 @@
 package ia.gateways;
 
-import uc.doc.submitsolution.SubSDocDsRequestModel;
-import uc.doc.submitsolution.SubSDocFileAccessGateway;
-import uc.doc.submittest.SubTDocDsRequestModel;
-import uc.doc.submittest.SubTDocFileAccessGateway;
+import uc.doc.submitsolution.SubmitSDocDsRequestModel;
+import uc.doc.submitsolution.SubmitSDocFileAccessGateway;
+import uc.doc.submittest.SubmitTDocDsRequestModel;
+import uc.doc.submittest.SubmitTDocFileAccessGateway;
 
-public interface FileAccessGateway extends SubSDocFileAccessGateway, SubTDocFileAccessGateway{
+public interface FileAccessGateway extends SubmitSDocFileAccessGateway, SubmitTDocFileAccessGateway {
     
     boolean uploadFile(String filePath, String docId);
 
-    default boolean uploadSolutionDocument(SubSDocDsRequestModel model, String docId) {
+    default boolean uploadSolutionDocument(SubmitSDocDsRequestModel model, String docId) {
         String filePath = model.getFilePath();
         return uploadFile(filePath, docId);
     }
 
-    default boolean uploadTestDocument(SubTDocDsRequestModel dsRequestModel, String docId) {
+    default boolean uploadTestDocument(SubmitTDocDsRequestModel dsRequestModel, String docId) {
         String filePath = dsRequestModel.getFilePath();
         return uploadFile(filePath, docId);
     }

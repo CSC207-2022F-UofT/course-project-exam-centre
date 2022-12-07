@@ -3,11 +3,19 @@ package uc.course.updatemembers;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/** UpdateCourseMembershipInteractor implements the ability to update a user's course membership.
+ * @layer use cases
+ */
 public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary {
 
     final UpdateCMemDsGateway gateway;
     final UpdateCMemOutputBoundary presenter;
 
+    /** Constructs an UpdateCourseMembershipInteractor with a gateway and an OutputBoundary
+     *
+     * @param gateway provides methods to access persistent memory
+     * @param presenter provides methods to update the view
+     */
     public UpdateCourseMembershipInteractor(
             UpdateCMemDsGateway gateway,
             UpdateCMemOutputBoundary presenter) {

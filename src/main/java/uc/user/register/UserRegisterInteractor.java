@@ -6,6 +6,9 @@ import entities.factories.UserFactory;
 
 import java.time.LocalDateTime;
 
+/** The UserRegisterInteractor implements the ability to register a user.
+ * @layer use cases
+ */
 public class UserRegisterInteractor implements URegisterInputBoundary {
 
     private StateTracker stateTracker;
@@ -49,8 +52,8 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
 
         String userId = userDsGateway.saveUser(userDsModel);
 
-        User user = userFactory.create(userId, requestModel.getFirstName(),
-                requestModel.getLastName(), requestModel.getEmail());
+        User user = userFactory.create(requestModel.getFirstName(),
+                requestModel.getLastName(), requestModel.getEmail(), userId);
 
         LocalDateTime now = LocalDateTime.now();
 
