@@ -1,42 +1,50 @@
 package uc.dboard.submessage;
 
-import java.time.LocalDateTime;
+import uc.dboard.submessage.responsemodels.*;
 
 /** SubDBMessResponseModel is responsible for packaging data in a way a presenter can use
  * @layer use cases
  */
 public class SubDBMessResponseModel {
 
-    String messageBody;
-    String creationTime;
+    private final SubDBMessMessageTreeResponseModel newMessageTree;
+    private final String solutionId;
+    private final String parentTestId;
+    private final String parentCourseId;
 
-    String parentId;
-
-    /** Constructs a SubDBMessResponseModel containing the messageBody, creationTime, and parentId
+    /** Constructs a SubDBMessResponseModel
      *
-     * @param messageBody the body of the message
-     * @param creationTime how long it takes to create the message
-     * @param parentId either the messageId of the parent or rootMessageId
+     * @param newMessageTree a new message tree model
+     * @param solutionId the solution for the message tree
+     * @param parentTestId the parent test ID
+     * @param parentCourseId the parent course ID
      */
-    public SubDBMessResponseModel(String messageBody, String creationTime, String parentId) {
-        this.messageBody = messageBody;
-        this.creationTime = creationTime;
-        this.parentId = parentId;
+    public SubDBMessResponseModel(
+            SubDBMessMessageTreeResponseModel newMessageTree,
+            String solutionId,
+            String parentTestId,
+            String parentCourseId) {
+        this.newMessageTree = newMessageTree;
+        this.solutionId = solutionId;
+        this.parentTestId = parentTestId;
+        this.parentCourseId = parentCourseId;
     }
 
-    /**
-     * Gets the message body of the message.
-     *
-     * @return the body of the message
-     */
-    public  String getMessageBody(){return messageBody;}
+    public SubDBMessMessageTreeResponseModel getMessageTree() {
+        return this.newMessageTree;
+    }
 
-    /**
-     * Gets the creation time of the message.
-     *
-     * @return how long it took to create the message
-     */
-    public  String getCreationTime(){return creationTime;}
+    public String getSolutionId() {
+        return this.solutionId;
+    }
+
+    public String getParentTestId() {
+        return this.parentTestId;
+    }
+
+    public String getParentCourseId() {
+        return this.parentCourseId;
+    }
 
 
 }
