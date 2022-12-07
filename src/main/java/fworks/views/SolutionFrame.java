@@ -9,6 +9,10 @@ import java.awt.*;
 public class SolutionFrame extends JFrame {
     public SolutionFrame() {
         super("Solutions");
+
+        MenuBar menuBar = new MenuBar();
+        this.setJMenuBar(menuBar);
+
         SolutionToolbar toolbar = new SolutionToolbar();
         DocumentView documentView = new DocumentView();
         documentView.loadFile();
