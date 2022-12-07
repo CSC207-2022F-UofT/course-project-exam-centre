@@ -6,6 +6,9 @@ import entities.factories.UserFactory;
 
 import java.time.LocalDateTime;
 
+/** The UserRegisterInteractor implements the ability to register a user.
+ * @layer use cases
+ */
 public class UserRegisterInteractor implements URegisterInputBoundary {
 
     private StateTracker stateTracker;

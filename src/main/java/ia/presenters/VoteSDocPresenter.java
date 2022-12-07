@@ -12,7 +12,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
     }
 
     @Override
-    public VoteSDocDsRequestModel prepareFailureView(VoteSDocResponseModel model) {
+    public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
         // TODO prepare failure view
         return null;
     }

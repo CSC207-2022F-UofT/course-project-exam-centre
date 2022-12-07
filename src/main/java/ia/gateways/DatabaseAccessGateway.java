@@ -6,10 +6,10 @@ import uc.course.register.CRegisterDsRequestModel;
 import uc.course.updatemembers.UpdateCMemDsGateway;
 import uc.dboard.submessage.SubDBMessDsGateway;
 import uc.dboard.submessage.SubDBMessDsRequestModel;
-import uc.doc.submitsolution.SubSDocDsGateway;
-import uc.doc.submitsolution.SubSDocDsRequestModel;
-import uc.doc.submittest.SubTDocDsGateway;
-import uc.doc.submittest.SubTDocDsRequestModel;
+import uc.doc.submitsolution.SubmitSDocDsGateway;
+import uc.doc.submitsolution.SubmitSDocDsRequestModel;
+import uc.doc.submittest.SubmitTDocDsGateway;
+import uc.doc.submittest.SubmitTDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocDsGateway;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
@@ -47,8 +47,8 @@ public interface DatabaseAccessGateway
         CRegisterDsGateway,
         UpdateCMemDsGateway,
         SubDBMessDsGateway,
-        SubSDocDsGateway,
-        SubTDocDsGateway,
+        SubmitSDocDsGateway,
+        SubmitTDocDsGateway,
         LoginDsGateway,
         URegisterDsGateway,
         VoteSDocDsGateway {
@@ -362,7 +362,7 @@ public interface DatabaseAccessGateway
      * @return the unique solution ID of the saved solution document entity
      */
     @Override
-    default String saveSolutionDocument(SubSDocDsRequestModel requestModel) {
+    default String saveSolutionDocument(SubmitSDocDsRequestModel requestModel) {
         String solutionId = generateRandomId();
 
         saveSolutionDocumentQuery(
@@ -386,7 +386,7 @@ public interface DatabaseAccessGateway
      * @return the unique test ID of the saved test document entity
      */
     @Override
-    default String saveTestDocument(SubTDocDsRequestModel requestModel) {
+    default String saveTestDocument(SubmitTDocDsRequestModel requestModel) {
         String testId = generateRandomId();
 
         saveTestDocumentQuery(
