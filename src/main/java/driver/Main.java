@@ -40,6 +40,8 @@ import uc.user.register.UserRegisterInteractor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -145,7 +147,8 @@ public class Main {
                     = new CourseRegisterInteractor(
                             courseRegisterPresenter,
                             dbGateway,
-                            courseFactory
+                            courseFactory,
+                            currentState
             );
             LoginInputBoundary loginInteractor
                     = new LoginInteractor(
@@ -185,7 +188,13 @@ public class Main {
             UpdateCMemInputBoundary updateCourseMembershipInteractor
                     = new UpdateCourseMembershipInteractor(
                     dbGateway,
-                    updateCourseMembershipPresenter
+                    updateCourseMembershipPresenter,
+                    currentState,
+                    userFactory,
+                    courseFactory,
+                    testDocFactory,
+                    solutionDocFactory,
+                    messageFactory
             );
             URegisterInputBoundary userRegisterInteractor
                     = new UserRegisterInteractor(
@@ -225,6 +234,29 @@ public class Main {
                     = new UserRegisterController(userRegisterInteractor);
             LogoutController logoutController
                     = new LogoutController(logoutInteractor);
+
+            // Update current state
+            updateStateController.updateState();
+
+            // Testing Use Cases
+
+//            loginController.logIn(
+//                    "harveydonnelly404@gmail.com",
+//                    "HelloWorld"
+//            );
+////            userRegisterController.registerUser(
+////                    "Harvey",
+////                    "Donnelly",
+////                    "harveydonnelly404@gmail.com",
+////                    "HelloWorld",
+////                    "HelloWorld"
+////            );
+//            updateStateController.updateState();
+//            List<String> testList = new ArrayList<>();
+//            testList.add("h9ib1a73");
+//            testList.add("koz8t694");
+//
+//            updateCourseMembershipController.updateCourseMembership(testList);
 
             // Construct JFrame views
             new WelcomeDialog(

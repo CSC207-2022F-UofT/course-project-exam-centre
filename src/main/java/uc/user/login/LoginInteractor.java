@@ -4,6 +4,8 @@ import entities.StateTracker;
 import entities.User;
 import entities.factories.UserFactory;
 
+import java.util.List;
+
 /**
  * LoginInteractor implements login behaviour.
  * @layer use cases
@@ -50,6 +52,14 @@ public class LoginInteractor implements LoginInputBoundary {
             String firstName = dsResponseModel.getFirstName();
             String lastName = dsResponseModel.getLastName();
             User user = userFactory.create(firstName, lastName, email, userId);
+
+            // Add new course enrolments
+            List<String> enrolments = dsGateway.getCourseIdsByUserId(userId);
+            for (String courseId: enrolments) {
+                user.addCourse(courseId);
+            }
+
+            // Set current user
             stateTracker.setCurrentUser(user);
 
             LoginResponseModel responseModel = new LoginResponseModel(true, userId);

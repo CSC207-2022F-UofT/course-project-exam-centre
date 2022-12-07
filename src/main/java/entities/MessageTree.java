@@ -2,13 +2,21 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessageTree {
     private final Message root;
     private final ArrayList<MessageTree> subtrees;
 
-    public MessageTree(String rootId) {
-        this.root = new CommonMessage(rootId, rootId, rootId, rootId, null, LocalDateTime.now());
+    public MessageTree(String rootId,
+                       String solutionId,
+                       String userId) {
+        this.root = new CommonMessage(rootId,
+                solutionId,
+                userId,
+                null,
+                "",
+                LocalDateTime.now());
         this.subtrees = new ArrayList<>();
     }
 
@@ -37,5 +45,13 @@ public class MessageTree {
             }
         }
         return false;
+    }
+
+    public List<MessageTree> getSubtrees(){
+        return this.subtrees;
+    }
+
+    public Message getRootMessage() {
+        return this.root;
     }
 }

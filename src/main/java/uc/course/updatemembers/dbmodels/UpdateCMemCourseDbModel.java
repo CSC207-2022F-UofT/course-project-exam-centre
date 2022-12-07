@@ -1,6 +1,6 @@
-package uc.state.update;
+package uc.course.updatemembers.dbmodels;
 
-public interface UpdateStateCourseDbModel {
+public interface UpdateCMemCourseDbModel {
     String getCourseId();
     String getCourseCode();
     String getCourseName();

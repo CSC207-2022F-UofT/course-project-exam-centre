@@ -1,10 +1,13 @@
 package ia.gateways.models;
 
-import uc.state.update.UpdateStateMessageDbModel;
+import uc.course.updatemembers.dbmodels.UpdateCMemMessageDbModel;
+import uc.state.update.dbmodels.UpdateStateMessageDbModel;
 
 import java.time.LocalDateTime;
 
-public class MessageDbResponseModel implements UpdateStateMessageDbModel {
+public class MessageDbResponseModel
+        implements UpdateStateMessageDbModel,
+        UpdateCMemMessageDbModel {
 
     private final String messageId;
     private final String solutionId;

@@ -1,6 +1,6 @@
-package uc.state.update;
+package uc.course.updatemembers.dbmodels;
 
-public interface UpdateStateTestDocDbModel {
+public interface UpdateCMemTestDocDbModel {
     String getTestId();
     String getUserId();
     String getTestType();

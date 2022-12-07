@@ -1,11 +1,8 @@
-package ia.gateways.models;
+package uc.course.updatemembers.responsemodels;
 
-import uc.course.updatemembers.dbmodels.UpdateCMemTestDocDbModel;
-import uc.state.update.dbmodels.UpdateStateTestDocDbModel;
+import java.util.Map;
 
-public class TestDocDbResponseModel
-        implements UpdateStateTestDocDbModel,
-        UpdateCMemTestDocDbModel {
+public class UpdateCMemTestDocResponseModel {
 
     private final String testId;
     private final String userId;
@@ -13,19 +10,28 @@ public class TestDocDbResponseModel
     private final Integer numOfQuestions;
     private final Float estimatedTime;
     private final String testName;
+    private final Map<String, UpdateCMemSolutionDocResponseModel> solutionModels;
 
-    public TestDocDbResponseModel(String testId,
-                                  String userId,
-                                  String testType,
-                                  Integer numOfQuestions,
-                                  Float estimatedTime,
-                                  String testName) {
+    public UpdateCMemTestDocResponseModel(
+            String testId,
+            String userId,
+            String testType,
+            Integer numOfQuestions,
+            Float estimatedTime,
+            String testName,
+            Map<String, UpdateCMemSolutionDocResponseModel> solutionModels) {
+
         this.testId = testId;
         this.userId = userId;
         this.testType = testType;
         this.numOfQuestions = numOfQuestions;
         this.estimatedTime = estimatedTime;
         this.testName = testName;
+        this.solutionModels = solutionModels;
+    }
+
+    public Map<String, UpdateCMemSolutionDocResponseModel> getSolutionModels() {
+        return this.solutionModels;
     }
 
     public String getTestId() {

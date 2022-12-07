@@ -1,11 +1,12 @@
-package uc.course.register;
+package uc.state.update.responsemodels;
 
-public class CRegisterResponseModel {
+public class UpdateStateCourseInfoResponseModel {
+
     private final String courseId;
     private final String courseCode;
     private final String courseName;
 
-    public CRegisterResponseModel(String courseId,
+    public UpdateStateCourseInfoResponseModel(String courseId,
                                               String courseCode,
                                               String courseName) {
         this.courseId = courseId;
@@ -24,4 +25,5 @@ public class CRegisterResponseModel {
     public String getCourseName() {
         return this.courseName;
     }
+
 }

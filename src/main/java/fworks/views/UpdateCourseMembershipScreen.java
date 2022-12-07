@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +37,10 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
      * @param controller The controller for handling course addition
      */
 
-    public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller, String userID, HashMap<String, String> courseList){
+    public UpdateCourseMembershipScreen(
+            UpdateCourseMembershipController controller,
+            String userID,
+            HashMap<String, String> courseList){
         this.updateCourseMembershipController = controller;
         this.courseList = courseList;
         this.userID = userID;
@@ -76,7 +78,7 @@ public class UpdateCourseMembershipScreen extends JPanel implements ActionListen
                   coursesToAdd.add(courseID.getText());
                 }
             }
-            updateCourseMembershipController.registerCourse(userID, coursesToAdd);
+            updateCourseMembershipController.updateCourseMembership(coursesToAdd);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

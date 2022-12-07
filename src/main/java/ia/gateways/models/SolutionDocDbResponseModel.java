@@ -1,8 +1,11 @@
 package ia.gateways.models;
 
-import uc.state.update.UpdateStateSolutionDocDbModel;
+import uc.course.updatemembers.dbmodels.UpdateCMemSolutionDocDbModel;
+import uc.state.update.dbmodels.UpdateStateSolutionDocDbModel;
 
-public class SolutionDocDbResponseModel implements UpdateStateSolutionDocDbModel {
+public class SolutionDocDbResponseModel
+        implements UpdateStateSolutionDocDbModel,
+        UpdateCMemSolutionDocDbModel {
 
     private final String solutionId;
     private final String testId;

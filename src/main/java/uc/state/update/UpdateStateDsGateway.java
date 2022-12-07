@@ -1,5 +1,7 @@
 package uc.state.update;
 
+import uc.state.update.dbmodels.*;
+
 import java.util.List;
 
 public interface UpdateStateDsGateway {
@@ -11,4 +13,6 @@ public interface UpdateStateDsGateway {
     UpdateStateCourseDbModel getCourseById(String courseId);
     List<String> getAllCourseIds();
     List<String> getCourseIdsByUserId(String userId);
+
+    boolean getConnectionStatus();
 }

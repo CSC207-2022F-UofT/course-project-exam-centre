@@ -48,10 +48,14 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
     /** Checks whether connection to postgres instance is
      *
      * @return boolean representing whether database is connected
-     * @throws SQLException if connection check query fails
      */
-    public boolean getConnectionStatus() throws SQLException {
-        return this.db.isValid(2);
+    public boolean getConnectionStatus() {
+        try {
+            return this.db.isValid(2);
+        } catch(SQLException e) {
+            return false;
+        }
+
     }
 
     /** Counts number of rows represented in a given ResultSet object.
@@ -77,7 +81,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         try{
             int numOfColumns = rs.getMetaData().getColumnCount();
             List<String> stringRow = new ArrayList<>();
-            for (int i = 0; i < numOfColumns; i++){
+            for (int i = 1; i <= numOfColumns; i++){
                 stringRow.add(
                         rs.getString(i)
                 );
@@ -166,7 +170,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 courseCode + "', '" + courseName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -195,7 +199,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 hashedPassword + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -445,7 +449,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 userId + "', '" + courseId + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -467,7 +471,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 "course_id='" + courseId + "';";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -544,7 +548,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 + "', '" + messageBody + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -582,7 +586,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 + "'" + solutionName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -605,7 +609,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
         + rootMessageId + "' WHERE solution_id='" + solutionId + "';";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -640,7 +644,7 @@ public class PostgresAccessManager implements DatabaseAccessGateway {
                 "'" + estimatedTime.toString() + "', '" + testName + "');";
 
         try (Statement statement = db.createStatement()) {
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
