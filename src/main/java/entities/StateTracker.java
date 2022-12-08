@@ -187,7 +187,7 @@ public class StateTracker implements Serializable {
      * @param documentId the document ID being checked
      * @return a string representing the local document path
      */
-    public String getDownloadedDocument(String documentId) {
+    public String getDownloadedDocumentPath(String documentId) {
         return this.downloadedDocumentPaths.get(documentId);
     }
 
