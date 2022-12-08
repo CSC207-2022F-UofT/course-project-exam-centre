@@ -1,6 +1,6 @@
 package uc.doc.submitsolution;
 
-import java.time.LocalDateTime;
+import uc.doc.submitsolution.responsemodels.SubmitSDocSolutionDocResponseModel;
 
 /**
  * SubmitSDocResponseModel bundles the data being passed back to presenter in a single object
@@ -8,54 +8,30 @@ import java.time.LocalDateTime;
  */
 public class SubmitSDocResponseModel {
 
-    /**
-     * The ID of the new solution doc entity
-     */
-    private final String solutionDocID;
+    private final SubmitSDocSolutionDocResponseModel solutionDocModel;
+    private final String parentTestId;
+    private final String parentCourseId;
 
-    /**
-     * The ID of the corresponding parent test
-     */
-    private final String testDocID;
-
-    /**
-     * A timestamp for when this document was created
-     */
-    private final LocalDateTime timestamp;
-
-    /**
-     * Creates a new solution document submission response model for giving relevant information back to the user
-     * @param solutionDocID The ID of the newly created solution document
-     * @param testDocID The ID of the corresponding test this solution document belongs to
-     * @param timestamp The time the SolutionDoc was created
-     */
-    public SubmitSDocResponseModel(String solutionDocID, String testDocID, LocalDateTime timestamp) {
-        this.solutionDocID = solutionDocID;
-        this.timestamp = timestamp;
-        this.testDocID = testDocID;
+    public SubmitSDocResponseModel(
+            SubmitSDocSolutionDocResponseModel solutionDocModel,
+            String parentTestId,
+            String parentCourseId
+    ) {
+        this.solutionDocModel = solutionDocModel;
+        this.parentTestId = parentTestId;
+        this.parentCourseId = parentCourseId;
     }
 
-    /**
-     * Gets the ID for this solution document
-     * @return The document's ID
-     */
-    public String getSolutionDoc() {
-        return solutionDocID;
+    public SubmitSDocSolutionDocResponseModel getSolutionDocModel() {
+        return this.solutionDocModel;
     }
 
-    /**
-     * Gets the time the solution doc was created
-     * @return The time in a LocalDateTime object
-     */
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public String getParentTestId() {
+        return this.parentTestId;
     }
 
-    /**
-     * Gets the ID of the test this solution document corresponds to
-     * @return The test document's ID
-     */
-    public String getTestDocID() {
-        return testDocID;
+    public String getParentCourseId() {
+        return this.parentCourseId;
     }
+
 }
