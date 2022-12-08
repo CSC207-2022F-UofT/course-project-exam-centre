@@ -1,5 +1,10 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.SubmitTestDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,14 +12,24 @@ import java.awt.*;
  * The frame for viewing tests
  */
 public class TestFrame extends JFrame {
-    public TestFrame() {
+
+    private MenuBar menuBar;
+
+    private TestToolbar toolbar;
+
+    private DocumentView documentView;
+
+    public TestFrame(MainViewModel mainViewModel,
+                     SubmitTestDocController submitTestDocController,
+                     UpdateCourseMembershipController updateCourseMembershipController
+                     ) {
         super("Exam Centre");
 
-        MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar(mainViewModel);
         this.setJMenuBar(menuBar);
 
-        TestToolbar toolbar = new TestToolbar();
-        DocumentView documentView = new DocumentView();
+        toolbar = new TestToolbar(mainViewModel, submitTestDocController, updateCourseMembershipController);
+        documentView = new DocumentView(mainViewModel);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

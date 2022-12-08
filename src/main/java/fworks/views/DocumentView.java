@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 
@@ -10,23 +11,27 @@ import java.util.prefs.Preferences;
  * The view that renders and displays a PDF
  * TODO: test with PDFs of different sizes
  */
-public class DocumentView {
+public class DocumentView implements Updatable {
     private SwingController controller;
     private JPanel panel;
     private String filePath;
 
+    private MainViewModel mainViewModel;
+
     /**
-     * @param filePath the file path of the PDF
+     * Creates a new screen for viewing the document
+     * @param mvm The main ViewModel
      */
-    public DocumentView(String filePath) {
-        this();
-        this.filePath = filePath;
+    public DocumentView(MainViewModel mvm) {
+        this.mainViewModel = mvm;
+        //this.filePath get filepath from viewmodel
     }
 
     /**
      * Initialize with a default file path for testing
      */
     public DocumentView() {
+        this.
 
         setPreferences();
         controller = new SwingController();
@@ -76,5 +81,10 @@ public class DocumentView {
         controller.setPageViewMode(2, false);
         controller.setPageFitMode(4, true);
         panel.setSize(700, 700);
+    }
+
+    @Override
+    public void update() {
+
     }
 }
