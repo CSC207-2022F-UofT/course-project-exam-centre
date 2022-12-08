@@ -1,7 +1,9 @@
 package fworks.views;
 
 import ia.controllers.LogoutController;
-
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,21 +12,20 @@ import java.awt.*;
  * @layer drivers and frameworks
  */
 public class SolutionFrame extends JFrame {
+
     private LogoutController logoutController;
 
-    /**
-     * Creates an instance of the SolutionFrame
-     * @param logoutController the controller for the logout use case
-     */
-    public SolutionFrame(LogoutController logoutController) {
+    public SolutionFrame(MainViewModel mainViewModel,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         LogoutController logoutController) {
         super("Solutions");
         this.logoutController = logoutController;
 
-        MenuBar menuBar = new MenuBar(logoutController);
+        MenuBar menuBar = new MenuBar(mainViewModel, logoutController);
         this.setJMenuBar(menuBar);
 
-        DocumentView documentView = new DocumentView();
-        SolutionToolbar toolbar = new SolutionToolbar(documentView);
+        DocumentView documentView = new DocumentView(mainViewModel);
+        SolutionToolbar toolbar = new SolutionToolbar(documentView, mainViewModel, submitSolutionDocController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

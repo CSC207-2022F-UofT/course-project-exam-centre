@@ -1,5 +1,9 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,15 +18,20 @@ public class SolutionToolbar extends JPanel implements ActionListener {
 
     private JButton uploadSolutionsButton;
     private JComboBox<String> chooseSolutionDoc;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private MainViewModel mainViewModel;
 
     /** Construct an instance of the SolutionToolbar that takes in the DocumentView that it will update
      *
      * @param docView
      */
-    public SolutionToolbar(DocumentView docView) {
+    public SolutionToolbar(DocumentView docView, MainViewModel mvm, SubmitSolutionDocController ssdc) {
         this.docView = docView;
         String[] solutionList = {"Solution1", "Solution2", "Solution3"}; // Note: This is currently hard-coded
         // TODO: Replace the solution list with a list of actual solutions available for the test
+        this.submitSolutionDocController = ssdc;
+        this.mainViewModel = mvm;
+
         discussionButton = new JButton("Discussions");
         uploadSolutionsButton = new JButton("Upload solution");
         chooseSolutionDoc = new JComboBox<String>(solutionList);
@@ -43,7 +52,10 @@ public class SolutionToolbar extends JPanel implements ActionListener {
         if (actionEvent.getActionCommand().equals(discussionButton.getText())) {
         // TODO: Discussions
         } else if (actionEvent.getActionCommand().equals(uploadSolutionsButton.getText())) {
-        // TODO: Upload solution
+            SolutionDocumentSubmissionScreen solutionDocumentSubmissionScreen = new SolutionDocumentSubmissionScreen(
+                    submitSolutionDocController,
+                    mainViewModel.getCurrentCourseId(),
+                    mainViewModel.getCurrentTestId());
         }else if (actionEvent.getSource().equals(chooseSolutionDoc)){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String solutionName = (String) action.getSelectedItem();

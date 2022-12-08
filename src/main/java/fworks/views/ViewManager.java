@@ -10,7 +10,7 @@ public class ViewManager implements ViewManagerGateway {
 
     /**
      * Creates a new ViewManager instance to manage updating the views
-     * @param updatableViews
+     * @param updatableViews All the views with an update() method
      */
     public ViewManager(ArrayList<Updatable> updatableViews) {
         this.updatableViews = updatableViews;

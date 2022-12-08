@@ -1,16 +1,20 @@
 package fworks.views;
 
 import ia.controllers.LogoutController;
-
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.SubmitTestDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * The panel component for TestFrame
  * @layer drivers and frameworks
  */
-public class TestToolbar extends JPanel implements ActionListener {
+public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private LogoutController logoutController;
     private DocumentView docView;
     private JComboBox<String> testComboBox;
@@ -19,14 +23,28 @@ public class TestToolbar extends JPanel implements ActionListener {
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
+    private SubmitTestDocController submitTestDocController;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private UpdateCourseMembershipScreen updateCourseMembershipScreen;
+    private MainViewModel mainViewModel;
 
     /**
      * Creates an instance of the TestToolbar with the docView that it will update
      * @param docView the docView that will be updated
      */
-    public TestToolbar(DocumentView docView, LogoutController logoutController) {
+    public TestToolbar(DocumentView docView,
+                       MainViewModel mvm,
+                       SubmitTestDocController stdc,
+                       SubmitSolutionDocController ssdc,
+                       UpdateCourseMembershipController ucmc,
+                       LogoutController logoutController) {
+        this.submitTestDocController = stdc;
+        this.submitSolutionDocController = ssdc;
+        this.mainViewModel = mvm;
+        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel.getCourseMembershipViewModel());
         this.docView = docView;
         this.logoutController = logoutController;
+
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
 
@@ -36,7 +54,7 @@ public class TestToolbar extends JPanel implements ActionListener {
     }
 
     private JPanel createWestPanel() {
-        courseComboBox = createCourseComboBox();
+        courseComboBox = createComboBox();
         addCourseButton = new JButton("Add course");
         uploadTestButton = new JButton("Upload test");
         testComboBox = createTestComboBox();
@@ -84,12 +102,6 @@ public class TestToolbar extends JPanel implements ActionListener {
         return panel;
     }
 
-    // Dummy combo box for testing
-    private JComboBox createCourseComboBox() {
-        String[] courses = {"CSC207", "CSC236", "CSC258", "CSC263"};
-        return new JComboBox<>(courses);
-    }
-
     private JComboBox<String> createTestComboBox() {
         String[] courses = {"Test1", "Test2", "Test3"};
         JComboBox testComboBox = new JComboBox<>(courses);
@@ -97,22 +109,46 @@ public class TestToolbar extends JPanel implements ActionListener {
         return testComboBox;
     }
 
+    /**
+     * Creates a JComboBox with the user's registered courses
+     * @return A combo box with the user's courses
+     */
+    private JComboBox createComboBox() {
+            ArrayList<String> courseList = mainViewModel.getCourseMembershipViewModel().getCurrentCourses();
+            return new JComboBox(courseList.toArray());
+        }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == courseComboBox) {
+            // Add a course to user's membership
         } else if (actionEvent.getSource() == addCourseButton) {
-            // TODO: Add course
+            updateCourseMembershipScreen.createScreen();
+            // Upload a test
         } else if (actionEvent.getSource() == uploadTestButton) {
-            // TODO: Upload test
+            TestDocumentSubmissionScreen testDocumentSubmissionScreen = new TestDocumentSubmissionScreen(
+                    submitTestDocController,
+                    mainViewModel.getCurrentCourseId()
+            );
+            // Sit a test
         } else if (actionEvent.getSource() == takeTestButton) {
             // TODO: Take test
+            // Get the solutions
         } else if (actionEvent.getSource() == solutionsButton) {
-            new SolutionFrame(logoutController); // Create the solution window
+            new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController); // Create the solution window
+            //Switch file being viewed
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String testName = action.getSelectedItem().toString();
             docView.setFilePath(testName);
             docView.loadFile();
         }
+    }
+
+    @Override
+    public void update() {
+        courseComboBox = createComboBox();
+        courseComboBox.addActionListener(this);
+
     }
 }
