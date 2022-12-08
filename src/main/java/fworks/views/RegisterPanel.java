@@ -222,7 +222,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+        if (mainViewModel.getCurrentUserModel() != null) {
             if(mainFrame == null) {
                 this.mainFrame = new MainFrame(mainViewModel,
                         submitTestDocController,
