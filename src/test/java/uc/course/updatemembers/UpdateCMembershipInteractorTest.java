@@ -82,7 +82,7 @@ public class UpdateCMembershipInteractorTest {
             }
             @Override
             public UpdateCMemResponseModel prepareFailView(String errorMessage) {
-                fail("Use case success is unexpected.");
+                fail("Use case failure is unexpected.");
                 return null;
             }
         };
@@ -121,106 +121,106 @@ public class UpdateCMembershipInteractorTest {
 
     }
 
+    /** Test that UpdateCourseMembershipInteractor
+     * prepares a fail view if the course the user is trying to enroll in is not registered yet.
+     */
+    @Test
+    public void updateCourseMembershipFailCourseNotRegistered() {
+        UpdateCMemDsGateway dsGateway = new UpdateCMemDsGateway() {
+            @Override
+            public boolean checkIfCourseExists(String courseId) {
 
-//    @Test
-//    public void updateCourseMembershipFailCourseNotRegistered() {
-//        UpdateCMemDsGateway dsGateway = new UpdateCMemDsGateway() {
-//            @Override
-//            public boolean checkIfCourseExists(String courseId) {
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public void addCourseEnrolment(String courseId, String userId) {
-//
-//            }
-//            @Override
-//            public void removeCourseEnrolment(String courseId, String userId) {
-//
-//            }
-//            @Override
-//            public List<String> getCourseIdsByUserId(String userId) {
-//                ArrayList<String> courseIds = new ArrayList<>();
-//
-//                return courseIds;
-//            }
-//
-//            @Override
-//            public UpdateCMemUserDbModel getUserById(String userId) {
-//                return null;
-//            }
-//
-//            @Override
-//            public boolean getConnectionStatus() {
-//                return false;
-//            }
-//
-//            @Override
-//            public List<? extends UpdateCMemTestDocDbModel> getTestDocsByCourseId(String courseId) {
-//                return null;
-//            }
-//
-//            @Override
-//            public List<? extends UpdateCMemSolutionDocDbModel> getSolutionDocsByTestId(String testId) {
-//                return null;
-//            }
-//
-//            @Override
-//            public List<? extends UpdateCMemMessageDbModel> getMessagesByParentId(String parentId) {
-//                return null;
-//            }
-//
-//            @Override
-//            public UpdateCMemCourseDbModel getCourseById(String courseId) {
-//                return new CourseDbResponseModel("Theory of Computation", "CSC236", "1234ABCD");
-//            }
-//        };
-//
-//        UpdateCMemOutputBoundary presenter = new UpdateCMemOutputBoundary() {
-//            @Override
-//            public UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel) {
-//                assertEquals("ABCD1234", responseModel.getCurrentUserModel().getUserId());
-//                assertEquals("CSC236", responseModel.getUsersCourseModels().get("1234ABCD").getCourseCode())
-//                return null;
-//            }
-//
-//            @Override
-//            public UpdateCMemResponseModel prepareFailView(String errorMessage) {
-//                fail("Use case success is unexpected.");
-//                return null;
-//            }
-//        };
-//
-//        StateTracker currentState = new StateTracker();
-//        UserFactory userFactory = new UserFactory();
-//        CourseFactory courseFactory = new CourseFactory();
-//        TestDocFactory testDocFactory = new TestDocFactory();
-//        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
-//        MessageFactory messageFactory = new MessageFactory();
-//
-//        User currentUser = new CommonUser("First", "Last", "first.last@mail.utoronto.ca", "ABCD1234");
-//        currentState.setCurrentUser(currentUser);
-//        UpdateCourseMembershipInteractor interactor = new UpdateCourseMembershipInteractor(
-//                dsGateway,
-//                presenter,
-//                currentState,
-//                userFactory,
-//                courseFactory,
-//                testDocFactory,
-//                solutionDocFactory,
-//                messageFactory);
-//
-//        ArrayList<String> newCourses = new ArrayList<>() {
-//            {
-//
-//                add("1234ABCD");
-//
-//            }
-//        };
-//
-//        UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(newCourses);
-//        interactor.updateCourseMembership(requestModel);
-//    }
-//
+                return false;
+            }
+
+            @Override
+            public void addCourseEnrolment(String courseId, String userId) {
+
+            }
+            @Override
+            public void removeCourseEnrolment(String courseId, String userId) {
+
+            }
+            @Override
+            public List<String> getCourseIdsByUserId(String userId) {
+                ArrayList<String> courseIds = new ArrayList<>();
+
+                return courseIds;
+            }
+
+            @Override
+            public UpdateCMemUserDbModel getUserById(String userId) {
+                return null;
+            }
+
+            @Override
+            public boolean getConnectionStatus() {
+                return false;
+            }
+
+            @Override
+            public List<? extends UpdateCMemTestDocDbModel> getTestDocsByCourseId(String courseId) {
+                return null;
+            }
+
+            @Override
+            public List<? extends UpdateCMemSolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+                return null;
+            }
+
+            @Override
+            public List<? extends UpdateCMemMessageDbModel> getMessagesByParentId(String parentId) {
+                return null;
+            }
+
+            @Override
+            public UpdateCMemCourseDbModel getCourseById(String courseId) {
+                return new CourseDbResponseModel("Theory of Computation", "CSC236", "1234ABCD");
+            }
+        };
+
+        UpdateCMemOutputBoundary presenter = new UpdateCMemOutputBoundary() {
+            @Override
+            public UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel) {
+                fail("Use case success is unexpected");
+                return null;
+            }
+
+            @Override
+            public UpdateCMemResponseModel prepareFailView(String errorMessage) {
+                assertEquals("1234ABCD has not been registered", errorMessage);
+                return null;
+            }
+        };
+
+        StateTracker currentState = new StateTracker();
+        UserFactory userFactory = new UserFactory();
+        CourseFactory courseFactory = new CourseFactory();
+        TestDocFactory testDocFactory = new TestDocFactory();
+        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
+        MessageFactory messageFactory = new MessageFactory();
+
+        User currentUser = new CommonUser("First", "Last",
+                "first.last@mail.utoronto.ca", "ABCD1234");
+        currentState.setCurrentUser(currentUser);
+        UpdateCourseMembershipInteractor interactor = new UpdateCourseMembershipInteractor(
+                dsGateway,
+                presenter,
+                currentState,
+                userFactory,
+                courseFactory,
+                testDocFactory,
+                solutionDocFactory,
+                messageFactory);
+
+        ArrayList<String> newCourses = new ArrayList<>() {
+            {
+                add("1234ABCD");
+            }
+        };
+
+        UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(newCourses);
+        interactor.updateCourseMembership(requestModel);
+    }
+
 }
