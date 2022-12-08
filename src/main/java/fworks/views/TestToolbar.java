@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,6 +33,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipScreen updateCourseMembershipScreen;
     private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
+    private Map<String, String> testNametoID;
 
     /**
      * Creates an instance of the TestToolbar with the docView that it will update
@@ -110,6 +112,10 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JComboBox<String> createTestComboBox() {
         Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
         Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
+        testNametoID = new HashMap<>();
+        for (TestDocSubViewModel testModel : testModles.values()) {
+            testNametoID.put(testModel.getTestName(), testModel.getTestId());
+        }
         return (JComboBox) new JComboBox<Object>(testModles.keySet().toArray());
     }
 
@@ -161,7 +167,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String testName = action.getSelectedItem().toString();
-            docView.setFilePath(getFilePath(testName));
+            docView.setFilePath(getFilePath(testNametoID.get(testName)));
             docView.loadFile();
         }
     }
