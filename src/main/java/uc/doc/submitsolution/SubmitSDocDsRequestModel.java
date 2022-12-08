@@ -136,7 +136,7 @@ public class SubmitSDocDsRequestModel {
 
     /**
      * Gets the ID of the test corresponding to this solution document
-     * @return
+     * @return the parent test ID
      */
     public String getParentTestId() {
         return parentTestId;

@@ -13,7 +13,6 @@ public interface URegisterOutputBoundary {
     /**
      * Prepares a failure view
      * @param error The string of the error that occurred
-     * @throws fworks.views.UserCreationFailed runtime exception
      */
     URegisterResponseModel prepareFailView(String error);
 }

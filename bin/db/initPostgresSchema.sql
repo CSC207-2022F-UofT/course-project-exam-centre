@@ -160,14 +160,14 @@ VALUES ('r5hdyrg2', 'igt4sstc', 'mtq2r09h', 5, 50.5, 3, 'w2ilpab8', current_time
 
 DELETE FROM ec.messages;
 INSERT INTO ec.messages
-VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', null, 'great answer!', current_timestamp),
-('i524wrxd', 'v5apbbr0', '4b6v23zg', null, 'best answer!', current_timestamp),
-('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', null, 'excellent answer!', current_timestamp),
-('lswlchjc', 'hi0ve0z5', 'mtq2r09h', null, 'decent answer!', current_timestamp),
-('o9szv3uk', 'wq3t8cps', 'mtq2r09h', null, 'wrong answer!', current_timestamp),
-('jrkkjkd2', 'r5hdyrg2', 'wx1of70l', 'w2ilpab8', 'great answer 2!', current_timestamp),
-('jm8hn6u8', 'r5hdyrg2', '4b6v23zg', 'jrkkjkd2', 'great answer 3!', current_timestamp),
-('b7jk4iy3', 'v5apbbr0', 'csye07l8', 'i524wrxd', 'best answer 2!', current_timestamp),
-('99koseyd', 'v5apbbr0', 'mtq2r09h', 'b7jk4iy3', 'best answer 3!', current_timestamp),
-('7zsgpyrp', 'pw7mh6vf', 'csye07l8', 'b2jyql0z', 'excellent answer 2!', current_timestamp),
-('8kh1bmaa', 'pw7mh6vf', 'hph52pue', '7zsgpyrp', 'excellent answer 3!', current_timestamp);
+VALUES ('w2ilpab8', 'r5hdyrg2', 'b36as7qx', null, 'great answer!'),
+('i524wrxd', 'v5apbbr0', '4b6v23zg', null, 'best answer!'),
+('b2jyql0z', 'pw7mh6vf', 'mtq2r09h', null, 'excellent answer!'),
+('lswlchjc', 'hi0ve0z5', 'mtq2r09h', null, 'decent answer!'),
+('o9szv3uk', 'wq3t8cps', 'mtq2r09h', null, 'wrong answer!'),
+('jrkkjkd2', 'r5hdyrg2', 'wx1of70l', 'w2ilpab8', 'great answer 2!'),
+('jm8hn6u8', 'r5hdyrg2', '4b6v23zg', 'jrkkjkd2', 'great answer 3!'),
+('b7jk4iy3', 'v5apbbr0', 'csye07l8', 'i524wrxd', 'best answer 2!'),
+('99koseyd', 'v5apbbr0', 'mtq2r09h', 'b7jk4iy3', 'best answer 3!'),
+('7zsgpyrp', 'pw7mh6vf', 'csye07l8', 'b2jyql0z', 'excellent answer 2!'),
+('8kh1bmaa', 'pw7mh6vf', 'hph52pue', '7zsgpyrp', 'excellent answer 3!');

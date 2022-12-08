@@ -55,7 +55,10 @@ public class SolutionDocument extends Document {
         this.parentTest = parentTest;
         this.votes = 0;
         this.recordedTime = recordedTime;
-        this.messageTree = new MessageTree(rootMessageId);
+        this.messageTree = new MessageTree(
+                rootMessageId,
+                solutionId,
+                user.getId());
     }
 
     /**

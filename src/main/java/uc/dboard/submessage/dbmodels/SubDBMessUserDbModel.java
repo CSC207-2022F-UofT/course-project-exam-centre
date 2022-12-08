@@ -1,6 +1,6 @@
-package uc.state.update;
+package uc.dboard.submessage.dbmodels;
 
-public interface UpdateStateUserDbModel {
+public interface SubDBMessUserDbModel {
     String getUserId();
     String getFirstName();
     String getLastName();

@@ -6,6 +6,9 @@ import entities.factories.UserFactory;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class LoginInteractorTest {
@@ -24,10 +27,17 @@ public class LoginInteractorTest {
             private final String storedUserId = "ABCD1234";
             private final String storedFirstName = "First";
             private final String storedLastName = "Last";
+            private final List<String> storedEnrolments = new ArrayList<>();
+
             @Override
             public boolean verifyLoginCredentials(String email, String password) {
                 return email.equals(storedEmail)
                         && password.equals(storedPassword);
+            }
+
+            @Override
+            public List<String> getCourseIdsByUserId(String userId) {
+                return storedEnrolments;
             }
 
             @Override
@@ -100,10 +110,17 @@ public class LoginInteractorTest {
             private final String storedUserId = "ABCD1234";
             private final String storedFirstName = "First";
             private final String storedLastName = "Last";
+            private final List<String> storedEnrolments = new ArrayList<>();
+
             @Override
             public boolean verifyLoginCredentials(String email, String password) {
                 return email.equals(storedEmail)
                         && password.equals(storedPassword);
+            }
+
+            @Override
+            public List<String> getCourseIdsByUserId(String userId) {
+                return storedEnrolments;
             }
 
             @Override

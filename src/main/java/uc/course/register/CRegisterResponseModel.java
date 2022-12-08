@@ -1,22 +1,27 @@
 package uc.course.register;
 
-/** The CRegisterResponseModel is responsible for formatting information in a way the presenter can use.
- * @layer use cases
- */
 public class CRegisterResponseModel {
-    private String course;
-    private boolean registrationStatus;
-    private String timestamp;
+    private final String courseId;
+    private final String courseCode;
+    private final String courseName;
 
-    /** Creates an instance of the CRegisterResponseModel containing the course and registration status
-     *
-     * @param course the String of the course corresponding to the course being made
-     * @param registrationStatus the status of the registration
-     * @param timestamp how long it takes the registration to happen
-     */
-    public CRegisterResponseModel(String course, boolean registrationStatus, String timestamp) {
-        this.course = course;
-        this.registrationStatus = registrationStatus;
-        this.timestamp = timestamp;
+    public CRegisterResponseModel(String courseId,
+                                              String courseCode,
+                                              String courseName) {
+        this.courseId = courseId;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+    }
+
+    public String getCourseId() {
+        return this.courseId;
+    }
+
+    public String getCourseCode() {
+        return this.courseCode;
+    }
+
+    public String getCourseName() {
+        return this.courseName;
     }
 }

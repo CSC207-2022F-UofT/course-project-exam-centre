@@ -1,7 +1,6 @@
 package ia.controllers;
 
 import uc.course.updatemembers.UpdateCMemInputBoundary;
-import uc.course.updatemembers.UpdateCMemOutputBoundary;
 import uc.course.updatemembers.UpdateCMemRequestModel;
 import uc.course.updatemembers.UpdateCMemResponseModel;
 
@@ -24,12 +23,11 @@ public class UpdateCourseMembershipController {
 
     /**
      * Called upon the user submitting their course selection, will add the user to the specified course
-     * @param userID The ID of the user updating their course membership
      * @param newCourseList A list of new courses to add
      * @return An instance of CRegisterResponseModel
      */
-    public UpdateCMemResponseModel registerCourse(String userID, List<String> newCourseList) {
-        UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(userID, newCourseList);
+    public UpdateCMemResponseModel updateCourseMembership(List<String> newCourseList) {
+        UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(newCourseList);
             return inputBoundary.updateCourseMembership(requestModel);
     }
 }

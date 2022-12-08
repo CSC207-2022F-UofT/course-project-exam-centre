@@ -1,12 +1,11 @@
 package uc.doc.submitsolution;
 
+import java.time.LocalDateTime;
+
 /**
  * SubmitSDocResponseModel bundles the data being passed back to presenter in a single object
  * @layer Use cases
  */
-
-import java.time.LocalDateTime;
-
 public class SubmitSDocResponseModel {
 
     /**

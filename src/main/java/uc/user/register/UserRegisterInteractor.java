@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 public class UserRegisterInteractor implements URegisterInputBoundary {
 
-    private StateTracker stateTracker;
+    private StateTracker currentState;
     private URegisterDsGateway userDsGateway;
     private URegisterOutputBoundary userOutputBoundary;
     private UserFactory userFactory;
@@ -22,12 +22,13 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
      * @param userOutputBoundary use case output boundary
      * @param userFactory user entity factory
      */
-    public UserRegisterInteractor(StateTracker stateTracker, URegisterDsGateway userDsGateway,
+    public UserRegisterInteractor(StateTracker currentState, URegisterDsGateway userDsGateway,
                                   URegisterOutputBoundary userOutputBoundary,
                                   UserFactory userFactory) {
         this.userDsGateway = userDsGateway;
         this.userOutputBoundary = userOutputBoundary;
         this.userFactory = userFactory;
+        this.currentState = currentState;
     }
 
     /** Checks if a user's info is valid and saves the information if it is. Returns a Response Model and
@@ -56,6 +57,9 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
                 requestModel.getLastName(), requestModel.getEmail(), userId);
 
         LocalDateTime now = LocalDateTime.now();
+
+        // Set current user to newly-registered (log in user)
+        currentState.setCurrentUser(user);
 
         URegisterResponseModel responseModel =new URegisterResponseModel(
                 user,

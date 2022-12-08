@@ -1,10 +1,15 @@
 package ia.gateways.models;
 
-import uc.state.update.UpdateStateUserDbModel;
+import uc.course.updatemembers.dbmodels.UpdateCMemUserDbModel;
+import uc.dboard.submessage.dbmodels.SubDBMessUserDbModel;
+import uc.state.update.dbmodels.UpdateStateUserDbModel;
 import uc.user.login.LoginDsResponseModel;
 
 public class UserDbResponseModel
-        implements UpdateStateUserDbModel, LoginDsResponseModel {
+        implements UpdateStateUserDbModel,
+        LoginDsResponseModel,
+        UpdateCMemUserDbModel,
+        SubDBMessUserDbModel {
 
     private final String userId;
     private final String email;
