@@ -275,19 +275,8 @@ public class Main {
             ArrayList<Updatable> updatableScreens = new ArrayList<>();
 
             updatableScreens.add(
-                    new LoginPanel(
+                    new WelcomeDialog(
                             loginController,
-                            mainViewModel,
-                            submitTestDocController,
-                            submitSolutionDocController,
-                            updateCourseMembershipController,
-                            logoutController,
-                            downloadDocController
-                    )
-            );
-
-            updatableScreens.add(
-                    new RegisterPanel(
                             userRegisterController,
                             logoutController,
                             mainViewModel,
