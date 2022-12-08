@@ -45,7 +45,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         this.submitTestDocController = stdc;
         this.submitSolutionDocController = ssdc;
         this.mainViewModel = mvm;
-        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel.getCourseMembershipViewModel());
+        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel);
         this.docView = docView;
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
@@ -137,8 +137,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
      * @return A combo box with the user's courses
      */
     private JComboBox createComboBox() {
-            ArrayList<String> courseList = mainViewModel.getCourseMembershipViewModel().getCurrentCourses();
-            return new JComboBox(courseList.toArray());
+            return new JComboBox(mainViewModel.getCurrentUserCourseModels().keySet().toArray());
         }
 
     @Override
