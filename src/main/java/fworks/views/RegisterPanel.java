@@ -1,6 +1,5 @@
 package fworks.views;
 
-import driver.Main;
 import ia.controllers.*;
 import ia.exceptions.UserRegisterFailed;
 import ia.viewmodels.MainViewModel;
@@ -27,7 +26,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     private JButton cancelButton;
     private JButton registerButton;
     private MainViewModel mainViewModel;
-    private TestFrame testFrame;
+    private MainFrame mainFrame;
     private SubmitTestDocController submitTestDocController;
     private SubmitSolutionDocController submitSolutionDocController;
     private UpdateCourseMembershipController updateCourseMembershipController;
@@ -52,7 +51,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.downloadDocController = downloadDocController;
 
-        this.testFrame = null;
+        this.mainFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -216,7 +215,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
 
                 setVisible(false);
 
-                //new TestFrame(logoutController); TODO fix this
+                //new MainFrame(logoutController); TODO fix this
             }
         }
     }
@@ -224,8 +223,8 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     @Override
     public void update() {
         if (mainViewModel.getCurrentUserModel().getUserId() != null) {
-            if(testFrame == null) {
-                testFrame = new TestFrame(mainViewModel,
+            if(mainFrame == null) {
+                mainFrame = new MainFrame(mainViewModel,
                         submitTestDocController,
                         submitSolutionDocController,
                         updateCourseMembershipController,
@@ -233,10 +232,10 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                         downloadDocController);
             }
         } else {
-            if(testFrame != null) {
-                testFrame.setVisible(false);
-                testFrame.dispose();
-                testFrame = null;
+            if(mainFrame != null) {
+                mainFrame.setVisible(false);
+                mainFrame.dispose();
+                mainFrame = null;
             }
         }
     }

@@ -29,7 +29,7 @@ public class MainTest {
 //        UserRegisterController userRegisterController = new UserRegisterController(userRegisterInteractor);
 
 //        new WelcomeDialog(loginController, userRegisterController); // Register/Log-in window
-//        new TestFrame(); // View test window
+//        new MainFrame(); // View test window
 //        new SolutionFrame(); // View solutions window
     }
 }
