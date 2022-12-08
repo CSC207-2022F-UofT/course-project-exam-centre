@@ -26,6 +26,7 @@ public class FtpAccessManager implements FileAccessGateway{
     
     private FTPClient ftpClient;
     private String remotePath;
+    private String localPath;
 
     /** Constructs a new instance of FtpAccessManager by attempting to establish
      * a connection to an FTP server using the given connection data.
@@ -35,15 +36,18 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param user              the user to be used in the ftp server connection
      * @param password          the password to be used in the ftp server connection
      * @param remotePath        the remote path to be used for file transfer
+     * @param localPath         the local path to download files to
      */
     public FtpAccessManager(
         String hostname,
         int port,
         String user,
         String password,
-        String remotePath
+        String remotePath,
+        String localPath
     ){
         this.remotePath = remotePath;
+        this.localPath = localPath;
         FTPClient ftpClient = new FTPClient();
 
         try {
@@ -79,6 +83,7 @@ public class FtpAccessManager implements FileAccessGateway{
      * @param fileName file name
      * @return returns true if file upload is successful, false otherwise
      */
+    @Override
     public boolean uploadFile(String localFilePath, String fileName){
         // Upload file
         try {
@@ -115,10 +120,10 @@ public class FtpAccessManager implements FileAccessGateway{
     /** Download a file from FTP server
      *
      * @param fileName file name to download
-     * @param downloadPath file path of file to download
-     * @return returns true if file is downloaded successfully, false otherwise
+     * @return returns the local file path if file is downloaded successfully, null otherwise
      */
-    public boolean downloadFile(String fileName, String downloadPath){
+    @Override
+    public String downloadFile(String fileName){
 
         // Download file
         try {
@@ -126,13 +131,13 @@ public class FtpAccessManager implements FileAccessGateway{
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
  
             String remoteFile = remotePath + fileName + ".pdf";
-            File downloadFile = new File(downloadPath + fileName + ".pdf");
+            File downloadFile = new File(localPath + fileName + ".pdf");
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
             boolean success = ftpClient.retrieveFile(remoteFile, outputStream);
             outputStream.close();
  
             if (success) {
-                return true;
+                return localPath + fileName + ".pdf";
             }
  
         } catch (IOException ex) {
@@ -148,6 +153,6 @@ public class FtpAccessManager implements FileAccessGateway{
                 ex.printStackTrace();
             }
         }
-        return false;
+        return null;
     }
 }
