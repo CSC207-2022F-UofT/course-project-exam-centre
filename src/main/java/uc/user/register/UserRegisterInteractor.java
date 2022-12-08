@@ -62,10 +62,9 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
         currentState.setCurrentUser(user);
 
         URegisterResponseModel responseModel =new URegisterResponseModel(
-                user,
-                true, // TODO: Update URegisterResponseModel
-                now.toString());
-
+                user.getId(),
+                true
+                );
         return userOutputBoundary.prepareSuccessView(responseModel);
 
     }

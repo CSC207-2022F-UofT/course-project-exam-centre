@@ -1,10 +1,6 @@
 package fworks.views;
 
 import ia.controllers.SubmitTestDocController;
-import org.intellij.lang.annotations.JdkConstants;
-import uc.doc.submittest.SubmitTDocInputBoundary;
-import uc.doc.submittest.SubmitTDocRequestModel;
-import uc.doc.submittest.SubmitTDocResponseModel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -187,12 +183,11 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
                 System.out.println("Click: " + event.getActionCommand());
                 Float timeParsedHours = Float.parseFloat(durationHoursField.getText())
                         + Float.parseFloat(durationMinutesField.getText())/60;
-                testDocController.SubmitTestDocument(
+                testDocController.submitTestDocument(
                         name.getText(),
                         Integer.parseInt(numQuestions.getText()),
                         timeParsedHours,
                         description.getText(),
-                        userID,
                         courseID,
                         fileChooser.getSelectedFile().getAbsolutePath()
                         );
