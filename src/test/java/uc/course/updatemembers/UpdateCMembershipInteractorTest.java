@@ -226,5 +226,4 @@ public class UpdateCMembershipInteractorTest {
         UpdateCMemRequestModel requestModel = new UpdateCMemRequestModel(newCourses);
         interactor.updateCourseMembership(requestModel);
     }
-
 }
