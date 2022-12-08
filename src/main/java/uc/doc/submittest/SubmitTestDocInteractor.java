@@ -2,8 +2,9 @@ package uc.doc.submittest;
 
 import entities.*;
 import entities.factories.TestDocFactory;
+import uc.doc.submittest.responsemodels.SubmitTDocTestDocResponseModel;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
 
 /**
  * SubmitTestDocInteractor implements the ability to save a test document into persistent memory
@@ -12,13 +13,9 @@ import java.time.LocalDateTime;
 public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
     private final SubmitTDocOutputBoundary tDocOutputBoundary;
-
-    private final SubmitTDocDsGateway tDocDsGateway;
-
+    private final SubmitTDocDsGateway dsGateway;
     private final SubmitTDocFileAccessGateway tDocFileAccessGateway;
-
     private final TestDocFactory testDocFactory;
-
     private final StateTracker stateTracker;
 
     /**
@@ -27,18 +24,18 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
      * @param tDocDsGateway Contains the methods to save the document in persistent memory
      * @param tDocOutputBoundary Provides the methods to update the views and pass information back to the user
      * @param tDocFileAccessGateway Provides methods for uploading the document
-     * @param stateTracker The app's state tracker for referencing entities
+     * @param dsGateway The app's state tracker for referencing entities
      * @param testDocFactory The factory for creating test documents
      */
     public SubmitTestDocInteractor(SubmitTDocDsGateway tDocDsGateway,
                                    SubmitTDocFileAccessGateway tDocFileAccessGateway,
                                    SubmitTDocOutputBoundary tDocOutputBoundary,
-                                   StateTracker stateTracker,
+                                   StateTracker dsGateway,
                                    TestDocFactory testDocFactory) {
         this.tDocOutputBoundary = tDocOutputBoundary;
-        this.tDocDsGateway = tDocDsGateway;
+        this.dsGateway = tDocDsGateway;
         this.tDocFileAccessGateway = tDocFileAccessGateway;
-        this.stateTracker = stateTracker;
+        this.stateTracker = dsGateway;
         this.testDocFactory = testDocFactory;
     }
 
@@ -51,19 +48,19 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
     @Override
     public SubmitTDocResponseModel submitTestDoc(SubmitTDocRequestModel requestModel) {
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
-        User user = stateTracker.getUserIfTracked(requestModel.getUserID());
+        User user = stateTracker.getCurrentUser();
 
         SubmitTDocDsRequestModel dsRequestModel = new SubmitTDocDsRequestModel(
                 requestModel.getName(),
                 requestModel.getNumberOfQuestions(),
                 requestModel.getRecordedTime(),
                 requestModel.getTestType(),
-                requestModel.getUserID(),
+                user.getId(),
                 requestModel.getCourseID(),
                 requestModel.getFilePath()
         );
 
-        String docId = tDocDsGateway.saveTestDocument(dsRequestModel);
+        String docId = dsGateway.saveTestDocument(dsRequestModel);
         
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
@@ -78,8 +75,20 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         );
 
         course.addTest(document);
+        SubmitTDocTestDocResponseModel testDocModel
+                = new SubmitTDocTestDocResponseModel(
+                    document.getId(),
+                    document.getUser().getId(),
+                    document.getTestType(),
+                    document.getNumberOfQuestions(),
+                    document.getEstimatedTime(),
+                    document.getName(),
+                    new HashMap<>()
+        );
 
-        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(docId, LocalDateTime.now());
+        SubmitTDocResponseModel responseModel = new SubmitTDocResponseModel(
+                testDocModel,
+                document.getCourse().getId());
 
         return tDocOutputBoundary.prepareSuccessView(responseModel);
     }

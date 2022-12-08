@@ -27,7 +27,6 @@ public class SubmitTestDocController {
      * @param numOfQuestions The number of questions on the test
      * @param recordedTime The time limit for the test
      * @param testType The type of test (i.e. quiz, term test, final exam)
-     * @param userID The ID of the user submitting this document
      * @param courseID The ID of the course this document belongs to
      * @param filePath The path to the document on the user's drive
      * @return An instance of a SubmitTDocResponseModel for this request
@@ -36,7 +35,6 @@ public class SubmitTestDocController {
                                                       Integer numOfQuestions,
                                                       Float recordedTime,
                                                       String testType,
-                                                      String userID,
                                                       String courseID,
                                                       String filePath) {
         SubmitTDocRequestModel requestModel = new SubmitTDocRequestModel(
@@ -44,7 +42,6 @@ public class SubmitTestDocController {
                 numOfQuestions,
                 recordedTime,
                 testType,
-                userID,
                 courseID,
                 filePath
         );

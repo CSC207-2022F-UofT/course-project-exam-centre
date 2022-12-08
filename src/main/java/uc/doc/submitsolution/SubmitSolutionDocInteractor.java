@@ -5,7 +5,6 @@ import entities.factories.*;
 import uc.doc.submitsolution.dbmodels.SubmitSDocUserDbModel;
 import uc.doc.submitsolution.responsemodels.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
