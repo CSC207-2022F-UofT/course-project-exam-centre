@@ -44,6 +44,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -52,7 +53,7 @@ public class Main {
 
         Properties config = new Properties();
 
-        // Welcome Message :D
+        // Wel9come Message :D
         System.out.println("\n====    U of T Exam Centre     ===");
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
@@ -92,6 +93,8 @@ public class Main {
                 "FTP_PASS", config.getProperty("FTP_PASS"));
         String ftpRemotePath = System.getenv().getOrDefault(
                 "REMOTE_PATH", config.getProperty("REMOTE_PATH"));
+        String ftpLocalPath = System.getenv().getOrDefault(
+                "LOCAL_PATH", config.getProperty("LOCAL_PATH"));
 
         try {
             // Initialise database access gateway
@@ -110,7 +113,8 @@ public class Main {
                 ftpPort,
                 ftpUser,
                 ftpPass,
-                ftpRemotePath
+                ftpRemotePath,
+                ftpLocalPath
             );
 
             // Construct entity factories
@@ -264,6 +268,15 @@ public class Main {
 //            testList.add("koz8t694");
 //
 //            updateCourseMembershipController.updateCourseMembership(testList);
+//
+//            submitTestDocController.submitTestDocument(
+//                        "Test #1",
+//                    5,
+//                    Float.parseFloat("1.5"),
+//                    "Final Exam",
+//                    "h9ib1a73",
+//                    "./lib/example.pdf"
+//            );
 
             // Construct JFrame views
             new WelcomeDialog(

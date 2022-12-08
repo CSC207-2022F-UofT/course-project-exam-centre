@@ -9,16 +9,16 @@ import entities.StateTracker;
 
 public class LogoutInteractor implements LogoutInputBoundary {
     private LogoutOutputBoundary presenter;
-    private StateTracker stateTracker;
+    private StateTracker currentState;
 
     /**
      * Construct a LogoutInteractor object.
      * @param presenter has method to update the view to a login screen
-     * @param stateTracker entity to be mutated by logOut method
+     * @param currentState entity to be mutated by logOut method
      */
-    public LogoutInteractor(LogoutOutputBoundary presenter, StateTracker stateTracker) {
+    public LogoutInteractor(LogoutOutputBoundary presenter, StateTracker currentState) {
         this.presenter = presenter;
-        this.stateTracker = stateTracker;
+        this.currentState = currentState;
     }
 
     /**
@@ -27,7 +27,12 @@ public class LogoutInteractor implements LogoutInputBoundary {
      */
     @Override
     public void logOut() {
-        stateTracker.removeCurrentUser();
-        presenter.prepareSuccessView();
+        String currentUserId = currentState.getCurrentUser().getId();
+        currentState.removeCurrentUser();
+        presenter.prepareSuccessView(
+                new LogoutResponseModel(
+                        false,
+                        currentUserId
+                ));
     }
 }

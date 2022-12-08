@@ -8,14 +8,34 @@ public class MainViewModel {
     private CourseMembershipViewModel courseMembershipViewModel;
     private Map<String, CourseSubViewModel> usersCourseModels;
     private Map<String, CourseInfoSubViewModel> courseInfoModels;
+    private Map<String, String> localDocumentPaths;
 
-    MainViewModel(UserSubViewModel currentUser,
-                  Map<String, CourseSubViewModel> usersCourseModels,
-                  Map<String, CourseInfoSubViewModel> courseInfoModels) {
+    private String currentCourseId;
+    private String currentTestId;
+    private String currentSolutionId;
 
-        this.currentUserModel = currentUser;
-        this.usersCourseModels = usersCourseModels;
-        this.courseInfoModels = courseInfoModels;
+    public String getCurrentCourseId() {
+        return this.currentCourseId;
+    }
+
+    public void setCurrentCourseId(String newCurrentCourseId) {
+        this.currentCourseId = newCurrentCourseId;
+    }
+
+    public String getCurrentTestId() {
+        return this.currentTestId;
+    }
+
+    public void setCurrentTestId(String newCurrentTestId) {
+        this.currentTestId = newCurrentTestId;
+    }
+
+    public String getCurrentSolutionId() {
+        return this.currentSolutionId;
+    }
+
+    public void setCurrentSolutionId(String newCurrentSolutionId) {
+        this.currentSolutionId = newCurrentSolutionId;
     }
 
     public UserSubViewModel getCurrentUserModel() {
@@ -51,4 +71,20 @@ public class MainViewModel {
     public void setCourseMembershipViewModel(CourseMembershipViewModel courseMembershipViewModel) {
         this.courseMembershipViewModel = courseMembershipViewModel;
     }
+    public Map<String, String> getLocalDocumentPaths() {
+        return this.localDocumentPaths;
+    }
+
+    public void setLocalDocumentPaths(Map<String, String> newLocalDocumentPaths) {
+        this.localDocumentPaths = newLocalDocumentPaths;
+    }
+
+    public boolean checkIfLocalDocumentPathExists(String documentId) {
+        return this.localDocumentPaths.containsKey(documentId);
+    }
+
+    public String getLocalDocumentPath(String documentId) {
+        return this.localDocumentPaths.get(documentId);
+    }
+
 }

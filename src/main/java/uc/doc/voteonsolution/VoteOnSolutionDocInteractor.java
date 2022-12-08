@@ -1,9 +1,9 @@
 package uc.doc.voteonsolution;
 
-import java.time.LocalDateTime;
-
+import entities.Course;
 import entities.SolutionDocument;
 import entities.StateTracker;
+import entities.TestDocument;
 import entities.User;
 
 /** VoteOnSolutionDocInteractor implements the ability to vote on a solution document
@@ -28,8 +28,14 @@ public class VoteOnSolutionDocInteractor implements VoteSDocInputBoundary {
         this.stateTracker = stateTracker;
     }
 
+    /** Takes in the needed information and updates the vote on a solution document
+     * 
+     * @param model The vote solution document model containing all the relevant information for updating
+     * the vote on a solution document
+     * @return If completed, the success view response model, containing information to be presented to the user
+     */
     @Override
-    public VoteSDocResponseModel voteSolutionDoc(VoteSDocRequestModel model, SolutionDocument sDocument) {
+    public VoteSDocResponseModel voteSolutionDoc(VoteSDocRequestModel model) {
         User user = stateTracker.getCurrentUser();
         boolean vote = model.getVote();
         String solutionId = model.getSolutionId();
@@ -43,13 +49,19 @@ public class VoteOnSolutionDocInteractor implements VoteSDocInputBoundary {
 
         VoteSDocDsRequestModel voteSDocDsRequestModel = new VoteSDocDsRequestModel(solutionId, user.getId(), voteTotal);
         
-        // Update vote in database
+        // Update vote in Database
         voteSDocDsGateway.updateSolutionDocVote(voteSDocDsRequestModel);
         
         // Update vote in Solution Document
-        sDocument.setVotes(voteTotal);
+        String testId = voteSDocDsGateway.getTestIdBySolutionId(solutionId);
+        String courseId = voteSDocDsGateway.getCourseIdByTestId(testId);
+        Course course = stateTracker.getCourseIfTracked(courseId);
 
-        VoteSDocResponseModel voteSDocResponseModel = new VoteSDocResponseModel(voteTotal, sDocument, LocalDateTime.now());
+        TestDocument testDoc = course.getTest(testId);
+        SolutionDocument solutionDoc = testDoc.getSolution(solutionId);
+        solutionDoc.setVotes(voteTotal);
+
+        VoteSDocResponseModel voteSDocResponseModel = new VoteSDocResponseModel(courseId, testId, solutionId, voteTotal);
 
         return voteSDocOutputBoundary.prepareSuccessView(voteSDocResponseModel);
     }

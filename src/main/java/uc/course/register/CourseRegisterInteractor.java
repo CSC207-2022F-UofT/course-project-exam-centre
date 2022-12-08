@@ -51,7 +51,6 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
         String courseId = gateway.saveCourse(courseDsModel);
 
 
-
         CourseInfo course = courseFactory.create(
                 requestModel.getCourseName(),
                 requestModel.getCourseCode(),
@@ -59,8 +58,8 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
 
         CRegisterResponseModel responseModel = new CRegisterResponseModel(
                 course.getId(),
-                course.getCourseName(),
-                course.getCourseCode()
+                course.getCourseCode(),
+                course.getCourseName()
         );
         return presenter.prepareSuccessView(responseModel);
     }

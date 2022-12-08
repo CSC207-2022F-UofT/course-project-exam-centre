@@ -1,28 +1,43 @@
 package uc.doc.voteonsolution;
 
-import java.time.LocalDateTime;
-
-import entities.SolutionDocument;
-
 /** VoteSDocResponseModel is a bundle of data that can be used by a presenter
  * @layer use cases
  */
 public class VoteSDocResponseModel {
+    private final String courseId;
+    private final String testId;
+    private final String solutionId;
     private final int voteTotal;
-    private final SolutionDocument solutionDoc;
-    private final LocalDateTime timestamp;
 
     /** Create an instance of VoteSDocResponseModel that contains the total number of votes, the solutionDoc
      * and the timestamp of the request
      *
+     * @param courseId Id of the course which the solution belongs to
+     * @param testId Id of the test the solution belongs to
+     * @param solutionId Id of the solution being voted on
      * @param voteTotal total number of votes on the sDoc
-     * @param solutionDoc the solutionDoc being updated
-     * @param timestamp the timestamp of the vote solution request
      */
-    public VoteSDocResponseModel(int voteTotal, SolutionDocument solutionDoc, LocalDateTime timestamp) {
+    public VoteSDocResponseModel(String courseId, String testId, String solutionId, int voteTotal) {
+        this.courseId = courseId;
+        this.testId = testId;
+        this.solutionId = solutionId;
         this.voteTotal = voteTotal;
-        this.solutionDoc = solutionDoc;
-        this.timestamp = timestamp;
+    }
+    
+    /** Gets the Id of the course which the solution belongs to
+     *
+     * @return the Id of the course
+     */
+    public String getCourseId() {
+        return this.courseId;
+    }
+
+    /** Gets the Id of the test which the solution belongs to
+     *
+     * @return the Id of the test
+     */
+    public String getTestId() {
+        return this.testId;
     }
 
     /** Gets the total number of votes that a solution has
@@ -33,19 +48,12 @@ public class VoteSDocResponseModel {
         return this.voteTotal;
     }
 
-    /** Gets the sDoc that is being updated
+    /** Gets the solutionId of the solution that is being updated
      *
-     * @return the sDoc entity that is being voted on
+     * @return the solutionId of the solution that is being voted on
      */
-    public SolutionDocument getSolutionDoc() {
-        return this.solutionDoc;
+    public String getSolutionId() {
+        return this.solutionId;
     }
 
-    /** Get the timestamp of the request
-     *
-     * @return a time corresponding to the timestamp of the request
-     */
-    public LocalDateTime getTimestamp() {
-        return this.timestamp;
-    }
 }
