@@ -120,7 +120,6 @@ public class FtpAccessManager implements FileAccessGateway{
     /** Download a file from FTP server
      *
      * @param fileName file name to download
-     * @param downloadPath file path of file to download
      * @return returns the local file path if file is downloaded successfully, null otherwise
      */
     @Override
