@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 /**
  * A Menu bar to display username and allow logout
  */
-public class MenuBar implements ActionListener {
+public class
+MenuBar implements ActionListener {
     // get this from login use case? hardcoded for now
     private String userFullName = "First Last";
     private JMenuBar menuBar;

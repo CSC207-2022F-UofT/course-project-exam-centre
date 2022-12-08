@@ -5,16 +5,20 @@ import java.awt.*;
 
 /**
  * The frame for viewing solutions
+ * @layer drivers and frameworks
  */
 public class SolutionFrame extends JFrame {
+    /**
+     * Creates an instance of the SolutionFrame
+     */
     public SolutionFrame() {
         super("Solutions");
 
         MenuBar menuBar = new MenuBar();
         this.setJMenuBar(menuBar.getMenuBar());
 
-        SolutionToolbar toolbar = new SolutionToolbar();
         DocumentView documentView = new DocumentView();
+        SolutionToolbar toolbar = new SolutionToolbar(documentView);
         documentView.loadFile();
 
         setLayout(new BorderLayout());
