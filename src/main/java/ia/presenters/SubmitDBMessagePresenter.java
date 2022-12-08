@@ -2,19 +2,63 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitDBMessageFailed;
+import ia.viewmodels.*;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubDBMessResponseModel;
+import uc.dboard.submessage.responsemodels.SubDBMessMessageTreeResponseModel;
+import uc.dboard.submessage.responsemodels.SubDBMessUserResponseModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public SubmitDBMessagePresenter(ViewManagerGateway viewManagerGateway) {
+    public SubmitDBMessagePresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
+    }
+
+    private MessageTreeSubViewModel prepareMessageTreeModel(
+            SubDBMessMessageTreeResponseModel messageTreeResModel) {
+
+        SubDBMessUserResponseModel senderResModel
+                = messageTreeResModel.getSender();
+
+        List<MessageTreeSubViewModel> replies = new ArrayList<>();
+
+        UserSubViewModel senderModel = new UserSubViewModel(
+                senderResModel.getUserId(),
+                senderResModel.getEmail(),
+                senderResModel.getFirstName(),
+                senderResModel.getLastName()
+        );
+
+        if (messageTreeResModel.getReplies().size() > 0) {
+            for(SubDBMessMessageTreeResponseModel replyMessageTreeResModel:
+                    messageTreeResModel.getReplies()) {
+                replies.add(
+                        prepareMessageTreeModel(replyMessageTreeResModel)
+                );
+            }
+        }
+
+        return new MessageTreeSubViewModel(
+                messageTreeResModel.getMessageId(),
+                senderModel,
+                messageTreeResModel.getMessageBody(),
+                messageTreeResModel.getMessageSentTimestamp(),
+                replies
+        );
+
     }
 
     /** Prepares the successView when the message is successfully submitted.
@@ -25,7 +69,39 @@ public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
     @Override
     public SubDBMessResponseModel prepareSuccessView(
             SubDBMessResponseModel responseModel) {
-        // TODO: Update view model here
+
+        Map<String, CourseSubViewModel> courseModels
+                = viewModel.getCurrentUserCourseModels();
+
+        MessageTreeSubViewModel messageTreeModel
+                = prepareMessageTreeModel(responseModel.getMessageTree());
+
+        Map<String, TestDocSubViewModel> testModels
+                = courseModels.get(responseModel.getParentCourseId()).getTests();
+
+        Map<String, SolutionDocSubViewModel> solutionModels
+                = testModels.get(responseModel.getParentTestId()).getSolutionModels();
+
+        SolutionDocSubViewModel solutionModel
+                = solutionModels.get(responseModel.getSolutionId());
+
+        SolutionDocSubViewModel newSolutionModel
+                = new SolutionDocSubViewModel(
+                        solutionModel.getSolutionId(),
+                        solutionModel.getVoteTotal(),
+                        solutionModel.getRecordedScore(),
+                        solutionModel.getEstimatedTime(),
+                        solutionModel.getSolutionName(),
+                        messageTreeModel
+                );
+
+        solutionModels.put(
+                responseModel.getSolutionId(),
+                newSolutionModel
+        );
+
+        viewManagerGateway.updateViews();
+
         return responseModel;
     }
 
