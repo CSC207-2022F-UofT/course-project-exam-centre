@@ -195,7 +195,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
 
                 setVisible(false);
 
-                new TestFrame(logoutController);
+                //new TestFrame(logoutController); TODO fix this
             }
         }
     }

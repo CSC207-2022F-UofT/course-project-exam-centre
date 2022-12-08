@@ -60,7 +60,7 @@ public class DocumentView implements Updatable {
      * @param filePath the name of the file // Note: we may want to rename this?
      */
     public void setFilePath(String filePath) {
-        this.filePath = "src/data/" + filePath + ".pdf";
+        this.filePath = filePath;
     }
 
     /**

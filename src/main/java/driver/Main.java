@@ -284,7 +284,7 @@ public class Main {
 //                    loginController,
 //                    userRegisterController
 //            );
-            new TestFrame(logoutController);
+            //new TestFrame(logoutController); TODO fix this
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);

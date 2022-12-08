@@ -1,14 +1,16 @@
 package fworks.views;
 
-import ia.controllers.LogoutController;
-import ia.controllers.SubmitSolutionDocController;
-import ia.controllers.SubmitTestDocController;
-import ia.controllers.UpdateCourseMembershipController;
+import ia.controllers.*;
+import ia.viewmodels.CourseSubViewModel;
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.TestDocSubViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The panel component for TestFrame
@@ -26,6 +28,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private SubmitTestDocController submitTestDocController;
     private SubmitSolutionDocController submitSolutionDocController;
     private UpdateCourseMembershipScreen updateCourseMembershipScreen;
+    private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
 
     /**
@@ -37,13 +40,15 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
                        SubmitTestDocController stdc,
                        SubmitSolutionDocController ssdc,
                        UpdateCourseMembershipController ucmc,
-                       LogoutController logoutController) {
+                       LogoutController logoutController,
+                       DownloadDocController downloadDocController) {
         this.submitTestDocController = stdc;
         this.submitSolutionDocController = ssdc;
         this.mainViewModel = mvm;
         this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel.getCourseMembershipViewModel());
         this.docView = docView;
         this.logoutController = logoutController;
+        this.downloadDocController = downloadDocController;
 
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
@@ -103,10 +108,28 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JComboBox<String> createTestComboBox() {
-        String[] courses = {"Test1", "Test2", "Test3"};
-        JComboBox testComboBox = new JComboBox<>(courses);
-        docView.setFilePath(courses[0]);
+        Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
+        Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
+        JComboBox testComboBox = new JComboBox<>(testModles.keySet().toArray());
         return testComboBox;
+    }
+
+    private String getFilePath(String testID) {
+        if(mainViewModel.checkIfLocalDocumentPathExists(testID)) {
+            return mainViewModel.getLocalDocumentPath(testID);
+        } else {
+            try {
+                downloadDocController.createInput(testID, mainViewModel.getCurrentUserModel().getUserId());
+                if(mainViewModel.checkIfLocalDocumentPathExists(testID)) {
+                    return mainViewModel.getLocalDocumentPath(testID);
+                } else {
+                    JOptionPane.showMessageDialog(this, String.format("Unable to download the document %s", testID));
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
+        return null;
     }
 
     /**
@@ -135,20 +158,22 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
             // TODO: Take test
             // Get the solutions
         } else if (actionEvent.getSource() == solutionsButton) {
-            new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController); // Create the solution window
+            new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController, downloadDocController); // Create the solution window
             //Switch file being viewed
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String testName = action.getSelectedItem().toString();
-            docView.setFilePath(testName);
+            docView.setFilePath(getFilePath(testName));
             docView.loadFile();
         }
     }
 
     @Override
     public void update() {
-        courseComboBox = createComboBox();
-        courseComboBox.addActionListener(this);
-
+        this.removeAll();
+        JPanel westPanel = createWestPanel();
+        JPanel eastPanel = createEastPanel();
+        add(westPanel, BorderLayout.WEST);
+        add(eastPanel, BorderLayout.EAST);
     }
 }

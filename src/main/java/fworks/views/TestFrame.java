@@ -1,10 +1,7 @@
 package fworks.views;
 
-import ia.controllers.SubmitSolutionDocController;
-import ia.controllers.SubmitTestDocController;
-import ia.controllers.UpdateCourseMembershipController;
+import ia.controllers.*;
 import ia.viewmodels.MainViewModel;
-import ia.controllers.LogoutController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +15,10 @@ public class TestFrame extends JFrame {
 
     public TestFrame(MainViewModel mainViewModel,
                      SubmitTestDocController submitTestDocController,
+                     SubmitSolutionDocController submitSolutionDocController,
                      UpdateCourseMembershipController updateCourseMembershipController,
-                     LogoutController logoutController
+                     LogoutController logoutController,
+                     DownloadDocController downloadDocController
                      ) {
         super("Exam Centre");
 
@@ -32,8 +31,10 @@ public class TestFrame extends JFrame {
         TestToolbar toolbar = new TestToolbar(documentView,
                 mainViewModel,
                 submitTestDocController,
+                submitSolutionDocController,
                 updateCourseMembershipController,
-                logoutController);
+                logoutController,
+                downloadDocController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());
