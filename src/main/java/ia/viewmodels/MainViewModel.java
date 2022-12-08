@@ -1,5 +1,6 @@
 package ia.viewmodels;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainViewModel {
@@ -12,6 +13,10 @@ public class MainViewModel {
     private String currentCourseId;
     private String currentTestId;
     private String currentSolutionId;
+
+    public MainViewModel() {
+        this.localDocumentPaths = new HashMap<>();
+    }
 
     public String getCurrentCourseId() {
         return this.currentCourseId;

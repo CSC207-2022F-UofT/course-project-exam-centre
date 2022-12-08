@@ -25,14 +25,16 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                          SubmitTestDocController submitTestDocController,
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
-                         DownloadDocController downloadDocController) {
+                         DownloadDocController downloadDocController,
+                         UpdateStateController updateStateController) {
         loginPanel = new LoginPanel(loginController,
                 mainViewModel,
                 submitTestDocController,
                 submitSolutionDocController,
                 updateCourseMembershipController,
                 logoutController,
-                downloadDocController);
+                downloadDocController,
+                updateStateController);
         registerPanel = new RegisterPanel(userRegisterController,
                 logoutController,
                 mainViewModel,

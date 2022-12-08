@@ -24,6 +24,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipController updateCourseMembershipController;
     private LogoutController logoutController;
     private DownloadDocController downloadDocController;
+    private final UpdateStateController updateStateController;
 
     MainFrame testFrame;
 
@@ -33,7 +34,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                       SubmitSolutionDocController submitSolutionDocController,
                       UpdateCourseMembershipController updateCourseMembershipController,
                       LogoutController logoutController,
-                      DownloadDocController downloadDocController) {
+                      DownloadDocController downloadDocController,
+                      UpdateStateController updateStateController) {
         this.controller = controller;
         this.mainViewModel = mainViewModel;
         this.submitTestDocController = submitTestDocController;
@@ -41,6 +43,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
+        this.updateStateController = updateStateController;
 
         this.testFrame = null;
 
@@ -137,6 +140,9 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                 String password = new String(passwordField.getPassword());
                 try {
                     controller.logIn(email, password);
+                    updateStateController.updateState();
+                    this.setVisible(false);
+
                 } catch (Exception exception) {
                     // TODO: handle error
                 }

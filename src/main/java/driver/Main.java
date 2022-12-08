@@ -284,7 +284,8 @@ public class Main {
                             submitTestDocController,
                             submitSolutionDocController,
                             updateCourseMembershipController,
-                            downloadDocController
+                            downloadDocController,
+                            updateStateController
                     )
             );
 
