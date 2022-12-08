@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.controllers.UserRegisterController;
+import ia.exceptions.UserRegisterFailed;
 
 import javax.swing.*;
 import java.awt.*;
@@ -176,15 +177,19 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 // TODO: blank field(s)
 //            } else if (!isValidEmail()) {
 //                // TODO: invalid email
-//            } else if (!passwordsMatch()) {
-//                // TODO: non-matching passwords
             } else {
                 String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
                 String email = emailTextField.getText();
                 String password = new String(passwordField1.getPassword());
                 String repeatPassword = new String(passwordField2.getPassword());
-                controller.registerUser(firstName, lastName, email, password, repeatPassword);
+
+                try{
+                    controller.registerUser(firstName, lastName, email, password, repeatPassword);
+                } catch(UserRegisterFailed exception){
+                // TODO: add popup that contains the error message
+                }
+
                 setVisible(false);
 
                 new TestFrame();
