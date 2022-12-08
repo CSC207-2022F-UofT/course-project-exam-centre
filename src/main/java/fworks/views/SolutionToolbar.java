@@ -7,6 +7,7 @@ import ia.viewmodels.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,6 +23,7 @@ public class SolutionToolbar extends JPanel implements ActionListener, Updatable
     private SubmitSolutionDocController submitSolutionDocController;
     private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
+    private Map<String, String> solutionNameToID;
 
     /** Construct an instance of the SolutionToolbar that takes in the DocumentView that it will update
      *
@@ -53,12 +55,16 @@ public class SolutionToolbar extends JPanel implements ActionListener, Updatable
 
     private JComboBox<String> createSolutionList() {
         Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
-        Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
-        JComboBox testComboBox = new JComboBox<>(testModles.get(mainViewModel.getCurrentTestId())
-                .getSolutionModels()
-                .keySet()
-                .toArray());
-        return testComboBox;
+        Map<String, SolutionDocSubViewModel> solModels = courseModels
+                .get(mainViewModel.getCurrentCourseId())
+                .getTests()
+                .get(mainViewModel.getCurrentTestId())
+                .getSolutionModels();
+        solutionNameToID = new HashMap<>();
+        for (SolutionDocSubViewModel viewModel : solModels.values()) {
+            solutionNameToID.put(viewModel.getSolutionName(), viewModel.getSolutionId());
+        }
+        return (JComboBox) new JComboBox<String>((String[]) solutionNameToID.keySet().toArray());
     }
 
     private String getFilePath(String solutionID) {

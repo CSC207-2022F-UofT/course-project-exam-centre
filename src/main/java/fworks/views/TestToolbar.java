@@ -116,7 +116,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         for (TestDocSubViewModel testModel : testModles.values()) {
             testNametoID.put(testModel.getTestName(), testModel.getTestId());
         }
-        return (JComboBox) new JComboBox<Object>(testModles.keySet().toArray());
+        return (JComboBox) new JComboBox<String>((String[]) testNametoID.keySet().toArray());
     }
 
     private String getFilePath(String testID) {
