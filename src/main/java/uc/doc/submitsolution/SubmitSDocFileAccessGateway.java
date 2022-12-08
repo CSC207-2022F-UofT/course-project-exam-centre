@@ -14,4 +14,9 @@ public interface SubmitSDocFileAccessGateway {
      */
     boolean uploadSolutionDocument(SubmitSDocDsRequestModel model, String docId);
 
+    /** Check connection status to FTP server
+     * 
+     * @return true if connection is successful, false otherwise
+     */
+    boolean checkConnectionStatus();
 }

@@ -13,6 +13,6 @@ public interface DownloadDocOutputBoundary {
     /** Prepares a failure view
      * @param errorMessage The errorMessage that occurs when a failure view happens
      */
-    DownloadDocRequestModel prepareFailureView(String errorMessage);
+    DownloadDocResponseModel prepareFailureView(String errorMessage);
     
 }

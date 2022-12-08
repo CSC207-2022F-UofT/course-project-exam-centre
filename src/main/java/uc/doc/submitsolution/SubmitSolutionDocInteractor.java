@@ -76,6 +76,10 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
                 solutionId,
                 rootMessageId);
 
+        if (!sDocFileAccessGateway.checkConnectionStatus()) {
+                return sDocOutputBoundary.prepareFailureView("Error connecting to the FTP server");
+        }
+
         sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
         SolutionDocument document = solutionDocFactory.create(
