@@ -1,8 +1,6 @@
 <a name="readme-top"></a>
 # U of T Exam Centre
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -23,8 +21,6 @@
     </li>
   </ol>
 </details>
-
-## About The Project
 
 ## Project Features
 TODO: Complete list of project features
@@ -47,6 +43,6 @@ TODO: Complete running instructions
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Next Steps
-TODO: Address code smells and identify refactoring techniques
+TODO: Address code smells and identify potential refactoring techniques/design patterns
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
