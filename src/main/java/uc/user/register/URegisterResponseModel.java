@@ -1,13 +1,11 @@
 package uc.user.register;
 
-import entities.User;
-
 /** The URegisterResponseModel is responsible for formatting information into a way the presenter can use.
  * @layer use cases
  */
 public class URegisterResponseModel {
-    String userId;
-    Boolean loginStatus;
+    private final String userId;
+    private final Boolean loginStatus;
 
     /**
      * Creates a URegisterResponseModel with the login and the creationTime it took to create the User
