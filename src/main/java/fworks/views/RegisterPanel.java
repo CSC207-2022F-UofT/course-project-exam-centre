@@ -32,6 +32,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipController updateCourseMembershipController;
     private DownloadDocController downloadDocController;
 
+
     /**
      * Constructs a RegisterPanel with a controller
      * @param userRegisterController the controller for the register use case
@@ -42,7 +43,8 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                          SubmitTestDocController submitTestDocController,
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
-                         DownloadDocController downloadDocController) {
+                         DownloadDocController downloadDocController,
+                         MainFrame mainFrame) {
         this.userRegisterController = userRegisterController;
         this.logoutController = logoutController;
         this.mainViewModel = mainViewModel;
@@ -50,8 +52,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
         this.submitTestDocController = submitTestDocController;
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.downloadDocController = downloadDocController;
-
-        this.mainFrame = null;
+        this.mainFrame = mainFrame;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -223,19 +224,12 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     @Override
     public void update() {
         if (mainViewModel.getCurrentUserModel().getUserId() != null) {
-            if(mainFrame == null) {
-                mainFrame = new MainFrame(mainViewModel,
-                        submitTestDocController,
-                        submitSolutionDocController,
-                        updateCourseMembershipController,
-                        logoutController,
-                        downloadDocController);
+            if(!mainFrame.isVisible()) {
+                mainFrame.setVisible(true);
             }
         } else {
-            if(mainFrame != null) {
+            if(mainFrame.isVisible()) {
                 mainFrame.setVisible(false);
-                mainFrame.dispose();
-                mainFrame = null;
             }
         }
     }

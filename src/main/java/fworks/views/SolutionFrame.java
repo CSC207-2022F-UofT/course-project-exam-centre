@@ -39,7 +39,7 @@ public class SolutionFrame extends JFrame {
 
         setSize(1100, 800);
         setLocationRelativeTo(null);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }

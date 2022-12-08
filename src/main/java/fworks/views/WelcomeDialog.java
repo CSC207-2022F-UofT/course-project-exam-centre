@@ -24,21 +24,24 @@ public class WelcomeDialog extends JDialog implements ActionListener {
                          SubmitTestDocController submitTestDocController,
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
-                         DownloadDocController downloadDocController) {
+                         DownloadDocController downloadDocController,
+                         MainFrame mainFrame) {
         loginPanel = new LoginPanel(loginController,
                 mainViewModel,
                 submitTestDocController,
                 submitSolutionDocController,
                 updateCourseMembershipController,
                 logoutController,
-                downloadDocController);
+                downloadDocController,
+                mainFrame);
         registerPanel = new RegisterPanel(userRegisterController,
                 logoutController,
                 mainViewModel,
                 submitTestDocController,
                 submitSolutionDocController,
                 updateCourseMembershipController,
-                downloadDocController);
+                downloadDocController,
+                mainFrame);
 
         JPanel buttonsPanel = createButtonsPanel();
 

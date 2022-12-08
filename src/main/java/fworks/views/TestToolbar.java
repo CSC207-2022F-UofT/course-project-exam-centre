@@ -25,6 +25,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
+    private JPanel eastPanel;
+    private JPanel westPanel;
     private SubmitTestDocController submitTestDocController;
     private SubmitSolutionDocController submitSolutionDocController;
     private UpdateCourseMembershipScreen updateCourseMembershipScreen;
@@ -50,8 +52,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
 
-        JPanel westPanel = createWestPanel();
-        JPanel eastPanel = createEastPanel();
+        westPanel = createWestPanel();
+        eastPanel = createEastPanel();
 
         setLayout(new BorderLayout());
         add(westPanel, BorderLayout.WEST);
@@ -80,10 +82,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         panel.add(uploadTestButton);
         panel.add(testComboBox);
 
-
         return panel;
     }
-
 
 
     private JPanel createEastPanel() {
@@ -110,8 +110,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JComboBox<String> createTestComboBox() {
         Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
         Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
-        JComboBox testComboBox = new JComboBox<>(testModles.keySet().toArray());
-        return testComboBox;
+        return (JComboBox) new JComboBox<Object>(testModles.keySet().toArray());
     }
 
     private String getFilePath(String testID) {
@@ -169,9 +168,10 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        this.removeAll();
-        JPanel westPanel = createWestPanel();
-        JPanel eastPanel = createEastPanel();
+        westPanel.remove(testComboBox);
+        this.testComboBox = createTestComboBox();
+        testComboBox.addActionListener(this);
+        westPanel.add(testComboBox);
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
     }
