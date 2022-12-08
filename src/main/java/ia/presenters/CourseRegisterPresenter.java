@@ -1,20 +1,27 @@
 package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
+import ia.viewmodels.CourseInfoSubViewModel;
+import ia.viewmodels.MainViewModel;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
 import ia.exceptions.CourseRegisterFailed;
 
+import java.util.Map;
+
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public CourseRegisterPresenter(ViewManagerGateway viewManagerGateway) {
+    public CourseRegisterPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /**  Prepares the successView when the Course is successfully registered
@@ -25,7 +32,20 @@ public class CourseRegisterPresenter implements CRegisterOutputBoundary {
     @Override
     public CRegisterResponseModel prepareSuccessView(
             CRegisterResponseModel responseModel) {
-        // TODO: Update view model here
+
+        Map<String, CourseInfoSubViewModel> courseInfoModels
+                = viewModel.getCourseInfoModels();
+
+        courseInfoModels.put(
+                responseModel.getCourseId(),
+                new CourseInfoSubViewModel(
+                        responseModel.getCourseId(),
+                        responseModel.getCourseCode(),
+                        responseModel.getCourseName()
+                ));
+
+        viewManagerGateway.updateViews();
+
         return responseModel;
     }
 
