@@ -251,32 +251,32 @@ public class Main {
 
             // Testing Use Cases
 
-            loginController.logIn(
-                    "harveydonnelly404@gmail.com",
-                    "HelloWorld"
-            );
-//            userRegisterController.registerUser(
-//                    "Harvey",
-//                    "Donnelly",
+//            loginController.logIn(
 //                    "harveydonnelly404@gmail.com",
-//                    "HelloWorld",
 //                    "HelloWorld"
 //            );
-            updateStateController.updateState();
-            List<String> testList = new ArrayList<>();
-            testList.add("h9ib1a73");
-            testList.add("koz8t694");
-
-            updateCourseMembershipController.updateCourseMembership(testList);
-
-            submitTestDocController.submitTestDocument(
-                        "Test #1",
-                    5,
-                    Float.parseFloat("1.5"),
-                    "Final Exam",
-                    "h9ib1a73",
-                    "./lib/example.pdf"
-            );
+////            userRegisterController.registerUser(
+////                    "Harvey",
+////                    "Donnelly",
+////                    "harveydonnelly404@gmail.com",
+////                    "HelloWorld",
+////                    "HelloWorld"
+////            );
+//            updateStateController.updateState();
+//            List<String> testList = new ArrayList<>();
+//            testList.add("h9ib1a73");
+//            testList.add("koz8t694");
+//
+//            updateCourseMembershipController.updateCourseMembership(testList);
+//
+//            submitTestDocController.submitTestDocument(
+//                        "Test #1",
+//                    5,
+//                    Float.parseFloat("1.5"),
+//                    "Final Exam",
+//                    "h9ib1a73",
+//                    "./lib/example.pdf"
+//            );
 
             // Construct JFrame views
             new WelcomeDialog(
