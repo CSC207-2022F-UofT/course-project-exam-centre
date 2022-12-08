@@ -1,5 +1,6 @@
 package ia.gateways;
 
+import ia.controllers.UpdateStateController;
 import ia.viewmodels.Updatable;
 
 import java.util.ArrayList;
@@ -25,4 +26,7 @@ public interface ViewManagerGateway {
      * @param presentationMessage A user-friendly name/description of the message
      */
     void showError(String errorMessage, String presentationMessage);
+
+    void setUpdateStateController(UpdateStateController updateStateController);
+    void updateState();
 }
