@@ -1,41 +1,30 @@
 package uc.doc.submittest;
 
-import java.time.LocalDateTime;
+import uc.doc.submittest.responsemodels.SubmitTDocTestDocResponseModel;
 
 /**
- * SubmitTDocResponseModel bundles the information of the saved test document to be passed back to the presenters
+ * SubmitTDocResponseModel bundles the information of the saved test document
+ * to be passed back to the presenters
  * @layer Use cases
  */
 public class SubmitTDocResponseModel {
 
-    private final String testDocID;
+    private final SubmitTDocTestDocResponseModel testDocModel;
+    private final String parentCourseId;
 
-    private final LocalDateTime timestamp;
-
-    /**
-     * Creates a new response model for the test document submission use case for giving relevant information back to
-     * the user
-     * @param testDocID The ID of the created test document
-     * @param timestamp The time the document was created
-     */
-    public SubmitTDocResponseModel(String testDocID, LocalDateTime timestamp) {
-        this.testDocID = testDocID;
-        this.timestamp = timestamp;
+    public SubmitTDocResponseModel(
+            SubmitTDocTestDocResponseModel testDocModel,
+            String parentCourseId
+    ) {
+        this.testDocModel = testDocModel;
+        this.parentCourseId = parentCourseId;
     }
 
-    /**
-     * Gets the ID of the new test document
-     * @return The ID of the test document
-     */
-    public String getTestDocID() {
-        return testDocID;
+    public SubmitTDocTestDocResponseModel getTestDocModel() {
+        return this.testDocModel;
     }
 
-    /**
-     * Gets the time that the document was created
-     * @return The timestamp in a LocalDateTime object
-     */
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public String getParentCourseId() {
+        return this.parentCourseId;
     }
 }
