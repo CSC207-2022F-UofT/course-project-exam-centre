@@ -14,6 +14,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LoginInteractorTest {
+    private static final String storedEmail = "firstlast@mail.uoftears.ca";
+    private static final String storedPassword = ";-;";
+    private static final String storedUserId = "ABCD1234";
+    private static final String storedFirstName = "First";
+    private static final String storedLastName = "Last";
 
     /** Test that LoginInteractor prepares a success view with the correct output data
      *  and updates the currentUser in the state tracker entity,
@@ -23,12 +28,6 @@ public class LoginInteractorTest {
     @BeforeClass
     public static void setupBeforeClass(){
         dsGateway = new LoginDsGateway() {
-            // implement LoginDsGateway using anonymous class
-            private final String storedEmail = "firstlast@mail.uoftears.ca";
-            private final String storedPassword = ";-;";
-            private final String storedUserId = "ABCD1234";
-            private final String storedFirstName = "First";
-            private final String storedLastName = "Last";
             private final List<String> storedEnrolments = new ArrayList<>();
 
             @Override
@@ -76,7 +75,7 @@ public class LoginInteractorTest {
         LoginOutputBoundary presenter = new LoginOutputBoundary() {
             @Override
             public LoginResponseModel prepareSuccessView(LoginResponseModel responseModel) {
-                assertEquals("ABCD1234", responseModel.getUserId());
+                assertEquals(storedUserId, responseModel.getUserId());
                 return null;
             }
 
@@ -98,8 +97,8 @@ public class LoginInteractorTest {
         // check if current user is tracked
         assertNotNull(stateTracker.getCurrentUser());
         User user = stateTracker.getCurrentUser();
-        assertEquals("ABCD1234", user.getId());
-        assertTrue(stateTracker.checkIfUserTracked("ABCD1234"));
+        assertEquals(storedUserId, user.getId());
+        assertTrue(stateTracker.checkIfUserTracked(storedUserId));
     }
 
     /** Test that LoginInteractor prepares a fail view
@@ -131,6 +130,6 @@ public class LoginInteractorTest {
 
         // check if current user is tracked
         assertNull(stateTracker.getCurrentUser());
-        assertFalse(stateTracker.checkIfUserTracked("ABCD1234"));
+        assertFalse(stateTracker.checkIfUserTracked(storedUserId));
     }
 }
