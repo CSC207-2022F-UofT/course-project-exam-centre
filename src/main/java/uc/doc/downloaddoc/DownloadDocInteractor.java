@@ -1,7 +1,5 @@
 package uc.doc.downloaddoc;
 
-import java.time.LocalDateTime;
-
 import entities.StateTracker;
 import entities.User;
 
@@ -36,6 +34,11 @@ public class DownloadDocInteractor implements DownloadDocInputBoundary {
      */
     @Override
     public DownloadDocResponseModel downloadDoc(DownloadDocRequestModel model) {
+        
+        if (!downloadDocFileAccessGateway.checkConnectionStatus()) {
+            return downloadDocOutputBoundary.prepareFailureView("Error connecting to the FTP server");
+        }
+        
         User user = stateTracker.getCurrentUser();
         String documentId = model.getDocumentId();
         String downloadPath;
