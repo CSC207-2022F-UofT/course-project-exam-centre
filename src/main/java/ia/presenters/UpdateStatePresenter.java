@@ -179,14 +179,16 @@ public class UpdateStatePresenter implements UpdateStateOutputBoundary {
         Map<String, UpdateStateCourseInfoResponseModel> courseInfoResModels
                 = responseModel.getCourseInfoModels();
 
-        viewModel.setCurrentUserModel(
-                new UserSubViewModel(
-                        currentUserResModel.getUserId(),
-                        currentUserResModel.getEmail(),
-                        currentUserResModel.getFirstName(),
-                        currentUserResModel.getLastName()
-                )
-        );
+        if (currentUserResModel != null) {
+            viewModel.setCurrentUserModel(
+                    new UserSubViewModel(
+                            currentUserResModel.getUserId(),
+                            currentUserResModel.getEmail(),
+                            currentUserResModel.getFirstName(),
+                            currentUserResModel.getLastName()
+                    )
+            );
+        }
 
         viewModel.setCourseInfoModels(
                 prepareCourseInfoModels(courseInfoResModels)

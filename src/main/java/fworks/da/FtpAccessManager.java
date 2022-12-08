@@ -24,9 +24,12 @@ import ia.gateways.FileAccessGateway;
  */
 public class FtpAccessManager implements FileAccessGateway{
     
-    private FTPClient ftpClient;
     private String remotePath;
     private String localPath;
+    private String hostname;
+    private int port;
+    private String user;
+    private String password;
 
     /** Constructs a new instance of FtpAccessManager by attempting to establish
      * a connection to an FTP server using the given connection data.
@@ -48,19 +51,59 @@ public class FtpAccessManager implements FileAccessGateway{
     ){
         this.remotePath = remotePath;
         this.localPath = localPath;
-        FTPClient ftpClient = new FTPClient();
+        this.hostname = hostname;
+        this.port = port;
+        this.user = user;
+        this.password = password; 
+    }
 
+    /** Establish connection to FTP server
+     *
+     * @return FTPClient object if connection and login to server is successful
+     */
+    private FTPClient connectFtpServer() {
         try {
+            FTPClient ftpClient = new FTPClient();
             ftpClient.connect(hostname, port);
-            showServerReply(ftpClient);
             int replyCode = ftpClient.getReplyCode();
             if (FTPReply.isPositiveCompletion(replyCode)) {
                 ftpClient.login(user, password);
                 showServerReply(ftpClient);
-                this.ftpClient = ftpClient;
+                return ftpClient;
+        }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /** Disconnect from the FTP server
+     * 
+     * @param ftpClient         ftpClient object to disconnect from the server
+     */
+    private void disconnectFtpServer(FTPClient ftpClient){
+        try {
+            if (ftpClient.isConnected()) {
+                ftpClient.logout();
+                ftpClient.disconnect();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    /** Check connection status to FTP server
+     * 
+     * @return true if connection is successful, false otherwise
+     */
+    @Override
+    public boolean checkConnectionStatus() {
+        FTPClient ftpClient = connectFtpServer();
+        if (ftpClient == null) {
+            return false;
+        } else {
+            disconnectFtpServer(ftpClient);
+            return true;
         }
     }
 
@@ -79,13 +122,13 @@ public class FtpAccessManager implements FileAccessGateway{
 
     /** Upload a file to the FTP server
      *
-     * @param localFilePath file path of local file 
-     * @param fileName file name
+     * @param localFilePath         file path of local file 
+     * @param fileName              file name
      * @return returns true if file upload is successful, false otherwise
      */
     @Override
     public boolean uploadFile(String localFilePath, String fileName){
-        // Upload file
+        FTPClient ftpClient = connectFtpServer();
         try {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -104,15 +147,7 @@ public class FtpAccessManager implements FileAccessGateway{
             System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
-            try {
-                // Disconnect from server
-                if (ftpClient.isConnected()) {
-                    ftpClient.logout();
-                    ftpClient.disconnect();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            disconnectFtpServer(ftpClient);
         }
         return false;
     }
@@ -124,8 +159,7 @@ public class FtpAccessManager implements FileAccessGateway{
      */
     @Override
     public String downloadFile(String fileName){
-
-        // Download file
+        FTPClient ftpClient = connectFtpServer();
         try {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -143,16 +177,9 @@ public class FtpAccessManager implements FileAccessGateway{
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
-            try {
-                // Disconnect from server
-                if (ftpClient.isConnected()) {
-                    ftpClient.logout();
-                    ftpClient.disconnect();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            disconnectFtpServer(ftpClient);
         }
         return null;
     }
+
 }
