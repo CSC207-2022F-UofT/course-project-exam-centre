@@ -172,7 +172,7 @@ public class StateTracker implements Serializable {
     }
 
     /**
-     * Check if a document is already downloaded locally
+     * Update or add a local document path to the state tracker
      * @param documentId the document ID being checked
      * @param documentDownloadPath the local path of the downloaded document
      */
