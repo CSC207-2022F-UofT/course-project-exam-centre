@@ -71,6 +71,14 @@ public class UpdateCMembershipInteractorTest {
             }
         };
 
+
+
+        StateTracker currentState = new StateTracker();
+        UserFactory userFactory = new UserFactory();
+        CourseFactory courseFactory = new CourseFactory();
+        TestDocFactory testDocFactory = new TestDocFactory();
+        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
+        MessageFactory messageFactory = new MessageFactory();
         UpdateCMemOutputBoundary presenter = new UpdateCMemOutputBoundary() {
             @Override
             public UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel) {
@@ -78,6 +86,8 @@ public class UpdateCMembershipInteractorTest {
                 assertEquals("ABCD1234", responseModel.getCurrentUserModel().getUserId());
                 // Check that the right course model is used.
                 assertEquals("CSC236", responseModel.getUsersCourseModels().get("1234ABCD").getCourseCode());
+                assertTrue(currentState.checkIfUserTracked("ABCD1234"));
+                assertTrue(currentState.checkIfCourseTracked("1234ABCD"));
                 return null;
             }
             @Override
@@ -86,14 +96,6 @@ public class UpdateCMembershipInteractorTest {
                 return null;
             }
         };
-
-        StateTracker currentState = new StateTracker();
-        UserFactory userFactory = new UserFactory();
-        CourseFactory courseFactory = new CourseFactory();
-        TestDocFactory testDocFactory = new TestDocFactory();
-        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
-        MessageFactory messageFactory = new MessageFactory();
-
     User currentUser = new CommonUser("First", "Last", "first.last@mail.utoronto.ca",
             "ABCD1234");
         currentState.setCurrentUser(currentUser);
@@ -179,6 +181,15 @@ public class UpdateCMembershipInteractorTest {
             }
         };
 
+
+
+        StateTracker currentState = new StateTracker();
+        UserFactory userFactory = new UserFactory();
+        CourseFactory courseFactory = new CourseFactory();
+        TestDocFactory testDocFactory = new TestDocFactory();
+        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
+        MessageFactory messageFactory = new MessageFactory();
+
         UpdateCMemOutputBoundary presenter = new UpdateCMemOutputBoundary() {
             @Override
             public UpdateCMemResponseModel prepareSuccessView(UpdateCMemResponseModel responseModel) {
@@ -189,17 +200,10 @@ public class UpdateCMembershipInteractorTest {
             @Override
             public UpdateCMemResponseModel prepareFailView(String errorMessage) {
                 assertEquals("1234ABCD has not been registered", errorMessage);
+                assertTrue(currentState.checkIfUserTracked("ABCD1234"));
                 return null;
             }
         };
-
-        StateTracker currentState = new StateTracker();
-        UserFactory userFactory = new UserFactory();
-        CourseFactory courseFactory = new CourseFactory();
-        TestDocFactory testDocFactory = new TestDocFactory();
-        SolutionDocFactory solutionDocFactory = new SolutionDocFactory();
-        MessageFactory messageFactory = new MessageFactory();
-
         User currentUser = new CommonUser("First", "Last",
                 "first.last@mail.utoronto.ca", "ABCD1234");
         currentState.setCurrentUser(currentUser);
