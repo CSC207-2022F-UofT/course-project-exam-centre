@@ -148,7 +148,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     public void update() {
         if (mainViewModel.getCurrentUserModel().getUserId() != null) {
             if(testFrame == null) {
-                testFrame = new TestFrame(mainViewModel,
+                testFrame = new MainFrame(mainViewModel,
                         submitTestDocController,
                          submitSolutionDocController,
                          updateCourseMembershipController,

@@ -9,11 +9,11 @@ import java.awt.*;
 /**
  * The frame for viewing tests
  */
-public class TestFrame extends JFrame {
+public class MainFrame extends JFrame {
 
     private LogoutController logoutController;
 
-    public TestFrame(MainViewModel mainViewModel,
+    public MainFrame(MainViewModel mainViewModel,
                      SubmitTestDocController submitTestDocController,
                      SubmitSolutionDocController submitSolutionDocController,
                      UpdateCourseMembershipController updateCourseMembershipController,
