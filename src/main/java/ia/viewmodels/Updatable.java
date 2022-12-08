@@ -1,4 +1,4 @@
-package fworks.views;
+package ia.viewmodels;
 
 /**
  * Interface which all updatable views implement

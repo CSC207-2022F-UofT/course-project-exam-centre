@@ -4,12 +4,12 @@ import ia.controllers.*;
 import ia.viewmodels.CourseSubViewModel;
 import ia.viewmodels.MainViewModel;
 import ia.viewmodels.TestDocSubViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

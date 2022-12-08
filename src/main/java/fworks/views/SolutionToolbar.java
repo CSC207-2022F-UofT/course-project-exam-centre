@@ -2,11 +2,7 @@ package fworks.views;
 
 import ia.controllers.DownloadDocController;
 import ia.controllers.SubmitSolutionDocController;
-import ia.controllers.UpdateCourseMembershipController;
-import ia.viewmodels.CourseSubViewModel;
-import ia.viewmodels.MainViewModel;
-import ia.viewmodels.SolutionDocSubViewModel;
-import ia.viewmodels.TestDocSubViewModel;
+import ia.viewmodels.*;
 
 import javax.swing.*;
 import java.awt.*;

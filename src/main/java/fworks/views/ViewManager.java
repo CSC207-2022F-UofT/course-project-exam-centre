@@ -1,6 +1,8 @@
 package fworks.views;
 
 import ia.gateways.ViewManagerGateway;
+import ia.viewmodels.Updatable;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -9,10 +11,10 @@ public class ViewManager implements ViewManagerGateway {
     ArrayList<Updatable> updatableViews;
 
     /**
-     * Creates a new ViewManager instance to manage updating the views
-     * @param updatableViews All the views with an update() method
+     * Sets the list of updatableViews
+     * @param updatableViews A list of Updatable type containing updtable views
      */
-    public ViewManager(ArrayList<Updatable> updatableViews) {
+    public void setUpdatableViews(ArrayList<Updatable> updatableViews) {
         this.updatableViews = updatableViews;
     }
 

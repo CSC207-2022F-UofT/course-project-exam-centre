@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 

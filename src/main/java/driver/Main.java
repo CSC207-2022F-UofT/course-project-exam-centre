@@ -4,11 +4,9 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
-import fworks.views.TestFrame;
-import fworks.views.Updatable;
+import ia.viewmodels.Updatable;
 import fworks.views.ViewManager;
 import ia.gateways.ViewManagerGateway;
-import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
 import ia.gateways.FileAccessGateway;
@@ -45,7 +43,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -132,7 +129,8 @@ public class Main {
             // Construct a new ViewManager
             ArrayList<Updatable> updatableScreens = new ArrayList<>();
             //TODO Add Updatable screens to ArrayList
-            ViewManagerGateway viewManagerGateway = new ViewManager(updatableScreens);
+            ViewManagerGateway viewManagerGateway = new ViewManager();
+            viewManagerGateway.setUpdatableViews(updatableScreens);
 
             // Construct use case presenters
             CRegisterOutputBoundary courseRegisterPresenter
