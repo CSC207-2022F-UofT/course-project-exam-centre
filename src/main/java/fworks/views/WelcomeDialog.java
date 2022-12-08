@@ -101,5 +101,7 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
         } else {
             this.setVisible(true);
         }
+        loginPanel.update();
+        registerPanel.update();
     }
 }

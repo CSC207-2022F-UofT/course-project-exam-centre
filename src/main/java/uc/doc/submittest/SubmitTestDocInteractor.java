@@ -62,6 +62,10 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
         String docId = dsGateway.saveTestDocument(dsRequestModel);
         
+        if (!tDocFileAccessGateway.checkConnectionStatus()) {
+            return tDocOutputBoundary.prepareFailureView("Error connecting to the FTP server");
+        }
+        
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 
         TestDocument document = testDocFactory.create(

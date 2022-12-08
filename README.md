@@ -25,6 +25,9 @@
 ## Project Features
 TODO: Complete list of project features
 
+### Design Patterns
+**Factory Design Pattern** We currently use a factory design pattern when creating our entities. This allows us to have further expand the types of entities that we can create. An example of this can be seen with the User Factory as we would be able to create an Admin User in the future if needed besides a Common User. All of our factories are available at `src/main/java/entities/factories`
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
