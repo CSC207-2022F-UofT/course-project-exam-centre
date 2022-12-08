@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 public class UpdateCourseMembershipScreen extends JFrame implements ActionListener {
@@ -16,7 +17,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      * A list of all the labels and buttons on the screen for a dynamically formed list
      */
-    HashMap<JLabel, JCheckBox> courseDisplay;
+    Map<JLabel, JCheckBox> courseDisplay;
 
     /**
      * The ID of the user updating their course membership
@@ -27,7 +28,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
      * The map of course IDs and their names
      * CourseList contains the string with the course's ID, followed by its name
      */
-    HashMap<String, List<Object>> courseList;
+    Map<String, List<Object>> courseList;
 
     /**
      * Button to submit course selection

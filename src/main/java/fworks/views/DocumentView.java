@@ -19,7 +19,8 @@ public class DocumentView implements Updatable {
     private MainViewModel mainViewModel;
 
     /**
-     * @param filePath the file path of the PDF
+     * Creates a new screen for viewing the document
+     * @param mvm The main ViewModel
      */
     public DocumentView(MainViewModel mvm) {
         this.mainViewModel = mvm;

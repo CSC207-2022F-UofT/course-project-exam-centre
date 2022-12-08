@@ -1,10 +1,13 @@
 package fworks.views;
 
+import ia.controllers.SubmitTestDocController;
+import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * The panel component for TestFrame
@@ -15,11 +18,14 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
-
+    private SubmitTestDocController submitTestDocController;
+    private UpdateCourseMembershipScreen updateCourseMembershipScreen;
     private MainViewModel mainViewModel;
 
-    public TestToolbar(MainViewModel mvm) {
+    public TestToolbar(MainViewModel mvm, SubmitTestDocController stdc, UpdateCourseMembershipController ucmc) {
+        this.submitTestDocController = stdc;
         this.mainViewModel = mvm;
+        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel.getCourseMembershipViewModel());
 
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
@@ -70,10 +76,13 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         return panel;
     }
 
-    // Dummy combo box for testing
+    /**
+     * Creates a JComboBox with the user's registered courses
+     * @return A combo box with the user's courses
+     */
     private JComboBox createComboBox() {
-        String[] courses = {"CSC207", "CSC236", "CSC258", "CSC263"};
-        return new JComboBox(courses);
+        ArrayList<String> courses = mainViewModel.getCourseMembershipViewModel().getCurrentCourses();
+        return new JComboBox(courses.toArray());
     }
 
     @Override
@@ -81,9 +90,14 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         if (actionEvent.getSource() == comboBox) {
             // TODO: Switch course
         } else if (actionEvent.getSource() == addCourseButton) {
-            // TODO: Add course
+            updateCourseMembershipScreen.createScreen();
         } else if (actionEvent.getSource() == uploadTestButton) {
-            // TODO: Upload test
+            TestDocumentSubmissionScreen testDocumentSubmissionScreen = new TestDocumentSubmissionScreen(
+                    submitTestDocController,
+                    mainViewModel.getCurrentUserModel().getUserId(),
+                    mainViewModel //get the current course
+            );
+
         } else if (actionEvent.getSource() == takeTestButton) {
             // TODO: Take test
         } else if (actionEvent.getSource() == solutionsButton) {
@@ -93,6 +107,9 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
 
     @Override
     public void update() {
+        comboBox = createComboBox();
+        comboBox.addActionListener(this);
+
 
     }
 }

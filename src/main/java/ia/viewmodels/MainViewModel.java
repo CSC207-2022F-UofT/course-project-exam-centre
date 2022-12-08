@@ -5,6 +5,7 @@ import java.util.Map;
 public class MainViewModel {
 
     private UserSubViewModel currentUserModel;
+    private CourseMembershipViewModel courseMembershipViewModel;
     private Map<String, CourseSubViewModel> usersCourseModels;
     private Map<String, CourseInfoSubViewModel> courseInfoModels;
 
@@ -43,4 +44,11 @@ public class MainViewModel {
         this.courseInfoModels = courseInfoModels;
     }
 
+    public CourseMembershipViewModel getCourseMembershipViewModel() {
+        return courseMembershipViewModel;
+    }
+
+    public void setCourseMembershipViewModel(CourseMembershipViewModel courseMembershipViewModel) {
+        this.courseMembershipViewModel = courseMembershipViewModel;
+    }
 }

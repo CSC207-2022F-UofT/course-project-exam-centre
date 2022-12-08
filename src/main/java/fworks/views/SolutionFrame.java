@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
@@ -8,7 +10,7 @@ import java.awt.*;
 /**
  * The frame for viewing solutions
  */
-public class SolutionFrame extends JFrame implements Updatable {
+public class SolutionFrame extends JFrame {
 
     private MenuBar menuBar;
 
@@ -16,13 +18,13 @@ public class SolutionFrame extends JFrame implements Updatable {
 
     private DocumentView documentView;
 
-    public SolutionFrame(MainViewModel mainViewModel) {
+    public SolutionFrame(MainViewModel mainViewModel, SubmitSolutionDocController submitSolutionDocController) {
         super("Solutions");
 
         menuBar = new MenuBar(mainViewModel);
         this.setJMenuBar(menuBar);
 
-        toolbar = new SolutionToolbar(mainViewModel);
+        toolbar = new SolutionToolbar(mainViewModel, submitSolutionDocController);
         documentView = new DocumentView(mainViewModel);
         documentView.loadFile();
 
@@ -34,15 +36,5 @@ public class SolutionFrame extends JFrame implements Updatable {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    /**
-     * Updates the panels which are part of this frame
-     */
-    @Override
-    public void update() {
-        menuBar.update();
-        toolbar.update();
-        documentView.update();
     }
 }

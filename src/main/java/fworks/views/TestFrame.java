@@ -1,5 +1,8 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.SubmitTestDocController;
+import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
@@ -8,7 +11,7 @@ import java.awt.*;
 /**
  * The frame for viewing tests
  */
-public class TestFrame extends JFrame implements Updatable {
+public class TestFrame extends JFrame {
 
     private MenuBar menuBar;
 
@@ -16,13 +19,16 @@ public class TestFrame extends JFrame implements Updatable {
 
     private DocumentView documentView;
 
-    public TestFrame(MainViewModel mainViewModel) {
+    public TestFrame(MainViewModel mainViewModel,
+                     SubmitTestDocController submitTestDocController,
+                     UpdateCourseMembershipController updateCourseMembershipController
+                     ) {
         super("Exam Centre");
 
         menuBar = new MenuBar(mainViewModel);
         this.setJMenuBar(menuBar);
 
-        toolbar = new TestToolbar(mainViewModel);
+        toolbar = new TestToolbar(mainViewModel, submitTestDocController, updateCourseMembershipController);
         documentView = new DocumentView(mainViewModel);
         documentView.loadFile();
 
@@ -34,15 +40,5 @@ public class TestFrame extends JFrame implements Updatable {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    /**
-     * Updates the view
-     */
-    @Override
-    public void update() {
-        menuBar.update();
-        toolbar.update();
-        documentView.update();
     }
 }

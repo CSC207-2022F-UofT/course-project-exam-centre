@@ -1,11 +1,12 @@
 package ia.viewmodels;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CourseMembershipViewModel {
 
-    private HashMap<String, List<Object>> courses;
+    private Map<String, List<Object>> courses;
 
     private String userID;
 
@@ -15,17 +16,27 @@ public class CourseMembershipViewModel {
      *                registration status
      * @param userID The users' ID
      */
-    public CourseMembershipViewModel(HashMap<String, List<Object>> courses, String userID) {
+    public CourseMembershipViewModel(Map<String, List<Object>> courses, String userID) {
         this.userID = userID;
         this.courses = courses;
     }
 
 
-    public HashMap<String, List<Object>> getCourses() {
+    public Map<String, List<Object>> getCourses() {
         return courses;
     }
 
-    public void setCourses(HashMap<String, List<Object>> courses) {
+    public ArrayList<String> getCurrentCourses() {
+        ArrayList<String> courseList = new ArrayList<>();
+        for (List<Object> course : courses.values()) {
+            if ((boolean) course.get(1)) {
+                courseList.add((String) course.get(0));
+            }
+        }
+        return courseList;
+    }
+
+    public void setCourses(Map<String, List<Object>> courses) {
         this.courses = courses;
     }
 
