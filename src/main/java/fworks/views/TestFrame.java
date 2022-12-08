@@ -13,8 +13,8 @@ public class TestFrame extends JFrame {
         MenuBar menuBar = new MenuBar();
         this.setJMenuBar(menuBar);
 
-        TestToolbar toolbar = new TestToolbar();
         DocumentView documentView = new DocumentView();
+        TestToolbar toolbar = new TestToolbar(documentView);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

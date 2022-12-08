@@ -6,15 +6,23 @@ import java.awt.event.*;
 
 /**
  * The panel component for TestFrame
+ * @layer drivers and frameworks
  */
 public class TestToolbar extends JPanel implements ActionListener {
-    private JComboBox comboBox;
+    private DocumentView docView;
+    private JComboBox<String> testComboBox;
+    private JComboBox courseComboBox;
     private JButton addCourseButton;
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
 
-    public TestToolbar() {
+    /**
+     * Creates an instance of the TestToolbar with the docView that it will update
+     * @param docView the docView that will be updated
+     */
+    public TestToolbar(DocumentView docView) {
+        this.docView = docView;
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
 
@@ -24,26 +32,32 @@ public class TestToolbar extends JPanel implements ActionListener {
     }
 
     private JPanel createWestPanel() {
-        comboBox = createComboBox();
+        courseComboBox = createCourseComboBox();
         addCourseButton = new JButton("Add course");
         uploadTestButton = new JButton("Upload test");
+        testComboBox = createTestComboBox();
 
-        comboBox.addActionListener(this);
+        courseComboBox.addActionListener(this);
         addCourseButton.addActionListener(this);
         uploadTestButton.addActionListener(this);
 
-        comboBox.setPreferredSize(new Dimension(120, 30));
+        courseComboBox.setPreferredSize(new Dimension(120, 30));
         addCourseButton.setPreferredSize(new Dimension(120, 30));
         uploadTestButton.setPreferredSize(new Dimension(120, 30));
+        testComboBox.setPreferredSize(new Dimension(120, 30));
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panel.add(comboBox);
+        panel.add(courseComboBox);
         panel.add(addCourseButton);
         panel.add(uploadTestButton);
+        panel.add(testComboBox);
+
 
         return panel;
     }
+
+
 
     private JPanel createEastPanel() {
         takeTestButton = new JButton("Take test");
@@ -53,6 +67,7 @@ public class TestToolbar extends JPanel implements ActionListener {
 
         takeTestButton.addActionListener(this);
         solutionsButton.addActionListener(this);
+        testComboBox.addActionListener(this);
 
         takeTestButton.setPreferredSize(new Dimension(120, 30));
         solutionsButton.setPreferredSize(new Dimension(120, 30));
@@ -66,15 +81,21 @@ public class TestToolbar extends JPanel implements ActionListener {
     }
 
     // Dummy combo box for testing
-    private JComboBox createComboBox() {
+    private JComboBox createCourseComboBox() {
         String[] courses = {"CSC207", "CSC236", "CSC258", "CSC263"};
-        return new JComboBox(courses);
+        return new JComboBox<>(courses);
+    }
+
+    private JComboBox<String> createTestComboBox() {
+        String[] courses = {"Test1", "Test2", "Test3"};
+        JComboBox testComboBox = new JComboBox<>(courses);
+        docView.setFilePath(courses[0]);
+        return testComboBox;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == comboBox) {
-            // TODO: Switch course
+        if (actionEvent.getSource() == courseComboBox) {
         } else if (actionEvent.getSource() == addCourseButton) {
             // TODO: Add course
         } else if (actionEvent.getSource() == uploadTestButton) {
@@ -83,6 +104,11 @@ public class TestToolbar extends JPanel implements ActionListener {
             // TODO: Take test
         } else if (actionEvent.getSource() == solutionsButton) {
             new SolutionFrame(); // Create the solution window
+        } else if (actionEvent.getSource() == testComboBox){
+            JComboBox action = (JComboBox)actionEvent.getSource();
+            String testName = action.getSelectedItem().toString();
+            docView.setFilePath(testName);
+            docView.loadFile();
         }
     }
 }
