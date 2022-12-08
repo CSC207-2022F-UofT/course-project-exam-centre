@@ -2,6 +2,7 @@ package ia.gateways.models;
 
 import uc.course.updatemembers.dbmodels.UpdateCMemUserDbModel;
 import uc.dboard.submessage.dbmodels.SubDBMessUserDbModel;
+import uc.doc.submitsolution.dbmodels.SubmitSDocUserDbModel;
 import uc.state.update.dbmodels.UpdateStateUserDbModel;
 import uc.user.login.LoginDsResponseModel;
 
@@ -9,7 +10,8 @@ public class UserDbResponseModel
         implements UpdateStateUserDbModel,
         LoginDsResponseModel,
         UpdateCMemUserDbModel,
-        SubDBMessUserDbModel {
+        SubDBMessUserDbModel,
+        SubmitSDocUserDbModel {
 
     private final String userId;
     private final String email;

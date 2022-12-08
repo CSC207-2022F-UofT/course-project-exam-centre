@@ -1,10 +1,6 @@
 package fworks.views;
 
 import ia.controllers.SubmitTestDocController;
-import org.intellij.lang.annotations.JdkConstants;
-import uc.doc.submittest.SubmitTDocInputBoundary;
-import uc.doc.submittest.SubmitTDocRequestModel;
-import uc.doc.submittest.SubmitTDocResponseModel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -49,11 +45,6 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
     JTextField numQuestions = new JTextField(5);
 
     /**
-     * The ID of the user using this window
-     */
-    String userID;
-
-    /**
      * The ID of the course this window was created for
      */
     String courseID;
@@ -68,9 +59,8 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
      * This screen auto displays after being created, and should be disposed after use
      * @param controller The user document submission controller
      */
-    public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID, String userID) {
+    public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID) {
         this.testDocController = controller;
-        this.userID = userID;
         this.courseID = courseID;
 
 
@@ -187,12 +177,11 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
                 System.out.println("Click: " + event.getActionCommand());
                 Float timeParsedHours = Float.parseFloat(durationHoursField.getText())
                         + Float.parseFloat(durationMinutesField.getText())/60;
-                testDocController.SubmitTestDocument(
+                testDocController.submitTestDocument(
                         name.getText(),
                         Integer.parseInt(numQuestions.getText()),
                         timeParsedHours,
                         description.getText(),
-                        userID,
                         courseID,
                         fileChooser.getSelectedFile().getAbsolutePath()
                         );

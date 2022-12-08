@@ -6,39 +6,11 @@ package uc.doc.submittest;
  */
 public class SubmitTDocRequestModel {
 
-    /**
-     * The name of this test document
-     */
     private final String name;
-
-    /**
-     * The number of questions on the test
-     */
     private final Integer numberOfQuestions;
-
-    /**
-     * The time limit for this test
-     */
     private final Float recordedTime;
-
-    /**
-     * The type of test this is (i.e. quiz, term test, final exam)
-     */
     private final String testType;
-
-    /**
-     * The ID of the user submtting the document
-     */
-    private final String userID;
-
-    /**
-     * The ID of the course this test document belongs to
-     */
     private final String courseID;
-
-    /**
-     * The path of the submitted document on the submitting user's drive
-     */
     private final String filePath;
 
     /**
@@ -47,7 +19,6 @@ public class SubmitTDocRequestModel {
      * @param numberOfQuestions The number of questions on the test
      * @param recordedTime The time limit allotted for this test
      * @param testType The type of test this document is (i.e. quiz, term test, final exam)
-     * @param userID The ID of the user submitting this document
      * @param courseID The ID of the course this test belongs to
      * @param filePath The path of the document on the user's drive
      */
@@ -55,14 +26,12 @@ public class SubmitTDocRequestModel {
                                   Integer numberOfQuestions,
                                   Float recordedTime,
                                   String testType,
-                                  String userID,
                                   String courseID,
                                   String filePath) {
         this.name = name;
         this.numberOfQuestions = numberOfQuestions;
         this.recordedTime = recordedTime;
         this.testType = testType;
-        this.userID = userID;
         this.courseID = courseID;
         this.filePath = filePath;
     }
@@ -104,14 +73,6 @@ public class SubmitTDocRequestModel {
      */
     public String getTestType() {
         return testType;
-    }
-
-    /**
-     * Gets the ID of the user who submitted this document
-     * @return The user's ID
-     */
-    public String getUserID() {
-        return userID;
     }
 
     /**

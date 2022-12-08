@@ -1,5 +1,9 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,14 +11,21 @@ import java.awt.*;
  * The frame for viewing solutions
  */
 public class SolutionFrame extends JFrame {
-    public SolutionFrame() {
+
+    private MenuBar menuBar;
+
+    private SolutionToolbar toolbar;
+
+    private DocumentView documentView;
+
+    public SolutionFrame(MainViewModel mainViewModel, SubmitSolutionDocController submitSolutionDocController) {
         super("Solutions");
 
-        MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar(mainViewModel);
         this.setJMenuBar(menuBar);
 
-        SolutionToolbar toolbar = new SolutionToolbar();
-        DocumentView documentView = new DocumentView();
+        toolbar = new SolutionToolbar(mainViewModel, submitSolutionDocController);
+        documentView = new DocumentView(mainViewModel);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

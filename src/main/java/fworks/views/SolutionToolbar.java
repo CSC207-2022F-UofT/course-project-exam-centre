@@ -1,5 +1,9 @@
 package fworks.views;
 
+import ia.controllers.SubmitSolutionDocController;
+import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,8 +14,13 @@ import java.awt.event.*;
 public class SolutionToolbar extends JPanel implements ActionListener {
     private JButton discussionButton;
     private JButton uploadSolutionsButton;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private MainViewModel mainViewModel;
 
-    public SolutionToolbar() {
+    public SolutionToolbar(MainViewModel mvm, SubmitSolutionDocController ssdc) {
+        this.submitSolutionDocController = ssdc;
+        this.mainViewModel = mvm;
+
         discussionButton = new JButton("Discussions");
         uploadSolutionsButton = new JButton("Upload solution");
 
@@ -29,7 +38,11 @@ public class SolutionToolbar extends JPanel implements ActionListener {
         if (clicked == discussionButton) {
             // TODO: Discussions
         } else if (clicked == uploadSolutionsButton) {
-            // TODO: Upload solution
+            SolutionDocumentSubmissionScreen solutionDocumentSubmissionScreen = new SolutionDocumentSubmissionScreen(
+                    submitSolutionDocController,
+                    mainViewModel.getCurrentCourseId(),
+                    mainViewModel.getCurrentTestId()
+            );
         }
     }
 }

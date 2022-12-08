@@ -2,8 +2,11 @@ package uc.doc.submitsolution;
 
 import entities.*;
 import entities.factories.*;
+import uc.doc.submitsolution.dbmodels.SubmitSDocUserDbModel;
+import uc.doc.submitsolution.responsemodels.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SubmitSolutionDocInteractor implements the ability to submit a solution document into persistent data
@@ -13,7 +16,7 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
 
     private final SubmitSDocOutputBoundary sDocOutputBoundary;
 
-    private final SubmitSDocDsGateway sDocDsGateway;
+    private final SubmitSDocDsGateway dsGateway;
 
     private final SubmitSDocFileAccessGateway sDocFileAccessGateway;
 
@@ -35,11 +38,63 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
                                        SubmitSDocOutputBoundary sDocOutputBoundary,
                                        StateTracker stateTracker,
                                        SolutionDocFactory solutionDocFactory) {
-        this.sDocDsGateway = sDocDsGateway;
+        this.dsGateway = sDocDsGateway;
         this.sDocFileAccessGateway = sDocFileAccessGateway;
         this.sDocOutputBoundary = sDocOutputBoundary;
         this.stateTracker = stateTracker;
         this.solutionDocFactory = solutionDocFactory;
+    }
+
+    private SubmitSDocMessageTreeResponseModel prepareMessageTreeResponseModel(
+            MessageTree messageTree) {
+
+        Message currentMessage = messageTree.getRootMessage();
+
+        SubmitSDocUserDbModel senderDbModel
+                = dsGateway.getUserById(currentMessage.getUserId());
+
+        List<SubmitSDocMessageTreeResponseModel> replies = new ArrayList<>();
+
+        SubmitSDocUserResponseModel senderUserModel
+                = new SubmitSDocUserResponseModel(
+                senderDbModel.getUserId(),
+                senderDbModel.getEmail(),
+                senderDbModel.getFirstName(),
+                senderDbModel.getLastName()
+        );
+
+        if (messageTree.getSubtrees().size() > 0) {
+            for(MessageTree replyMessageTree : messageTree.getSubtrees()) {
+                replies.add(
+                        prepareMessageTreeResponseModel(replyMessageTree)
+                );
+            }
+        }
+
+        return new SubmitSDocMessageTreeResponseModel(
+                currentMessage.getMessageId(),
+                senderUserModel,
+                currentMessage.getBody(),
+                currentMessage.getDate(),
+                replies
+        );
+
+    }
+
+    private SubmitSDocSolutionDocResponseModel prepareSolutionDocResponseModel(
+            SolutionDocument solutionDocEntity) {
+        SubmitSDocMessageTreeResponseModel messageTree
+                = prepareMessageTreeResponseModel(
+                solutionDocEntity.getMessageTree()
+        );
+        return new SubmitSDocSolutionDocResponseModel(
+                solutionDocEntity.getId(),
+                solutionDocEntity.getVotes(),
+                solutionDocEntity.getScore(),
+                solutionDocEntity.getRecordedTime(),
+                solutionDocEntity.getName(),
+                messageTree
+        );
     }
 
     /**
@@ -66,13 +121,13 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
                 model.getRecordedTime()
         );
 
-        String solutionId = sDocDsGateway.saveSolutionDocument(dsRequestModel);
-        String rootMessageId = sDocDsGateway.addRootMessage(
+        String solutionId = dsGateway.saveSolutionDocument(dsRequestModel);
+        String rootMessageId = dsGateway.addRootMessage(
                 solutionId,
                 user.getId()
         );
 
-        sDocDsGateway.updateRootMessageIdOfSolution(
+        dsGateway.updateRootMessageIdOfSolution(
                 solutionId,
                 rootMessageId);
 
@@ -94,7 +149,13 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
 
         parentTest.addUpdateSolution(document);
 
-        SubmitSDocResponseModel responseModel = new SubmitSDocResponseModel(document.getId(), parentTest.getId(), LocalDateTime.now());
+        SubmitSDocSolutionDocResponseModel solutionDocModel
+                = prepareSolutionDocResponseModel(document);
+
+        SubmitSDocResponseModel responseModel = new SubmitSDocResponseModel(
+                solutionDocModel,
+                parentTest.getId(),
+                parentTest.getCourse().getId());
 
         return sDocOutputBoundary.prepareSuccessView(responseModel);
     }

@@ -5,9 +5,38 @@ import java.util.Map;
 public class MainViewModel {
 
     private UserSubViewModel currentUserModel;
+    private CourseMembershipViewModel courseMembershipViewModel;
     private Map<String, CourseSubViewModel> usersCourseModels;
     private Map<String, CourseInfoSubViewModel> courseInfoModels;
     private Map<String, String> localDocumentPaths;
+
+    private String currentCourseId;
+    private String currentTestId;
+    private String currentSolutionId;
+
+    public String getCurrentCourseId() {
+        return this.currentCourseId;
+    }
+
+    public void setCurrentCourseId(String newCurrentCourseId) {
+        this.currentCourseId = newCurrentCourseId;
+    }
+
+    public String getCurrentTestId() {
+        return this.currentTestId;
+    }
+
+    public void setCurrentTestId(String newCurrentTestId) {
+        this.currentTestId = newCurrentTestId;
+    }
+
+    public String getCurrentSolutionId() {
+        return this.currentSolutionId;
+    }
+
+    public void setCurrentSolutionId(String newCurrentSolutionId) {
+        this.currentSolutionId = newCurrentSolutionId;
+    }
 
     public UserSubViewModel getCurrentUserModel() {
         return this.currentUserModel;
@@ -35,6 +64,13 @@ public class MainViewModel {
         this.courseInfoModels = courseInfoModels;
     }
 
+    public CourseMembershipViewModel getCourseMembershipViewModel() {
+        return courseMembershipViewModel;
+    }
+
+    public void setCourseMembershipViewModel(CourseMembershipViewModel courseMembershipViewModel) {
+        this.courseMembershipViewModel = courseMembershipViewModel;
+    }
     public Map<String, String> getLocalDocumentPaths() {
         return this.localDocumentPaths;
     }
