@@ -48,7 +48,8 @@ public class TestToolbar extends JPanel implements ActionListener {
     private JPanel createEastPanel() {
         takeTestButton = new JButton("Take test");
         solutionsButton = new JButton("Solutions");
-        solutionsButton.setEnabled(false);
+        solutionsButton.setEnabled(true); // Note: This is false until the user writes a test but
+        // I set it to true for testing purposes
 
         takeTestButton.addActionListener(this);
         solutionsButton.addActionListener(this);
@@ -81,7 +82,7 @@ public class TestToolbar extends JPanel implements ActionListener {
         } else if (actionEvent.getSource() == takeTestButton) {
             // TODO: Take test
         } else if (actionEvent.getSource() == solutionsButton) {
-            // TODO: Solutions
+            new SolutionFrame(); // Create the solution window
         }
     }
 }

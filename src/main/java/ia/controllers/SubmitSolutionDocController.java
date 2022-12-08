@@ -1,7 +1,7 @@
 package ia.controllers;
 
-import uc.doc.submitsolution.SubSDocRequestModel;
-import uc.doc.submitsolution.SubSDocResponseModel;
+import uc.doc.submitsolution.SubmitSDocRequestModel;
+import uc.doc.submitsolution.SubmitSDocResponseModel;
 import uc.doc.submitsolution.SubmitSDocInputBoundary;
 
 public class SubmitSolutionDocController{
@@ -30,14 +30,14 @@ public class SubmitSolutionDocController{
      * @param filePath The path to document on the user's computer
      * @return A SubmitSDocResponseModel object
      */
-    public SubSDocResponseModel SubmitSolutionDoc(String name,
-                                                  Float recordedScore,
-                                                  String courseID,
-                                                  Float recordedTime,
-                                                  String parentTestID,
-                                                  String filePath) {
+    public SubmitSDocResponseModel SubmitSolutionDoc(String name,
+                                                     Float recordedScore,
+                                                     String courseID,
+                                                     Float recordedTime,
+                                                     String parentTestID,
+                                                     String filePath) {
 
-        SubSDocRequestModel responseModel = new SubSDocRequestModel(
+        SubmitSDocRequestModel requestModel = new SubmitSDocRequestModel(
                 name,
                 filePath,
                 recordedScore,
@@ -46,6 +46,6 @@ public class SubmitSolutionDocController{
                 parentTestID
                 );
 
-        return inputBoundary.submitSolutionDoc(responseModel);
+        return inputBoundary.submitSolutionDoc(requestModel);
     }
 }

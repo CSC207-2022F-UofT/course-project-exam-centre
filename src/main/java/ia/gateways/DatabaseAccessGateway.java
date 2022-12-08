@@ -6,10 +6,12 @@ import uc.course.register.CRegisterDsRequestModel;
 import uc.course.updatemembers.UpdateCMemDsGateway;
 import uc.dboard.submessage.SubDBMessDsGateway;
 import uc.dboard.submessage.SubDBMessDsRequestModel;
-import uc.doc.submitsolution.SubSDocDsGateway;
-import uc.doc.submitsolution.SubSDocDsRequestModel;
-import uc.doc.submittest.SubTDocDsGateway;
-import uc.doc.submittest.SubTDocDsRequestModel;
+import uc.doc.submitsolution.SubmitSDocDsGateway;
+import uc.doc.submitsolution.SubmitSDocDsRequestModel;
+import uc.doc.submittest.SubmitTDocDsGateway;
+import uc.doc.submittest.SubmitTDocDsRequestModel;
+import uc.doc.voteonsolution.VoteSDocDsGateway;
+import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.state.update.UpdateStateDsGateway;
 import uc.user.login.LoginDsGateway;
 import uc.user.register.URegisterDsGateway;
@@ -19,6 +21,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -45,10 +48,11 @@ public interface DatabaseAccessGateway
         CRegisterDsGateway,
         UpdateCMemDsGateway,
         SubDBMessDsGateway,
-        SubSDocDsGateway,
-        SubTDocDsGateway,
+        SubmitSDocDsGateway,
+        SubmitTDocDsGateway,
         LoginDsGateway,
-        URegisterDsGateway {
+        URegisterDsGateway,
+        VoteSDocDsGateway {
 
     // Query methods to be implemented by a concrete database
     // access manager class in Drivers and Frameworks layer.
@@ -56,9 +60,9 @@ public interface DatabaseAccessGateway
     /** Checks whether gateway is connected to database.
      *
      * @return boolean representing whether database is connected
-     * @throws Exception if connection check query fails
      */
-    boolean getConnectionStatus() throws Exception;
+    @Override
+    boolean getConnectionStatus();
 
     /** Queries database to check whether a course exists by ID.
      *
@@ -146,6 +150,14 @@ public interface DatabaseAccessGateway
      * @return a string representing a unique course ID
      */
     String getCourseIdByTestIdQuery(String testId);
+
+    /** Queries database to get the total votes of a solution document
+     *  corresponding to the given solution ID.
+     *
+     * @param solutionId the solution ID of the solution document being queried
+     * @return an int representing the total votes of the solution document
+     */
+    int getVoteTotalBySolutionIdQuery(String solutionId);
 
     /** Queries database to save data for new solution document entity.
      *
@@ -269,6 +281,18 @@ public interface DatabaseAccessGateway
             String email,
             String hashedPassword
     );
+        
+    /** Queries database to update the total number of votes of the solution document.
+    *
+    * @param solutionId    the solution ID of the solution document to be updated
+    * @param voteTotal        the vote total to update the solution document to
+    *
+    * @return true if updating of vote was successful
+    */
+   boolean updateSolutionDocVoteQuery(
+           String solutionId,
+           int voteTotal);
+
 
     // Default methods implementing use case database gateways
     // Note: some methods implement methods across multiple use case gateways
@@ -301,10 +325,10 @@ public interface DatabaseAccessGateway
      * @return a response model representing the data of a user entity
      */
     @Override
-    default UserDbModel getUserByEmail(String email) {
+    default UserDbResponseModel getUserByEmail(String email) {
         List<String> rawUserData = getUserByEmailQuery(email);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -339,7 +363,7 @@ public interface DatabaseAccessGateway
      * @return the unique solution ID of the saved solution document entity
      */
     @Override
-    default String saveSolutionDocument(SubSDocDsRequestModel requestModel) {
+    default String saveSolutionDocument(SubmitSDocDsRequestModel requestModel) {
         String solutionId = generateRandomId();
 
         saveSolutionDocumentQuery(
@@ -363,7 +387,7 @@ public interface DatabaseAccessGateway
      * @return the unique test ID of the saved test document entity
      */
     @Override
-    default String saveTestDocument(SubTDocDsRequestModel requestModel) {
+    default String saveTestDocument(SubmitTDocDsRequestModel requestModel) {
         String testId = generateRandomId();
 
         saveTestDocumentQuery(
@@ -558,10 +582,10 @@ public interface DatabaseAccessGateway
      * requested course entity
      */
     @Override
-    default CourseDbModel getCourseById(String courseId) {
+    default CourseDbResponseModel getCourseById(String courseId) {
         List<String> rawCourseData = getCourseByIdQuery(courseId);
 
-        return new CourseDbModel(
+        return new CourseDbResponseModel(
                 rawCourseData.get(0),           // courseId
                 rawCourseData.get(1),           // courseCode
                 rawCourseData.get(2)            // courseName
@@ -576,10 +600,10 @@ public interface DatabaseAccessGateway
      * requested user entity
      */
     @Override
-    default UserDbModel getUserById(String userId) {
+    default UserDbResponseModel getUserById(String userId) {
         List<String> rawUserData = getUserByIdQuery(userId);
 
-        return new UserDbModel(
+        return new UserDbResponseModel(
                 rawUserData.get(0),         // userId
                 rawUserData.get(1),         // email
                 rawUserData.get(2),         // firstName
@@ -606,19 +630,19 @@ public interface DatabaseAccessGateway
      * for a message entity
      */
     @Override
-    default List<MessageDbModel> getMessagesByParentId(String parentId) {
+    default List<MessageDbResponseModel> getMessagesByParentId(String parentId) {
         List<List<String>> rawMessagesData = getMessagesByParentIdQuery(parentId);
-        List<MessageDbModel> response = new ArrayList<>();
+        List<MessageDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawMessagesData) {
             response.add(
-                    new MessageDbModel(
+                    new MessageDbResponseModel(
                             row.get(0),                     // messageId
                             row.get(1),                     // solutionId
                             row.get(2),                     // userId
                             row.get(3),                     // parentId
                             row.get(4),                     // messageBody
-                            LocalDateTime.parse(row.get(5)) // sentTimestamp
+                            parseTimestamp(row.get(5))      // sentTimestamp
                     )
             );
         }
@@ -633,18 +657,18 @@ public interface DatabaseAccessGateway
      * for a test document entity
      */
     @Override
-    default List<TestDocDbModel> getTestDocsByCourseId(String courseId) {
+    default List<TestDocDbResponseModel> getTestDocsByCourseId(String courseId) {
         List<List<String>> rawTestDocData = getTestDocsByCourseIdQuery(courseId);
-        List<TestDocDbModel> response = new ArrayList<>();
+        List<TestDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawTestDocData) {
             response.add(
-                    new TestDocDbModel(
+                    new TestDocDbResponseModel(
                             row.get(0),                     // testId
                             row.get(1),                     // userId
-                            row.get(2),                     // courseId
-                            Integer.parseInt(row.get(3)),   // numOfQuestions
-                            Float.parseFloat(row.get(4)),   // estimatedTime
+                            row.get(3),                     // test type
+                            Integer.parseInt(row.get(4)),   // numOfQuestions
+                            Float.parseFloat(row.get(5)),   // estimatedTime
                             row.get(6)                      // testName
                     )
             );
@@ -660,13 +684,13 @@ public interface DatabaseAccessGateway
      * for a solution document entity
      */
     @Override
-    default List<SolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+    default List<SolutionDocDbResponseModel> getSolutionDocsByTestId(String testId) {
         List<List<String>> rawSolutionDocData = getSolutionDocsByTestIdQuery(testId);
-        List<SolutionDocDbModel> response = new ArrayList<>();
+        List<SolutionDocDbResponseModel> response = new ArrayList<>();
 
         for (List<String> row : rawSolutionDocData) {
             response.add(
-                    new SolutionDocDbModel(
+                    new SolutionDocDbResponseModel(
                             row.get(0),                     // solutionId
                             row.get(1),                     // testId
                             row.get(2),                     // userId
@@ -679,6 +703,21 @@ public interface DatabaseAccessGateway
             );
         }
         return response;
+    }
+
+    /** Updates the total votes for a solution document.
+     *
+     * @param requestModel      the use case DS request model representing the
+     *                          data of the solution document to be updated.
+     *
+     * @return true if update was successful, false otherwise
+     */
+    @Override
+    default boolean updateSolutionDocVote(VoteSDocDsRequestModel requestModel) {
+        return updateSolutionDocVoteQuery(
+                requestModel.getSolutionId(),
+                requestModel.getVote()
+        );
     }
 
     // Utility methods for gateway requests
@@ -723,4 +762,15 @@ public interface DatabaseAccessGateway
         }
     }
 
+    /** Parses timestamp string into LocalDateTime object
+     *
+     * @param timestamp string of timestamp
+     * @return LocalDateTime object representing timestamp
+     */
+    default LocalDateTime parseTimestamp(String timestamp) {
+        String pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+
+        return LocalDateTime.from(formatter.parse(timestamp));
+    }
 }

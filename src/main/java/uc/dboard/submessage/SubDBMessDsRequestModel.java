@@ -4,6 +4,9 @@ package uc.dboard.submessage;
 
 import java.time.LocalDateTime;
 
+/** SubDBMessDsRequestModel is responsible for packaging data for use in persistent data
+ * @layer use cases
+ */
 public class SubDBMessDsRequestModel {
 
     private final String solutionId;

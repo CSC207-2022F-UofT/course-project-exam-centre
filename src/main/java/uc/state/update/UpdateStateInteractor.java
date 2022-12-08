@@ -1,31 +1,49 @@
 package uc.state.update;
 
 import entities.*;
+import entities.factories.*;
+import uc.state.update.dbmodels.*;
+import uc.state.update.responsemodels.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private final UpdateStateOutputBoundary presenter;
     private final UpdateStateDsGateway dsGateway;
     private final StateTracker currentState;
 
+    private final UserFactory userFactory;
+    private final TestDocFactory testDocFactory;
+    private final CourseFactory courseFactory;
+    private final SolutionDocFactory solutionDocFactory;
+    private final MessageFactory messageFactory;
+
     public UpdateStateInteractor(
             UpdateStateOutputBoundary presenter,
             UpdateStateDsGateway dsGateway,
-            StateTracker stateTracker) {
+            StateTracker stateTracker,
+            UserFactory userFactory,
+            CourseFactory courseFactory,
+            TestDocFactory testDocFactory,
+            SolutionDocFactory solutionDocFactory,
+            MessageFactory messageFactory) {
+
         this.presenter = presenter;
         this.dsGateway = dsGateway;
         this.currentState = stateTracker;
+
+        this.userFactory = userFactory;
+        this.testDocFactory = testDocFactory;
+        this.solutionDocFactory = solutionDocFactory;
+        this.courseFactory = courseFactory;
+        this.messageFactory = messageFactory;
     }
 
     private User constructUserById(String userId) {
         UpdateStateUserDbModel userData = dsGateway.getUserById(userId);
         List<String> rawUserEnrolmentsData = dsGateway.getCourseIdsByUserId(userId);
 
-        User newUser = UserFactory.create(
+        User newUser = userFactory.create(
                 userData.getFirstName(),
                 userData.getLastName(),
                 userData.getEmail(),
@@ -41,7 +59,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private CourseInfo constructCourseInfoItemById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        return CourseFactory.create(
+        return courseFactory.create(
                 courseData.getCourseName(),
                 courseData.getCourseCode(),
                 courseData.getCourseId()
@@ -51,7 +69,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
     private Course constructCourseById(String courseId) {
         UpdateStateCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
-        Course newCourse = CourseFactory.create(
+        Course newCourse = courseFactory.create(
                 courseData.getCourseName(),
                 courseData.getCourseCode(),
                 courseData.getCourseId()
@@ -71,7 +89,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         for (UpdateStateTestDocDbModel currentTestData : testsData) {
 
-            currentTestDoc = TestDocFactory.create(
+            currentTestDoc = testDocFactory.create(
                     currentTestData.getTestName(),
                     currentTestData.getTestId(),
                     parentCourse,
@@ -98,7 +116,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
         for (UpdateStateSolutionDocDbModel currentSolutionData: solutionsData) {
 
-            currentSolutionDoc = SolutionDocFactory.create(
+            currentSolutionDoc = solutionDocFactory.create(
                     currentSolutionData.getSolutionName(),
                     currentSolutionData.getSolutionId(),
                     parentTestDoc.getCourse(),
@@ -121,12 +139,13 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
 
     private void constructMessageTreeByParentId(
             String parentId, MessageTree newMessageTree) {
-            List<? extends UpdateStateMessageDbModel> rawChildMessageData = dsGateway.getMessagesByParentId(parentId);
+            List<? extends UpdateStateMessageDbModel> rawChildMessageData
+                    = dsGateway.getMessagesByParentId(parentId);
 
         for (UpdateStateMessageDbModel rawChildMessageDatum : rawChildMessageData) {
 
             newMessageTree.addMessage(
-                    MessageFactory.create(
+                    messageFactory.create(
                             rawChildMessageDatum.getMessageId(),
                             rawChildMessageDatum.getSolutionId(),
                             rawChildMessageDatum.getUserId(),
@@ -139,6 +158,7 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
                     rawChildMessageDatum.getMessageId(),
                     newMessageTree);
         }
+
     }
 
     private Map<String, CourseInfo> constructAllCourseInfoItems() {
@@ -156,41 +176,194 @@ public class UpdateStateInteractor implements UpdateStateInputBoundary {
         return allCourseItems;
     }
 
-    @Override
-    public UpdateStateResponseModel updateState(
-            UpdateStateRequestModel requestModel) {
+    private UpdateStateMessageTreeResponseModel prepareMessageTreeResponseModel(
+            MessageTree messageTree) {
 
-        List<Course> usersCourses = new ArrayList<>();
-        Map<String, CourseInfo> allCourseInfoItems;
+        Message currentMessage = messageTree.getRootMessage();
+
+        UpdateStateUserDbModel senderDbModel
+                = dsGateway.getUserById(currentMessage.getUserId());
+
+        List<UpdateStateMessageTreeResponseModel> replies = new ArrayList<>();
+
+        UpdateStateUserResponseModel senderUserModel
+                = new UpdateStateUserResponseModel(
+                        senderDbModel.getUserId(),
+                        senderDbModel.getEmail(),
+                        senderDbModel.getFirstName(),
+                        senderDbModel.getLastName()
+        );
+
+        if (messageTree.getSubtrees().size() > 0) {
+            for(MessageTree replyMessageTree : messageTree.getSubtrees()) {
+                replies.add(
+                        prepareMessageTreeResponseModel(replyMessageTree)
+                );
+            }
+        }
+
+        return new UpdateStateMessageTreeResponseModel(
+                currentMessage.getMessageId(),
+                senderUserModel,
+                currentMessage.getBody(),
+                currentMessage.getDate(),
+                replies
+        );
+
+    }
+
+    private UpdateStateSolutionDocResponseModel prepareSolutionDocResponseModel(
+            SolutionDocument solutionDocEntity) {
+        UpdateStateMessageTreeResponseModel messageTree
+                = prepareMessageTreeResponseModel(
+                        solutionDocEntity.getMessageTree()
+        );
+        return new UpdateStateSolutionDocResponseModel(
+                solutionDocEntity.getId(),
+                solutionDocEntity.getVotes(),
+                solutionDocEntity.getScore(),
+                solutionDocEntity.getRecordedTime(),
+                solutionDocEntity.getName(),
+                messageTree
+        );
+    }
+
+    private UpdateStateTestDocResponseModel prepareTestDocResponseModel(
+            TestDocument testDocEntity) {
+        Map<String, UpdateStateSolutionDocResponseModel> solutionModels = new HashMap<>();
+        for(SolutionDocument currentSolution : testDocEntity.getSolutions().values()) {
+            solutionModels.put(
+                    currentSolution.getId(),
+                    prepareSolutionDocResponseModel(currentSolution)
+            );
+        }
+        return new UpdateStateTestDocResponseModel(
+                testDocEntity.getId(),
+                testDocEntity.getUser().getId(),
+                testDocEntity.getTestType(),
+                testDocEntity.getNumberOfQuestions(),
+                testDocEntity.getEstimatedTime(),
+                testDocEntity.getName(),
+                solutionModels
+        );
+    }
+
+    private UpdateStateCourseResponseModel prepareCourseResponseModel(
+            Course courseEntity) {
+        Map<String, UpdateStateTestDocResponseModel> testModels = new HashMap<>();
+        for(TestDocument currentTest : courseEntity.getTests().values()) {
+            testModels.put(
+                    currentTest.getId(),
+                    prepareTestDocResponseModel(currentTest)
+            );
+        }
+        return new UpdateStateCourseResponseModel(
+                courseEntity.getId(),
+                courseEntity.getCourseCode(),
+                courseEntity.getCourseName(),
+                testModels
+        );
+    }
+
+    private UpdateStateResponseModel prepareResponseModel() {
         User currentUser = currentState.getCurrentUser();
+        Map<String, UpdateStateCourseInfoResponseModel> courseInfoModels = new HashMap<>();
+        Map<String, UpdateStateCourseResponseModel> usersCourseModels = new HashMap<>();
+
+        Collection<CourseInfo> courseInfoItems =
+                currentState.getAllCourseInfoItems().values();
+
+        // Construct course info models
+        for(CourseInfo courseInfoItem : courseInfoItems) {
+            courseInfoModels.put(
+                    courseInfoItem.getId(),
+                    new UpdateStateCourseInfoResponseModel(
+                            courseInfoItem.getId(),
+                            courseInfoItem.getCourseCode(),
+                            courseInfoItem.getCourseName()
+                    )
+            );
+        }
 
         if (currentUser != null) {
 
-            // Reload current user
-            String currentUserId = currentState.getCurrentUser().getId();
-            currentUser = constructUserById(currentUserId);
-            currentState.setCurrentUser(currentUser);
+            // Construct current user response model
+            UpdateStateUserResponseModel currentUserModel =
+                    new UpdateStateUserResponseModel(
+                            currentUser.getId(),
+                            currentUser.getEmail(),
+                            currentUser.getFirstName(),
+                            currentUser.getLastName()
+                    );
 
-            // Reload current user's course entities
-            List<String> usersCourseIds = currentUser.getCourses();
-            Course currentCourse;
-            for (String usersCourseId : usersCourseIds) {
-                currentCourse = constructCourseById(usersCourseId);
-                currentState.addUpdateTrackedCourse(currentCourse);
-                usersCourses.add(currentCourse);
+            Collection<Course> currentUserCourses =
+                    currentState.getAllTrackedCourses().values();
+
+            // Construct course response models for current user
+            for (Course currentUserCourse : currentUserCourses) {
+                usersCourseModels.put(
+                        currentUserCourse.getId(),
+                        prepareCourseResponseModel(currentUserCourse)
+                );
             }
 
+            // Construct response model
+            return new UpdateStateResponseModel(
+                    currentUserModel,
+                    usersCourseModels,
+                    courseInfoModels
+            );
+
+        } else {
+            // Construct response model
+            return new UpdateStateResponseModel(
+                    null,
+                    new HashMap<>(),
+                    new HashMap<>()
+            );
         }
 
-        // Reload all course info items
-        allCourseInfoItems = constructAllCourseInfoItems();
-        currentState.setAllCourseInfoItems(allCourseInfoItems);
+    }
 
-        return new UpdateStateResponseModel(
-                currentUser,
-                usersCourses,
-                allCourseInfoItems);
+    @Override
+    public UpdateStateResponseModel updateState() {
 
+        Map<String, CourseInfo> allCourseInfoItems;
+        User currentUser = currentState.getCurrentUser();
+
+        // Check connection status
+        if(dsGateway.getConnectionStatus()) {
+            if (currentUser != null) {
+
+                // Reload current user
+                String currentUserId = currentState.getCurrentUser().getId();
+                currentUser = constructUserById(currentUserId);
+                currentState.setCurrentUser(currentUser);
+
+                // Reload current user's course entities
+                List<String> usersCourseIds = currentUser.getCourses();
+                Course currentCourse;
+                for (String usersCourseId : usersCourseIds) {
+                    currentCourse = constructCourseById(usersCourseId);
+                    currentState.addUpdateTrackedCourse(currentCourse);
+                }
+
+            }
+
+            // Reload all course info items
+            allCourseInfoItems = constructAllCourseInfoItems();
+            currentState.setAllCourseInfoItems(allCourseInfoItems);
+
+            // Construct response model
+            UpdateStateResponseModel responseModel = prepareResponseModel();
+
+            // Prepare success view
+            presenter.prepareSuccessView(responseModel);
+
+            return responseModel;
+        } else {
+            return presenter.prepareFailView("Database Connection Failed");
+        }
     }
 
 }

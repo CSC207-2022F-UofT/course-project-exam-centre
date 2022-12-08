@@ -5,9 +5,9 @@ import java.util.*;
 
 public class StateTracker implements Serializable {
     private final Map<String, User> trackedUsers;
-    // TODO: Implement abstract course class with a Comprehensive Course Class and a Meta Course Class (no test/solution docs)
     private final Map<String, Course> trackedCourses;
     private Map<String, CourseInfo> courseInfoItems;
+    private final Map<String, String> downloadedDocumentPaths;
     private User currentUser;
     private boolean runStatus;
 
@@ -19,6 +19,7 @@ public class StateTracker implements Serializable {
         this.trackedUsers = new HashMap<>();
         this.trackedCourses = new HashMap<>();
         this.courseInfoItems = new HashMap<>();
+        this.downloadedDocumentPaths = new HashMap<>();
         this.currentUser = null;
     }
 
@@ -143,6 +144,51 @@ public class StateTracker implements Serializable {
      */
     public Map<String, CourseInfo> getAllCourseInfoItems() {
         return this.courseInfoItems;
+    }
+
+    /**
+     * Get all tracked courses.
+     *
+     * @return a map of course items.
+     */
+    public Map<String, Course> getAllTrackedCourses() {
+        return this.trackedCourses;
+    }
+
+    /**
+     * Remove tracked course.
+     */
+    public void removeTrackedCourse(String courseId) {
+        this.trackedCourses.remove(courseId);
+    }
+
+    /**
+     * Check if a document is already downloaded locally
+     * @param documentId the document ID being checked
+     * @return whether the document is downloaded locally
+     */
+    public boolean checkIfDocumentDownloaded(String documentId) {
+        return this.downloadedDocumentPaths.containsKey(documentId);
+    }
+
+    /**
+     * Update or add a local document path to the state tracker
+     * @param documentId the document ID being checked
+     * @param documentDownloadPath the local path of the downloaded document
+     */
+    public void updateDownloadedDocuments(
+            String documentId,
+            String documentDownloadPath) {
+        this.downloadedDocumentPaths.put(documentId, documentDownloadPath);
+    }
+
+    /**
+     * Get the local download path for a document
+     * @param documentId the document ID being checked
+     * @return a string representing the local document path
+     */
+    public String getDownloadedDocumentPath(String documentId) {
+        return this.downloadedDocumentPaths.get(documentId);
     }
 
 }

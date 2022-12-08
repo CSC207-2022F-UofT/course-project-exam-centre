@@ -1,15 +1,32 @@
 package uc.course.updatemembers;
 
-import java.util.List;
+import uc.course.updatemembers.dbmodels.UpdateCMemUserDbModel;
+import uc.course.updatemembers.responsemodels.UpdateCMemCourseResponseModel;
+import uc.course.updatemembers.responsemodels.UpdateCMemUserResponseModel;
 
+import java.util.Map;
+
+/** UpdateCMemResponseModel is responsible for packaging data in a way for a presenter to use.
+ * @layer use cases
+ */
 public class UpdateCMemResponseModel {
-    private String timestamp;
-    private List<String> userCourseList;
-    private boolean updateMembershipStatus;
+    private final UpdateCMemUserResponseModel currentUserModel;
+    private final Map<String, UpdateCMemCourseResponseModel> usersCourseModels;
 
-    public UpdateCMemResponseModel(String timestamp, List<String> userCourseList, boolean updateMembershipStatus) {
-        this.timestamp = timestamp;
-        this.userCourseList = userCourseList;
-        this.updateMembershipStatus = updateMembershipStatus;
+    /** Constructs a UpdateCMemResponseModel containing a timestamp, userCourseList and an updateMembershipStatus
+     */
+    public UpdateCMemResponseModel(UpdateCMemUserResponseModel currentUser,
+                                   Map<String, UpdateCMemCourseResponseModel> usersCourseModels) {
+
+        this.currentUserModel = currentUser;
+        this.usersCourseModels = usersCourseModels;
+    }
+
+    public UpdateCMemUserResponseModel getCurrentUserModel() {
+        return this.currentUserModel;
+    }
+
+    public Map<String, UpdateCMemCourseResponseModel> getUsersCourseModels() {
+        return this.usersCourseModels;
     }
 }
