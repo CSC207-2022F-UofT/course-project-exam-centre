@@ -273,6 +273,7 @@ public class Main {
 
             // Construct views and configure ViewManager references
             ArrayList<Updatable> updatableScreens = new ArrayList<>();
+            viewManagerGateway.setUpdateStateController(updateStateController);
 
             updatableScreens.add(
                     new WelcomeDialog(
@@ -292,18 +293,6 @@ public class Main {
 
             // Update current state
             updateStateController.updateState();
-
-            // Construct JFrame views
-            new WelcomeDialog(
-                    loginController,
-                    userRegisterController,
-                    logoutController,
-                    mainViewModel,
-                    submitTestDocController,
-                    submitSolutionDocController,
-                    updateCourseMembershipController,
-                    downloadDocController
-            );
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);

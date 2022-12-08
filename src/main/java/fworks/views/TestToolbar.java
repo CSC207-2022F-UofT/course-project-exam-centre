@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -109,6 +110,9 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JComboBox<String> createTestComboBox() {
+        mainViewModel.setCurrentCourseId(
+                new ArrayList<>(
+                        mainViewModel.getCurrentUserCourseModels().values()).get(0).getCourseId());
         Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
         Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
         JComboBox testComboBox = new JComboBox<>(testModles.keySet().toArray());

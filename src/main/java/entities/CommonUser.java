@@ -31,7 +31,7 @@ public class CommonUser implements User {
         this.userId = userId;
         this.tests = new ArrayList<>();
         this.solutions = new ArrayList<>();
-        this.courses = new LinkedList<>();
+        this.courses = new ArrayList<>();
     }
 
     /** Gets the User's ID number

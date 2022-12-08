@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.controllers.UpdateStateController;
 import ia.gateways.ViewManagerGateway;
 import ia.viewmodels.Updatable;
 
@@ -8,7 +9,13 @@ import java.util.ArrayList;
 
 public class ViewManager implements ViewManagerGateway {
 
-    ArrayList<Updatable> updatableViews;
+    private ArrayList<Updatable> updatableViews;
+    private UpdateStateController updateStateController;
+
+    @Override
+    public void setUpdateStateController(UpdateStateController updateStateController) {
+        this.updateStateController = updateStateController;
+    }
 
     /**
      * Sets the list of updatableViews
@@ -36,5 +43,10 @@ public class ViewManager implements ViewManagerGateway {
     @Override
     public void showError(String errorMessage, String presentationMessage) {
         JOptionPane.showMessageDialog(null, errorMessage, presentationMessage, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void updateState() {
+        this.updateStateController.updateState();
     }
 }
