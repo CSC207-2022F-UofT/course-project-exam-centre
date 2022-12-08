@@ -23,7 +23,8 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
     @Override
     public LogoutResponseModel prepareSuccessView(LogoutResponseModel responseModel) {
-        // TODO: Update view model here
+        viewModel.reset();
+        viewManagerGateway.updateViews();
         return responseModel;
     }
 
