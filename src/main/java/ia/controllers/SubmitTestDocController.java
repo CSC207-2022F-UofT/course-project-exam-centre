@@ -32,7 +32,7 @@ public class SubmitTestDocController {
      * @param filePath The path to the document on the user's drive
      * @return An instance of a SubmitTDocResponseModel for this request
      */
-    public SubmitTDocResponseModel SubmitTestDocument(String name,
+    public SubmitTDocResponseModel submitTestDocument(String name,
                                                       Integer numOfQuestions,
                                                       Float recordedTime,
                                                       String testType,
