@@ -83,7 +83,7 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
-            public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
+            public VoteSDocResponseModel prepareFailureView(String errorMessage) {
                 fail("Use case failure is unexpected.");
                 return null;
             }
@@ -138,7 +138,7 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
-            public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
+            public VoteSDocResponseModel prepareFailureView(String errorMessage) {
                 fail("Use case failure is unexpected.");
                 return null;
             }

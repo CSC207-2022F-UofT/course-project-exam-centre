@@ -2,7 +2,6 @@ package ia.presenters;
 
 import ia.exceptions.VoteSDocFailed;
 import ia.gateways.ViewManagerGateway;
-import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.doc.voteonsolution.VoteSDocResponseModel;
 

@@ -3,7 +3,6 @@ package ia.presenters;
 import ia.exceptions.DownloadDocFailed;
 import ia.gateways.ViewManagerGateway;
 import uc.doc.downloaddoc.DownloadDocOutputBoundary;
-import uc.doc.downloaddoc.DownloadDocRequestModel;
 import uc.doc.downloaddoc.DownloadDocResponseModel;
 
 public class DownloadDocPresenter implements DownloadDocOutputBoundary{
