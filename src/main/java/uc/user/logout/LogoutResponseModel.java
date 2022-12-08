@@ -1,19 +1,19 @@
-package uc.user.login;
+package uc.user.logout;
 
 /**
- * LoginResponseModel bundles data to be used by a presenter.
+ * LogoutResponseModel bundles data to be used by a presenter.
  * @layer use cases
  */
-public class LoginResponseModel {
+public class LogoutResponseModel {
     private final boolean loginStatus;
     private final String userId;
 
     /**
-     * Construct a LoginResponseModel.
+     * Construct a LogoutResponseModel.
      * @param loginStatus is true if login is successful
      * @param userId the user's id
      */
-    public LoginResponseModel(boolean loginStatus, String userId) {
+    public LogoutResponseModel(boolean loginStatus, String userId) {
 
         this.loginStatus = loginStatus;
         this.userId = userId;

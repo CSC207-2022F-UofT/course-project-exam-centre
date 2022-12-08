@@ -1,5 +1,7 @@
 package uc.doc.submitsolution;
 
+import uc.doc.submitsolution.dbmodels.SubmitSDocUserDbModel;
+
 /**
  * SubmitSDocDsGateway provides methods to save document, and save/modify the root message of the message board
  * @layer Use cases
@@ -31,5 +33,7 @@ public interface SubmitSDocDsGateway {
     void updateRootMessageIdOfSolution(
             String solutionId,
             String rootMessageId);
+
+    SubmitSDocUserDbModel getUserById(String userId);
 
 }

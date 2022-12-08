@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.controllers.LogoutController;
 import ia.controllers.UserRegisterController;
 import ia.exceptions.UserRegisterFailed;
 
@@ -13,7 +14,8 @@ import java.util.regex.Pattern;
  * @layer drivers and frameworks
  */
 public class RegisterPanel extends JPanel implements ActionListener {
-    private UserRegisterController controller;
+    private UserRegisterController userRegisterController;
+    private LogoutController logoutController;
     private JTextField firstNameField;
     private JTextField lastNameField;
 
@@ -25,10 +27,11 @@ public class RegisterPanel extends JPanel implements ActionListener {
 
     /**
      * Constructs a RegisterPanel with a controller
-     * @param controller the controller for the register use case
+     * @param userRegisterController the controller for the register use case
      */
-    public RegisterPanel(UserRegisterController controller) {
-        this.controller = controller;
+    public RegisterPanel(UserRegisterController userRegisterController, LogoutController logoutController) {
+        this.userRegisterController = userRegisterController;
+        this.logoutController = logoutController;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -185,14 +188,14 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 String repeatPassword = new String(passwordField2.getPassword());
 
                 try{
-                    controller.registerUser(firstName, lastName, email, password, repeatPassword);
+                    userRegisterController.registerUser(firstName, lastName, email, password, repeatPassword);
                 } catch(UserRegisterFailed exception){
                 // TODO: add popup that contains the error message
                 }
 
                 setVisible(false);
 
-                new TestFrame();
+                new TestFrame(logoutController);
             }
         }
     }

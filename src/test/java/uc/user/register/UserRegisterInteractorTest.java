@@ -38,17 +38,11 @@ public class UserRegisterInteractorTest {
             // Asserting if the register was a success.
 
             @Override
-            public URegisterResponseModel prepareSuccessView(URegisterResponseModel user) {
-                // Check if the user's first name matches
-                assertEquals(user.getUser().getFirstName(), "John");
-                // Check if the user's last name matches
-                assertEquals(user.getUser().getLastName(), "Doe");
-                // Check if the email matches
-                assertEquals(user.getUser().getEmail(), "email@email.com");
+            public URegisterResponseModel prepareSuccessView(URegisterResponseModel responseModel) {
                 // Check if the userId is created and is of length 8
-                assertEquals((user.getUser().getId()).length(), 8);
-                // Check if the timestamp is not empty
-                assertNotNull(user.timestamp);
+                assertEquals(responseModel.getUserId().length(), 8);
+                // Check if loginStatus is true
+                assertEquals(responseModel.getLoginStatus(), true);
 
                 return null;
             }
