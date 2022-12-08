@@ -2,6 +2,7 @@ package fworks.views;
 
 import ia.controllers.*;
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,14 @@ import java.awt.event.*;
 /**
  * A dialog for the user to register or log in
  */
-public class WelcomeDialog extends JDialog implements ActionListener {
+public class WelcomeDialog extends JDialog implements ActionListener, Updatable {
     private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
+
+    private MainViewModel mainViewModel;
 
     public WelcomeDialog(LoginController loginController,
                          UserRegisterController userRegisterController,
@@ -39,6 +42,8 @@ public class WelcomeDialog extends JDialog implements ActionListener {
                 submitSolutionDocController,
                 updateCourseMembershipController,
                 downloadDocController);
+
+        this.mainViewModel = mainViewModel;
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -87,5 +92,14 @@ public class WelcomeDialog extends JDialog implements ActionListener {
         }
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void update() {
+        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+            this.setVisible(false);
+        } else {
+            this.setVisible(true);
+        }
     }
 }
