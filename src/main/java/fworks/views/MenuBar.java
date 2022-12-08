@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * A Menu bar to display username and allow logout
  */
-public class MenuBar extends JMenuBar implements ActionListener {
+public class MenuBar extends JMenuBar implements ActionListener, Updatable {
     // get this from login use case? hardcoded for now
     private String userFullName = "First Last";
     private JMenu userMenu;
@@ -16,7 +18,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
     private JMenuItem settingsMenuItem;
     private JMenuItem logoutMenuItem;
 
-    public MenuBar() {
+    private MainViewModel mainViewModel;
+
+    public MenuBar(MainViewModel mvm) {
+        this.mainViewModel = mvm;
         logoutMenuItem = new JMenuItem("Sign out");
         logoutMenuItem.addActionListener(this);
 
@@ -43,5 +48,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: trigger logout use case
+    }
+
+    @Override
+    public void update() {
+
     }
 }

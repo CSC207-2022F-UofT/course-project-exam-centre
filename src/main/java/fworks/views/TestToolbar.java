@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,14 +9,18 @@ import java.awt.event.*;
 /**
  * The panel component for TestFrame
  */
-public class TestToolbar extends JPanel implements ActionListener {
+public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JComboBox comboBox;
     private JButton addCourseButton;
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
 
-    public TestToolbar() {
+    private MainViewModel mainViewModel;
+
+    public TestToolbar(MainViewModel mvm) {
+        this.mainViewModel = mvm;
+
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
 
@@ -83,5 +89,10 @@ public class TestToolbar extends JPanel implements ActionListener {
         } else if (actionEvent.getSource() == solutionsButton) {
             // TODO: Solutions
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 }

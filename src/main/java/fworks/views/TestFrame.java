@@ -1,20 +1,29 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * The frame for viewing tests
  */
-public class TestFrame extends JFrame {
-    public TestFrame() {
+public class TestFrame extends JFrame implements Updatable {
+
+    private MenuBar menuBar;
+
+    private TestToolbar toolbar;
+
+    private DocumentView documentView;
+
+    public TestFrame(MainViewModel mainViewModel) {
         super("Exam Centre");
 
-        MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar(mainViewModel);
         this.setJMenuBar(menuBar);
 
-        TestToolbar toolbar = new TestToolbar();
-        DocumentView documentView = new DocumentView();
+        toolbar = new TestToolbar(mainViewModel);
+        documentView = new DocumentView(mainViewModel);
         documentView.loadFile();
 
         setLayout(new BorderLayout());
@@ -25,5 +34,15 @@ public class TestFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    /**
+     * Updates the view
+     */
+    @Override
+    public void update() {
+        menuBar.update();
+        toolbar.update();
+        documentView.update();
     }
 }

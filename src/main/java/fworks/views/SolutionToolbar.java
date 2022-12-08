@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,11 +9,15 @@ import java.awt.event.*;
 /**
  * The panel component for SolutionFrame
  */
-public class SolutionToolbar extends JPanel implements ActionListener {
+public class SolutionToolbar extends JPanel implements ActionListener, Updatable {
     private JButton discussionButton;
     private JButton uploadSolutionsButton;
 
-    public SolutionToolbar() {
+    private MainViewModel mainViewModel;
+
+    public SolutionToolbar(MainViewModel mvm) {
+        this.mainViewModel = mvm;
+
         discussionButton = new JButton("Discussions");
         uploadSolutionsButton = new JButton("Upload solution");
 
@@ -31,5 +37,10 @@ public class SolutionToolbar extends JPanel implements ActionListener {
         } else if (clicked == uploadSolutionsButton) {
             // TODO: Upload solution
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 }
