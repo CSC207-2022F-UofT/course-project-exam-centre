@@ -40,9 +40,9 @@ public class SolutionToolbar extends JPanel implements ActionListener {
         } else if (clicked == uploadSolutionsButton) {
             SolutionDocumentSubmissionScreen solutionDocumentSubmissionScreen = new SolutionDocumentSubmissionScreen(
                     submitSolutionDocController,
-                    mainViewModel.getCurrentUserModel().getUserId(),
-
-            )
+                    mainViewModel.getCurrentCourseId(),
+                    mainViewModel.getCurrentTestId()
+            );
         }
     }
 }

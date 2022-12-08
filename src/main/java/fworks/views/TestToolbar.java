@@ -94,10 +94,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         } else if (actionEvent.getSource() == uploadTestButton) {
             TestDocumentSubmissionScreen testDocumentSubmissionScreen = new TestDocumentSubmissionScreen(
                     submitTestDocController,
-                    mainViewModel.getCurrentUserModel().getUserId(),
-                    mainViewModel //get the current course
+                    mainViewModel.getCurrentCourseId()
             );
-
         } else if (actionEvent.getSource() == takeTestButton) {
             // TODO: Take test
         } else if (actionEvent.getSource() == solutionsButton) {
