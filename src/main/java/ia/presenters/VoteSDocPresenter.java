@@ -2,10 +2,13 @@ package ia.presenters;
 
 import ia.exceptions.VoteSDocFailed;
 import ia.gateways.ViewManagerGateway;
-import ia.viewmodels.MainViewModel;
+import ia.viewmodels.*;
+import uc.doc.submitsolution.responsemodels.SubmitSDocSolutionDocResponseModel;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.doc.voteonsolution.VoteSDocResponseModel;
+
+import java.util.Map;
 
 public class VoteSDocPresenter implements VoteSDocOutputBoundary{
 
@@ -24,12 +27,29 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
 
     /** Prepares SuccessView when a solution document is successfully voted
      *
-     * @param model Response model containing the courseId, testId, solutionId and voteTotal
+     * @param responseModel Response model containing the courseId, testId, solutionId and voteTotal
      * @return model Response model corresponding to successful
      */
     @Override
-    public VoteSDocResponseModel prepareSuccessView(VoteSDocResponseModel model) {
-        return model;
+    public VoteSDocResponseModel prepareSuccessView(VoteSDocResponseModel responseModel) {
+
+        Map<String, CourseSubViewModel> courseModels
+                = viewModel.getCurrentUserCourseModels();
+
+        Map<String, TestDocSubViewModel> testModels
+                = courseModels.get(responseModel.getCourseId()).getTests();
+
+        Map<String, SolutionDocSubViewModel> solutionModels
+                = testModels.get(responseModel.getTestId()).getSolutionModels();
+
+
+        solutionModels.get(responseModel.getSolutionId()).setVoteTotal(
+                responseModel.getVoteTotal()
+        );
+
+        viewManagerGateway.updateViews();
+
+        return responseModel;
     }
 
     /** Prepares SuccessView when a solution document is unsuccessfully voted

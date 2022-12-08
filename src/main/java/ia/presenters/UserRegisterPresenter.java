@@ -29,7 +29,6 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
      */
     @Override
     public URegisterResponseModel prepareSuccessView(URegisterResponseModel responseModel){
-        // TODO: Update view model
         return responseModel;
     }
 

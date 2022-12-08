@@ -2,9 +2,15 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitTestDocFailed;
-import ia.viewmodels.MainViewModel;
+import ia.viewmodels.*;
 import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTDocResponseModel;
+import uc.doc.submittest.responsemodels.SubmitTDocTestDocResponseModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
 
@@ -29,7 +35,30 @@ public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
     @Override
     public SubmitTDocResponseModel prepareSuccessView(
             SubmitTDocResponseModel responseModel) {
-        // TODO: Update view model here
+
+        SubmitTDocTestDocResponseModel testResModel
+                = responseModel.getTestDocModel();
+
+        Map<String, CourseSubViewModel> courseModels
+                = viewModel.getCurrentUserCourseModels();
+
+        Map<String, TestDocSubViewModel> testModels
+                = courseModels.get(responseModel.getParentCourseId()).getTests();
+
+        testModels.put(
+                testResModel.getTestId(),
+                new TestDocSubViewModel(
+                        testResModel.getTestId(),
+                        testResModel.getUserId(),
+                        testResModel.getTestType(),
+                        testResModel.getNumOfQuestions(),
+                        testResModel.getEstimatedTime(),
+                        testResModel.getTestName(),
+                        new HashMap<>()
+                )
+        );
+
+        viewManagerGateway.updateViews();
         return responseModel;
     }
 
