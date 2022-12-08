@@ -52,7 +52,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      * Creates a screen for updating a user's course membership
      * @param controller The controller for updating course membership
-     * @param viewModel The view model for this screen
+     * @param mainViewModel The main view model
      */
     public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller,
                                         MainViewModel mainViewModel){
