@@ -1,5 +1,8 @@
 package fworks.views;
 
+import ia.controllers.LogoutController;
+import ia.exceptions.LogoutFailed;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,17 +10,24 @@ import java.awt.event.ActionListener;
 
 /**
  * A Menu bar to display username and allow logout
+ * @layer drivers and frameworks
  */
 public class MenuBar extends JMenuBar implements ActionListener {
 
     // get this from login use case? hardcoded for now
+    private LogoutController controller;
     private String userFullName = "First Last";
     private JMenu userMenu;
     private JMenuItem profileMenuItem;
     private JMenuItem settingsMenuItem;
     private JMenuItem logoutMenuItem;
 
-    public MenuBar() {
+    /**
+     * Constructs an instance of the MenuBar with a controller for the Logout Use case
+     * @param controller controller for the logout use case
+     */
+    public MenuBar(LogoutController controller) {
+        this.controller = controller;
         logoutMenuItem = new JMenuItem("Sign out");
         logoutMenuItem.addActionListener(this);
 
@@ -44,5 +54,14 @@ public class MenuBar extends JMenuBar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: trigger logout use case
+        if(e.getActionCommand().equals(logoutMenuItem.getText())){
+            try{
+                controller.logOut();
+            } catch(LogoutFailed exception){
+                // TODO: generic error message hehe
+            }
+
+
+        }
     }
 }
