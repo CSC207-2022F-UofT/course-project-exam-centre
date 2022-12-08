@@ -1,8 +1,6 @@
 package fworks.views;
 
-import ia.controllers.LoginController;
-import ia.controllers.LogoutController;
-import ia.controllers.UserRegisterController;
+import ia.controllers.*;
 import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
@@ -22,9 +20,25 @@ public class WelcomeDialog extends JDialog implements ActionListener {
     public WelcomeDialog(LoginController loginController,
                          UserRegisterController userRegisterController,
                          LogoutController logoutController,
-                         MainViewModel mainViewModel) {
-        loginPanel = new LoginPanel(loginController, mainViewModel);
-        registerPanel = new RegisterPanel(userRegisterController, logoutController, mainViewModel);
+                         MainViewModel mainViewModel,
+                         SubmitTestDocController submitTestDocController,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         UpdateCourseMembershipController updateCourseMembershipController,
+                         DownloadDocController downloadDocController) {
+        loginPanel = new LoginPanel(loginController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                logoutController,
+                downloadDocController);
+        registerPanel = new RegisterPanel(userRegisterController,
+                logoutController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                downloadDocController);
 
         JPanel buttonsPanel = createButtonsPanel();
 
