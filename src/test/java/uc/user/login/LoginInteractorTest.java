@@ -4,6 +4,8 @@ import entities.StateTracker;
 import entities.User;
 import entities.factories.UserFactory;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,10 +19,10 @@ public class LoginInteractorTest {
      *  and updates the currentUser in the state tracker entity,
      *  given a correct password
      */
-    @Test
-    public void logInSuccess() {
-
-        LoginDsGateway dsGateway = new LoginDsGateway() {
+    private static LoginDsGateway dsGateway;
+    @BeforeClass
+    public static void setupBeforeClass(){
+        dsGateway = new LoginDsGateway() {
             // implement LoginDsGateway using anonymous class
             private final String storedEmail = "firstlast@mail.uoftears.ca";
             private final String storedPassword = ";-;";
@@ -66,6 +68,10 @@ public class LoginInteractorTest {
                 };
             }
         };
+    }
+
+    @Test
+    public void logInSuccess() {
 
         LoginOutputBoundary presenter = new LoginOutputBoundary() {
             @Override
@@ -102,54 +108,6 @@ public class LoginInteractorTest {
      */
     @Test
     public void logInFailGivenIncorrectPassword() {
-
-        LoginDsGateway dsGateway = new LoginDsGateway() {
-            // implement LoginDsGateway using anonymous class
-            private final String storedEmail = "firstlast@mail.uoftears.ca";
-            private final String storedPassword = ";-;";
-            private final String storedUserId = "ABCD1234";
-            private final String storedFirstName = "First";
-            private final String storedLastName = "Last";
-            private final List<String> storedEnrolments = new ArrayList<>();
-
-            @Override
-            public boolean verifyLoginCredentials(String email, String password) {
-                return email.equals(storedEmail)
-                        && password.equals(storedPassword);
-            }
-
-            @Override
-            public List<String> getCourseIdsByUserId(String userId) {
-                return storedEnrolments;
-            }
-
-            @Override
-            public LoginDsResponseModel getUserByEmail(String email) {
-                // implement LoginDsResponseModel using anonymous class
-                return new LoginDsResponseModel() {
-                    @Override
-                    public String getUserId() {
-                        return storedUserId;
-                    }
-
-                    @Override
-                    public String getEmail() {
-                        return storedEmail;
-                    }
-
-                    @Override
-                    public String getFirstName() {
-                        return storedFirstName;
-                    }
-
-                    @Override
-                    public String getLastName() {
-                        return storedLastName;
-                    }
-                };
-            }
-        };
-
         LoginOutputBoundary presenter = new LoginOutputBoundary() {
             @Override
             public LoginResponseModel prepareSuccessView(LoginResponseModel responseModel) {
