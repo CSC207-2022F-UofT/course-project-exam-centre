@@ -87,4 +87,14 @@ public class MainViewModel {
         return this.localDocumentPaths.get(documentId);
     }
 
+    public void reset() {
+        this.currentUserModel = null;
+        this.usersCourseModels = null;
+        this.courseInfoModels = null;
+        this.localDocumentPaths = null;
+        this.currentCourseId = null;
+        this.currentTestId = null;
+        this.currentSolutionId = null;
+    }
+
 }
