@@ -9,7 +9,7 @@ public class DownloadDocRequestModel {
 
     /** Creates an instance of DownloadDocRequestModel containing the name of the document to download
      *  and the Id of the user requesting the download
-     * @param downloadId        the name of the document to be download
+     * @param documentId        the name of the document to be download
      * @param userId            the id of the user requesting the download
      */
     public DownloadDocRequestModel(String documentId, String userId) {

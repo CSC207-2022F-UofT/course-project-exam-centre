@@ -1,15 +1,14 @@
 package fworks.views;
 
 import ia.controllers.UpdateCourseMembershipController;
-import ia.viewmodels.CourseMembershipViewModel;
+import ia.viewmodels.CourseInfoSubViewModel;
+import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.List;
 
 public class UpdateCourseMembershipScreen extends JFrame implements ActionListener {
@@ -26,7 +25,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
 
     /**
      * The map of course IDs and their names
-     * CourseList contains the string with the course's ID, followed by its name
+     * CourseList contains the string with the course's ID, followed by its name, then the user's status
      */
     Map<String, List<Object>> courseList;
 
@@ -48,17 +47,17 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      *  The viewmodel for this screen
      */
-    CourseMembershipViewModel viewModel;
+    MainViewModel mainViewModel;
 
     /**
      * Creates a screen for updating a user's course membership
      * @param controller The controller for updating course membership
-     * @param viewModel The view model for this screen
+     * @param mainViewModel The main view model
      */
     public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller,
-                                        CourseMembershipViewModel viewModel){
+                                        MainViewModel mainViewModel){
         this.updateCourseMembershipController = controller;
-        this.viewModel = viewModel;
+        this.mainViewModel = mainViewModel;
         submit = new JButton("Add Courses");
         submit.addActionListener(this);
     }
@@ -68,8 +67,8 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
      * This screen auto-updates upon being called.
      */
     public void createScreen(){
-        this.courseList = viewModel.getCourses();
-        this.userId = viewModel.getUserID();
+        this.courseList = getParsedCourseList();
+        this.userId = mainViewModel.getCurrentUserModel().getUserId();
         reset();
 
         courseDisplay = new HashMap<>();
@@ -87,6 +86,21 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
         this.add(submit);
         this.pack();
         this.setVisible(true);
+    }
+
+    private Map<String, List<Object>> getParsedCourseList() {
+        Map<String, List<Object>> returnList = new HashMap<String, List<Object>>();
+
+        Set<String> userCourseList = mainViewModel.getCurrentUserCourseModels().keySet();
+        Map<String, CourseInfoSubViewModel> allCourses = mainViewModel.getCourseInfoModels();
+
+        for (String courseID : allCourses.keySet()) {
+            List<Object> courseData = new ArrayList<>();
+            courseData.add(allCourses.get(courseID).getCourseName());
+            courseData.add(userCourseList.contains(courseID));
+            returnList.put(courseID, courseData);
+        }
+        return returnList;
     }
 
     /**

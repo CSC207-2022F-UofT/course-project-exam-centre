@@ -1,6 +1,10 @@
 package fworks.views;
 
+import ia.controllers.LogoutController;
+import ia.exceptions.LogoutFailed;
+
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,18 +13,25 @@ import java.awt.event.ActionListener;
 
 /**
  * A Menu bar to display username and allow logout
+ * @layer drivers and frameworks
  */
 public class MenuBar extends JMenuBar implements ActionListener, Updatable {
     // get this from login use case? hardcoded for now
+    private LogoutController logoutController;
     private String userFullName = "First Last";
     private JMenu userMenu;
     private JMenuItem profileMenuItem;
     private JMenuItem settingsMenuItem;
     private JMenuItem logoutMenuItem;
-
     private MainViewModel mainViewModel;
 
-    public MenuBar(MainViewModel mvm) {
+    /**
+     * Constructs an instance of the MenuBar with a controller for the Logout Use case
+     * @param mvm The primary view model for all views
+     * @param logoutController controller for the logout use case
+     */
+    public MenuBar(MainViewModel mvm, LogoutController logoutController) {
+        this.logoutController = logoutController;
         this.mainViewModel = mvm;
         logoutMenuItem = new JMenuItem("Sign out");
         logoutMenuItem.addActionListener(this);
@@ -48,6 +59,15 @@ public class MenuBar extends JMenuBar implements ActionListener, Updatable {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: trigger logout use case
+        if(e.getActionCommand().equals(logoutMenuItem.getText())){
+            try{
+                logoutController.logOut();
+            } catch(LogoutFailed exception){
+                // TODO: generic error message hehe
+            }
+
+
+        }
     }
 
     @Override

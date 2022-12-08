@@ -1,7 +1,7 @@
 package fworks.views;
 
-import ia.controllers.LoginController;
-import ia.controllers.UserRegisterController;
+import ia.controllers.*;
+import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +11,34 @@ import java.awt.event.*;
  * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
+    private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
-    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
-        loginPanel = new LoginPanel(loginController);
-        registerPanel = new RegisterPanel(userRegisterController);
+    public WelcomeDialog(LoginController loginController,
+                         UserRegisterController userRegisterController,
+                         LogoutController logoutController,
+                         MainViewModel mainViewModel,
+                         SubmitTestDocController submitTestDocController,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         UpdateCourseMembershipController updateCourseMembershipController,
+                         DownloadDocController downloadDocController) {
+        loginPanel = new LoginPanel(loginController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                logoutController,
+                downloadDocController);
+        registerPanel = new RegisterPanel(userRegisterController,
+                logoutController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                downloadDocController);
 
         JPanel buttonsPanel = createButtonsPanel();
 

@@ -1,31 +1,36 @@
 package fworks.views;
 
+import ia.controllers.DownloadDocController;
+import ia.controllers.LogoutController;
 import ia.controllers.SubmitSolutionDocController;
 import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.MainViewModel;
-
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * The frame for viewing solutions
+ * @layer drivers and frameworks
  */
 public class SolutionFrame extends JFrame {
 
-    private MenuBar menuBar;
+    private LogoutController logoutController;
 
-    private SolutionToolbar toolbar;
-
-    private DocumentView documentView;
-
-    public SolutionFrame(MainViewModel mainViewModel, SubmitSolutionDocController submitSolutionDocController) {
+    public SolutionFrame(MainViewModel mainViewModel,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         LogoutController logoutController,
+                         DownloadDocController downloadDocController) {
         super("Solutions");
+        this.logoutController = logoutController;
 
-        menuBar = new MenuBar(mainViewModel);
+        MenuBar menuBar = new MenuBar(mainViewModel, logoutController);
         this.setJMenuBar(menuBar);
 
-        toolbar = new SolutionToolbar(mainViewModel, submitSolutionDocController);
-        documentView = new DocumentView(mainViewModel);
+        DocumentView documentView = new DocumentView(mainViewModel);
+        SolutionToolbar toolbar = new SolutionToolbar(documentView,
+                mainViewModel,
+                submitSolutionDocController,
+                downloadDocController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());
@@ -34,7 +39,7 @@ public class SolutionFrame extends JFrame {
 
         setSize(1100, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }

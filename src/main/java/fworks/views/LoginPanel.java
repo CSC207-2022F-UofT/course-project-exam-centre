@@ -1,6 +1,8 @@
 package fworks.views;
 
-import ia.controllers.LoginController;
+import ia.controllers.*;
+import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,16 +11,38 @@ import java.awt.event.*;
 /**
  * A panel for existing users to log in
  */
-public class LoginPanel extends JPanel implements ActionListener {
+public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LoginController controller;
 
     private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cancelButton;
     private JButton loginButton;
+    private MainViewModel mainViewModel;
+    private SubmitTestDocController submitTestDocController;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private UpdateCourseMembershipController updateCourseMembershipController;
+    private LogoutController logoutController;
+    private DownloadDocController downloadDocController;
 
-    public LoginPanel(LoginController controller) {
+    JFrame testFrame;
+
+    public LoginPanel(LoginController controller,
+                      MainViewModel mainViewModel,
+                      SubmitTestDocController submitTestDocController,
+                      SubmitSolutionDocController submitSolutionDocController,
+                      UpdateCourseMembershipController updateCourseMembershipController,
+                      LogoutController logoutController,
+                      DownloadDocController downloadDocController) {
         this.controller = controller;
+        this.mainViewModel = mainViewModel;
+        this.submitTestDocController = submitTestDocController;
+        this.submitSolutionDocController = submitSolutionDocController;
+        this.updateCourseMembershipController = updateCourseMembershipController;
+        this.logoutController = logoutController;
+        this.downloadDocController = downloadDocController;
+
+        this.testFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -116,6 +140,26 @@ public class LoginPanel extends JPanel implements ActionListener {
                 } catch (Exception exception) {
                     // TODO: handle error
                 }
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+            if(testFrame == null) {
+                testFrame = new MainFrame(mainViewModel,
+                        submitTestDocController,
+                         submitSolutionDocController,
+                         updateCourseMembershipController,
+                         logoutController,
+                         downloadDocController);
+            }
+        } else {
+            if(testFrame != null) {
+                testFrame.setVisible(false);
+                testFrame.dispose();
+                testFrame = null;
             }
         }
     }

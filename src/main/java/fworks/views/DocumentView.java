@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 
@@ -37,7 +38,7 @@ public class DocumentView implements Updatable {
         controller = new SwingController();
         SwingViewBuilder factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();
-        filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
+//        filePath = "src/data/Solution2.pdf";
     }
 
     /**
@@ -57,7 +58,7 @@ public class DocumentView implements Updatable {
 
     /**
      * Set the file path
-     * @param filePath
+     * @param filePath the name of the file // Note: we may want to rename this?
      */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
@@ -70,6 +71,9 @@ public class DocumentView implements Updatable {
         controller.openDocument(filePath);
     }
 
+    /**
+     * Set the preferences of the view
+     */
     private void setPreferences() {
         Preferences preferences = Preferences.userNodeForPackage(ViewerPropertiesManager.class);
         preferences.putBoolean("application.viewerpreferences.hidemenubar", true);
@@ -77,6 +81,9 @@ public class DocumentView implements Updatable {
         preferences.putBoolean("application.statusbar", false);
     }
 
+    /**
+     * Set the properties of the view
+     */
     private void setViewProperties() {
         controller.setPageViewMode(2, false);
         controller.setPageFitMode(4, true);
