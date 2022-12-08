@@ -5,18 +5,15 @@ package uc.doc.voteonsolution;
  */
 public class VoteSDocRequestModel {
     private final String solutionId;
-    private final String userId;
     private final boolean vote;
 
     /** Creates an instance of VoteSDocRequestModel containing the ids of the solution and user voting as well as
      * the type of vote.
      * @param solutionId id of the solution being updated
-     * @param userId the id of the user voting
      * @param vote whether it is an upvote or a downvote
      */
-    public VoteSDocRequestModel(String solutionId, String userId, boolean vote) {
+    public VoteSDocRequestModel(String solutionId, boolean vote) {
         this.solutionId = solutionId;
-        this.userId = userId;
         this.vote = vote;
     }
 
@@ -26,14 +23,6 @@ public class VoteSDocRequestModel {
      */
     public String getSolutionId() {
         return this.solutionId;
-    }
-
-    /** Get the userID of the user voting
-     *
-     * @return a string containing the userId
-     */
-    public String getUserId() {
-        return this.userId;
     }
 
     /** Get whether the solution is being up-voted or down-voted

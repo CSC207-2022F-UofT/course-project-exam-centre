@@ -19,4 +19,16 @@ public interface VoteSDocDsGateway {
      */
     boolean updateSolutionDocVote(VoteSDocDsRequestModel model);
 
+    /** Gets the TestId from the database when given the solutionId of the solution the user wants to add a Message to.
+     *
+     * @return returns the String type of the TestId that the solution is written for.
+     */
+    String getTestIdBySolutionId(String solutionId);
+
+    /** Gets the CourseId from the database when given the TestId.
+     *
+     * @return returns the String type of the CourseId that the Test relates to.
+     */
+    String getCourseIdByTestId(String testId);
+    
 }
