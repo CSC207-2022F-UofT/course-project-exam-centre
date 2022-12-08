@@ -25,7 +25,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LogoutController logoutController;
     private DownloadDocController downloadDocController;
 
-    JFrame testFrame;
+    MainFrame testFrame;
 
     public LoginPanel(LoginController controller,
                       MainViewModel mainViewModel,
@@ -154,6 +154,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                          updateCourseMembershipController,
                          logoutController,
                          downloadDocController);
+            } else {
+                testFrame.update();
             }
         } else {
             if(testFrame != null) {
