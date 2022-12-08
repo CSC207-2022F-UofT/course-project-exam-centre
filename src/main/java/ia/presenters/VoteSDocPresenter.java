@@ -1,5 +1,6 @@
 package ia.presenters;
 
+import ia.exceptions.VoteSDocFailed;
 import ia.gateways.ViewManagerGateway;
 import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
@@ -36,7 +37,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
     public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
         // TODO prepare failure view
         viewManagerGateway.showError(errorMessage, "Document Vote Failed");
-        return null;
+        throw new VoteSDocFailed(errorMessage);
     }
     
 }
