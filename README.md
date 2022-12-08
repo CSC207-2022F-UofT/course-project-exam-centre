@@ -32,12 +32,12 @@ TODO: Complete Getting Started
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Prerequisites
+### Prerequisites
 TODO: Complete Prerequisites
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Running the Application
+### Running the Application
 TODO: Complete running instructions
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
