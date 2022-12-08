@@ -9,6 +9,34 @@ public class MainViewModel {
     private Map<String, CourseInfoSubViewModel> courseInfoModels;
     private Map<String, String> localDocumentPaths;
 
+    private String currentCourseId;
+    private String currentTestId;
+    private String currentSolutionId;
+
+    public String getCurrentCourseId() {
+        return this.currentCourseId;
+    }
+
+    public void setCurrentCourseId(String newCurrentCourseId) {
+        this.currentCourseId = newCurrentCourseId;
+    }
+
+    public String getCurrentTestId() {
+        return this.currentTestId;
+    }
+
+    public void setCurrentTestId(String newCurrentTestId) {
+        this.currentTestId = newCurrentTestId;
+    }
+
+    public String getCurrentSolutionId() {
+        return this.currentSolutionId;
+    }
+
+    public void setCurrentSolutionId(String newCurrentSolutionId) {
+        this.currentSolutionId = newCurrentSolutionId;
+    }
+
     public UserSubViewModel getCurrentUserModel() {
         return this.currentUserModel;
     }
