@@ -1,7 +1,6 @@
 package ia.controllers;
 
 import uc.course.updatemembers.UpdateCMemInputBoundary;
-import uc.course.updatemembers.UpdateCMemOutputBoundary;
 import uc.course.updatemembers.UpdateCMemRequestModel;
 import uc.course.updatemembers.UpdateCMemResponseModel;
 

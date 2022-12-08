@@ -15,7 +15,7 @@ public class SolutionFrame extends JFrame {
         super("Solutions");
 
         MenuBar menuBar = new MenuBar();
-        this.setJMenuBar(menuBar.getMenuBar());
+        this.setJMenuBar(menuBar);
 
         DocumentView documentView = new DocumentView();
         SolutionToolbar toolbar = new SolutionToolbar(documentView);

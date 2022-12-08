@@ -8,11 +8,10 @@ import java.awt.event.ActionListener;
 /**
  * A Menu bar to display username and allow logout
  */
-public class
-MenuBar implements ActionListener {
+public class MenuBar extends JMenuBar implements ActionListener {
+
     // get this from login use case? hardcoded for now
     private String userFullName = "First Last";
-    private JMenuBar menuBar;
     private JMenu userMenu;
     private JMenuItem profileMenuItem;
     private JMenuItem settingsMenuItem;
@@ -23,7 +22,6 @@ MenuBar implements ActionListener {
         logoutMenuItem.addActionListener(this);
 
         userMenu = new JMenu(userFullName);
-        // make menu appear at top right corner
         userMenu.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         userMenu.add(logoutMenuItem);
 
@@ -35,18 +33,12 @@ MenuBar implements ActionListener {
 //        userMenu.add(profileMenuItem);
 //        userMenu.add(settingsMenuItem);
 
-        menuBar = new JMenuBar();
-        menuBar.add(Box.createHorizontalGlue());
-
-        menuBar.add(userMenu);
+        this.add(Box.createHorizontalGlue());
+        this.add(userMenu);
     }
 
     public void setUserFullName(String userFullName){
         this.userFullName = userFullName;
-    }
-
-    public JMenuBar getMenuBar() {
-        return menuBar;
     }
 
     @Override

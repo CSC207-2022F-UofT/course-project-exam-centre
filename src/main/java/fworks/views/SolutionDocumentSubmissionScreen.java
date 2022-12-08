@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SolutionDocumentSubmissionScreen extends JPanel implements ActionListener {
+public class SolutionDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**
      * Name of the solution document
@@ -57,6 +57,7 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
 
     /**
      * A window allowing the user to select a document for submission and set information of the test
+     * This screen auto-displays when being created, should be disposed after use
      * @param controller The user document submission controller
      */
     public SolutionDocumentSubmissionScreen(SubmitSolutionDocController controller, String courseID, String parentTestID) {
@@ -140,6 +141,9 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridwidth = 4;
         this.add(submit, gridBagConstraints);
+
+        this.pack();
+        this.setVisible(true);
     }
 
     /**
@@ -171,6 +175,8 @@ public class SolutionDocumentSubmissionScreen extends JPanel implements ActionLi
                         parentTestID,
                         fileName.getText()
                 );
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", name.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
