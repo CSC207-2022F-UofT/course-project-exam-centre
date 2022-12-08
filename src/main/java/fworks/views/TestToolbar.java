@@ -30,6 +30,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipScreen updateCourseMembershipScreen;
     private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
+    private SolutionFrame solutionFrame;
 
     /**
      * Creates an instance of the TestToolbar with the docView that it will update
@@ -157,7 +158,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
             // TODO: Take test
             // Get the solutions
         } else if (actionEvent.getSource() == solutionsButton) {
-            new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController, downloadDocController); // Create the solution window
+            this.solutionFrame = new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController, downloadDocController); // Create the solution window
             //Switch file being viewed
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
@@ -174,5 +175,9 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         JPanel eastPanel = createEastPanel();
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+        if(this.solutionFrame != null) {
+            solutionFrame.update();
+        }
     }
 }

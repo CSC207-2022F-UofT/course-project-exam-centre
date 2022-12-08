@@ -25,7 +25,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LogoutController logoutController;
     private DownloadDocController downloadDocController;
 
-    JFrame testFrame;
+    MainFrame testFrame;
 
     public LoginPanel(LoginController controller,
                       MainViewModel mainViewModel,
@@ -146,7 +146,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+        if (mainViewModel.getCurrentUserModel() != null) {
             if(testFrame == null) {
                 if(mainViewModel.getCurrentUserCourseModels().isEmpty()) {
                     UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
@@ -160,6 +160,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                          updateCourseMembershipController,
                          logoutController,
                          downloadDocController);
+            } else {
+                testFrame.update();
             }
         } else {
             if(testFrame != null) {
