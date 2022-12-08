@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 
@@ -60,7 +61,7 @@ public class DocumentView implements Updatable {
      * @param filePath the name of the file // Note: we may want to rename this?
      */
     public void setFilePath(String filePath) {
-        this.filePath = "src/data/" + filePath + ".pdf";
+        this.filePath = filePath;
     }
 
     /**

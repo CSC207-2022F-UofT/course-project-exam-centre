@@ -4,6 +4,7 @@ import ia.controllers.LogoutController;
 import ia.exceptions.LogoutFailed;
 
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;

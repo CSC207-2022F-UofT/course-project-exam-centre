@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.LoginFailed;
+import ia.viewmodels.MainViewModel;
 import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
 
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public LoginPresenter(ViewManagerGateway viewManagerGateway) {
+    public LoginPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /** Prepares SuccessView after successful Login
@@ -23,6 +27,7 @@ public class LoginPresenter implements LoginOutputBoundary {
      */
     @Override
     public LoginResponseModel prepareSuccessView(LoginResponseModel responseModel) {
+
         return responseModel;
     }
 

@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.controllers.DownloadDocController;
 import ia.controllers.LogoutController;
 import ia.controllers.SubmitSolutionDocController;
 import ia.controllers.UpdateCourseMembershipController;
@@ -17,7 +18,8 @@ public class SolutionFrame extends JFrame {
 
     public SolutionFrame(MainViewModel mainViewModel,
                          SubmitSolutionDocController submitSolutionDocController,
-                         LogoutController logoutController) {
+                         LogoutController logoutController,
+                         DownloadDocController downloadDocController) {
         super("Solutions");
         this.logoutController = logoutController;
 
@@ -25,7 +27,10 @@ public class SolutionFrame extends JFrame {
         this.setJMenuBar(menuBar);
 
         DocumentView documentView = new DocumentView(mainViewModel);
-        SolutionToolbar toolbar = new SolutionToolbar(documentView, mainViewModel, submitSolutionDocController);
+        SolutionToolbar toolbar = new SolutionToolbar(documentView,
+                mainViewModel,
+                submitSolutionDocController,
+                downloadDocController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

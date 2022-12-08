@@ -3,7 +3,7 @@ package ia.viewmodels;
 public class SolutionDocSubViewModel {
 
     private final String solutionId;
-    private final Integer voteTotal;
+    private Integer voteTotal;
     private final Float recordedScore;
     private final Float estimatedTime;
     private final String solutionName;
@@ -31,6 +31,10 @@ public class SolutionDocSubViewModel {
 
     public Integer getVoteTotal() {
         return this.voteTotal;
+    }
+
+    public void setVoteTotal(Integer newVoteTotal) {
+        this.voteTotal = newVoteTotal;
     }
 
     public Float getRecordedScore() {
