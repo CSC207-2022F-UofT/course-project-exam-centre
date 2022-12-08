@@ -18,6 +18,8 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
+    private MainViewModel mainViewModel;
+
     public WelcomeDialog(LoginController loginController,
                          UserRegisterController userRegisterController,
                          LogoutController logoutController,
@@ -42,6 +44,8 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                 submitSolutionDocController,
                 updateCourseMembershipController,
                 downloadDocController);
+
+        this.mainViewModel = mainViewModel;
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -94,6 +98,11 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
 
     @Override
     public void update() {
+        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+            this.setVisible(false);
+        } else {
+            this.setVisible(true);
+        }
         loginPanel.update();
         registerPanel.update();
     }
