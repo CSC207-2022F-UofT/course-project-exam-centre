@@ -2,6 +2,7 @@ package fworks.views;
 
 import ia.controllers.*;
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.*;
 /**
  * A dialog for the user to register or log in
  */
-public class WelcomeDialog extends JDialog implements ActionListener {
+public class WelcomeDialog extends JDialog implements ActionListener, Updatable {
     private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
@@ -87,5 +88,11 @@ public class WelcomeDialog extends JDialog implements ActionListener {
         }
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void update() {
+        loginPanel.update();
+        registerPanel.update();
     }
 }
