@@ -4,8 +4,8 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import fworks.views.*;
 import ia.viewmodels.Updatable;
-import fworks.views.ViewManager;
 import ia.gateways.ViewManagerGateway;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
@@ -21,12 +21,18 @@ import uc.course.updatemembers.UpdateCourseMembershipInteractor;
 import uc.dboard.submessage.SubDBMessInputBoundary;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubmitDBMessageInteractor;
+import uc.doc.downloaddoc.DownloadDocInputBoundary;
+import uc.doc.downloaddoc.DownloadDocInteractor;
+import uc.doc.downloaddoc.DownloadDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocInputBoundary;
 import uc.doc.submitsolution.SubmitSolutionDocInteractor;
 import uc.doc.submittest.SubmitTDocInputBoundary;
 import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTestDocInteractor;
+import uc.doc.voteonsolution.VoteOnSolutionDocInteractor;
+import uc.doc.voteonsolution.VoteSDocInputBoundary;
+import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.state.update.UpdateStateInputBoundary;
 import uc.state.update.UpdateStateInteractor;
 import uc.state.update.UpdateStateOutputBoundary;
@@ -128,10 +134,7 @@ public class Main {
             MainViewModel mainViewModel = new MainViewModel();
 
             // Construct a new ViewManager
-            ArrayList<Updatable> updatableScreens = new ArrayList<>();
-            //TODO Add Updatable screens to ArrayList
             ViewManagerGateway viewManagerGateway = new ViewManager();
-            viewManagerGateway.setUpdatableViews(updatableScreens);
 
             // Construct use case presenters
             CRegisterOutputBoundary courseRegisterPresenter
@@ -152,6 +155,10 @@ public class Main {
                     = new UserRegisterPresenter(viewManagerGateway, mainViewModel);
             UpdateStateOutputBoundary updateStatePresenter
                     = new UpdateStatePresenter(viewManagerGateway, mainViewModel);
+            DownloadDocOutputBoundary downloadDocPresenter
+                    = new DownloadDocPresenter(viewManagerGateway, mainViewModel);
+            VoteSDocOutputBoundary voteSDocPresenter
+                    = new VoteSDocPresenter(viewManagerGateway, mainViewModel);
 
             // Construct use case interactors
             CRegisterInputBoundary courseRegisterInteractor
@@ -226,6 +233,20 @@ public class Main {
                             messageFactory
             );
 
+            DownloadDocInputBoundary downloadDocInteractor
+                    = new DownloadDocInteractor(
+                            fileAccessGateway,
+                            downloadDocPresenter,
+                            currentState
+            );
+
+            VoteSDocInputBoundary voteOnDocInteractor
+                    = new VoteOnSolutionDocInteractor(
+                            dbGateway,
+                            voteSDocPresenter,
+                            currentState
+            );
+
             // Construct use case controllers
             CourseRegisterController courseRegisterController
                     = new CourseRegisterController(courseRegisterInteractor);
@@ -245,16 +266,55 @@ public class Main {
                     = new UserRegisterController(userRegisterInteractor);
             LogoutController logoutController
                     = new LogoutController(logoutInteractor);
+            DownloadDocController downloadDocController
+                    = new DownloadDocController(downloadDocInteractor);
+            VoteOnDocSolutionController voteOnDocSolutionController
+                    = new VoteOnDocSolutionController(voteOnDocInteractor);
+
+            // Construct views and configure ViewManager references
+            ArrayList<Updatable> updatableScreens = new ArrayList<>();
+
+            updatableScreens.add(
+                    new LoginPanel(
+                            loginController,
+                            mainViewModel,
+                            submitTestDocController,
+                            submitSolutionDocController,
+                            updateCourseMembershipController,
+                            logoutController,
+                            downloadDocController
+                    )
+            );
+
+            updatableScreens.add(
+                    new RegisterPanel(
+                            userRegisterController,
+                            logoutController,
+                            mainViewModel,
+                            submitTestDocController,
+                            submitSolutionDocController,
+                            updateCourseMembershipController,
+                            downloadDocController
+                    )
+            );
+
+            // Configure view manager references
+            viewManagerGateway.setUpdatableViews(updatableScreens);
 
             // Update current state
             updateStateController.updateState();
 
             // Construct JFrame views
-//            new WelcomeDialog(
-//                    loginController,
-//                    userRegisterController
-//            );
-            //new TestFrame(logoutController); TODO fix this
+            new WelcomeDialog(
+                    loginController,
+                    userRegisterController,
+                    logoutController,
+                    mainViewModel,
+                    submitTestDocController,
+                    submitSolutionDocController,
+                    updateCourseMembershipController,
+                    downloadDocController
+            );
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);
