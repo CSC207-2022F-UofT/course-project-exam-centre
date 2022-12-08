@@ -45,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -53,7 +54,7 @@ public class Main {
 
         Properties config = new Properties();
 
-        // Welcome Message :D
+        // Wel9come Message :D
         System.out.println("\n====    U of T Exam Centre     ===");
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
@@ -268,6 +269,15 @@ public class Main {
 //            testList.add("koz8t694");
 //
 //            updateCourseMembershipController.updateCourseMembership(testList);
+//
+//            submitTestDocController.submitTestDocument(
+//                        "Test #1",
+//                    5,
+//                    Float.parseFloat("1.5"),
+//                    "Final Exam",
+//                    "h9ib1a73",
+//                    "./lib/example.pdf"
+//            );
 
             // Construct JFrame views
             new WelcomeDialog(

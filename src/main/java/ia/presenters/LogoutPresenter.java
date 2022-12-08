@@ -3,6 +3,7 @@ package ia.presenters;
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.LogoutFailed;
 import uc.user.logout.LogoutOutputBoundary;
+import uc.user.logout.LogoutResponseModel;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 
@@ -17,8 +18,9 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView() {
+    public LogoutResponseModel prepareSuccessView(LogoutResponseModel responseModel) {
         // TODO: Update view model here
+        return responseModel;
     }
 
     /** Prepares failView when logout is unsucessful.
@@ -27,7 +29,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
      * @throws LogoutFailed when the logout use case fails.
      */
     @Override
-    public void prepareFailView(String errorMessage) {
+    public LogoutResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
         viewManagerGateway.showError(errorMessage, "Logout Failed");
         throw new LogoutFailed(errorMessage);
