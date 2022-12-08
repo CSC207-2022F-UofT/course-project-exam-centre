@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.CourseMembershipViewModel;
 
 import javax.swing.*;
 import java.awt.*;

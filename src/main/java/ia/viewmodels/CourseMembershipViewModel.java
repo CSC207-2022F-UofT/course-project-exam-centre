@@ -1,4 +1,4 @@
-package fworks.views;
+package ia.viewmodels;
 
 import java.util.HashMap;
 import java.util.List;
