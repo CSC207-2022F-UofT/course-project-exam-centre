@@ -28,7 +28,7 @@ public class VoteOnSolutionDocInteractor implements VoteSDocInputBoundary {
         this.stateTracker = stateTracker;
     }
 
-    /**Takes in the needed information and updates the vote on a solution document
+    /** Takes in the needed information and updates the vote on a solution document
      * 
      * @param model The vote solution document model containing all the relevant information for updating
      * the vote on a solution document

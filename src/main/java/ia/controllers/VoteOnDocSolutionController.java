@@ -11,8 +11,8 @@ public class VoteOnDocSolutionController {
         this.voteSDocInputBoundary = voteSDocInputBoundary;
     }
 
-    public VoteSDocResponseModel createInput(String solutionId, String userId, boolean vote){
-        VoteSDocRequestModel voteSDocRequestModel = new VoteSDocRequestModel(solutionId, userId, vote);
+    public VoteSDocResponseModel createInput(String solutionId, boolean vote){
+        VoteSDocRequestModel voteSDocRequestModel = new VoteSDocRequestModel(solutionId, vote);
         return voteSDocInputBoundary.voteSolutionDoc(voteSDocRequestModel);
     }
     
