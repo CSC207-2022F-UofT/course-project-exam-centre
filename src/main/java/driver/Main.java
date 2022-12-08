@@ -270,11 +270,12 @@ public class Main {
 //            updateCourseMembershipController.updateCourseMembership(testList);
 
             // Construct JFrame views
-//            new WelcomeDialog(
-//                    loginController,
-//                    userRegisterController
-//            );
-            new TestFrame(logoutController);
+            new WelcomeDialog(
+                    loginController,
+                    userRegisterController,
+                    logoutController
+            );
+//            new TestFrame(logoutController); This was added for testing :)
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);
