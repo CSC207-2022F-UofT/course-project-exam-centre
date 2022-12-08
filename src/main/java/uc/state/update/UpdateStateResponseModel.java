@@ -1,8 +1,5 @@
 package uc.state.update;
 
-import entities.Course;
-import entities.CourseInfo;
-import entities.User;
 import uc.state.update.responsemodels.UpdateStateCourseInfoResponseModel;
 import uc.state.update.responsemodels.UpdateStateCourseResponseModel;
 import uc.state.update.responsemodels.UpdateStateUserResponseModel;
@@ -23,15 +20,15 @@ public class UpdateStateResponseModel {
         this.courseInfoModels = courseInfoModels;
     }
 
-    UpdateStateUserResponseModel getCurrentUserModel() {
+    public UpdateStateUserResponseModel getCurrentUserModel() {
         return this.currentUserModel;
     }
 
-    Map<String, UpdateStateCourseResponseModel> getCurrentUserCourseModels() {
+    public Map<String, UpdateStateCourseResponseModel> getCurrentUserCourseModels() {
         return this.usersCourseModels;
     }
 
-    Map<String, UpdateStateCourseInfoResponseModel> getCourseInfoModels() {
+    public Map<String, UpdateStateCourseInfoResponseModel> getCourseInfoModels() {
         return this.courseInfoModels;
     }
 }

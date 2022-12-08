@@ -1,5 +1,7 @@
 package uc.dboard.submessage;
 
+import uc.dboard.submessage.dbmodels.SubDBMessUserDbModel;
+
 /** SubDBMessDsGateway provides methods to access, compare, and update persistent data
  * @layer use cases
  */
@@ -22,4 +24,7 @@ public interface SubDBMessDsGateway {
      * @return returns the String Corresponding to the unique identifier for the message
      */
     String addMessage(SubDBMessDsRequestModel requestModel);
+
+    // TODO: JavaDoc
+    SubDBMessUserDbModel getUserById(String userId);
 }
