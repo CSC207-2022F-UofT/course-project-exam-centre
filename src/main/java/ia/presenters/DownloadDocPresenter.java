@@ -2,6 +2,7 @@ package ia.presenters;
 
 import ia.exceptions.DownloadDocFailed;
 import ia.gateways.ViewManagerGateway;
+import ia.viewmodels.MainViewModel;
 import uc.doc.downloaddoc.DownloadDocOutputBoundary;
 import uc.doc.downloaddoc.DownloadDocRequestModel;
 import uc.doc.downloaddoc.DownloadDocResponseModel;
@@ -9,13 +10,16 @@ import uc.doc.downloaddoc.DownloadDocResponseModel;
 public class DownloadDocPresenter implements DownloadDocOutputBoundary{
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public DownloadDocPresenter(ViewManagerGateway viewManagerGateway) {
+    public DownloadDocPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
     
     /** Prepares SuccessView when a document is successfully downloaded

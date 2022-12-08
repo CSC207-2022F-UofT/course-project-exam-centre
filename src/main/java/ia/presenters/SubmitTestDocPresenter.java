@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitTestDocFailed;
+import ia.viewmodels.MainViewModel;
 import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTDocResponseModel;
 
 public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public SubmitTestDocPresenter(ViewManagerGateway viewManagerGateway) {
+    public SubmitTestDocPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /** Prepares the successView when the test document is successfully submitted.

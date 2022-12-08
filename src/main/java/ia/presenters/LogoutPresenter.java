@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.LogoutFailed;
+import ia.viewmodels.MainViewModel;
 import uc.user.logout.LogoutOutputBoundary;
 import uc.user.logout.LogoutResponseModel;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public LogoutPresenter(ViewManagerGateway viewManagerGateway) {
+    public LogoutPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     @Override

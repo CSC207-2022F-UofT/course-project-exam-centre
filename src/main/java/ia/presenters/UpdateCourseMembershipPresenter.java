@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UpdateCourseMembershipFailed;
+import ia.viewmodels.MainViewModel;
 import uc.course.updatemembers.UpdateCMemOutputBoundary;
 import uc.course.updatemembers.UpdateCMemResponseModel;
 
 public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public UpdateCourseMembershipPresenter(ViewManagerGateway viewManagerGateway) {
+    public UpdateCourseMembershipPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /** Prepares the successView when the membership of the course is successfully updated

@@ -1,6 +1,7 @@
 package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
+import ia.viewmodels.MainViewModel;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CRegisterResponseModel;
 import ia.exceptions.CourseRegisterFailed;
@@ -8,13 +9,16 @@ import ia.exceptions.CourseRegisterFailed;
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public CourseRegisterPresenter(ViewManagerGateway viewManagerGateway) {
+    public CourseRegisterPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /**  Prepares the successView when the Course is successfully registered

@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.SubmitDBMessageFailed;
+import ia.viewmodels.MainViewModel;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubDBMessResponseModel;
 
 public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public SubmitDBMessagePresenter(ViewManagerGateway viewManagerGateway) {
+    public SubmitDBMessagePresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
     /** Prepares the successView when the message is successfully submitted.

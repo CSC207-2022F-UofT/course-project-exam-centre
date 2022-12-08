@@ -12,6 +12,7 @@ import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
 import ia.gateways.FileAccessGateway;
 import ia.presenters.*;
+import ia.viewmodels.MainViewModel;
 import uc.course.register.CRegisterInputBoundary;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CourseRegisterInteractor;
@@ -53,13 +54,10 @@ public class Main {
 
         Properties config = new Properties();
 
-        // Wel9come Message :D
+        // Welcome Message :D
         System.out.println("\n====    U of T Exam Centre     ===");
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
-        // Initialise JFrame view
-        // new WelcomeDialog();
-        // new TestFrame();
 
         // Load local config file
         try {
@@ -128,6 +126,9 @@ public class Main {
             // Construct state tracker entity
             StateTracker currentState = stateTrackerFactory.create();
 
+            // Construct main view model
+            MainViewModel mainViewModel = new MainViewModel();
+
             // Construct a new ViewManager
             ArrayList<Updatable> updatableScreens = new ArrayList<>();
             //TODO Add Updatable screens to ArrayList
@@ -135,23 +136,23 @@ public class Main {
 
             // Construct use case presenters
             CRegisterOutputBoundary courseRegisterPresenter
-                    = new CourseRegisterPresenter(viewManagerGateway);
+                    = new CourseRegisterPresenter(viewManagerGateway, mainViewModel);
             LoginOutputBoundary loginPresenter
-                    = new LoginPresenter(viewManagerGateway);
+                    = new LoginPresenter(viewManagerGateway, mainViewModel);
             LogoutOutputBoundary logoutPresenter
-                    = new LogoutPresenter(viewManagerGateway);
+                    = new LogoutPresenter(viewManagerGateway, mainViewModel);
             SubDBMessOutputBoundary submitDBMessagePresenter
-                    = new SubmitDBMessagePresenter(viewManagerGateway);
+                    = new SubmitDBMessagePresenter(viewManagerGateway, mainViewModel);
             SubmitSDocOutputBoundary submitSolutionDocPresenter
-                    = new SubmitSolutionDocPresenter(viewManagerGateway);
+                    = new SubmitSolutionDocPresenter(viewManagerGateway, mainViewModel);
             SubmitTDocOutputBoundary submitTestDocPresenter
-                    = new SubmitTestDocPresenter(viewManagerGateway);
+                    = new SubmitTestDocPresenter(viewManagerGateway, mainViewModel);
             UpdateCMemOutputBoundary updateCourseMembershipPresenter
-                    = new UpdateCourseMembershipPresenter(viewManagerGateway);
+                    = new UpdateCourseMembershipPresenter(viewManagerGateway, mainViewModel);
             URegisterOutputBoundary userRegisterPresenter
-                    = new UserRegisterPresenter(viewManagerGateway);
+                    = new UserRegisterPresenter(viewManagerGateway, mainViewModel);
             UpdateStateOutputBoundary updateStatePresenter
-                    = new UpdateStatePresenter(viewManagerGateway);
+                    = new UpdateStatePresenter(viewManagerGateway, mainViewModel);
 
             // Construct use case interactors
             CRegisterInputBoundary courseRegisterInteractor
@@ -248,35 +249,6 @@ public class Main {
 
             // Update current state
             updateStateController.updateState();
-
-            // Testing Use Cases
-
-//            loginController.logIn(
-//                    "harveydonnelly404@gmail.com",
-//                    "HelloWorld"
-//            );
-////            userRegisterController.registerUser(
-////                    "Harvey",
-////                    "Donnelly",
-////                    "harveydonnelly404@gmail.com",
-////                    "HelloWorld",
-////                    "HelloWorld"
-////            );
-//            updateStateController.updateState();
-//            List<String> testList = new ArrayList<>();
-//            testList.add("h9ib1a73");
-//            testList.add("koz8t694");
-//
-//            updateCourseMembershipController.updateCourseMembership(testList);
-//
-//            submitTestDocController.submitTestDocument(
-//                        "Test #1",
-//                    5,
-//                    Float.parseFloat("1.5"),
-//                    "Final Exam",
-//                    "h9ib1a73",
-//                    "./lib/example.pdf"
-//            );
 
             // Construct JFrame views
             new WelcomeDialog(
