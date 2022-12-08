@@ -1,6 +1,7 @@
 package fworks.views;
 
 import ia.controllers.LoginController;
+import ia.controllers.LogoutController;
 import ia.controllers.UserRegisterController;
 
 import javax.swing.*;
@@ -11,14 +12,16 @@ import java.awt.event.*;
  * A dialog for the user to register or log in
  */
 public class WelcomeDialog extends JDialog implements ActionListener {
+    private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
-    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
+    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController,
+                         LogoutController logoutController) {
         loginPanel = new LoginPanel(loginController);
-        registerPanel = new RegisterPanel(userRegisterController);
+        registerPanel = new RegisterPanel(userRegisterController, logoutController);
 
         JPanel buttonsPanel = createButtonsPanel();
 

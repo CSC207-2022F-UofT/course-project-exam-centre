@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.controllers.LogoutController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,14 +9,17 @@ import java.awt.*;
  * The frame for viewing tests
  */
 public class TestFrame extends JFrame {
-    public TestFrame() {
+    private LogoutController logoutController;
+    public TestFrame(LogoutController logoutController) {
         super("Exam Centre");
 
-        MenuBar menuBar = new MenuBar();
+        this.logoutController = logoutController;
+
+        MenuBar menuBar = new MenuBar(logoutController);
         this.setJMenuBar(menuBar);
 
         DocumentView documentView = new DocumentView();
-        TestToolbar toolbar = new TestToolbar(documentView);
+        TestToolbar toolbar = new TestToolbar(documentView, logoutController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

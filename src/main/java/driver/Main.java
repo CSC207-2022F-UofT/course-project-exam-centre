@@ -4,6 +4,7 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
+import fworks.views.TestFrame;
 import fworks.views.Updatable;
 import fworks.views.ViewManager;
 import ia.gateways.ViewManagerGateway;
@@ -269,10 +270,11 @@ public class Main {
 //            updateCourseMembershipController.updateCourseMembership(testList);
 
             // Construct JFrame views
-            new WelcomeDialog(
-                    loginController,
-                    userRegisterController
-            );
+//            new WelcomeDialog(
+//                    loginController,
+//                    userRegisterController
+//            );
+            new TestFrame(logoutController);
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);

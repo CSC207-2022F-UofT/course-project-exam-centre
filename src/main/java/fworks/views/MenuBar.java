@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class MenuBar extends JMenuBar implements ActionListener {
 
     // get this from login use case? hardcoded for now
-    private LogoutController controller;
+    private LogoutController logoutController;
     private String userFullName = "First Last";
     private JMenu userMenu;
     private JMenuItem profileMenuItem;
@@ -24,10 +24,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
     /**
      * Constructs an instance of the MenuBar with a controller for the Logout Use case
-     * @param controller controller for the logout use case
+     * @param logOutController controller for the logout use case
      */
-    public MenuBar(LogoutController controller) {
-        this.controller = controller;
+    public MenuBar(LogoutController logoutController) {
+        this.logoutController = logoutController;
         logoutMenuItem = new JMenuItem("Sign out");
         logoutMenuItem.addActionListener(this);
 
@@ -56,7 +56,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
         // TODO: trigger logout use case
         if(e.getActionCommand().equals(logoutMenuItem.getText())){
             try{
-                controller.logOut();
+                logoutController.logOut();
             } catch(LogoutFailed exception){
                 // TODO: generic error message hehe
             }

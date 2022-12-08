@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.controllers.LogoutController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +11,7 @@ import java.awt.event.*;
  * @layer drivers and frameworks
  */
 public class TestToolbar extends JPanel implements ActionListener {
+    private LogoutController logoutController;
     private DocumentView docView;
     private JComboBox<String> testComboBox;
     private JComboBox courseComboBox;
@@ -21,8 +24,9 @@ public class TestToolbar extends JPanel implements ActionListener {
      * Creates an instance of the TestToolbar with the docView that it will update
      * @param docView the docView that will be updated
      */
-    public TestToolbar(DocumentView docView) {
+    public TestToolbar(DocumentView docView, LogoutController logoutController) {
         this.docView = docView;
+        this.logoutController = logoutController;
         JPanel westPanel = createWestPanel();
         JPanel eastPanel = createEastPanel();
 
@@ -103,7 +107,7 @@ public class TestToolbar extends JPanel implements ActionListener {
         } else if (actionEvent.getSource() == takeTestButton) {
             // TODO: Take test
         } else if (actionEvent.getSource() == solutionsButton) {
-            new SolutionFrame(); // Create the solution window
+            new SolutionFrame(logoutController); // Create the solution window
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String testName = action.getSelectedItem().toString();
