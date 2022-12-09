@@ -35,9 +35,19 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     JButton submit;
 
     /**
+     * Button to create a course
+     */
+    JButton addCourse;
+
+    /**
      * The UpdateCourseMembershipController
      */
     UpdateCourseMembershipController updateCourseMembershipController;
+
+    /**
+     * Provides entry way to the course register use case
+     */
+    CourseRegisterController courseRegisterController;
 
     /**
      * Creates a screen for adding courses to the user's membership
@@ -58,7 +68,11 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
                                         MainViewModel mainViewModel){
         this.updateCourseMembershipController = controller;
         this.mainViewModel = mainViewModel;
-        submit = new JButton("Update Course Membership");
+
+        submit = new JButton("Update Courses");
+        addCourse = new JButton("Add Course");
+
+        addCourse.addActionListener(this);
         submit.addActionListener(this);
     }
 
@@ -83,6 +97,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
             this.add(courseID);
         }
         this.add(submit);
+        this.add(addCourse);
         this.pack();
         this.setVisible(true);
     }
@@ -110,20 +125,25 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     @Override
     public void actionPerformed(ActionEvent event) {
         System.out.println("Click: " + event);
-        try {
-            StringBuilder courseDisplayString = new StringBuilder("\n");
-            ArrayList<String> coursesToAdd = new ArrayList<>();
-            for (JLabel courseID : courseDisplay.keySet()) {
-                if (courseDisplay.get(courseID).isSelected()) {
-                    coursesToAdd.add(courseDisplay.get(courseID).getText());
-                    courseDisplayString.append(courseID.getText()).append("\n");
+        if(event.getActionCommand().equals(addCourse)) {
+            new RegisterCoursePanel(courseRegisterController, mainViewModel);
+        } else{
+            try {
+                StringBuilder courseDisplayString = new StringBuilder("\n");
+                ArrayList<String> coursesToAdd = new ArrayList<>();
+                for (JLabel courseID : courseDisplay.keySet()) {
+                    if (courseDisplay.get(courseID).isSelected()) {
+                        coursesToAdd.add(courseDisplay.get(courseID).getText());
+                        courseDisplayString.append(courseID.getText()).append("\n");
+                    }
                 }
+                updateCourseMembershipController.updateCourseMembership(coursesToAdd);
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, String.format("%s Courses Updated Successfully",
+                        courseDisplayString));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-            updateCourseMembershipController.updateCourseMembership(coursesToAdd);
-            this.setVisible(false);
-            JOptionPane.showMessageDialog(this, String.format("%s Updated Course Membership:", courseDisplayString));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
