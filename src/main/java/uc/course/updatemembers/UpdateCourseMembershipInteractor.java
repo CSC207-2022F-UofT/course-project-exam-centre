@@ -27,7 +27,11 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
      * @param gateway provides methods to access persistent memory
      * @param presenter provides methods to update the view
      * @param currentState the state tracker representing current software state
-     *                     TODO: Update JavaDoc
+     * @param userFactory the user factory to create users
+     * @param testDocFactory the test document factory to create tests
+     * @param solutionDocFactory the solution document factory to create solutions
+     * @param courseFactory the course factory to create courses
+     * @param messageFactory the message factory to create messages
      */
     public UpdateCourseMembershipInteractor(
             UpdateCMemDsGateway gateway,
@@ -48,6 +52,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         this.messageFactory = messageFactory;
     }
 
+    /**
+     * @param messageTree a tree representing messages and its replies
+     * @return a response model of the tree
+     */
     private UpdateCMemMessageTreeResponseModel prepareMessageTreeResponseModel(
             MessageTree messageTree) {
 
@@ -84,6 +92,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
 
     }
 
+    /**
+     * @param solutionDocEntity a solutions document
+     * @return a response model of the solutions document
+     */
     private UpdateCMemSolutionDocResponseModel prepareSolutionDocResponseModel(
             SolutionDocument solutionDocEntity) {
         UpdateCMemMessageTreeResponseModel messageTree
@@ -100,6 +112,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         );
     }
 
+    /**
+     * @param testDocEntity a test document
+     * @return a response model of the test document
+     */
     private UpdateCMemTestDocResponseModel prepareTestDocResponseModel(
             TestDocument testDocEntity) {
         Map<String, UpdateCMemSolutionDocResponseModel> solutionModels = new HashMap<>();
@@ -120,6 +136,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         );
     }
 
+    /**
+     * @param courseEntity a course
+     * @return a response model of the course
+     */
     private UpdateCMemCourseResponseModel prepareCourseResponseModel(
             Course courseEntity) {
         Map<String, UpdateCMemTestDocResponseModel> testModels = new HashMap<>();
@@ -137,6 +157,9 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         );
     }
 
+    /**
+     * @return a update course response model
+     */
     private UpdateCMemResponseModel prepareResponseModel() {
         User currentUser = currentState.getCurrentUser();
         Map<String, UpdateCMemCourseResponseModel> usersCourseModels = new HashMap<>();
@@ -176,6 +199,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
 
     }
 
+    /**
+     * @param userId a unique identifier of a user
+     * @return the user
+     */
     private User constructUserById(String userId) {
         UpdateCMemUserDbModel userData = dsGateway.getUserById(userId);
         List<String> rawUserEnrolmentsData = dsGateway.getCourseIdsByUserId(userId);
@@ -193,6 +220,9 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         return newUser;
     }
 
+    /**
+     * @param parentTestDoc a test document that is a parent of solution documents
+     */
     private void constructSolutionsByTest(TestDocument parentTestDoc) {
         String parentTestId = parentTestDoc.getId();
         List<? extends UpdateCMemSolutionDocDbModel> solutionsData
@@ -223,6 +253,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         }
     }
 
+    /**
+     * @param parentId a unique identifier of a parent of a message
+     * @param newMessageTree the message tree
+     */
     private void constructMessageTreeByParentId(
             String parentId, MessageTree newMessageTree) {
         List<? extends UpdateCMemMessageDbModel> rawChildMessageData
@@ -246,6 +280,9 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         }
     }
 
+    /**
+     * @param parentCourse a course
+     */
     private void constructAllTestsByCourse(Course parentCourse) {
         String courseId = parentCourse.getId();
         List<? extends UpdateCMemTestDocDbModel> testsData
@@ -272,6 +309,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         }
     }
 
+    /**
+     * @param courseId a unique identifier of a course
+     * @return the course
+     */
     private Course constructCourseById(String courseId) {
         UpdateCMemCourseDbModel courseData = dsGateway.getCourseById(courseId);
 
@@ -287,6 +328,11 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
 
     }
 
+    /**
+     * @param requestModel UpdateCMemRequestModel containing the information of the user
+     *                     and courses they want to be enrolled in
+     * @return a response model for updating course membership
+     */
     @Override
     public UpdateCMemResponseModel updateCourseMembership(UpdateCMemRequestModel requestModel) {
         User currentUser = currentState.getCurrentUser();
