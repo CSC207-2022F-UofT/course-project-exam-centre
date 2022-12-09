@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.util.prefs.Preferences;
 
 /**
- * The view that renders and displays a PDF
- * TODO: test with PDFs of different sizes
+ * The panel that renders and displays a PDF
+ * @layer Frameworks and drivers
  */
 public class DocumentView {
     private SwingController controller;

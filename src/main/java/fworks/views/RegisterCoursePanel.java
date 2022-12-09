@@ -12,6 +12,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A panel displaying a list of courses with checkboxes, allowing a user to signup/unsignup for courses
+ * @layer Frameworks and driver
+ */
 public class RegisterCoursePanel extends JPanel implements ActionListener, Updatable {
 
     private JTextField courseCodeField;

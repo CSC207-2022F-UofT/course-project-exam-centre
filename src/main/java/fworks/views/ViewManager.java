@@ -7,6 +7,10 @@ import ia.viewmodels.Updatable;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * A class for updating all views at once and displaying error dialogue boxes
+ * @layer Frameworks and driver
+ */
 public class ViewManager implements ViewManagerGateway {
 
     private ArrayList<Updatable> updatableViews;

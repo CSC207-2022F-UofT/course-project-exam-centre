@@ -56,6 +56,11 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     MainViewModel mainViewModel;
 
     /**
+     * A map containing all the course codes, and their corresponding ID
+     */
+    Map<String, String> courseCodeToId;
+
+    /**
      * Creates a screen for updating a user's course membership
      * @param controller The controller for updating course membership
      * @param mainViewModel The main view model
@@ -103,14 +108,17 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     private Map<String, List<Object>> getParsedCourseList() {
         Map<String, List<Object>> returnList = new HashMap<String, List<Object>>();
 
+        courseCodeToId = new HashMap<>();
+
         Set<String> userCourseList = mainViewModel.getCurrentUserCourseModels().keySet();
         Map<String, CourseInfoSubViewModel> allCourses = mainViewModel.getCourseInfoModels();
 
         for (String courseID : allCourses.keySet()) {
+            courseCodeToId.put(allCourses.get(courseID).getCourseCode(), courseID);
             List<Object> courseData = new ArrayList<>();
             courseData.add(allCourses.get(courseID).getCourseName());
             courseData.add(userCourseList.contains(courseID));
-            returnList.put(courseID, courseData);
+            returnList.put(allCourses.get(courseID).getCourseCode(), courseData);
         }
         return returnList;
     }
@@ -131,7 +139,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
                 ArrayList<String> coursesToAdd = new ArrayList<>();
                 for (JLabel courseID : courseDisplay.keySet()) {
                     if (courseDisplay.get(courseID).isSelected()) {
-                        coursesToAdd.add(courseDisplay.get(courseID).getText());
+                        coursesToAdd.add(courseCodeToId.get(courseID.getText()));
                         courseDisplayString.append(courseID.getText()).append("\n");
                     }
                 }
