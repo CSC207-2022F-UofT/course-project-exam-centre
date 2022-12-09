@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * A panel for new users to register
  * @layer drivers and frameworks
  */
-public class RegisterPanel extends JPanel implements ActionListener, Updatable {
+public class RegisterPanel extends JPanel implements ActionListener {
     private UserRegisterController userRegisterController;
     private LogoutController logoutController;
     private JTextField firstNameField;
@@ -216,34 +216,6 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                 setVisible(false);
 
                 //new TestFrame(logoutController); TODO fix this
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        if (mainViewModel.getCurrentUserModel() != null) {
-            if(mainFrame == null) {
-                if(mainViewModel.getCurrentUserCourseModels().isEmpty()) {
-                    UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
-                            updateCourseMembershipController,
-                            mainViewModel);
-                    updateCourseMembershipScreen.createScreen();
-                }
-                mainFrame = new MainFrame(mainViewModel,
-                        submitTestDocController,
-                        submitSolutionDocController,
-                        updateCourseMembershipController,
-                        logoutController,
-                        downloadDocController);
-            } else {
-                mainFrame.update();
-            }
-        } else {
-            if(mainFrame != null) {
-                mainFrame.setVisible(false);
-                mainFrame.dispose();
-                mainFrame = null;
             }
         }
     }
