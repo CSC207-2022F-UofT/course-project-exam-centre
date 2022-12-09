@@ -23,4 +23,5 @@ public interface LoginDsGateway {
 
     //TODO: JavaDoc
     List<String> getCourseIdsByUserId(String userId);
+    boolean getConnectionStatus();
 }

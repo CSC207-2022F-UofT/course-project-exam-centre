@@ -43,6 +43,11 @@ public class LoginInteractor implements LoginInputBoundary {
         String email = requestModel.getEmail();
         String password = requestModel.getPassword();
 
+        // Exception handling for failed db connection
+        if (!dsGateway.getConnectionStatus()) {
+            return outputBoundary.prepareFailView("Database Connection Failed");
+        }
+
         if (!dsGateway.verifyLoginCredentials(email, password)) {
             return outputBoundary.prepareFailView("Could not find a user with a matching email and password");
         } else {

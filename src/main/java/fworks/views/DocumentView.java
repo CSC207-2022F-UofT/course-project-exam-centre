@@ -12,7 +12,7 @@ import java.util.prefs.Preferences;
  * The view that renders and displays a PDF
  * TODO: test with PDFs of different sizes
  */
-public class DocumentView implements Updatable {
+public class DocumentView {
     private SwingController controller;
     private JPanel panel;
     private String filePath;
@@ -94,10 +94,5 @@ public class DocumentView implements Updatable {
         controller.setPageViewMode(2, false);
         controller.setPageFitMode(4, true);
         panel.setSize(700, 700);
-    }
-
-    @Override
-    public void update() {
-
     }
 }

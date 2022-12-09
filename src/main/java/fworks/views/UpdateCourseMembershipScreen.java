@@ -1,6 +1,5 @@
 package fworks.views;
 
-import ia.controllers.CourseRegisterController;
 import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.CourseInfoSubViewModel;
 import ia.viewmodels.MainViewModel;
@@ -75,7 +74,6 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
 
         addCourse.addActionListener(this);
         submit.addActionListener(this);
-
     }
 
     /**

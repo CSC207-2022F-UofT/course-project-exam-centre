@@ -32,6 +32,10 @@ public class UserRegisterInteractorTest {
             public String saveUser(URegisterDsRequestModel requestModel) {
                 return "ABCD1234";
             }
+
+            @Override
+            public boolean getConnectionStatus() {return true;}
+
         };
 
         URegisterOutputBoundary userOutputBoundary = new URegisterOutputBoundary() {
@@ -81,6 +85,10 @@ public class UserRegisterInteractorTest {
                 fail("Use case success is unexpected.");
                 return null;
             }
+
+            @Override
+            public boolean getConnectionStatus() {return true;}
+
         };
 
         URegisterOutputBoundary userOutputBoundary = new URegisterOutputBoundary() {
@@ -124,6 +132,10 @@ public class UserRegisterInteractorTest {
                 fail("Use case success is unexpected");
                 return null;
             }
+
+            @Override
+            public boolean getConnectionStatus() {return true;}
+
         };
 
         URegisterOutputBoundary userOutputBoundary = new URegisterOutputBoundary() {

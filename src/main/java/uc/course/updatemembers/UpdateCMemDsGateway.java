@@ -44,7 +44,6 @@ public interface UpdateCMemDsGateway
      */
     UpdateCMemUserDbModel getUserById(String userId);
 
-    // TODO: Update JavaDoc
     boolean getConnectionStatus();
     List<? extends UpdateCMemTestDocDbModel> getTestDocsByCourseId(String courseId);
     List<? extends UpdateCMemSolutionDocDbModel> getSolutionDocsByTestId(String testId);

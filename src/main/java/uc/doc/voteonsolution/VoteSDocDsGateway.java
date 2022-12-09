@@ -30,5 +30,7 @@ public interface VoteSDocDsGateway {
      * @return returns the String type of the CourseId that the Test relates to.
      */
     String getCourseIdByTestId(String testId);
+
+    boolean getConnectionStatus();
     
 }

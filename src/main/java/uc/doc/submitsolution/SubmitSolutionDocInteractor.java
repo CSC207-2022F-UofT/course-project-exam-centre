@@ -105,6 +105,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
      */
     @Override
     public SubmitSDocResponseModel submitSolutionDoc(SubmitSDocRequestModel model) {
+
+        // Exception handling for failed db connection
+        if (!dsGateway.getConnectionStatus()) {
+            return sDocOutputBoundary.prepareFailView("Database Connection Failed");
+        }
+
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());
         User user = stateTracker.getCurrentUser();
         TestDocument parentTest = course.getTest(model.getParentTestID());
@@ -130,10 +136,6 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
         dsGateway.updateRootMessageIdOfSolution(
                 solutionId,
                 rootMessageId);
-
-        if (!sDocFileAccessGateway.checkConnectionStatus()) {
-                return sDocOutputBoundary.prepareFailureView("Error connecting to the FTP server");
-        }
 
         sDocFileAccessGateway.uploadSolutionDocument(dsRequestModel, solutionId);
 
