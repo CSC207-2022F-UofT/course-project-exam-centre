@@ -1,5 +1,6 @@
 package fworks.views;
 
+import ia.controllers.CourseRegisterController;
 import ia.controllers.UpdateCourseMembershipController;
 import ia.viewmodels.CourseInfoSubViewModel;
 import ia.viewmodels.MainViewModel;
