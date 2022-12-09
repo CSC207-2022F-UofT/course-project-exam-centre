@@ -47,6 +47,12 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
      */
     @Override
     public SubmitTDocResponseModel submitTestDoc(SubmitTDocRequestModel requestModel) {
+
+        // Exception handling for failed db connection
+        if (!dsGateway.getConnectionStatus()) {
+            return tDocOutputBoundary.prepareFailView("Database Connection Failed");
+        }
+
         Course course = stateTracker.getCourseIfTracked(requestModel.getCourseID());
         User user = stateTracker.getCurrentUser();
 
@@ -61,6 +67,10 @@ public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
         );
 
         String docId = dsGateway.saveTestDocument(dsRequestModel);
+        
+        if (!tDocFileAccessGateway.checkConnectionStatus()) {
+            return tDocOutputBoundary.prepareFailView("Error connecting to the FTP server");
+        }
         
         tDocFileAccessGateway.uploadTestDocument(dsRequestModel, docId);
 

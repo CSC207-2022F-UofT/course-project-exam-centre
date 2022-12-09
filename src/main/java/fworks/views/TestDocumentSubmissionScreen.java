@@ -45,11 +45,6 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
     JTextField numQuestions = new JTextField(5);
 
     /**
-     * The ID of the user using this window
-     */
-    String userID;
-
-    /**
      * The ID of the course this window was created for
      */
     String courseID;
@@ -64,9 +59,8 @@ public class TestDocumentSubmissionScreen extends JFrame implements ActionListen
      * This screen auto displays after being created, and should be disposed after use
      * @param controller The user document submission controller
      */
-    public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID, String userID) {
+    public TestDocumentSubmissionScreen(SubmitTestDocController controller, String courseID) {
         this.testDocController = controller;
-        this.userID = userID;
         this.courseID = courseID;
 
 

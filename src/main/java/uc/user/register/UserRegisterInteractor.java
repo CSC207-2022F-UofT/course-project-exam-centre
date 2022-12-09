@@ -39,6 +39,12 @@ public class UserRegisterInteractor implements URegisterInputBoundary {
      */
     @Override
     public URegisterResponseModel registerUser(URegisterRequestModel requestModel){
+
+        // Exception handling for failed db connection
+        if (!userDsGateway.getConnectionStatus()) {
+            return userOutputBoundary.prepareFailView("Database Connection Failed");
+        }
+
         if(userDsGateway.checkIfUserExistsByEmail(requestModel.getEmail())){
             return userOutputBoundary.prepareFailView("User already exists");
         } else if(!(requestModel.getPassword().equals(requestModel.getRepeatPassword()))){

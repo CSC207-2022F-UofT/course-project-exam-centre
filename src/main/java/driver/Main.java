@@ -4,14 +4,14 @@ import entities.*;
 import entities.factories.*;
 import fworks.da.FtpAccessManager;
 import fworks.da.PostgresAccessManager;
-import fworks.views.Updatable;
-import fworks.views.ViewManager;
+import fworks.views.*;
+import ia.viewmodels.Updatable;
 import ia.gateways.ViewManagerGateway;
-import fworks.views.WelcomeDialog;
 import ia.controllers.*;
 import ia.gateways.DatabaseAccessGateway;
 import ia.gateways.FileAccessGateway;
 import ia.presenters.*;
+import ia.viewmodels.MainViewModel;
 import uc.course.register.CRegisterInputBoundary;
 import uc.course.register.CRegisterOutputBoundary;
 import uc.course.register.CourseRegisterInteractor;
@@ -21,12 +21,18 @@ import uc.course.updatemembers.UpdateCourseMembershipInteractor;
 import uc.dboard.submessage.SubDBMessInputBoundary;
 import uc.dboard.submessage.SubDBMessOutputBoundary;
 import uc.dboard.submessage.SubmitDBMessageInteractor;
+import uc.doc.downloaddoc.DownloadDocInputBoundary;
+import uc.doc.downloaddoc.DownloadDocInteractor;
+import uc.doc.downloaddoc.DownloadDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocOutputBoundary;
 import uc.doc.submitsolution.SubmitSDocInputBoundary;
 import uc.doc.submitsolution.SubmitSolutionDocInteractor;
 import uc.doc.submittest.SubmitTDocInputBoundary;
 import uc.doc.submittest.SubmitTDocOutputBoundary;
 import uc.doc.submittest.SubmitTestDocInteractor;
+import uc.doc.voteonsolution.VoteOnSolutionDocInteractor;
+import uc.doc.voteonsolution.VoteSDocInputBoundary;
+import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.state.update.UpdateStateInputBoundary;
 import uc.state.update.UpdateStateInteractor;
 import uc.state.update.UpdateStateOutputBoundary;
@@ -44,7 +50,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -53,13 +58,10 @@ public class Main {
 
         Properties config = new Properties();
 
-        // Wel9come Message :D
+        // Welcome Message :D
         System.out.println("\n====    U of T Exam Centre     ===");
         System.out.println("====  CSC 207 Course Project   ===\n\n");
 
-        // Initialise JFrame view
-        // new WelcomeDialog();
-        // new TestFrame();
 
         // Load local config file
         try {
@@ -128,30 +130,35 @@ public class Main {
             // Construct state tracker entity
             StateTracker currentState = stateTrackerFactory.create();
 
+            // Construct main view model
+            MainViewModel mainViewModel = new MainViewModel();
+
             // Construct a new ViewManager
-            ArrayList<Updatable> updatableScreens = new ArrayList<>();
-            //TODO Add Updatable screens to ArrayList
-            ViewManagerGateway viewManagerGateway = new ViewManager(updatableScreens);
+            ViewManagerGateway viewManagerGateway = new ViewManager();
 
             // Construct use case presenters
             CRegisterOutputBoundary courseRegisterPresenter
-                    = new CourseRegisterPresenter(viewManagerGateway);
+                    = new CourseRegisterPresenter(viewManagerGateway, mainViewModel);
             LoginOutputBoundary loginPresenter
-                    = new LoginPresenter(viewManagerGateway);
+                    = new LoginPresenter(viewManagerGateway, mainViewModel);
             LogoutOutputBoundary logoutPresenter
-                    = new LogoutPresenter(viewManagerGateway);
+                    = new LogoutPresenter(viewManagerGateway, mainViewModel);
             SubDBMessOutputBoundary submitDBMessagePresenter
-                    = new SubmitDBMessagePresenter(viewManagerGateway);
+                    = new SubmitDBMessagePresenter(viewManagerGateway, mainViewModel);
             SubmitSDocOutputBoundary submitSolutionDocPresenter
-                    = new SubmitSolutionDocPresenter(viewManagerGateway);
+                    = new SubmitSolutionDocPresenter(viewManagerGateway, mainViewModel);
             SubmitTDocOutputBoundary submitTestDocPresenter
-                    = new SubmitTestDocPresenter(viewManagerGateway);
+                    = new SubmitTestDocPresenter(viewManagerGateway, mainViewModel);
             UpdateCMemOutputBoundary updateCourseMembershipPresenter
-                    = new UpdateCourseMembershipPresenter(viewManagerGateway);
+                    = new UpdateCourseMembershipPresenter(viewManagerGateway, mainViewModel);
             URegisterOutputBoundary userRegisterPresenter
-                    = new UserRegisterPresenter(viewManagerGateway);
+                    = new UserRegisterPresenter(viewManagerGateway, mainViewModel);
             UpdateStateOutputBoundary updateStatePresenter
-                    = new UpdateStatePresenter(viewManagerGateway);
+                    = new UpdateStatePresenter(viewManagerGateway, mainViewModel);
+            DownloadDocOutputBoundary downloadDocPresenter
+                    = new DownloadDocPresenter(viewManagerGateway, mainViewModel);
+            VoteSDocOutputBoundary voteSDocPresenter
+                    = new VoteSDocPresenter(viewManagerGateway, mainViewModel);
 
             // Construct use case interactors
             CRegisterInputBoundary courseRegisterInteractor
@@ -226,6 +233,20 @@ public class Main {
                             messageFactory
             );
 
+            DownloadDocInputBoundary downloadDocInteractor
+                    = new DownloadDocInteractor(
+                            fileAccessGateway,
+                            downloadDocPresenter,
+                            currentState
+            );
+
+            VoteSDocInputBoundary voteOnDocInteractor
+                    = new VoteOnSolutionDocInteractor(
+                            dbGateway,
+                            voteSDocPresenter,
+                            currentState
+            );
+
             // Construct use case controllers
             CourseRegisterController courseRegisterController
                     = new CourseRegisterController(courseRegisterInteractor);
@@ -245,44 +266,34 @@ public class Main {
                     = new UserRegisterController(userRegisterInteractor);
             LogoutController logoutController
                     = new LogoutController(logoutInteractor);
+            DownloadDocController downloadDocController
+                    = new DownloadDocController(downloadDocInteractor);
+            VoteOnDocSolutionController voteOnDocSolutionController
+                    = new VoteOnDocSolutionController(voteOnDocInteractor);
+
+            // Construct views and configure ViewManager references
+            ArrayList<Updatable> updatableScreens = new ArrayList<>();
+            viewManagerGateway.setUpdateStateController(updateStateController);
+
+            updatableScreens.add(
+                    new WelcomeDialog(
+                            loginController,
+                            userRegisterController,
+                            logoutController,
+                            mainViewModel,
+                            submitTestDocController,
+                            submitSolutionDocController,
+                            updateCourseMembershipController,
+                            downloadDocController,
+                            updateStateController
+                    )
+            );
+
+            // Configure view manager references
+            viewManagerGateway.setUpdatableViews(updatableScreens);
 
             // Update current state
             updateStateController.updateState();
-
-            // Testing Use Cases
-
-//            loginController.logIn(
-//                    "harveydonnelly404@gmail.com",
-//                    "HelloWorld"
-//            );
-////            userRegisterController.registerUser(
-////                    "Harvey",
-////                    "Donnelly",
-////                    "harveydonnelly404@gmail.com",
-////                    "HelloWorld",
-////                    "HelloWorld"
-////            );
-//            updateStateController.updateState();
-//            List<String> testList = new ArrayList<>();
-//            testList.add("h9ib1a73");
-//            testList.add("koz8t694");
-//
-//            updateCourseMembershipController.updateCourseMembership(testList);
-//
-//            submitTestDocController.submitTestDocument(
-//                        "Test #1",
-//                    5,
-//                    Float.parseFloat("1.5"),
-//                    "Final Exam",
-//                    "h9ib1a73",
-//                    "./lib/example.pdf"
-//            );
-
-            // Construct JFrame views
-            new WelcomeDialog(
-                    loginController,
-                    userRegisterController
-            );
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException(e);

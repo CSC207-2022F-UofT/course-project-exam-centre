@@ -18,6 +18,6 @@ public interface SubmitSDocOutputBoundary {
      * @param error The error message
      * @return The data to pass for presentation
      */
-    SubmitSDocResponseModel prepareFailureView(String error);
+    SubmitSDocResponseModel prepareFailView(String error);
 
 }

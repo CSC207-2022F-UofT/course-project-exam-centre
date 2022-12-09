@@ -27,5 +27,7 @@ public interface FileAccessGateway extends SubmitSDocFileAccessGateway, SubmitTD
         String documentId = model.getDocumentId();
         return downloadFile(documentId);
     }
+    
+    boolean checkConnectionStatus();
 
 }

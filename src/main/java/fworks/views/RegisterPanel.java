@@ -1,6 +1,9 @@
 package fworks.views;
 
-import ia.controllers.UserRegisterController;
+import ia.controllers.*;
+import ia.exceptions.UserRegisterFailed;
+import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,19 +12,46 @@ import java.util.regex.Pattern;
 
 /**
  * A panel for new users to register
- * TODO: add fields for first and last name
+ * @layer drivers and frameworks
  */
 public class RegisterPanel extends JPanel implements ActionListener {
-    private UserRegisterController controller;
+    private UserRegisterController userRegisterController;
+    private LogoutController logoutController;
+    private JTextField firstNameField;
+    private JTextField lastNameField;
 
     private JTextField emailTextField;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
     private JButton cancelButton;
     private JButton registerButton;
+    private MainViewModel mainViewModel;
+    private MainFrame mainFrame;
+    private SubmitTestDocController submitTestDocController;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private UpdateCourseMembershipController updateCourseMembershipController;
+    private DownloadDocController downloadDocController;
 
-    public RegisterPanel(UserRegisterController controller) {
-        this.controller = controller;
+    /**
+     * Constructs a RegisterPanel with a controller
+     * @param userRegisterController the controller for the register use case
+     */
+    public RegisterPanel(UserRegisterController userRegisterController,
+                         LogoutController logoutController,
+                         MainViewModel mainViewModel,
+                         SubmitTestDocController submitTestDocController,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         UpdateCourseMembershipController updateCourseMembershipController,
+                         DownloadDocController downloadDocController) {
+        this.userRegisterController = userRegisterController;
+        this.logoutController = logoutController;
+        this.mainViewModel = mainViewModel;
+        this.submitSolutionDocController = submitSolutionDocController;
+        this.submitTestDocController = submitTestDocController;
+        this.updateCourseMembershipController = updateCourseMembershipController;
+        this.downloadDocController = downloadDocController;
+
+        this.mainFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -39,6 +69,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * @return a panel with text fields
      */
     private JPanel createFieldsPanel() {
+        firstNameField = new JTextField(15);
+        lastNameField = new JTextField(15);
         emailTextField = new JTextField(15);
         passwordField1 = new JPasswordField(15);
         passwordField2 = new JPasswordField(15);
@@ -48,40 +80,65 @@ public class RegisterPanel extends JPanel implements ActionListener {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
-        // Row 1, column 1
+        // Row 1, column 0
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = GridBagConstraints.EAST;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 5);
+        panel.add(new JLabel("First Name"), gridBagConstraints);
+        // Row 1, column 1
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+        panel.add(firstNameField, gridBagConstraints);
+
+        // Row 2, column 0
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = GridBagConstraints.EAST;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 5);
+        panel.add(new JLabel("Last Name"), gridBagConstraints);
+
+        // Row 2, column 1
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+        panel.add(lastNameField, gridBagConstraints);
+
+        // Row 2, column 1
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter email"), gridBagConstraints);
 
-        // Row 1, column 2
+        // Row 2, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(emailTextField, gridBagConstraints);
 
-        // Row 2, column 1
-        gridBagConstraints.gridy = 1;
+        // Row 3, column 1
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password"), gridBagConstraints);
 
-        // Row 2, column 2
+        // Row 3, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         panel.add(passwordField1, gridBagConstraints);
 
-        // Row 3, column 1
-        gridBagConstraints.gridy = 2;
+        // Row 4, column 1
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.anchor = GridBagConstraints.EAST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         panel.add(new JLabel("Enter password again"), gridBagConstraints);
 
-        // Row 3, column 2
+        // Row 4, column 2
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
@@ -141,14 +198,24 @@ public class RegisterPanel extends JPanel implements ActionListener {
         } else if (clicked == registerButton) {
             if (isBlank()) {
                 // TODO: blank field(s)
-            } else if (!isValidEmail()) {
-                // TODO: invalid email
-            } else if (!passwordsMatch()) {
-                // TODO: non-matching passwords
+//            } else if (!isValidEmail()) {
+//                // TODO: invalid email
             } else {
+                String firstName = firstNameField.getText();
+                String lastName = lastNameField.getText();
                 String email = emailTextField.getText();
                 String password = new String(passwordField1.getPassword());
-//                controller.create(email, password); TODO
+                String repeatPassword = new String(passwordField2.getPassword());
+
+                try{
+                    userRegisterController.registerUser(firstName, lastName, email, password, repeatPassword);
+                } catch(UserRegisterFailed exception){
+                // TODO: add popup that contains the error message
+                }
+
+                setVisible(false);
+
+                //new TestFrame(logoutController); TODO fix this
             }
         }
     }

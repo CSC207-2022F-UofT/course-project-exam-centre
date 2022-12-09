@@ -1,7 +1,8 @@
 package fworks.views;
 
-import ia.controllers.LoginController;
-import ia.controllers.UserRegisterController;
+import ia.controllers.*;
+import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,15 +11,41 @@ import java.awt.event.*;
 /**
  * A dialog for the user to register or log in
  */
-public class WelcomeDialog extends JDialog implements ActionListener {
+public class WelcomeDialog extends JDialog implements ActionListener, Updatable {
+    private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
     private JRadioButton returningUserRadioButton;
 
-    public WelcomeDialog(LoginController loginController, UserRegisterController userRegisterController) {
-        loginPanel = new LoginPanel(loginController);
-        registerPanel = new RegisterPanel(userRegisterController);
+    private MainViewModel mainViewModel;
+
+    public WelcomeDialog(LoginController loginController,
+                         UserRegisterController userRegisterController,
+                         LogoutController logoutController,
+                         MainViewModel mainViewModel,
+                         SubmitTestDocController submitTestDocController,
+                         SubmitSolutionDocController submitSolutionDocController,
+                         UpdateCourseMembershipController updateCourseMembershipController,
+                         DownloadDocController downloadDocController,
+                         UpdateStateController updateStateController) {
+        loginPanel = new LoginPanel(loginController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                logoutController,
+                downloadDocController,
+                updateStateController);
+        registerPanel = new RegisterPanel(userRegisterController,
+                logoutController,
+                mainViewModel,
+                submitTestDocController,
+                submitSolutionDocController,
+                updateCourseMembershipController,
+                downloadDocController);
+
+        this.mainViewModel = mainViewModel;
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -67,5 +94,15 @@ public class WelcomeDialog extends JDialog implements ActionListener {
         }
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void update() {
+        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+            this.setVisible(false);
+        } else {
+            this.setVisible(true);
+        }
+        loginPanel.update();
     }
 }

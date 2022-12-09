@@ -1,13 +1,14 @@
 package fworks.views;
 
 import ia.controllers.UpdateCourseMembershipController;
+import ia.viewmodels.CourseInfoSubViewModel;
+import ia.viewmodels.MainViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 public class UpdateCourseMembershipScreen extends JFrame implements ActionListener {
@@ -15,7 +16,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      * A list of all the labels and buttons on the screen for a dynamically formed list
      */
-    HashMap<JLabel, JCheckBox> courseDisplay;
+    Map<JLabel, JCheckBox> courseDisplay;
 
     /**
      * The ID of the user updating their course membership
@@ -24,9 +25,9 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
 
     /**
      * The map of course IDs and their names
-     * CourseList contains the string with the course's ID, followed by its name
+     * CourseList contains the string with the course's ID, followed by its name, then the user's status
      */
-    HashMap<String, List<Object>> courseList;
+    Map<String, List<Object>> courseList;
 
     /**
      * Button to submit course selection
@@ -34,9 +35,19 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     JButton submit;
 
     /**
+     * Button to create a course
+     */
+    JButton addCourse;
+
+    /**
      * The UpdateCourseMembershipController
      */
     UpdateCourseMembershipController updateCourseMembershipController;
+
+    /**
+     * Provides entry way to the course register use case
+     */
+    CourseRegisterController courseRegisterController;
 
     /**
      * Creates a screen for adding courses to the user's membership
@@ -46,18 +57,22 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     /**
      *  The viewmodel for this screen
      */
-    CourseMembershipViewModel viewModel;
+    MainViewModel mainViewModel;
 
     /**
      * Creates a screen for updating a user's course membership
      * @param controller The controller for updating course membership
-     * @param viewModel The view model for this screen
+     * @param mainViewModel The main view model
      */
     public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller,
-                                        CourseMembershipViewModel viewModel){
+                                        MainViewModel mainViewModel){
         this.updateCourseMembershipController = controller;
-        this.viewModel = viewModel;
-        submit = new JButton("Add Courses");
+        this.mainViewModel = mainViewModel;
+
+        submit = new JButton("Update Courses");
+        addCourse = new JButton("Add Course");
+
+        addCourse.addActionListener(this);
         submit.addActionListener(this);
     }
 
@@ -66,11 +81,10 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
      * This screen auto-updates upon being called.
      */
     public void createScreen(){
-        this.courseList = viewModel.getCourses();
-        this.userId = viewModel.getUserID();
-        reset();
-
+        this.courseList = getParsedCourseList();
+        this.userId = mainViewModel.getCurrentUserModel().getUserId();
         courseDisplay = new HashMap<>();
+        reset();
 
         this.setLayout(new GridLayout(courseList.size() + 1, 2));
 
@@ -83,8 +97,24 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
             this.add(courseID);
         }
         this.add(submit);
+        this.add(addCourse);
         this.pack();
         this.setVisible(true);
+    }
+
+    private Map<String, List<Object>> getParsedCourseList() {
+        Map<String, List<Object>> returnList = new HashMap<String, List<Object>>();
+
+        Set<String> userCourseList = mainViewModel.getCurrentUserCourseModels().keySet();
+        Map<String, CourseInfoSubViewModel> allCourses = mainViewModel.getCourseInfoModels();
+
+        for (String courseID : allCourses.keySet()) {
+            List<Object> courseData = new ArrayList<>();
+            courseData.add(allCourses.get(courseID).getCourseName());
+            courseData.add(userCourseList.contains(courseID));
+            returnList.put(courseID, courseData);
+        }
+        return returnList;
     }
 
     /**
@@ -95,21 +125,25 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     @Override
     public void actionPerformed(ActionEvent event) {
         System.out.println("Click: " + event);
-        try {
-            StringBuilder courseDisplayString = new StringBuilder("\n");
-            ArrayList<String> coursesToAdd = new ArrayList<>();
-            for (JLabel courseID : courseDisplay.keySet()) {
-                if (courseDisplay.get(courseID).isSelected()) {
-                  coursesToAdd.add(courseID.getText());
-                  courseDisplayString.append(courseID.getText()).append("\n");
+        if(event.getActionCommand().equals(addCourse)) {
+            new RegisterCoursePanel(courseRegisterController, mainViewModel);
+        } else{
+            try {
+                StringBuilder courseDisplayString = new StringBuilder("\n");
+                ArrayList<String> coursesToAdd = new ArrayList<>();
+                for (JLabel courseID : courseDisplay.keySet()) {
+                    if (courseDisplay.get(courseID).isSelected()) {
+                        coursesToAdd.add(courseDisplay.get(courseID).getText());
+                        courseDisplayString.append(courseID.getText()).append("\n");
+                    }
                 }
+                updateCourseMembershipController.updateCourseMembership(coursesToAdd);
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, String.format("%s Courses Updated Successfully",
+                        courseDisplayString));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-            System.out.println(coursesToAdd);
-            updateCourseMembershipController.updateCourseMembership(coursesToAdd);
-            this.setVisible(false);
-            JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", courseDisplayString));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 

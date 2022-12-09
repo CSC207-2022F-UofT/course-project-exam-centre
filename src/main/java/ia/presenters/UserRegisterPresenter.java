@@ -2,19 +2,23 @@ package ia.presenters;
 
 import ia.gateways.ViewManagerGateway;
 import ia.exceptions.UserRegisterFailed;
+import ia.viewmodels.MainViewModel;
 import uc.user.register.URegisterOutputBoundary;
 import uc.user.register.URegisterResponseModel;
 
 public class UserRegisterPresenter implements URegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
+    private final MainViewModel viewModel;
 
     /**
      * Creates a presenter for updating the view
      * @param viewManagerGateway Used for managing and updating views
      */
-    public UserRegisterPresenter(ViewManagerGateway viewManagerGateway) {
+    public UserRegisterPresenter(
+            ViewManagerGateway viewManagerGateway, MainViewModel viewModel) {
         this.viewManagerGateway = viewManagerGateway;
+        this.viewModel = viewModel;
     }
 
 
@@ -25,7 +29,8 @@ public class UserRegisterPresenter implements URegisterOutputBoundary {
      */
     @Override
     public URegisterResponseModel prepareSuccessView(URegisterResponseModel responseModel){
-        // TODO: Update view model
+        viewManagerGateway.updateState();
+        viewManagerGateway.updateViews();
         return responseModel;
     }
 

@@ -66,6 +66,9 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
+            public boolean getConnectionStatus() {return true;}
+
+            @Override
             public String getCourseIdByTestId(String testId) {
                 return course.getId();
             }
@@ -83,7 +86,7 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
-            public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
+            public VoteSDocResponseModel prepareFailView(String errorMessage) {
                 fail("Use case failure is unexpected.");
                 return null;
             }
@@ -116,6 +119,9 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
+            public boolean getConnectionStatus() {return true;}
+
+            @Override
             public String getTestIdBySolutionId(String solutionId) {
                 return testDoc.getId();
             }
@@ -138,7 +144,7 @@ public class VoteOnSolutionDocInteractorTest {
             }
 
             @Override
-            public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
+            public VoteSDocResponseModel prepareFailView(String errorMessage) {
                 fail("Use case failure is unexpected.");
                 return null;
             }

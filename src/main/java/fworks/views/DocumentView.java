@@ -1,5 +1,7 @@
 package fworks.views;
 
+import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 
@@ -15,12 +17,22 @@ public class DocumentView {
     private JPanel panel;
     private String filePath;
 
+    private MainViewModel mainViewModel;
+
     /**
-     * @param filePath the file path of the PDF
+     * Creates a new screen for viewing the document
+     * @param mvm The main ViewModel
      */
-    public DocumentView(String filePath) {
-        this();
-        this.filePath = filePath;
+    public DocumentView(MainViewModel mvm) {
+        this.mainViewModel = mvm;
+        controller = new SwingController();
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
+        panel = factory.buildViewerPanel();
+        if (mvm.getCurrentTestId() != null) {
+            this.filePath = mainViewModel.getLocalDocumentPath(mvm.getCurrentTestId());
+        } else {
+            this.filePath = "./lib/blank.pdf";
+        }
     }
 
     /**
@@ -32,7 +44,7 @@ public class DocumentView {
         controller = new SwingController();
         SwingViewBuilder factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();
-        filePath = "/Users/takedakento/Downloads/project/test/csc207h-d21.pdf";
+//        filePath = "src/data/Solution2.pdf";
     }
 
     /**
@@ -52,7 +64,7 @@ public class DocumentView {
 
     /**
      * Set the file path
-     * @param filePath
+     * @param filePath the name of the file // Note: we may want to rename this?
      */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
@@ -65,6 +77,9 @@ public class DocumentView {
         controller.openDocument(filePath);
     }
 
+    /**
+     * Set the preferences of the view
+     */
     private void setPreferences() {
         Preferences preferences = Preferences.userNodeForPackage(ViewerPropertiesManager.class);
         preferences.putBoolean("application.viewerpreferences.hidemenubar", true);
@@ -72,6 +87,9 @@ public class DocumentView {
         preferences.putBoolean("application.statusbar", false);
     }
 
+    /**
+     * Set the properties of the view
+     */
     private void setViewProperties() {
         controller.setPageViewMode(2, false);
         controller.setPageFitMode(4, true);

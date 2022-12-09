@@ -1,6 +1,8 @@
 package fworks.views;
 
-import ia.controllers.LoginController;
+import ia.controllers.*;
+import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,16 +11,39 @@ import java.awt.event.*;
 /**
  * A panel for existing users to log in
  */
-public class LoginPanel extends JPanel implements ActionListener {
+public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LoginController controller;
-
     private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cancelButton;
     private JButton loginButton;
+    private MainViewModel mainViewModel;
+    private SubmitTestDocController submitTestDocController;
+    private SubmitSolutionDocController submitSolutionDocController;
+    private UpdateCourseMembershipController updateCourseMembershipController;
+    private LogoutController logoutController;
+    private DownloadDocController downloadDocController;
+    private MainFrame mainFrame;
+    private final UpdateStateController updateStateController;
 
-    public LoginPanel(LoginController controller) {
+    public LoginPanel(LoginController controller,
+                      MainViewModel mainViewModel,
+                      SubmitTestDocController submitTestDocController,
+                      SubmitSolutionDocController submitSolutionDocController,
+                      UpdateCourseMembershipController updateCourseMembershipController,
+                      LogoutController logoutController,
+                      DownloadDocController downloadDocController,
+                      UpdateStateController updateStateController) {
         this.controller = controller;
+        this.mainViewModel = mainViewModel;
+        this.submitTestDocController = submitTestDocController;
+        this.submitSolutionDocController = submitSolutionDocController;
+        this.updateCourseMembershipController = updateCourseMembershipController;
+        this.logoutController = logoutController;
+        this.downloadDocController = downloadDocController;
+        this.updateStateController = updateStateController;
+
+        this.mainFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -113,9 +138,39 @@ public class LoginPanel extends JPanel implements ActionListener {
                 String password = new String(passwordField.getPassword());
                 try {
                     controller.logIn(email, password);
+                    updateStateController.updateState();
+
                 } catch (Exception exception) {
                     // TODO: handle error
                 }
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        if (mainViewModel.getCurrentUserModel() != null) {
+            if(mainFrame == null) {
+                if(mainViewModel.getCurrentUserCourseModels().isEmpty()) {
+                    UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
+                            updateCourseMembershipController,
+                            mainViewModel);
+                    updateCourseMembershipScreen.createScreen();
+                }
+                mainFrame = new MainFrame(mainViewModel,
+                        submitTestDocController,
+                        submitSolutionDocController,
+                        updateCourseMembershipController,
+                        logoutController,
+                        downloadDocController);
+            } else {
+                mainFrame.update();
+            }
+        } else {
+            if(mainFrame != null) {
+                mainFrame.setVisible(false);
+                mainFrame.dispose();
+                mainFrame = null;
             }
         }
     }

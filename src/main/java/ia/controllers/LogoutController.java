@@ -9,7 +9,7 @@ public class LogoutController {
         this.inputBoundary = inputBoundary;
     }
 
-    public void logIn() {
+    public void logOut() {
         inputBoundary.logOut();
     }
 }
