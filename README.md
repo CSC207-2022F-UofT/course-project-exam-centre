@@ -53,7 +53,9 @@ UofT is notorious for its lack of past-exams for students to use to prepare for 
 
 Implemented using an FTP Server. Uploads and downloads are handled by the FtpAccessManager which implements the FileAccessGateway interface in the interface adapters layer. The FileAccessGateway extends all use case file access gateways in the application business rules layer. This feature is used to manage PDF uploads and downloads for test and solution documents.
 
-2. **Database Access:** Implemented using a Postgres 14.5 server. Database requests are handled by the PostgresAccessManager which implements the DatabaseAccessGateway in the interface adapters layer. The DatabaseAccessGateway extends all use case DS gateways in the application business rules layer, with default methods to parse the raw data and construct DB response models. Entity data is returned as DB entity models which implement use case specific DB response models in the relevant use case packages via dependency inversion. This feature is used to maintain synchronised data between users.
+2. **Database Access:** 
+
+Implemented using a Postgres 14.5 server. Database requests are handled by the PostgresAccessManager which implements the DatabaseAccessGateway in the interface adapters layer. The DatabaseAccessGateway extends all use case DS gateways in the application business rules layer, with default methods to parse the raw data and construct DB response models. Entity data is returned as DB entity models which implement use case specific DB response models in the relevant use case packages via dependency inversion. This feature is used to maintain synchronised data between users.
 
 
 
