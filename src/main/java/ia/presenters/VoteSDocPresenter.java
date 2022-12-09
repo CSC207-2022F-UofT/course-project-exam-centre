@@ -9,6 +9,10 @@ import uc.doc.voteonsolution.VoteSDocResponseModel;
 
 import java.util.Map;
 
+/**
+ * VoteSDocPresenter updates the views after the VoteSDoc use case
+ * @layer interface adapters
+ */
 public class VoteSDocPresenter implements VoteSDocOutputBoundary{
 
     private final ViewManagerGateway viewManagerGateway;

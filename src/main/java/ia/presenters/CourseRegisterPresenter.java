@@ -9,6 +9,10 @@ import ia.exceptions.CourseRegisterFailed;
 
 import java.util.Map;
 
+/**
+ * CourseRegisterPresenter updates the views after CourseRegister use case
+ * @layer interface adapters
+ */
 public class CourseRegisterPresenter implements CRegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
