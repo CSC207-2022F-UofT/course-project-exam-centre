@@ -1,6 +1,7 @@
 package uc.state.update;
 
 import entities.Course;
+import entities.CourseInfo;
 import entities.StateTracker;
 import entities.factories.*;
 import org.junit.Before;
@@ -13,28 +14,23 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class UpdateStateInteractorTest {
-    private static UpdateStateTestData testData;
-    private static UserFactory userFactory;
-    private static CourseFactory courseFactory;
-    private static TestDocFactory testFactory;
-    private static SolutionDocFactory solutionFactory;
-    private static MessageFactory messageFactory;
+    private UpdateStateTestData testData;
+    private UserFactory userFactory;
+    private CourseFactory courseFactory;
+    private TestDocFactory testFactory;
+    private SolutionDocFactory solutionFactory;
+    private MessageFactory messageFactory;
     private StateTracker currentState;
 
-    @BeforeClass
-    public static void setupBeforeClass(){
+    @Before
+    public void setup(){
         testData = new UpdateStateTestData();
-
+        currentState = new StateTracker();
         userFactory = new UserFactory();
         courseFactory = new CourseFactory();
         testFactory = new TestDocFactory();
         solutionFactory = new SolutionDocFactory();
         messageFactory = new MessageFactory();
-    }
-
-    @Before
-    public void setup(){
-        currentState = new StateTracker();
     }
     /**
      * Test that update state successfully reloads all courses tracked in state
@@ -46,12 +42,12 @@ public class UpdateStateInteractorTest {
             final boolean connectionStatus = true;
             @Override
             public List<? extends UpdateStateTestDocDbModel> getTestDocsByCourseId(String courseId) {
-                return null;
+                return testData.getStoredTestsByCourseId(courseId);
             }
 
             @Override
             public List<? extends UpdateStateSolutionDocDbModel> getSolutionDocsByTestId(String testId) {
-                return null;
+                return testData.getStoredSolutionsByTestId(testId);
             }
 
             @Override
@@ -110,20 +106,20 @@ public class UpdateStateInteractorTest {
                                                                      solutionFactory,
                                                                      messageFactory);
         interactor.updateState();
-        Map<String, Course> trackedCourses = currentState.getAllTrackedCourses();
+        Map<String, CourseInfo> trackedCourses = currentState.getAllCourseInfoItems();
         List<String> storedAllCourseIds = testData.getStoredAllCourseIds();
         assertEquals(storedAllCourseIds.size(), trackedCourses.size());
     }
 
-//    @Test
-//    public void updateStateSuccessGivenUserNotNullConnectionSuccess(){
-//
-//        UpdateStateInteractor interactor = new UpdateStateInteractor();
-//    }
-//
-//
-//    @Test
-//    public void updateStateFailGivenDbConnectionFail(){
-//        UpdateStateInteractor interactor = new UpdateStateInteractor();
-//    }
+    @Test
+    public void updateStateSuccessGivenUserNotNullConnectionSuccess(){
+
+        UpdateStateInteractor interactor = new UpdateStateInteractor();
+    }
+
+
+    @Test
+    public void updateStateFailGivenDbConnectionFail(){
+        UpdateStateInteractor interactor = new UpdateStateInteractor();
+    }
 }

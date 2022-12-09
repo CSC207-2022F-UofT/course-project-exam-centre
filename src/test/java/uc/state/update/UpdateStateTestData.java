@@ -279,7 +279,7 @@ public class UpdateStateTestData {
     private void createStoredAllCourseIds() {
         storedAllCourseIds = new ArrayList<>();
         storedAllCourseIds.add("csc207Id");
-        storedAllCourseIds.add("mat207Id");
+        storedAllCourseIds.add("mat137Id");
     }
 
     private void createStoredCourseIdsByUserId(){
