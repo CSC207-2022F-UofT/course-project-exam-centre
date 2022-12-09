@@ -7,6 +7,11 @@
   <ol>
     <li>
       <a href="#project-features">Project Features</a>
+      <ul>
+        <li><a href="#design-patterns">Design Patterns</a>
+        <li><a href="#documentation">Documentation</a>
+        <li><a href="#testing">Testing</a>
+      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -54,6 +59,10 @@ Used throughout the project to adhere to Clean Architecture
 **4. Observer Pattern**
 
 Views Observe the view  model for updates. The View Model is an observable.
+
+### Documentation
+
+### Testing
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
