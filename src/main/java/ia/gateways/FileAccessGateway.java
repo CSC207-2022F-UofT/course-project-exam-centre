@@ -11,8 +11,8 @@ public interface FileAccessGateway extends SubmitSDocFileAccessGateway, SubmitTD
     
     /** Upload a file to the FTP server
      *
-     * @param localFilePath         file path of local file 
-     * @param fileName              file name
+     * @param filePath         file path of local file
+     * @param docId            file name
      * @return returns true if file upload is successful, false otherwise
      */
     boolean uploadFile(String filePath, String docId);

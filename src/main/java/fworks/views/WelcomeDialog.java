@@ -9,7 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * A dialog for the user to register or log in
+ * The first window which appears when the program is stated, prompting the user to login/register
+ * @layer Frameworks and driver
  */
 public class WelcomeDialog extends JDialog implements ActionListener, Updatable {
     private LoginPanel loginPanel;

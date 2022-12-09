@@ -10,6 +10,7 @@ import java.awt.event.*;
 
 /**
  * A panel for existing users to log in
+ * @layer Frameworks and driver
  */
 public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LoginController controller;

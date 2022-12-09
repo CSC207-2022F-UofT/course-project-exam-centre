@@ -7,6 +7,10 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A screen for selecting test document and specifying information about them
+ * @layer Frameworks and driver
+ */
 public class TestDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**

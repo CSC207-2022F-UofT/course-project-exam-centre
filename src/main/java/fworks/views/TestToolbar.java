@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * The panel component for TestFrame
+ * The panel component for TestFrame with various menu items
  * @layer drivers and frameworks
  */
 public class TestToolbar extends JPanel implements ActionListener, Updatable {
