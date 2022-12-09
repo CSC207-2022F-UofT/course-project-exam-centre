@@ -8,6 +8,7 @@
     <li>
       <a href="#project-features">Project Features</a>
       <ul>
+        <li><a href="#persistent-storage">Persistent Storage</a>
         <li><a href="#design-patterns">Design Patterns</a>
         <li><a href="#documentation">Documentation</a>
         <li><a href="#testing">Testing</a>
@@ -28,6 +29,11 @@
 </details>
 
 ## Project Features
+
+**What is Exam Centre**
+
+UofT is notorious for its lack of past-exams for students to use to prepare for their exams. Along with this, many students struggle with completing questions under a timed test environment. The Exam Centre solves these issues by providing a platform in which students can upload their own practice exams and share them for other students to use. Students are able to take these practice exams under a timed environment. Along with this, students are able to upload their solutions and discuss the tests in a discussion board, giving a rating for the best solutions uploaded. We implement these features:
+
 1. Login User
 2. Logout User
 3. Register new User
@@ -41,6 +47,14 @@
 11. State Tracker
 12. PostGresAccess
 13. FTP Server
+
+### Persistent Storage
+1. **Remote File Access:** 
+
+Implemented using an FTP Server. Uploads and downloads are handled by the FtpAccessManager which implements the FileAccessGateway interface in the interface adapters layer. The FileAccessGateway extends all use case file access gateways in the application business rules layer. This feature is used to manage PDF uploads and downloads for test and solution documents.
+
+2. **Database Access:** Implemented using a Postgres 14.5 server. Database requests are handled by the PostgresAccessManager which implements the DatabaseAccessGateway in the interface adapters layer. The DatabaseAccessGateway extends all use case DS gateways in the application business rules layer, with default methods to parse the raw data and construct DB response models. Entity data is returned as DB entity models which implement use case specific DB response models in the relevant use case packages via dependency inversion. This feature is used to maintain synchronised data between users.
+
 
 
 ### Design Patterns
