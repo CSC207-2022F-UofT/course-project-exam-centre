@@ -51,11 +51,6 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     CourseRegisterController courseRegisterController;
 
     /**
-     * Creates a screen for adding courses to the user's membership
-     * @param controller The controller for handling course addition
-     */
-
-    /**
      *  The viewmodel for this screen
      */
     MainViewModel mainViewModel;
@@ -66,9 +61,11 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
      * @param mainViewModel The main view model
      */
     public UpdateCourseMembershipScreen(UpdateCourseMembershipController controller,
+                                        CourseRegisterController courseRegisterController,
                                         MainViewModel mainViewModel){
         this.updateCourseMembershipController = controller;
         this.mainViewModel = mainViewModel;
+        this.courseRegisterController = courseRegisterController;
 
         submit = new JButton("Update Courses");
         addCourse = new JButton("Add Course");
