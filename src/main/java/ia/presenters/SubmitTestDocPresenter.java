@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SubmitTestDocPresenter updates the views after the SubmitTestDoc use case
+ * @layer interface adapters
+ */
 public class SubmitTestDocPresenter implements SubmitTDocOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

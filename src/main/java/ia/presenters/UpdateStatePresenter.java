@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * UpdateStatePresenter updates the views after the UpdateState use case
+ * @layer interface adapters
+ */
 public class UpdateStatePresenter implements UpdateStateOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

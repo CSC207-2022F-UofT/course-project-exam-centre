@@ -6,6 +6,10 @@ import uc.course.updatemembers.UpdateCMemResponseModel;
 
 import java.util.List;
 
+/**
+ * UpdateCourseMembershipController provides an entry way into the UpdateCourseMembership use case
+ * @layer interface adapters
+ */
 public class UpdateCourseMembershipController {
 
     /**

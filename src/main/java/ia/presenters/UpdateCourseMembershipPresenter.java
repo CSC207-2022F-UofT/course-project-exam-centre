@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * UpdateCourseMembershipPresenter updates the views after the UpdateCourseMembership use case
+ * @layer interface adapters
+ */
 public class UpdateCourseMembershipPresenter implements UpdateCMemOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

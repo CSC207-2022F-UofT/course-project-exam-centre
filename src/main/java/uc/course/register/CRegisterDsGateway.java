@@ -18,5 +18,10 @@ public interface CRegisterDsGateway {
      * @return the course's unique id
      */
     String saveCourse(CRegisterDsRequestModel requestModel);
+    
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
     boolean getConnectionStatus();
 }

@@ -1,6 +1,5 @@
 package uc.course.updatemembers;
 
-import uc.course.updatemembers.dbmodels.UpdateCMemUserDbModel;
 import uc.course.updatemembers.responsemodels.UpdateCMemCourseResponseModel;
 import uc.course.updatemembers.responsemodels.UpdateCMemUserResponseModel;
 
@@ -14,7 +13,10 @@ public class UpdateCMemResponseModel {
     private final Map<String, UpdateCMemCourseResponseModel> usersCourseModels;
 
     /** Constructs a UpdateCMemResponseModel containing a timestamp, userCourseList and an updateMembershipStatus
-     */
+    *
+    * @param currentUser            response model containing information on the current user
+    * @param usersCourseModels      map of course models which correspond to a user
+    */
     public UpdateCMemResponseModel(UpdateCMemUserResponseModel currentUser,
                                    Map<String, UpdateCMemCourseResponseModel> usersCourseModels) {
 
@@ -22,15 +24,17 @@ public class UpdateCMemResponseModel {
         this.usersCourseModels = usersCourseModels;
     }
 
-    /**
-     * @return the current user model
+    /** Gets the user response model which contains information on the current user
+     *
+     * @return user response model of current user
      */
     public UpdateCMemUserResponseModel getCurrentUserModel() {
         return this.currentUserModel;
     }
 
-    /**
-     * @return a mapping of course ids to course response models
+    /** Gets the course models which correspond to a user
+     *
+     * @return map of course models which correspond to a user
      */
     public Map<String, UpdateCMemCourseResponseModel> getUsersCourseModels() {
         return this.usersCourseModels;

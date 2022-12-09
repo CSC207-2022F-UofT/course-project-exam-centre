@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SubmitDBMessagePresenter updates the views after the SubmitDBMessage use case
+ * @layer interface adapters
+ */
 public class SubmitDBMessagePresenter implements SubDBMessOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

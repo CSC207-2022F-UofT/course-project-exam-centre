@@ -13,6 +13,9 @@ public interface SubmitTDocDsGateway {
      */
     String saveTestDocument(SubmitTDocDsRequestModel dsRequestModel);
 
-
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
     boolean getConnectionStatus();
 }

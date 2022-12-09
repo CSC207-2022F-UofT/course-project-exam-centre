@@ -6,6 +6,10 @@ import ia.viewmodels.MainViewModel;
 import uc.user.logout.LogoutOutputBoundary;
 import uc.user.logout.LogoutResponseModel;
 
+/**
+ * LogoutPresenter updates the views after the Logout use case
+ * @layer interface adapters
+ */
 public class LogoutPresenter implements LogoutOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

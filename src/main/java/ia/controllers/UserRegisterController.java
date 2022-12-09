@@ -4,6 +4,10 @@ import uc.user.register.URegisterInputBoundary;
 import uc.user.register.URegisterRequestModel;
 import uc.user.register.URegisterResponseModel;
 
+/**
+ *  UserRegisterController provides an entry way into the UserRegister use case
+ * @layer interface adapters
+ */
 public class UserRegisterController {
 
     URegisterInputBoundary userInput;

@@ -17,7 +17,7 @@ public class SubmitTDocDsRequestModel {
     private final Integer numberOfQuestions;
 
     /**
-     * The ID of the user submtting the document
+     * The ID of the user submitting the document
      */
     private final String userId;
 

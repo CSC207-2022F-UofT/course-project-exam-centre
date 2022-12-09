@@ -1,14 +1,19 @@
 package uc.course.register;
 
+/** CRegisterResponseModel is a bundle of data that can be used by a presenter
+ * @layer use cases
+ */
 public class CRegisterResponseModel {
     private final String courseId;
     private final String courseCode;
     private final String courseName;
 
-    /**
-     * @param courseId the unique identifier of the course
-     * @param courseCode the code of the course e.g. CSC207
-     * @param courseName the name of the course e.g. Software Design
+    /** Create an instance of CRegisterResponseModel that contains information regarding the course
+     * to be registered
+     *
+     * @param courseId          Id of the course
+     * @param courseCode        Code of the course
+     * @param courseName        Name of the course
      */
     public CRegisterResponseModel(String courseId,
                                               String courseCode,
@@ -18,22 +23,25 @@ public class CRegisterResponseModel {
         this.courseName = courseName;
     }
 
-    /**
-     * @return the unique identifier of the course
+    /** Gets the Id of the course
+     *
+     * @return the Id of the course
      */
     public String getCourseId() {
         return this.courseId;
     }
 
-    /**
-     * @return the code of the course e.g. CSC207
+    /** Gets the code of the course
+     *
+     * @return the code of the course
      */
     public String getCourseCode() {
         return this.courseCode;
     }
 
-    /**
-     * @return the name of the course e.g. Software Design
+    /** Gets the name of the course
+     *
+     * @return the name of the course
      */
     public String getCourseName() {
         return this.courseName;
