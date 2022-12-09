@@ -4,6 +4,10 @@ import uc.doc.submitsolution.SubmitSDocRequestModel;
 import uc.doc.submitsolution.SubmitSDocResponseModel;
 import uc.doc.submitsolution.SubmitSDocInputBoundary;
 
+/**
+ * SubmitSolutionDocController provides an entry way into the SubmitSolutionDoc use case
+ * @layer interface adapters
+ */
 public class SubmitSolutionDocController{
 
     /**

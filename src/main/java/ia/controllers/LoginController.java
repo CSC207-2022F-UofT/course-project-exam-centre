@@ -4,6 +4,10 @@ import uc.user.login.LoginInputBoundary;
 import uc.user.login.LoginRequestModel;
 import uc.user.login.LoginResponseModel;
 
+/**
+ * LoginController provides an entry way into the Login use case
+ * @layer interface adapters
+ */
 public class LoginController {
     private final LoginInputBoundary inputBoundary;
 
