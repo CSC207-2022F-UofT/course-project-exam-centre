@@ -48,6 +48,7 @@ public class MainFrame extends JFrame implements Updatable {
         setSize(1100, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     @Override

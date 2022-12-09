@@ -98,7 +98,7 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
 
     @Override
     public void update() {
-        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+        if (mainViewModel.getCurrentUserModel() != null) {
             this.setVisible(false);
         } else {
             this.setVisible(true);

@@ -20,8 +20,6 @@ public class MenuBar extends JMenuBar implements ActionListener, Updatable {
     private LogoutController logoutController;
     private String userFullName = "First Last";
     private JMenu userMenu;
-    private JMenuItem profileMenuItem;
-    private JMenuItem settingsMenuItem;
     private JMenuItem logoutMenuItem;
     private MainViewModel mainViewModel;
 
