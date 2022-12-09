@@ -58,7 +58,7 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
                                         MainViewModel mainViewModel){
         this.updateCourseMembershipController = controller;
         this.mainViewModel = mainViewModel;
-        submit = new JButton("Add Courses");
+        submit = new JButton("Update Course Membership");
         submit.addActionListener(this);
     }
 
@@ -113,17 +113,17 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
         System.out.println("Click: " + event);
         try {
             StringBuilder courseDisplayString = new StringBuilder("\n");
-            ArrayList<String> coursesToAdd = new ArrayList<>();
+                ArrayList<String> coursesToAdd = new ArrayList<>();
             for (JLabel courseID : courseDisplay.keySet()) {
                 if (courseDisplay.get(courseID).isSelected()) {
-                  coursesToAdd.add(courseID.getText());
+                  coursesToAdd.add(courseDisplay.get(courseID).getText());
                   courseDisplayString.append(courseID.getText()).append("\n");
                 }
             }
             System.out.println(coursesToAdd);
             updateCourseMembershipController.updateCourseMembership(coursesToAdd);
             this.setVisible(false);
-            JOptionPane.showMessageDialog(this, String.format("%s Successfully Uploaded", courseDisplayString));
+            JOptionPane.showMessageDialog(this, String.format("%s Updated Course Membership:", courseDisplayString));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
