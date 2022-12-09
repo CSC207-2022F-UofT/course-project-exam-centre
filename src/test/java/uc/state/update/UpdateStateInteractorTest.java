@@ -1,12 +1,10 @@
 package uc.state.update;
 
-import entities.Course;
 import entities.CourseInfo;
 import entities.StateTracker;
 import entities.User;
 import entities.factories.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import uc.state.update.dbmodels.*;
 import java.util.List;
@@ -201,13 +199,75 @@ public class UpdateStateInteractorTest {
         interactor.updateState();
         assertEquals(1, currentState.getAllTrackedCourses().size());
         assertEquals(2, currentState.getAllCourseInfoItems().size());
-
-
     }
 
-//
-//    @Test
-//    public void updateStateFailGivenDbConnectionFail(){
-//        UpdateStateInteractor interactor = new UpdateStateInteractor();
-//    }
+    @Test
+    public void updateStateFailGivenDbConnectionFail(){
+
+        UpdateStateOutputBoundary presenter = new UpdateStateOutputBoundary() {
+            @Override
+            public UpdateStateResponseModel prepareSuccessView(UpdateStateResponseModel responseModel) {
+                fail("Use case success is unexpected.");
+                return null;
+            }
+
+            @Override
+            public UpdateStateResponseModel prepareFailView(String errorMessage) {
+                assertEquals("Database Connection Failed", errorMessage);
+                return null;
+            }
+        };
+
+        UpdateStateDsGateway dsGateway = new UpdateStateDsGateway() {
+            final boolean connectionStatus = false;
+            @Override
+            public List<? extends UpdateStateTestDocDbModel> getTestDocsByCourseId(String courseId) {
+                return testData.getStoredTestsByCourseId(courseId);
+            }
+
+            @Override
+            public List<? extends UpdateStateSolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+                return testData.getStoredSolutionsByTestId(testId);
+            }
+
+            @Override
+            public List<? extends UpdateStateMessageDbModel> getMessagesByParentId(String parentId) {
+                return testData.getStoredMessagesByParentId(parentId);
+            }
+
+            @Override
+            public UpdateStateUserDbModel getUserById(String userId) {
+                return testData.getUserDbResponseModelById(userId);
+            }
+
+            @Override
+            public UpdateStateCourseDbModel getCourseById(String courseId) {
+                return testData.getCourseDbResponseModelById(courseId);
+            }
+
+            @Override
+            public List<String> getAllCourseIds() {
+                return testData.getStoredAllCourseIds();
+            }
+
+            @Override
+            public List<String> getCourseIdsByUserId(String userId) {
+                return testData.getStoredCourseIdsByUserId(userId);
+            }
+
+            @Override
+            public boolean getConnectionStatus() {
+                return connectionStatus;
+            }
+        };
+        UpdateStateInteractor interactor = new UpdateStateInteractor(presenter,
+                                                                    dsGateway,
+                                                                    currentState,
+                                                                    userFactory,
+                                                                    courseFactory,
+                                                                    testFactory,
+                                                                    solutionFactory,
+                                                                    messageFactory);
+        interactor.updateState();
+    }
 }
