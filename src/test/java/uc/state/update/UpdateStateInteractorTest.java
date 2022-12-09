@@ -111,7 +111,8 @@ public class UpdateStateInteractorTest {
     }
 
     /**
-     *
+     * Test that update state successfully loads all courses and user courses into current state
+     * Given successful connection and user not null
      */
     @Test
     public void updateStateSuccessGivenUserNotNullConnectionSuccess(){
@@ -201,6 +202,9 @@ public class UpdateStateInteractorTest {
         assertEquals(2, currentState.getAllCourseInfoItems().size());
     }
 
+    /**
+     * Test that update state fails given connection fail
+     */
     @Test
     public void updateStateFailGivenDbConnectionFail(){
 
