@@ -23,10 +23,38 @@
 </details>
 
 ## Project Features
-TODO: Complete list of project features
+1. Login User
+2. Logout User
+3. Register new User
+4. Update Course Membership
+5. Submit Test Document
+6. Submit Solution Document
+7. Register New Course
+8. Submit Discussion Board Message
+9. Vote on Solution Document
+10. Upload/Download Document
+11. State Tracker
+12. PostGresAccess
+13. FTP Server
+
 
 ### Design Patterns
-**Factory Design Pattern** We currently use a factory design pattern when creating our entities. This allows us to have further expand the types of entities that we can create. An example of this can be seen with the User Factory as we would be able to create an Admin User in the future if needed besides a Common User. All of our factories are available at `src/main/java/entities/factories`
+**1. Factory Design Pattern** 
+
+We currently use a factory design pattern when creating our entities. This allows us to have further expand the types of entities that we can create. An example of this can be seen with the User Factory as we would be able to create an Admin User in the future if needed besides a Common User. All of our factories are available at `src/main/java/entities/factories`
+
+**2. Open for Extension, Closed for Modification**
+
+Implemented User and Message Interfaces that gives us the flexibility of adding different types users and messages 
+
+**3. Dependency Inversion**
+
+Used throughout the project to adhere to Clean Architecture
+
+**4. Observer Pattern**
+
+Views Observe the view  model for updates. The View Model is an observable.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -40,6 +68,7 @@ TODO: Complete list of project features
  [Apache Commons Net](https://commons.apache.org/proper/commons-net/download_net.cgi)
 
 
+### Running the Application
 **Setup a local database**
 
 1. Install Postgres 14.5: https://www.postgresql.org/download/
@@ -52,16 +81,18 @@ TODO: Complete list of project features
 8. In the PSQL console, copy and paste the script found at `~/bin/db/initPostgresSchema.sql` .
 9. Wooo hooo ye did it !
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Running the Application
-TODO: Complete running instructions
+After the local database is set up, running the program should take you to the login/register screen which would then lead to the main view once logged in.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Next Steps
-TODO: Address code smells and identify potential refactoring techniques/design patterns
-
- **Reset User Password** We plan to add a system to reset user passwords. 
+ **Reset User Password** 
+ 
+ We plan to add a system to reset user passwords. This was originally a feature we planned on demonstrating, however, due to time constraints we decided it was not a core feature of our project and pushed it to be completed in the future.
+ 
+ **Addressing Code Smells**
+ 
+ Although our project strictly follows Clean Architecture, there remains some code smells that can make the code unclear or hard to read. We aim to address these issues in the future to allow for a better reading and understanding experience.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
