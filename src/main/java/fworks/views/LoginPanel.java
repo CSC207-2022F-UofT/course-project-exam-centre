@@ -157,6 +157,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                             updateCourseMembershipController,
                             mainViewModel);
                     updateCourseMembershipScreen.createScreen();
+                } else {
                     mainFrame.setVisible(true);
                 }
             } else {

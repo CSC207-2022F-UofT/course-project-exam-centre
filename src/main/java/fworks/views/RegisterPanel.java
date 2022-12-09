@@ -230,6 +230,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                             updateCourseMembershipController,
                             mainViewModel);
                     updateCourseMembershipScreen.createScreen();
+                } else {
                     mainFrame.setVisible(true);
                 }
             } else {
