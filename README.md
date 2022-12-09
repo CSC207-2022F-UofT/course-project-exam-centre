@@ -7,6 +7,12 @@
   <ol>
     <li>
       <a href="#project-features">Project Features</a>
+      <ul>
+        <li><a href="#persistent-storage">Persistent Storage</a>
+        <li><a href="#design-patterns">Design Patterns</a>
+        <li><a href="#documentation">Documentation</a>
+        <li><a href="#testing">Testing</a>
+      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -23,6 +29,11 @@
 </details>
 
 ## Project Features
+
+**What is Exam Centre**
+
+UofT is notorious for its lack of past-exams for students to use to prepare for their exams. Along with this, many students struggle with completing questions under a timed test environment. The Exam Centre solves these issues by providing a platform in which students can upload their own practice exams and share them for other students to use. Students are able to take these practice exams under a timed environment. Along with this, students are able to upload their solutions and discuss the tests in a discussion board, giving a rating for the best solutions uploaded. We implement these features:
+
 1. Login User
 2. Logout User
 3. Register new User
@@ -36,6 +47,16 @@
 11. State Tracker
 12. PostGresAccess
 13. FTP Server
+
+### Persistent Storage
+1. **Remote File Access:** 
+
+Implemented using an FTP Server. Uploads and downloads are handled by the FtpAccessManager which implements the FileAccessGateway interface in the interface adapters layer. The FileAccessGateway extends all use case file access gateways in the application business rules layer. This feature is used to manage PDF uploads and downloads for test and solution documents.
+
+2. **Database Access:** 
+
+Implemented using a Postgres 14.5 server. Database requests are handled by the PostgresAccessManager which implements the DatabaseAccessGateway in the interface adapters layer. The DatabaseAccessGateway extends all use case DS gateways in the application business rules layer, with default methods to parse the raw data and construct DB response models. Entity data is returned as DB entity models which implement use case specific DB response models in the relevant use case packages via dependency inversion. This feature is used to maintain synchronised data between users.
+
 
 
 ### Design Patterns
@@ -55,6 +76,21 @@ Used throughout the project to adhere to Clean Architecture
 
 Views Observe the view  model for updates. The View Model is an observable.
 
+### Documentation
+
+**IMPORTANT:** Within our documentation, we utilize a custom `@layer` tag that helps specify which layer the class or interface is located in regards to Clean Architecture. In order to get this `@layer` tag, you must add it into your own IntelliJ.
+
+### Testing
+We provide unit testing for the following use cases:
+1. User Register
+2. User Log Out
+3. User Log In
+4. Vote On Solution
+5. Update Course Membership
+6. Register Course
+7. Update State Tracker
+8. Submit Discussion Board Message
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -66,6 +102,8 @@ Views Observe the view  model for updates. The View Model is an observable.
  [ICEPdf](https://github.com/pcorless/icepdf)
  
  [Apache Commons Net](https://commons.apache.org/proper/commons-net/download_net.cgi)
+ 
+ [FireZilla](https://filezilla-project.org/download.php?type=server)
 
 
 ### Running the Application
@@ -82,7 +120,51 @@ Views Observe the view  model for updates. The View Model is an observable.
 9. Wooo hooo ye did it !
 
 
-After the local database is set up, running the program should take you to the login/register screen which would then lead to the main view once logged in.
+**Setup a local FTP Server**
+
+1. Download FileZilla Server
+2. Run FileZilla Server and click on “Connect to FileZilla FTP Server”
+3. Input the following when prompted to setup a connection:
+
+
+  >>a. `Host: localhost`
+  
+  
+  >>b. `Port: 14148`
+  
+  >>c. `Password: password`
+  
+  
+4. Create a user
+
+
+  >> a. `Server > Configure > Users`
+  
+  
+  >> b. Click on “Add” at the bottom
+  
+  
+   >>> i. `Name: user`
+    
+    
+   >>> ii. `Password: password`
+    
+    
+  >> c. [Under mount points, click on “Add”](https://filezillapro.com/docs/server/advanced-options/filezilla-server-group-panel/#:~:text=To%20share%20files%20and%20directories,native%20path%20by%20FileZilla%20Server.)
+  
+  
+   >>> i. The *virtual path* is the path that the FTP users will see and it is mapped to the *native path* by FileZilla Server. I used “/” for Mac
+    
+    
+   >>> ii. The native path is a local file path. I used “/etc/” for Mac
+    
+    
+  >> d. Access mode: **Read+Write**
+  
+  
+5. Input the remote path where you’d like files to be uploaded to and downloaded from inside `local.properties`
+
+After the local database and FTP server is set up, running the program should take you to the login/register screen which would then lead to the main view once logged in.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

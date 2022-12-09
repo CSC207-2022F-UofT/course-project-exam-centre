@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A frame for selecting a solution document to submit and specifying information on it
+ */
 public class SolutionDocumentSubmissionScreen extends JFrame implements ActionListener {
 
     /**

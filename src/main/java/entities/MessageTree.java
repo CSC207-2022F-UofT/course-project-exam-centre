@@ -37,6 +37,7 @@ public class MessageTree {
         this.root = root;
         this.subtrees = subtrees;
     }
+
     /**
      * Checks if the tree is empty
      * @return Returns Boolean of whether the tree is empty.
@@ -44,7 +45,7 @@ public class MessageTree {
     public boolean  isEmpty(){
         return this.root == null;
     }
-
+    
     /**
      * Adds the given message to the tree
      * @param message the message that needs to get added to the tree

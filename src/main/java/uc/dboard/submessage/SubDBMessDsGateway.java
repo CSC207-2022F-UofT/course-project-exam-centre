@@ -25,7 +25,18 @@ public interface SubDBMessDsGateway {
      */
     String addMessage(SubDBMessDsRequestModel requestModel);
 
-    // TODO: JavaDoc
+    /** Gets user data by user ID.
+     *
+     * @param userId the unique ID of the user being requested
+     *
+     * @return UserDbModel object representing the data for the
+     * requested user entity
+     */
     SubDBMessUserDbModel getUserById(String userId);
+
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
     boolean getConnectionStatus();
 }

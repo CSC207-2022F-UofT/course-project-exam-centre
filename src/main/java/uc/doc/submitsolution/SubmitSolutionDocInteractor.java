@@ -45,6 +45,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
         this.solutionDocFactory = solutionDocFactory;
     }
 
+    /** Takes in information of a message tree and creates a message tree response model containing
+     * sender information in the senderUserModel, the message information and replies to the message
+     * 
+     * @param messageTree entity containing information regarding the message tree in a discussion board
+     * @return message tree response model containing information regarding the tree
+     */
     private SubmitSDocMessageTreeResponseModel prepareMessageTreeResponseModel(
             MessageTree messageTree) {
 
@@ -81,6 +87,12 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
 
     }
 
+    /** Takes in information of a solution document and creates a solution doc response model with
+     * this information along with a message tree
+     * 
+     * @param solutionDocEntity
+     * @return solution doc response model containing solution doc information and its message tree
+     */
     private SubmitSDocSolutionDocResponseModel prepareSolutionDocResponseModel(
             SolutionDocument solutionDocEntity) {
         SubmitSDocMessageTreeResponseModel messageTree
@@ -109,6 +121,8 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
         // Exception handling for failed db connection
         if (!dsGateway.getConnectionStatus()) {
             return sDocOutputBoundary.prepareFailView("Database Connection Failed");
+        } else if(!sDocFileAccessGateway.checkConnectionStatus()) {
+            return sDocOutputBoundary.prepareFailView("Remote File Storage Connection Failed");
         }
 
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());

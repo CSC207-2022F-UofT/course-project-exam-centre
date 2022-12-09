@@ -10,6 +10,7 @@ import java.awt.event.*;
 
 /**
  * A panel for existing users to log in
+ * @layer Frameworks and driver
  */
 public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LoginController controller;
@@ -25,6 +26,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private DownloadDocController downloadDocController;
     private MainFrame mainFrame;
     private final UpdateStateController updateStateController;
+    private CourseRegisterController courseRegisterController;
 
     public LoginPanel(LoginController controller,
                       MainViewModel mainViewModel,
@@ -33,7 +35,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                       UpdateCourseMembershipController updateCourseMembershipController,
                       LogoutController logoutController,
                       DownloadDocController downloadDocController,
-                      UpdateStateController updateStateController) {
+                      UpdateStateController updateStateController,
+                      CourseRegisterController courseRegisterController) {
         this.controller = controller;
         this.mainViewModel = mainViewModel;
         this.submitTestDocController = submitTestDocController;
@@ -42,6 +45,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
         this.updateStateController = updateStateController;
+        this.courseRegisterController = courseRegisterController;
 
         this.mainFrame = null;
 
@@ -154,6 +158,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                 if(mainViewModel.getCurrentUserCourseModels().isEmpty()) {
                     UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
                             updateCourseMembershipController,
+                            courseRegisterController,
                             mainViewModel);
                     updateCourseMembershipScreen.createScreen();
                 }
@@ -162,7 +167,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                         submitSolutionDocController,
                         updateCourseMembershipController,
                         logoutController,
-                        downloadDocController);
+                        downloadDocController,
+                        courseRegisterController);
             } else {
                 mainFrame.update();
             }

@@ -3,7 +3,6 @@ package uc.doc.submitsolution;
 /** SubmitSDocFileAccessGateway provides a method to access the file of the uploaded solution document
  * @layer Use cases
  */
-
 public interface SubmitSDocFileAccessGateway {
 
     /**

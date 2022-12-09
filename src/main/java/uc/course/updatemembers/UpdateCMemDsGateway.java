@@ -44,10 +44,45 @@ public interface UpdateCMemDsGateway
      */
     UpdateCMemUserDbModel getUserById(String userId);
 
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
     boolean getConnectionStatus();
+
+    /** Gets a list containing model representations of
+     * each test document entity that shares the given course ID.
+     *
+     * @param courseId the course ID shared by the requested test document entities
+     * @return list containing TestDocDbModel objects which each represent the data
+     * for a test document entity
+     */
     List<? extends UpdateCMemTestDocDbModel> getTestDocsByCourseId(String courseId);
+    
+    /** Gets a list containing model representations of
+     * each solution document entity that shares the given test ID.
+     *
+     * @param testId the test ID shared by the requested solution document entities
+     * @return list containing SolutionDocDbModel objects which each represent the data
+     * for a solution document entity
+     */
     List<? extends UpdateCMemSolutionDocDbModel> getSolutionDocsByTestId(String testId);
 
+    /** Gets a list containing model representations of
+     * each message entity that shares the given parent ID.
+     *
+     * @param parentId the parent message ID shared by the messages being requested
+     * @return list containing MessageDbModel objects which each represent the data
+     * for a message entity
+     */
     List<? extends UpdateCMemMessageDbModel> getMessagesByParentId(String parentId);
+    
+    /** Gets course data by course ID.
+     *
+     * @param courseId the unique ID of the course being requested
+     *
+     * @return CourseDbModel object representing the data for the
+     * requested course entity
+     */
     UpdateCMemCourseDbModel getCourseById(String courseId);
 }

@@ -6,6 +6,10 @@ import ia.viewmodels.MainViewModel;
 import uc.user.register.URegisterOutputBoundary;
 import uc.user.register.URegisterResponseModel;
 
+/**
+ * UserRegisterPresenter updates the views after the UserRegister use case
+ * @layer interface adapters
+ */
 public class UserRegisterPresenter implements URegisterOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

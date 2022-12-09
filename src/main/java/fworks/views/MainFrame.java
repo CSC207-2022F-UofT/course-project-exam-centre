@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * The frame for viewing tests
+ * The frame for viewing documents and accessing all menu items
+ * @layer Frameworks and driver
  */
 public class MainFrame extends JFrame implements Updatable {
 
@@ -22,8 +23,8 @@ public class MainFrame extends JFrame implements Updatable {
                      SubmitSolutionDocController submitSolutionDocController,
                      UpdateCourseMembershipController updateCourseMembershipController,
                      LogoutController logoutController,
-                     DownloadDocController downloadDocController
-                     ) {
+                     DownloadDocController downloadDocController,
+                     CourseRegisterController courseRegisterController) {
         super("Exam Centre");
 
         this.logoutController = logoutController;
@@ -38,7 +39,8 @@ public class MainFrame extends JFrame implements Updatable {
                 submitSolutionDocController,
                 updateCourseMembershipController,
                 logoutController,
-                downloadDocController);
+                downloadDocController,
+                courseRegisterController);
         documentView.loadFile();
 
         setLayout(new BorderLayout());

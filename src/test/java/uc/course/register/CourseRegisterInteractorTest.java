@@ -45,7 +45,6 @@ public class CourseRegisterInteractorTest {
             }
         };
 
-
         CourseFactory courseFactory = new CourseFactory();
         StateTracker stateTracker = new StateTracker();
         CourseRegisterInteractor interactor = new CourseRegisterInteractor(presenter, dsGateway,

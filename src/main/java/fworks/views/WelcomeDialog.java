@@ -9,10 +9,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * A dialog for the user to register or log in
+ * The first window which appears when the program is stated, prompting the user to login/register
+ * @layer Frameworks and driver
  */
 public class WelcomeDialog extends JDialog implements ActionListener, Updatable {
-    private LogoutController logoutController;
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private JRadioButton newUserRadioButton;
@@ -28,7 +28,8 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
                          DownloadDocController downloadDocController,
-                         UpdateStateController updateStateController) {
+                         UpdateStateController updateStateController,
+                         CourseRegisterController courseRegisterController) {
         loginPanel = new LoginPanel(loginController,
                 mainViewModel,
                 submitTestDocController,
@@ -36,14 +37,9 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                 updateCourseMembershipController,
                 logoutController,
                 downloadDocController,
-                updateStateController);
-        registerPanel = new RegisterPanel(userRegisterController,
-                logoutController,
-                mainViewModel,
-                submitTestDocController,
-                submitSolutionDocController,
-                updateCourseMembershipController,
-                downloadDocController);
+                updateStateController,
+                courseRegisterController);
+        registerPanel = new RegisterPanel(userRegisterController);
 
         this.mainViewModel = mainViewModel;
 
@@ -98,7 +94,7 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
 
     @Override
     public void update() {
-        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+        if (mainViewModel.getCurrentUserModel() != null) {
             this.setVisible(false);
         } else {
             this.setVisible(true);

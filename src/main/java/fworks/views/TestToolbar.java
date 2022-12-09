@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * The panel component for TestFrame
+ * The panel component for TestFrame with various menu items
  * @layer drivers and frameworks
  */
 public class TestToolbar extends JPanel implements ActionListener, Updatable {
@@ -48,11 +48,12 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
                        SubmitSolutionDocController ssdc,
                        UpdateCourseMembershipController ucmc,
                        LogoutController logoutController,
-                       DownloadDocController downloadDocController) {
+                       DownloadDocController downloadDocController,
+                       CourseRegisterController crc) {
         this.submitTestDocController = stdc;
         this.submitSolutionDocController = ssdc;
         this.mainViewModel = mvm;
-        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, mainViewModel);
+        this.updateCourseMembershipScreen = new UpdateCourseMembershipScreen(ucmc, crc, mainViewModel);
         this.docView = docView;
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;

@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SubmitSolutionDocPresenter updates the views after the SubmitSolutionDoc use case
+ * @layer interface adapters
+ */
 public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;

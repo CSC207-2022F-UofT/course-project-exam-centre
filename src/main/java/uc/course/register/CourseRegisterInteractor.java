@@ -1,12 +1,8 @@
 package uc.course.register;
 
-import entities.Course;
 import entities.CourseInfo;
 import entities.StateTracker;
 import entities.factories.CourseFactory;
-
-import javax.swing.plaf.nimbus.State;
-import java.time.LocalDateTime;
 
 /** CourseRegisterInteractor implements the ability to register courses.
  * @layer use cases
@@ -23,6 +19,7 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
      * @param presenter An output boundary containing methods to update view
      * @param gateway A gateway that provides methods to access persistent data
      * @param courseFactory A course factory that creates course objects
+     * @param currentState tracks the current state
      */
     public CourseRegisterInteractor(
             CRegisterOutputBoundary presenter,
@@ -35,6 +32,11 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
         this.currentState = currentState;
     }
 
+    /** Register a course
+     *
+     * @param requestModel      request model containing information on the course to be registered
+     * @return register response model if registration is successful
+     */
     @Override
     public CRegisterResponseModel registerCourse(CRegisterRequestModel requestModel) {
 

@@ -9,6 +9,10 @@ import uc.doc.downloaddoc.DownloadDocResponseModel;
 
 import java.util.Map;
 
+/**
+ * DownloadDocPresenter updates the views after the DownloadDoc use case
+ * @layer interface adapters
+ */
 public class DownloadDocPresenter implements DownloadDocOutputBoundary{
 
     private final ViewManagerGateway viewManagerGateway;
