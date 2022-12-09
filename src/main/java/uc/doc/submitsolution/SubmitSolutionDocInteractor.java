@@ -109,6 +109,8 @@ public class SubmitSolutionDocInteractor implements SubmitSDocInputBoundary {
         // Exception handling for failed db connection
         if (!dsGateway.getConnectionStatus()) {
             return sDocOutputBoundary.prepareFailView("Database Connection Failed");
+        } else if(!sDocFileAccessGateway.checkConnectionStatus()) {
+            return sDocOutputBoundary.prepareFailView("Remote File Storage Connection Failed");
         }
 
         Course course  = stateTracker.getCourseIfTracked(model.getCourseID());

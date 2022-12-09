@@ -36,7 +36,7 @@ public class DownloadDocInteractor implements DownloadDocInputBoundary {
     public DownloadDocResponseModel downloadDoc(DownloadDocRequestModel model) {
         
         if (!downloadDocFileAccessGateway.checkConnectionStatus()) {
-            return downloadDocOutputBoundary.prepareFailureView("Error connecting to the FTP server");
+            return downloadDocOutputBoundary.prepareFailureView("Remote File Storage Connection Failed");
         }
         
         User user = stateTracker.getCurrentUser();
