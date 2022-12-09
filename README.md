@@ -32,8 +32,6 @@ TODO: Complete list of project features
 
 ## Getting Started
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Prerequisites
  [Postgres 14.5](https://www.postgresql.org/download/)
  
@@ -63,5 +61,7 @@ TODO: Complete running instructions
 
 ## Next Steps
 TODO: Address code smells and identify potential refactoring techniques/design patterns
+
+ **Reset User Password** We plan to add a system to reset user passwords. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
