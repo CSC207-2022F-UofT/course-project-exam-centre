@@ -27,7 +27,8 @@ public class LoginPresenter implements LoginOutputBoundary {
      */
     @Override
     public LoginResponseModel prepareSuccessView(LoginResponseModel responseModel) {
-
+        viewManagerGateway.updateState();
+        viewManagerGateway.updateViews();
         return responseModel;
     }
 

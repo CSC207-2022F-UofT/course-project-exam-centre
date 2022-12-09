@@ -32,7 +32,6 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipController updateCourseMembershipController;
     private DownloadDocController downloadDocController;
 
-
     /**
      * Constructs a RegisterPanel with a controller
      * @param userRegisterController the controller for the register use case
@@ -52,6 +51,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
         this.submitTestDocController = submitTestDocController;
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.downloadDocController = downloadDocController;
+
         this.mainFrame = mainFrame;
 
         JPanel fieldsPanel = createFieldsPanel();
@@ -224,13 +224,20 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
     @Override
     public void update() {
         if (mainViewModel.getCurrentUserModel().getUserId() != null) {
-            if(!mainFrame.isVisible()) {
-                mainFrame.setVisible(true);
-            }
-        } else {
-            if(mainFrame.isVisible()) {
-                mainFrame.setVisible(false);
+            if (!mainFrame.isVisible()) {
+                if (mainViewModel.getCurrentUserCourseModels().isEmpty()) {
+                    UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
+                            updateCourseMembershipController,
+                            mainViewModel);
+                    updateCourseMembershipScreen.createScreen();
+                    mainFrame.setVisible(true);
+                }
+            } else {
+                if (mainFrame.isVisible()) {
+                    mainFrame.setVisible(false);
+                }
             }
         }
+        mainFrame.update();
     }
 }

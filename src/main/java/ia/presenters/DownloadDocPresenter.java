@@ -5,7 +5,6 @@ import ia.gateways.ViewManagerGateway;
 import ia.viewmodels.CourseSubViewModel;
 import ia.viewmodels.MainViewModel;
 import uc.doc.downloaddoc.DownloadDocOutputBoundary;
-import uc.doc.downloaddoc.DownloadDocRequestModel;
 import uc.doc.downloaddoc.DownloadDocResponseModel;
 
 import java.util.Map;
@@ -54,7 +53,7 @@ public class DownloadDocPresenter implements DownloadDocOutputBoundary{
      * @throws DownloadDocFailed when the download doc use case fails.
      */
     @Override
-    public DownloadDocRequestModel prepareFailureView(String errorMessage) {
+    public DownloadDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: prepare failure view
         viewManagerGateway.showError(errorMessage, "Document Download Failed");
         throw new DownloadDocFailed(errorMessage);

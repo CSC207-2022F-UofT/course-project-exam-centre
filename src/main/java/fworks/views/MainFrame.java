@@ -2,6 +2,7 @@ package fworks.views;
 
 import ia.controllers.*;
 import ia.viewmodels.MainViewModel;
+import ia.viewmodels.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,10 @@ import java.awt.*;
 /**
  * The frame for viewing tests
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Updatable {
+
+    private TestToolbar testToolbar;
+    private DocumentView documentView;
 
     private LogoutController logoutController;
 
@@ -27,8 +31,8 @@ public class MainFrame extends JFrame {
         MenuBar menuBar = new MenuBar(mainViewModel, logoutController);
         this.setJMenuBar(menuBar);
 
-        DocumentView documentView = new DocumentView(mainViewModel);
-        TestToolbar toolbar = new TestToolbar(documentView,
+        this.documentView = new DocumentView(mainViewModel);
+        this.testToolbar = new TestToolbar(documentView,
                 mainViewModel,
                 submitTestDocController,
                 submitSolutionDocController,
@@ -38,11 +42,17 @@ public class MainFrame extends JFrame {
         documentView.loadFile();
 
         setLayout(new BorderLayout());
-        add(toolbar, BorderLayout.NORTH);
+        add(this.testToolbar, BorderLayout.NORTH);
         add(documentView.getPanel(), BorderLayout.EAST);
 
         setSize(1100, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void update() {
+        testToolbar.update();
+        documentView.update();
     }
 }

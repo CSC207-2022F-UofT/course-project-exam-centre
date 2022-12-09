@@ -69,9 +69,8 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
     public void createScreen(){
         this.courseList = getParsedCourseList();
         this.userId = mainViewModel.getCurrentUserModel().getUserId();
-        reset();
-
         courseDisplay = new HashMap<>();
+        reset();
 
         this.setLayout(new GridLayout(courseList.size() + 1, 2));
 
@@ -113,14 +112,13 @@ public class UpdateCourseMembershipScreen extends JFrame implements ActionListen
         System.out.println("Click: " + event);
         try {
             StringBuilder courseDisplayString = new StringBuilder("\n");
-                ArrayList<String> coursesToAdd = new ArrayList<>();
+            ArrayList<String> coursesToAdd = new ArrayList<>();
             for (JLabel courseID : courseDisplay.keySet()) {
                 if (courseDisplay.get(courseID).isSelected()) {
-                  coursesToAdd.add(courseDisplay.get(courseID).getText());
-                  courseDisplayString.append(courseID.getText()).append("\n");
+                    coursesToAdd.add(courseDisplay.get(courseID).getText());
+                    courseDisplayString.append(courseID.getText()).append("\n");
                 }
             }
-            System.out.println(coursesToAdd);
             updateCourseMembershipController.updateCourseMembership(coursesToAdd);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, String.format("%s Updated Course Membership:", courseDisplayString));

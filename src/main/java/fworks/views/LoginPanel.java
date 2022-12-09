@@ -25,6 +25,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private LogoutController logoutController;
     private DownloadDocController downloadDocController;
     private MainFrame mainFrame;
+    private final UpdateStateController updateStateController;
 
     public LoginPanel(LoginController controller,
                       MainViewModel mainViewModel,
@@ -33,6 +34,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                       UpdateCourseMembershipController updateCourseMembershipController,
                       LogoutController logoutController,
                       DownloadDocController downloadDocController,
+                      UpdateStateController updateStateController,
                       MainFrame mainFrame) {
         this.controller = controller;
         this.mainViewModel = mainViewModel;
@@ -42,6 +44,7 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
         this.mainFrame = mainFrame;
+        this.updateStateController = updateStateController;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -136,6 +139,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                 String password = new String(passwordField.getPassword());
                 try {
                     controller.logIn(email, password);
+                    updateStateController.updateState();
+
                 } catch (Exception exception) {
                     // TODO: handle error
                 }
@@ -146,13 +151,20 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     @Override
     public void update() {
         if (mainViewModel.getCurrentUserModel().getUserId() != null) {
-            if(!mainFrame.isVisible()) {
-                mainFrame.setVisible(true);
-            }
-        } else {
-            if(mainFrame.isVisible()) {
-                mainFrame.setVisible(false);
+            if (!mainFrame.isVisible()) {
+                if (mainViewModel.getCurrentUserCourseModels().isEmpty()) {
+                    UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
+                            updateCourseMembershipController,
+                            mainViewModel);
+                    updateCourseMembershipScreen.createScreen();
+                    mainFrame.setVisible(true);
+                }
+            } else {
+                if (mainFrame.isVisible()) {
+                    mainFrame.setVisible(false);
+                }
             }
         }
+        mainFrame.update();
     }
 }

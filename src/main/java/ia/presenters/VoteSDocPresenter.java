@@ -4,7 +4,6 @@ import ia.exceptions.VoteSDocFailed;
 import ia.gateways.ViewManagerGateway;
 import ia.viewmodels.*;
 import uc.doc.submitsolution.responsemodels.SubmitSDocSolutionDocResponseModel;
-import uc.doc.voteonsolution.VoteSDocDsRequestModel;
 import uc.doc.voteonsolution.VoteSDocOutputBoundary;
 import uc.doc.voteonsolution.VoteSDocResponseModel;
 
@@ -58,7 +57,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
      * @return response model from use case
      */
     @Override
-    public VoteSDocDsRequestModel prepareFailureView(String errorMessage) {
+    public VoteSDocResponseModel prepareFailureView(String errorMessage) {
         // TODO: prepare failure view
         viewManagerGateway.showError(errorMessage, "Document Vote Failed");
         throw new VoteSDocFailed(errorMessage);

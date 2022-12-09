@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -34,6 +36,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private MainViewModel mainViewModel;
     private Map<String, String> testNametoID;
     private Map<String, String> courseNameToID;
+    private SolutionFrame solutionFrame;
 
     /**
      * Creates an instance of the TestToolbar with the docView that it will update
@@ -110,6 +113,10 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JComboBox<String> createTestComboBox() {
+        if (mainViewModel.getCurrentUserCourseModels().size() > 0) {
+            mainViewModel.setCurrentCourseId(
+                    new ArrayList<>(
+                            mainViewModel.getCurrentUserCourseModels().values()).get(0).getCourseId());
         Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
         Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
         testNametoID = new HashMap<>();
@@ -117,6 +124,12 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
             testNametoID.put(testModel.getTestName(), testModel.getTestId());
         }
         return (JComboBox) new JComboBox<String>((String[]) testNametoID.keySet().toArray());
+        } else {
+            JComboBox testComboBox = new JComboBox<>(new ArrayList<>().toArray());
+            return testComboBox;
+        }
+
+
     }
 
     private String getFilePath(String testID) {
@@ -168,7 +181,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
             // TODO: Take test
             // Get the solutions
         } else if (actionEvent.getSource() == solutionsButton) {
-            new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController, downloadDocController); // Create the solution window
+            this.solutionFrame = new SolutionFrame(mainViewModel, submitSolutionDocController, logoutController, downloadDocController); // Create the solution window
             //Switch file being viewed
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
@@ -186,5 +199,9 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         westPanel.add(testComboBox);
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+        if(this.solutionFrame != null) {
+            solutionFrame.update();
+        }
     }
 }

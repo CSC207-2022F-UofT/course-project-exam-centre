@@ -25,14 +25,20 @@ public class DocumentView {
      */
     public DocumentView(MainViewModel mvm) {
         this.mainViewModel = mvm;
-        //this.filePath get filepath from viewmodel
+        controller = new SwingController();
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
+        panel = factory.buildViewerPanel();
+        if (mvm.getCurrentTestId() != null) {
+            this.filePath = mainViewModel.getLocalDocumentPath(mvm.getCurrentTestId());
+        } else {
+            this.filePath = "./lib/blank.pdf";
+        }
     }
 
     /**
      * Initialize with a default file path for testing
      */
     public DocumentView() {
-        this.
 
         setPreferences();
         controller = new SwingController();
