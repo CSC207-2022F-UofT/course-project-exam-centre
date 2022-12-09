@@ -1,9 +1,10 @@
 package entities;
 
-// Entity layer
 
 import java.time.LocalDateTime;
-
+/** Common Message used when a user wants to create a simple reply to a solution or comment.
+ * @layer entities
+ */
 public class CommonMessage implements Message {
 
     private final String messageId;

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/** Represents a given User and their account details.
- *
+/** Common User represents a regular user of the program.
+ * @layer entities
  */
 public class CommonUser implements User {
     private final String firstName;

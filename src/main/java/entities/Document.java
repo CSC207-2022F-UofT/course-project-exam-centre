@@ -1,5 +1,8 @@
 package entities;
 
+/** Document abstract class that provides basic attributes all documents must have
+ * @layer entities
+ */
 public abstract class Document {
 
     /**
