@@ -66,6 +66,8 @@ Views Observe the view  model for updates. The View Model is an observable.
  [ICEPdf](https://github.com/pcorless/icepdf)
  
  [Apache Commons Net](https://commons.apache.org/proper/commons-net/download_net.cgi)
+ 
+ [FireZilla](https://filezilla-project.org/download.php?type=server)
 
 
 ### Running the Application
@@ -82,7 +84,26 @@ Views Observe the view  model for updates. The View Model is an observable.
 9. Wooo hooo ye did it !
 
 
-After the local database is set up, running the program should take you to the login/register screen which would then lead to the main view once logged in.
+**Setup a local FTP Server**
+
+1. Download FileZilla Server
+2. Run FileZilla Server and click on “Connect to FileZilla FTP Server”
+3. Input the following when prompted to setup a connection:
+  a. `Host: localhost`
+  b. `Port: 14148`
+  c. `Password: password`
+4. Create a user
+  a. `Server > Configure > Users`
+  b. Click on “Add” at the bottom
+    i. `Name: user`
+    ii. `Password: password`
+  c. [Under mount points, click on “Add”](https://filezillapro.com/docs/server/advanced-options/filezilla-server-group-panel/#:~:text=To%20share%20files%20and%20directories,native%20path%20by%20FileZilla%20Server.)
+    i. The *virtual path* is the path that the FTP users will see and it is mapped to the *native path* by FileZilla Server. I used “/” for Mac
+    ii. The native path is a local file path. I used “/etc/” for Mac
+  d. Access mode: **Read+Write**
+5. Input the remote path where you’d like files to be uploaded to and downloaded from inside `local.properties`
+
+After the local database and FTP server is set up, running the program should take you to the login/register screen which would then lead to the main view once logged in.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
