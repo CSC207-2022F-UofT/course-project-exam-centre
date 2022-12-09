@@ -50,7 +50,6 @@ public class SolutionFrame extends JFrame implements Updatable {
 
     @Override
     public void update() {
-        documentView.update();
         solutionToolbar.update();
     }
 }

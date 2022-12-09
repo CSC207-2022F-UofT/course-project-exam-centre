@@ -53,6 +53,5 @@ public class MainFrame extends JFrame implements Updatable {
     @Override
     public void update() {
         testToolbar.update();
-        documentView.update();
     }
 }
