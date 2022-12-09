@@ -9,7 +9,6 @@ import ia.viewmodels.Updatable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
     private Map<String, String> testNametoID;
+    private Map<String, String> courseNameToID;
 
     /**
      * Creates an instance of the TestToolbar with the docView that it will update
@@ -63,7 +63,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JPanel createWestPanel() {
-        courseComboBox = createComboBox();
+        courseComboBox = createCourseComboBox();
         addCourseButton = new JButton("Add course");
         uploadTestButton = new JButton("Upload test");
         testComboBox = createTestComboBox();
@@ -141,9 +141,15 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
      * Creates a JComboBox with the user's registered courses
      * @return A combo box with the user's courses
      */
-    private JComboBox createComboBox() {
-            return new JComboBox(mainViewModel.getCurrentUserCourseModels().keySet().toArray());
+    private JComboBox createCourseComboBox() {
+        Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
+
+        courseNameToID = new HashMap<>();
+        for(String key : courseModels.keySet()) {
+            courseNameToID.put(courseModels.get(key).getCourseName(), key);
         }
+            return new JComboBox(courseNameToID.keySet().toArray());
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
