@@ -38,6 +38,10 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
         this.messageFactory = messageFactory;
     }
 
+    /**
+     * @param messageTree a message tree
+     * @return a response model of the tree
+     */
     private SubDBMessMessageTreeResponseModel prepareMessageTreeResponseModel(
             MessageTree messageTree) {
 
@@ -74,6 +78,11 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
     }
 
+    /**
+     * @param requestModel contains information about the solution, user,
+     *                     the user they're responding to, and the body of the text
+     * @return a response model for submitting the message
+     */
     @Override
     public SubDBMessResponseModel submitMessage(SubDBMessRequestModel requestModel) {
 
