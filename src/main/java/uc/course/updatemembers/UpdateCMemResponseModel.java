@@ -22,10 +22,16 @@ public class UpdateCMemResponseModel {
         this.usersCourseModels = usersCourseModels;
     }
 
+    /**
+     * @return the current user model
+     */
     public UpdateCMemUserResponseModel getCurrentUserModel() {
         return this.currentUserModel;
     }
 
+    /**
+     * @return a mapping of course ids to course response models
+     */
     public Map<String, UpdateCMemCourseResponseModel> getUsersCourseModels() {
         return this.usersCourseModels;
     }
