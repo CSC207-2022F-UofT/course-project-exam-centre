@@ -4,6 +4,10 @@ import uc.doc.submittest.SubmitTDocInputBoundary;
 import uc.doc.submittest.SubmitTDocRequestModel;
 import uc.doc.submittest.SubmitTDocResponseModel;
 
+/**
+ * SubmitTestDocController provides an entry way into the SubmitTestDoc use case
+ * @layer interface adapters
+ */
 public class SubmitTestDocController {
 
     /**
