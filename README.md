@@ -91,39 +91,39 @@ Views Observe the view  model for updates. The View Model is an observable.
 3. Input the following when prompted to setup a connection:
 
 
-  a. `Host: localhost`
+  >>a. `Host: localhost`
   
   
-  b. `Port: 14148`
+  >>b. `Port: 14148`
   
-  c. `Password: password`
+  >>c. `Password: password`
   
   
 4. Create a user
 
 
-  a. `Server > Configure > Users`
+  >> a. `Server > Configure > Users`
   
   
-  b. Click on “Add” at the bottom
+  >> b. Click on “Add” at the bottom
   
   
-    i. `Name: user`
+   >>> i. `Name: user`
     
     
-    ii. `Password: password`
+   >>> ii. `Password: password`
     
     
-  c. [Under mount points, click on “Add”](https://filezillapro.com/docs/server/advanced-options/filezilla-server-group-panel/#:~:text=To%20share%20files%20and%20directories,native%20path%20by%20FileZilla%20Server.)
+  >> c. [Under mount points, click on “Add”](https://filezillapro.com/docs/server/advanced-options/filezilla-server-group-panel/#:~:text=To%20share%20files%20and%20directories,native%20path%20by%20FileZilla%20Server.)
   
   
-    i. The *virtual path* is the path that the FTP users will see and it is mapped to the *native path* by FileZilla Server. I used “/” for Mac
+   >>> i. The *virtual path* is the path that the FTP users will see and it is mapped to the *native path* by FileZilla Server. I used “/” for Mac
     
     
-    ii. The native path is a local file path. I used “/etc/” for Mac
+   >>> ii. The native path is a local file path. I used “/etc/” for Mac
     
     
-  d. Access mode: **Read+Write**
+  >> d. Access mode: **Read+Write**
   
   
 5. Input the remote path where you’d like files to be uploaded to and downloaded from inside `local.properties`
