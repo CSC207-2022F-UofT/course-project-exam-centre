@@ -34,7 +34,7 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
 
     /** Register a course
      *
-     * @param requestModel request model containing information on the course to be registered
+     * @param requestModel      request model containing information on the course to be registered
      * @return register response model if registration is successful
      */
     @Override

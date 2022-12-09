@@ -10,7 +10,7 @@ public class CRegisterResponseModel {
 
     /** Create an instance of CRegisterResponseModel that contains information regarding the course
      * to be registered
-     *
+     * 
      * @param courseId          Id of the course
      * @param courseCode        Code of the course
      * @param courseName        Name of the course
@@ -23,7 +23,7 @@ public class CRegisterResponseModel {
         this.courseName = courseName;
     }
 
-    /** Gets the Id of the course
+    /** Gets the Id of the course 
      *
      * @return the Id of the course
      */
@@ -31,7 +31,7 @@ public class CRegisterResponseModel {
         return this.courseId;
     }
 
-    /** Gets the code of the course
+    /** Gets the code of the course 
      *
      * @return the code of the course
      */
