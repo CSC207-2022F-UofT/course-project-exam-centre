@@ -1,6 +1,6 @@
-package uc.state.update;
+package usecases.state.update;
 
-import uc.state.update.dbmodels.*;
+import usecases.state.update.dbmodels.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

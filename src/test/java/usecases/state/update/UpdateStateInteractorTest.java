@@ -1,4 +1,4 @@
-package uc.state.update;
+package usecases.state.update;
 
 import entities.CourseInfo;
 import entities.StateTracker;
@@ -6,7 +6,9 @@ import entities.User;
 import entities.factories.*;
 import org.junit.Before;
 import org.junit.Test;
-import uc.state.update.dbmodels.*;
+import usecases.state.update.dbmodels.*;
+
+
 import java.util.List;
 import java.util.Map;
 
