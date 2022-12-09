@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
  */
 public class RegisterPanel extends JPanel implements ActionListener {
     private UserRegisterController userRegisterController;
-    private LogoutController logoutController;
     private JTextField firstNameField;
     private JTextField lastNameField;
 
@@ -25,33 +24,13 @@ public class RegisterPanel extends JPanel implements ActionListener {
     private JPasswordField passwordField2;
     private JButton cancelButton;
     private JButton registerButton;
-    private MainViewModel mainViewModel;
-    private MainFrame mainFrame;
-    private SubmitTestDocController submitTestDocController;
-    private SubmitSolutionDocController submitSolutionDocController;
-    private UpdateCourseMembershipController updateCourseMembershipController;
-    private DownloadDocController downloadDocController;
 
     /**
      * Constructs a RegisterPanel with a controller
      * @param userRegisterController the controller for the register use case
      */
-    public RegisterPanel(UserRegisterController userRegisterController,
-                         LogoutController logoutController,
-                         MainViewModel mainViewModel,
-                         SubmitTestDocController submitTestDocController,
-                         SubmitSolutionDocController submitSolutionDocController,
-                         UpdateCourseMembershipController updateCourseMembershipController,
-                         DownloadDocController downloadDocController) {
+    public RegisterPanel(UserRegisterController userRegisterController) {
         this.userRegisterController = userRegisterController;
-        this.logoutController = logoutController;
-        this.mainViewModel = mainViewModel;
-        this.submitSolutionDocController = submitSolutionDocController;
-        this.submitTestDocController = submitTestDocController;
-        this.updateCourseMembershipController = updateCourseMembershipController;
-        this.downloadDocController = downloadDocController;
-
-        this.mainFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();

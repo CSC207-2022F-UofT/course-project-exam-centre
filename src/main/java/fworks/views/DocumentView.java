@@ -1,7 +1,6 @@
 package fworks.views;
 
 import ia.viewmodels.MainViewModel;
-import ia.viewmodels.Updatable;
 import org.icepdf.ri.common.*;
 import org.icepdf.ri.util.*;
 
@@ -25,6 +24,7 @@ public class DocumentView {
      */
     public DocumentView(MainViewModel mvm) {
         this.mainViewModel = mvm;
+        setPreferences();
         controller = new SwingController();
         SwingViewBuilder factory = new SwingViewBuilder(controller);
         panel = factory.buildViewerPanel();
