@@ -6,6 +6,10 @@ import ia.viewmodels.MainViewModel;
 import uc.user.login.LoginOutputBoundary;
 import uc.user.login.LoginResponseModel;
 
+/**
+ * LoginPresenter updates the views after the Login use case
+ * @layer interface adapters
+ */
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final ViewManagerGateway viewManagerGateway;
