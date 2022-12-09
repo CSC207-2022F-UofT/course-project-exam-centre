@@ -62,7 +62,18 @@ Views Observe the view  model for updates. The View Model is an observable.
 
 ### Documentation
 
+**IMPORTANT:** Within our documentation, we utilize a custom `@layer` tag that helps specify which layer the class or interface is located in regards to Clean Architecture. In order to get this `@layer` tag, you must add it into your own IntelliJ.
+
 ### Testing
+We provide unit testing for the following use cases:
+1. User Register
+2. User Log Out
+3. User Log In
+4. Vote On Solution
+5. Update Course Membership
+6. Register Course
+7. Update State Tracker
+8. Submit Discussion Board Message
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
