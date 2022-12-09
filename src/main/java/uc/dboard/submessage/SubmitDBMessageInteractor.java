@@ -38,6 +38,12 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
         this.messageFactory = messageFactory;
     }
 
+    /** Takes in information of a message tree and creates a message tree response model containing
+     * sender information in the senderUserModel, the message information and replies to the message
+     * 
+     * @param messageTree entity containing information regarding the message tree in a discussion board
+     * @return message tree response model containing information regarding the tree
+     */     
     private SubDBMessMessageTreeResponseModel prepareMessageTreeResponseModel(
             MessageTree messageTree) {
 
@@ -73,7 +79,12 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
         );
 
     }
-
+    
+    /** Add a message into the discussion board
+     * 
+     * @param requestModel      submit message request model containing all relevant information regarding the message
+     * @return submit message response model containing information regarding the message that was successfully submitted
+     */
     @Override
     public SubDBMessResponseModel submitMessage(SubDBMessRequestModel requestModel) {
 
