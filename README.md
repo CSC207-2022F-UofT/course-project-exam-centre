@@ -94,5 +94,13 @@ After the local database is set up, running the program should take you to the l
  **Addressing Code Smells**
  
  Although our project strictly follows Clean Architecture, there remains some code smells that can make the code unclear or hard to read. We aim to address these issues in the future to allow for a better reading and understanding experience.
+ 
+ **Documentation**
+ 
+ Although we have decent documentation throughout the project, time constraints has led to us skipping on some documentation throughout the code. These issues will be addressed in future PRs.
+ 
+ **Testing**
+ 
+ Although we do have great code coverage in terms of testing, some unit tests still need to be written. Along with this, integration tests still need to be written for the database and FTP server access. These issues will be addressed in future PRs.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
