@@ -36,4 +36,6 @@ public interface SubmitSDocDsGateway {
 
     SubmitSDocUserDbModel getUserById(String userId);
 
+    boolean getConnectionStatus();
+
 }

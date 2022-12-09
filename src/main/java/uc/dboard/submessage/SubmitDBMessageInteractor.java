@@ -76,6 +76,12 @@ public class SubmitDBMessageInteractor implements SubDBMessInputBoundary {
 
     @Override
     public SubDBMessResponseModel submitMessage(SubDBMessRequestModel requestModel) {
+
+        // Exception handling for failed db connection
+        if (!dsGateway.getConnectionStatus()) {
+            return presenter.prepareFailView("Database Connection Failed");
+        }
+
         String solutionId = requestModel.getSolutionId();
         String testId = dsGateway.getTestIdBySolutionId(solutionId);
         String courseId = dsGateway.getCourseIdByTestId(testId);

@@ -13,4 +13,6 @@ public interface SubmitTDocDsGateway {
      */
     String saveTestDocument(SubmitTDocDsRequestModel dsRequestModel);
 
+
+    boolean getConnectionStatus();
 }
