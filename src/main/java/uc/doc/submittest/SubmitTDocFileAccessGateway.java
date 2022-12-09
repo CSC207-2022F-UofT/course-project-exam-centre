@@ -9,7 +9,7 @@ public interface SubmitTDocFileAccessGateway {
     /**
      * Uploads the test document into the app
      * @param dsRequestModel The request model containing the required information for document upload
-     * @param docId The ID the document
+     * @param docId Id of the document to be uploaded
      * @return Whether the request succeeds
      */
     boolean uploadTestDocument(SubmitTDocDsRequestModel dsRequestModel, String docId);

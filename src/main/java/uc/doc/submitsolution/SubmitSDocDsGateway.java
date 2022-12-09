@@ -34,8 +34,19 @@ public interface SubmitSDocDsGateway {
             String solutionId,
             String rootMessageId);
 
+    /** Gets user data by user ID.
+     *
+     * @param userId the unique ID of the user being requested
+     *
+     * @return UserDbModel object representing the data for the
+     * requested user entity
+     */
     SubmitSDocUserDbModel getUserById(String userId);
 
+    /** Checks whether gateway is connected to database.
+     *
+     * @return boolean representing whether database is connected
+     */
     boolean getConnectionStatus();
 
 }

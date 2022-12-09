@@ -16,10 +16,10 @@ public class SubDBMessRequestModel {
 
     /** Creates a SubDBMessRequest Model that contains the solutionId, userId, parentId, body and timestamp.
      *
-     * @param solutionId the unique id corresponding to the Solution document the Message is part of.
-     * @param userId the unique id corresponding to the creator of the Message.
-     * @param parentId the id of the current message is replying to. If not Messageid then it is a rootMessageId.
-     * @param body Contents of the Message.
+     * @param solutionId        the unique id corresponding to the Solution document the Message is part of.
+     * @param userId            the unique id corresponding to the creator of the Message.
+     * @param parentId          the id of the current message is replying to. If not Messageid then it is a rootMessageId.
+     * @param body              Contents of the Message.
      */
     public SubDBMessRequestModel(
             String solutionId,
@@ -35,7 +35,7 @@ public class SubDBMessRequestModel {
 
     /** Gets the solutionId corresponding to the message
      *
-     * @return a string containing the solultionId
+     * @return a string containing the solutionId
      */
     public String getSolutionId() {
         return solutionId;
