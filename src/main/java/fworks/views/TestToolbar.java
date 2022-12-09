@@ -9,6 +9,7 @@ import ia.viewmodels.Updatable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -26,11 +27,15 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     private JButton uploadTestButton;
     private JButton takeTestButton;
     private JButton solutionsButton;
+    private JPanel eastPanel;
+    private JPanel westPanel;
     private SubmitTestDocController submitTestDocController;
     private SubmitSolutionDocController submitSolutionDocController;
     private UpdateCourseMembershipScreen updateCourseMembershipScreen;
     private DownloadDocController downloadDocController;
     private MainViewModel mainViewModel;
+    private Map<String, String> testNametoID;
+    private Map<String, String> courseNameToID;
     private SolutionFrame solutionFrame;
 
     /**
@@ -52,8 +57,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
 
-        JPanel westPanel = createWestPanel();
-        JPanel eastPanel = createEastPanel();
+        westPanel = createWestPanel();
+        eastPanel = createEastPanel();
 
         setLayout(new BorderLayout());
         add(westPanel, BorderLayout.WEST);
@@ -61,7 +66,7 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JPanel createWestPanel() {
-        courseComboBox = createComboBox();
+        courseComboBox = createCourseComboBox();
         addCourseButton = new JButton("Add course");
         uploadTestButton = new JButton("Upload test");
         testComboBox = createTestComboBox();
@@ -82,10 +87,8 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         panel.add(uploadTestButton);
         panel.add(testComboBox);
 
-
         return panel;
     }
-
 
 
     private JPanel createEastPanel() {
@@ -110,16 +113,17 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
     }
 
     private JComboBox<String> createTestComboBox() {
-
         if (mainViewModel.getCurrentUserCourseModels().size() > 0) {
             mainViewModel.setCurrentCourseId(
                     new ArrayList<>(
                             mainViewModel.getCurrentUserCourseModels().values()).get(0).getCourseId());
-            Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
-            Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
-            JComboBox testComboBox = new JComboBox<>(testModles.keySet().toArray());
-            return testComboBox;
-
+        Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
+        Map<String, TestDocSubViewModel> testModles = courseModels.get(mainViewModel.getCurrentCourseId()).getTests();
+        testNametoID = new HashMap<>();
+        for (TestDocSubViewModel testModel : testModles.values()) {
+            testNametoID.put(testModel.getTestName(), testModel.getTestId());
+        }
+        return (JComboBox) new JComboBox<String>((String[]) testNametoID.keySet().toArray());
         } else {
             JComboBox testComboBox = new JComboBox<>(new ArrayList<>().toArray());
             return testComboBox;
@@ -150,9 +154,15 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
      * Creates a JComboBox with the user's registered courses
      * @return A combo box with the user's courses
      */
-    private JComboBox createComboBox() {
-            return new JComboBox(mainViewModel.getCurrentUserCourseModels().keySet().toArray());
+    private JComboBox createCourseComboBox() {
+        Map<String, CourseSubViewModel> courseModels = mainViewModel.getCurrentUserCourseModels();
+
+        courseNameToID = new HashMap<>();
+        for(String key : courseModels.keySet()) {
+            courseNameToID.put(courseModels.get(key).getCourseName(), key);
         }
+            return new JComboBox(courseNameToID.keySet().toArray());
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -176,16 +186,17 @@ public class TestToolbar extends JPanel implements ActionListener, Updatable {
         } else if (actionEvent.getSource() == testComboBox){
             JComboBox action = (JComboBox)actionEvent.getSource();
             String testName = action.getSelectedItem().toString();
-            docView.setFilePath(getFilePath(testName));
+            docView.setFilePath(getFilePath(testNametoID.get(testName)));
             docView.loadFile();
         }
     }
 
     @Override
     public void update() {
-        this.removeAll();
-        JPanel westPanel = createWestPanel();
-        JPanel eastPanel = createEastPanel();
+        westPanel.remove(testComboBox);
+        this.testComboBox = createTestComboBox();
+        testComboBox.addActionListener(this);
+        westPanel.add(testComboBox);
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 

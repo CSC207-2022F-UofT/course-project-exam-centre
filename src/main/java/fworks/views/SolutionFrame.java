@@ -44,13 +44,12 @@ public class SolutionFrame extends JFrame implements Updatable {
 
         setSize(1100, 800);
         setLocationRelativeTo(null);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     @Override
     public void update() {
-        documentView.update();
         solutionToolbar.update();
     }
 }

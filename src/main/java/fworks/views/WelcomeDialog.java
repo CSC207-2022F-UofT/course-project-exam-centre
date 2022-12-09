@@ -28,7 +28,8 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
                          DownloadDocController downloadDocController,
-                         UpdateStateController updateStateController) {
+                         UpdateStateController updateStateController,
+                         MainFrame mainFrame) {
         loginPanel = new LoginPanel(loginController,
                 mainViewModel,
                 submitTestDocController,
@@ -36,14 +37,16 @@ public class WelcomeDialog extends JDialog implements ActionListener, Updatable 
                 updateCourseMembershipController,
                 logoutController,
                 downloadDocController,
-                updateStateController);
+                updateStateController,
+                mainFrame);
         registerPanel = new RegisterPanel(userRegisterController,
                 logoutController,
                 mainViewModel,
                 submitTestDocController,
                 submitSolutionDocController,
                 updateCourseMembershipController,
-                downloadDocController);
+                downloadDocController,
+                mainFrame);
 
         this.mainViewModel = mainViewModel;
 
