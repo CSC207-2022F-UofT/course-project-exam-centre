@@ -10,7 +10,7 @@ import java.util.HashMap;
  * SubmitTestDocInteractor implements the ability to save a test document into persistent memory
  * @layer Use cases
  */
-public class SubmitTestDocInteractor implements SubmitTDocInputBoundary {
+public class    SubmitTestDocInteractor implements SubmitTDocInputBoundary {
 
     private final SubmitTDocOutputBoundary tDocOutputBoundary;
     private final SubmitTDocDsGateway dsGateway;

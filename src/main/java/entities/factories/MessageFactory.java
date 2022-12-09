@@ -9,8 +9,15 @@ import java.time.LocalDateTime;
 
 public class MessageFactory {
 
-    /**
-     * Returns a new Message object.
+    /** Creates a new Message object
+     *
+     * @param messageId unique identifier of the message
+     * @param solutionId unique identifier of the solution document the message is associated to.
+     * @param userId unique identifier of user writing the message
+     * @param parentId unique identifier of parent message
+     * @param body the body of the message
+     * @param sentTimestamp the time the message was sent.
+     * @return a new CommonMessage Object
      */
     public Message create(
             String messageId,
