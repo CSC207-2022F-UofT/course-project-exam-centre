@@ -3,6 +3,7 @@ package uc.state.update;
 import entities.Course;
 import entities.CourseInfo;
 import entities.StateTracker;
+import entities.User;
 import entities.factories.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -98,28 +99,115 @@ public class UpdateStateInteractorTest {
             }
         };
         UpdateStateInteractor interactor = new UpdateStateInteractor(presenter,
-                                                                     dsGateway,
-                                                                     currentState,
-                                                                     userFactory,
-                                                                     courseFactory,
-                                                                     testFactory,
-                                                                     solutionFactory,
-                                                                     messageFactory);
+                                                                    dsGateway,
+                                                                    currentState,
+                                                                    userFactory,
+                                                                    courseFactory,
+                                                                    testFactory,
+                                                                    solutionFactory,
+                                                                    messageFactory);
         interactor.updateState();
         Map<String, CourseInfo> trackedCourses = currentState.getAllCourseInfoItems();
         List<String> storedAllCourseIds = testData.getStoredAllCourseIds();
         assertEquals(storedAllCourseIds.size(), trackedCourses.size());
     }
 
+    /**
+     *
+     */
     @Test
     public void updateStateSuccessGivenUserNotNullConnectionSuccess(){
+        UpdateStateDsGateway dsGateway = new UpdateStateDsGateway() {
+            final boolean connectionStatus = true;
+            @Override
+            public List<? extends UpdateStateTestDocDbModel> getTestDocsByCourseId(String courseId) {
+                return testData.getStoredTestsByCourseId(courseId);
+            }
 
-        UpdateStateInteractor interactor = new UpdateStateInteractor();
+            @Override
+            public List<? extends UpdateStateSolutionDocDbModel> getSolutionDocsByTestId(String testId) {
+                return testData.getStoredSolutionsByTestId(testId);
+            }
+
+            @Override
+            public List<? extends UpdateStateMessageDbModel> getMessagesByParentId(String parentId) {
+                return testData.getStoredMessagesByParentId(parentId);
+            }
+
+            @Override
+            public UpdateStateUserDbModel getUserById(String userId) {
+                return testData.getUserDbResponseModelById(userId);
+            }
+
+            @Override
+            public UpdateStateCourseDbModel getCourseById(String courseId) {
+                return testData.getCourseDbResponseModelById(courseId);
+            }
+
+            @Override
+            public List<String> getAllCourseIds() {
+                return testData.getStoredAllCourseIds();
+            }
+
+            @Override
+            public List<String> getCourseIdsByUserId(String userId) {
+                return testData.getStoredCourseIdsByUserId(userId);
+            }
+
+            @Override
+            public boolean getConnectionStatus() {
+                return connectionStatus;
+            }
+        };
+
+        UpdateStateOutputBoundary presenter = new UpdateStateOutputBoundary() {
+            @Override
+            public UpdateStateResponseModel prepareSuccessView(UpdateStateResponseModel responseModel) {
+                assertNotNull(responseModel.getCurrentUserModel());
+                assertEquals(2, responseModel.getCourseInfoModels().size());
+                assertEquals(1, responseModel.getCurrentUserCourseModels().size());
+                return null;
+            }
+
+            @Override
+            public UpdateStateResponseModel prepareFailView(String errorMessage) {
+                fail("Use case failure is unexpected.");
+                return null;
+            }
+        };
+
+        // set current user to stored user1
+        // courses should not be loaded into state tracker yet
+        // stored user1 is enrolled in 1 course
+        // there are two registered courses total
+        UpdateStateUserDbModel userDbModel = testData.getUserDbResponseModelById("user1Id");
+        String userId = userDbModel.getUserId();
+        String first = userDbModel.getFirstName();
+        String last = userDbModel.getLastName();
+        String email = userDbModel.getEmail();
+        User user = userFactory.create(first, last, email, userId);
+        currentState.setCurrentUser(user);
+        assertEquals(0, currentState.getAllTrackedCourses().size());
+        assertEquals(0, currentState.getAllCourseInfoItems().size());
+
+        UpdateStateInteractor interactor = new UpdateStateInteractor(presenter,
+                                                                    dsGateway,
+                                                                    currentState,
+                                                                    userFactory,
+                                                                    courseFactory,
+                                                                    testFactory,
+                                                                    solutionFactory,
+                                                                    messageFactory);
+        interactor.updateState();
+        assertEquals(1, currentState.getAllTrackedCourses().size());
+        assertEquals(2, currentState.getAllCourseInfoItems().size());
+
+
     }
 
-
-    @Test
-    public void updateStateFailGivenDbConnectionFail(){
-        UpdateStateInteractor interactor = new UpdateStateInteractor();
-    }
+//
+//    @Test
+//    public void updateStateFailGivenDbConnectionFail(){
+//        UpdateStateInteractor interactor = new UpdateStateInteractor();
+//    }
 }

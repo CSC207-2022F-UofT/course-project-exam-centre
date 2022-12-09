@@ -126,12 +126,12 @@ public class UpdateStateTestData {
 
             @Override
             public String getUserId() {
-                return "";
+                return "user1Id";
             }
 
             @Override
             public String getTestType() {
-                return "";
+                return "Term Test";
             }
 
             @Override
@@ -146,7 +146,7 @@ public class UpdateStateTestData {
 
             @Override
             public String getTestName() {
-                return "";
+                return "Java Test";
             }
         };
 
@@ -162,12 +162,12 @@ public class UpdateStateTestData {
 
             @Override
             public String getUserId() {
-                return "";
+                return "user2Id";
             }
 
             @Override
             public String getTestType() {
-                return "";
+                return "Final";
             }
 
             @Override
@@ -182,7 +182,7 @@ public class UpdateStateTestData {
 
             @Override
             public String getTestName() {
-                return "";
+                return "Pain";
             }
         };
         mat137Tests.add(mat137Test);
@@ -195,12 +195,12 @@ public class UpdateStateTestData {
         UpdateStateSolutionDocDbModel csc207TestSolution = new UpdateStateSolutionDocDbModel() {
             @Override
             public String getSolutionId() {
-                return "csc207SolutionTestId";
+                return "csc207TestSolutionId";
             }
 
             @Override
             public String getSolutionName() {
-                return "";
+                return "Solution Name";
             }
 
             @Override
@@ -210,7 +210,7 @@ public class UpdateStateTestData {
 
             @Override
             public String getUserId() {
-                return "";
+                return "user2Id";
             }
 
             @Override
@@ -230,7 +230,7 @@ public class UpdateStateTestData {
 
             @Override
             public String getRootMessageId() {
-                return "";
+                return "rootMsgId";
             }
         };
         csc207TestSolutions.add(csc207TestSolution);
@@ -244,22 +244,22 @@ public class UpdateStateTestData {
         UpdateStateMessageDbModel csc207SolutionMessage = new UpdateStateMessageDbModel() {
             @Override
             public String getMessageId() {
-                return "";
+                return "msgId";
             }
 
             @Override
             public String getSolutionId() {
-                return "";
+                return "csc207TestSolutionId";
             }
 
             @Override
             public String getUserId() {
-                return "";
+                return "user2Id";
             }
 
             @Override
             public String getParentId() {
-                return "parentId";
+                return "rootMsgId";
             }
 
             @Override
@@ -273,7 +273,7 @@ public class UpdateStateTestData {
             }
         };
         csc207SolutionMessages.add(csc207SolutionMessage);
-        storedMessages.put(csc207SolutionMessage.getSolutionId(), csc207SolutionMessages);
+        storedMessages.put(csc207SolutionMessage.getParentId(), csc207SolutionMessages);
     }
 
     private void createStoredAllCourseIds() {
@@ -313,7 +313,11 @@ public class UpdateStateTestData {
     }
 
     public List<UpdateStateMessageDbModel> getStoredMessagesByParentId(String parentId) {
-        return storedMessages.get(parentId);
+        List<UpdateStateMessageDbModel> msg = storedMessages.get(parentId);
+        if (msg != null){
+            return msg;
+        }
+        return new ArrayList<>();
     }
 
     public List<String> getStoredAllCourseIds(){
