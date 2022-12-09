@@ -24,9 +24,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
     private UpdateCourseMembershipController updateCourseMembershipController;
     private LogoutController logoutController;
     private DownloadDocController downloadDocController;
+    private MainFrame mainFrame;
     private final UpdateStateController updateStateController;
-
-    MainFrame testFrame;
 
     public LoginPanel(LoginController controller,
                       MainViewModel mainViewModel,
@@ -35,7 +34,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                       UpdateCourseMembershipController updateCourseMembershipController,
                       LogoutController logoutController,
                       DownloadDocController downloadDocController,
-                      UpdateStateController updateStateController) {
+                      UpdateStateController updateStateController,
+                      MainFrame mainFrame) {
         this.controller = controller;
         this.mainViewModel = mainViewModel;
         this.submitTestDocController = submitTestDocController;
@@ -43,9 +43,8 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.logoutController = logoutController;
         this.downloadDocController = downloadDocController;
+        this.mainFrame = mainFrame;
         this.updateStateController = updateStateController;
-
-        this.testFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -141,7 +140,6 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
                 try {
                     controller.logIn(email, password);
                     updateStateController.updateState();
-                    this.setVisible(false);
 
                 } catch (Exception exception) {
                     // TODO: handle error
@@ -152,29 +150,21 @@ public class LoginPanel extends JPanel implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        if (mainViewModel.getCurrentUserModel() != null) {
-            if(testFrame == null) {
-                if(mainViewModel.getCurrentUserCourseModels().isEmpty()) {
+        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
+            if (!mainFrame.isVisible()) {
+                if (mainViewModel.getCurrentUserCourseModels().isEmpty()) {
                     UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
                             updateCourseMembershipController,
                             mainViewModel);
                     updateCourseMembershipScreen.createScreen();
+                    mainFrame.setVisible(true);
                 }
-                testFrame = new MainFrame(mainViewModel,
-                        submitTestDocController,
-                         submitSolutionDocController,
-                         updateCourseMembershipController,
-                         logoutController,
-                         downloadDocController);
             } else {
-                testFrame.update();
-            }
-        } else {
-            if(testFrame != null) {
-                testFrame.setVisible(false);
-                testFrame.dispose();
-                testFrame = null;
+                if (mainFrame.isVisible()) {
+                    mainFrame.setVisible(false);
+                }
             }
         }
+        mainFrame.update();
     }
 }
