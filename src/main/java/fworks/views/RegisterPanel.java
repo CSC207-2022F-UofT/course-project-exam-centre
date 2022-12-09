@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * A panel for new users to register
  * @layer drivers and frameworks
  */
-public class RegisterPanel extends JPanel implements ActionListener, Updatable {
+public class RegisterPanel extends JPanel implements ActionListener {
     private UserRegisterController userRegisterController;
     private LogoutController logoutController;
     private JTextField firstNameField;
@@ -42,8 +42,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                          SubmitTestDocController submitTestDocController,
                          SubmitSolutionDocController submitSolutionDocController,
                          UpdateCourseMembershipController updateCourseMembershipController,
-                         DownloadDocController downloadDocController,
-                         MainFrame mainFrame) {
+                         DownloadDocController downloadDocController) {
         this.userRegisterController = userRegisterController;
         this.logoutController = logoutController;
         this.mainViewModel = mainViewModel;
@@ -52,7 +51,7 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
         this.updateCourseMembershipController = updateCourseMembershipController;
         this.downloadDocController = downloadDocController;
 
-        this.mainFrame = mainFrame;
+        this.mainFrame = null;
 
         JPanel fieldsPanel = createFieldsPanel();
         JPanel buttonsPanel = createButtonsPanel();
@@ -219,25 +218,5 @@ public class RegisterPanel extends JPanel implements ActionListener, Updatable {
                 //new TestFrame(logoutController); TODO fix this
             }
         }
-    }
-
-    @Override
-    public void update() {
-        if (mainViewModel.getCurrentUserModel().getUserId() != null) {
-            if (!mainFrame.isVisible()) {
-                if (mainViewModel.getCurrentUserCourseModels().isEmpty()) {
-                    UpdateCourseMembershipScreen updateCourseMembershipScreen = new UpdateCourseMembershipScreen(
-                            updateCourseMembershipController,
-                            mainViewModel);
-                    updateCourseMembershipScreen.createScreen();
-                    mainFrame.setVisible(true);
-                }
-            } else {
-                if (mainFrame.isVisible()) {
-                    mainFrame.setVisible(false);
-                }
-            }
-        }
-        mainFrame.update();
     }
 }

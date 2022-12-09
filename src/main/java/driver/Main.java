@@ -275,13 +275,6 @@ public class Main {
             ArrayList<Updatable> updatableScreens = new ArrayList<>();
             viewManagerGateway.setUpdateStateController(updateStateController);
 
-            MainFrame mainFrame = new MainFrame(mainViewModel,
-                    submitTestDocController,
-                    submitSolutionDocController,
-                    updateCourseMembershipController,
-                    logoutController,
-                    downloadDocController);
-
             updatableScreens.add(
                     new WelcomeDialog(
                             loginController,
@@ -292,8 +285,7 @@ public class Main {
                             submitSolutionDocController,
                             updateCourseMembershipController,
                             downloadDocController,
-                            updateStateController,
-                            mainFrame
+                            updateStateController
                     )
             );
 
