@@ -2,8 +2,8 @@ package entities;
 
 import java.util.*;
 
-/**
- * Represents a university course
+/** Course represents a course that tests are written for.
+ * @layer entities
  */
 public class Course implements CourseInfo {
     private final String courseName;
@@ -43,7 +43,7 @@ public class Course implements CourseInfo {
 
     /** Gets the course's code
      *
-     * @return returs the string corresponding to the course code
+     * @return returns the string corresponding to the course code
      */
     public String getCourseCode() {
         return courseCode;

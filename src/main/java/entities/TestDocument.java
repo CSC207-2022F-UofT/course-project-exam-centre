@@ -2,6 +2,9 @@ package entities;
 
 import java.util.HashMap;
 
+/** Test Document entity that represents a Test Document
+ * @layer entities
+ */
 public class TestDocument extends Document{
 
     /**

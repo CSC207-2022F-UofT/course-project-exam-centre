@@ -1,5 +1,8 @@
 package entities;
 
+/** Solution Document that represents the Solution Document
+ * @layer entities
+ */
 public class SolutionDocument extends Document {
 
     /**

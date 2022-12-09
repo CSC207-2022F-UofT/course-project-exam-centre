@@ -3,6 +3,9 @@ package entities;
 import java.io.Serializable;
 import java.util.*;
 
+/** StateTracker entity that represents that state of the program
+ * @layer entities
+ */
 public class StateTracker implements Serializable {
     private final Map<String, User> trackedUsers;
     private final Map<String, Course> trackedCourses;
