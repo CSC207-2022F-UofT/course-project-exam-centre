@@ -19,4 +19,5 @@ public interface URegisterDsGateway {
      */
     String saveUser(URegisterDsRequestModel requestModel);
 
+    boolean getConnectionStatus();
 }

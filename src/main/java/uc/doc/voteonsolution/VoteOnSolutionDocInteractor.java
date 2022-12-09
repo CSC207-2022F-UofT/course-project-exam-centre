@@ -36,6 +36,12 @@ public class VoteOnSolutionDocInteractor implements VoteSDocInputBoundary {
      */
     @Override
     public VoteSDocResponseModel voteSolutionDoc(VoteSDocRequestModel model) {
+
+        // Exception handling for failed db connection
+        if (!voteSDocDsGateway.getConnectionStatus()) {
+            return voteSDocOutputBoundary.prepareFailView("Database Connection Failed");
+        }
+
         User user = stateTracker.getCurrentUser();
         boolean vote = model.getVote();
         String solutionId = model.getSolutionId();

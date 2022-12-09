@@ -27,4 +27,5 @@ public interface SubDBMessDsGateway {
 
     // TODO: JavaDoc
     SubDBMessUserDbModel getUserById(String userId);
+    boolean getConnectionStatus();
 }

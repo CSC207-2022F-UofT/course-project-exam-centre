@@ -57,7 +57,7 @@ public class VoteSDocPresenter implements VoteSDocOutputBoundary{
      * @return response model from use case
      */
     @Override
-    public VoteSDocResponseModel prepareFailureView(String errorMessage) {
+    public VoteSDocResponseModel prepareFailView(String errorMessage) {
         // TODO: prepare failure view
         viewManagerGateway.showError(errorMessage, "Document Vote Failed");
         throw new VoteSDocFailed(errorMessage);

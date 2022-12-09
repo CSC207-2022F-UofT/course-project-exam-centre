@@ -295,6 +295,10 @@ public class UpdateCourseMembershipInteractor implements UpdateCMemInputBoundary
         List<String> newCourseList = requestModel.getNewCoursesList();
         Course newCourse;
 
+        if (!dsGateway.getConnectionStatus()) {
+            return presenter.prepareFailView("Database Connection Failed");
+        }
+
         // Add new course enrolments
         for (String courseId: newCourseList) { //Checks for new courses user not currently enrolled in.
             if (!enrollments.contains(courseId)) {

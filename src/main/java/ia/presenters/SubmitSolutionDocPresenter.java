@@ -109,7 +109,7 @@ public class SubmitSolutionDocPresenter implements SubmitSDocOutputBoundary {
      * @throws SubmitSolutionDocFailed when the submit solution doc use case fails.
      */
     @Override
-    public SubmitSDocResponseModel prepareFailureView(String errorMessage) {
+    public SubmitSDocResponseModel prepareFailView(String errorMessage) {
         // TODO: Update view model here
         viewManagerGateway.showError(errorMessage, "Solution Document Submission Failed");
         throw new SubmitSolutionDocFailed(errorMessage);

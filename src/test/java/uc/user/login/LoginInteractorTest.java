@@ -37,6 +37,9 @@ public class LoginInteractorTest {
             }
 
             @Override
+            public boolean getConnectionStatus() {return true;}
+
+            @Override
             public List<String> getCourseIdsByUserId(String userId) {
                 return storedEnrolments;
             }

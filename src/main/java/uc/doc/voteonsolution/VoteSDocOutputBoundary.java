@@ -15,6 +15,6 @@ public interface VoteSDocOutputBoundary {
      * Prepares a failure view
      * @param errorMessage The errorMessage that occurs when a failure view happens
      */
-    VoteSDocResponseModel prepareFailureView(String errorMessage);
+    VoteSDocResponseModel prepareFailView(String errorMessage);
     
 }

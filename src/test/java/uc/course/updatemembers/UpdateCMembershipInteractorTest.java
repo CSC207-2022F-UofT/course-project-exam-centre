@@ -35,9 +35,8 @@ public class UpdateCMembershipInteractorTest {
             }
             @Override
             public List<String> getCourseIdsByUserId(String userId) {
-                ArrayList<String> courseIds = new ArrayList<>();
 
-                return courseIds;
+                return new ArrayList<>();
             }
 
             @Override
@@ -47,7 +46,7 @@ public class UpdateCMembershipInteractorTest {
 
             @Override
             public boolean getConnectionStatus() {
-                return false;
+                return true;
             }
 
             @Override
@@ -145,9 +144,8 @@ public class UpdateCMembershipInteractorTest {
             }
             @Override
             public List<String> getCourseIdsByUserId(String userId) {
-                ArrayList<String> courseIds = new ArrayList<>();
 
-                return courseIds;
+                return new ArrayList<>();
             }
 
             @Override
@@ -157,7 +155,7 @@ public class UpdateCMembershipInteractorTest {
 
             @Override
             public boolean getConnectionStatus() {
-                return false;
+                return true;
             }
 
             @Override
