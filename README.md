@@ -31,12 +31,28 @@ TODO: Complete list of project features
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
-TODO: Complete Getting Started
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Prerequisites
-TODO: Complete Prerequisites
+### Prerequisites
+ [Postgres 14.5](https://www.postgresql.org/download/)
+ 
+ [ICEPdf](https://github.com/pcorless/icepdf)
+ 
+ [Apache Commons Net](https://commons.apache.org/proper/commons-net/download_net.cgi)
+
+
+**Setup a local database**
+
+1. Install Postgres 14.5: https://www.postgresql.org/download/
+2. Set up Postgres with the `User: postgres` and `Password: postgrespw` and `Port: 5432 (default)` 
+3. Download the JDBC precompiled driver: https://jdbc.postgresql.org/download/ (it should download a file called `postgresql-42.5.0.jar` ).
+4. Create a directory called `lib` in the root project directory and place the `postgresql-42.5.0.jar` file there.
+5. Log into postgres from a terminal using `psql -U postgres` .
+6. Run the following SQL query: `CREATE DATABASE exam_centre;` in the PSQL console -> **make sure that you include the semi-colon!**
+7. Then run `\c exam_centre` to connect to the exam_centre DB. Alternatively, rerun the PSQL console using psql `-U postgres -d exam_centre` .
+8. In the PSQL console, copy and paste the script found at `~/bin/db/initPostgresSchema.sql` .
+9. Wooo hooo ye did it !
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
