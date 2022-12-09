@@ -23,6 +23,7 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
      * @param presenter An output boundary containing methods to update view
      * @param gateway A gateway that provides methods to access persistent data
      * @param courseFactory A course factory that creates course objects
+     * @param currentState tracks the current state
      */
     public CourseRegisterInteractor(
             CRegisterOutputBoundary presenter,
@@ -35,6 +36,10 @@ public class CourseRegisterInteractor implements CRegisterInputBoundary {
         this.currentState = currentState;
     }
 
+    /**
+     * @param requestModel a request model containing information of the course being created
+     * @return a response model containing information of the course being created
+     */
     @Override
     public CRegisterResponseModel registerCourse(CRegisterRequestModel requestModel) {
 
